@@ -1,0 +1,52 @@
+version: '3.9'
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports: ["11434:11434"]
+    volumes: ["ollama:/root/.ollama"]
+    deploy:
+      resources:
+        reservations:
+          devices: [{driver: nvidia, count: all, capabilities: [gpu]}]
+    command: serve
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434"]
+      interval: 10s
+
+  searxng:
+    image: searxng/searxng:latest
+    ports: ["8080:8080"]
+    environment:
+            - SEARXNG_BASE_URL=http://localhost:8080/
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports: ["6333:6333"]
+    volumes: ["qdrant:/qdrant/storage"]
+
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    ports: ["4000:4000"]
+    volumes: ["./litellm_config.yaml:/app/config.yaml"]
+    command: --config /app/config.yaml --num_workers 8
+    depends_on: [ollama]
+    environment:
+            - DATABASE_URL=sqlite:////app/litellm.db
+
+  studio:
+    build: .
+    ports: ["7860:7860"]
+    environment:
+      OPENAI_API_BASE: http://litellm:4000/v1
+      OPENAI_API_KEY: sk-free
+      SEARXNG_URL: http://searxng:8080
+      QDRANT_URL: http://qdrant:6333
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    volumes:
+      - ./workspace:/app/workspace
+      - ./toolchains:/toolchains
+    depends_on: [litellm, searxng, qdrant]
+
+volumes:
+  ollama:
+  qdrant:
