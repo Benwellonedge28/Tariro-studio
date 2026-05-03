@@ -5,12 +5,23 @@ from qdrant_client import QdrantClient
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from typing import List, Dict
 import ast
+import json
+
+# Import the new features module
+from tariro_features import ToolForge, ModelEvolution, AGITargetManager, SwarmVisualizer, MultiModalCollaborator
 
 client = AsyncOpenAI(base_url="http://localhost:4000/v1", api_key="sk-free")
 qdrant = QdrantClient("http://qdrant:6333")
 SEARXNG = "http://searxng:8080/search"
 WORKSPACE = "/app/workspace/taric"
 TOOLS_BIN = "/app/workspace/tools/bin"
+
+# Initialize feature managers
+tool_forge_manager = ToolForge()
+model_evolution_manager = ModelEvolution()
+agi_target_manager = AGITargetManager()
+swarm_visualizer = SwarmVisualizer()
+multimodal_collaborator = MultiModalCollaborator()
 
 ALL_MODELS = {
     "qwen-coder": "Write TariroLang code. Never test. Must cite 2+ sources.",
@@ -75,6 +86,21 @@ async def call_model(model, role, task, context, ban_models=[], target=None):
         sources = await web_search(task + " TariroLang FPGA RISC-V")
         context += f"\n\nWeb Sources:\n" + "\n".join(sources)
 
+    # Example of Tool Forge integration: If task needs a new tool
+    if "generate tool" in task.lower():
+        tool_spec = await tool_forge_manager.propose_tool(task, model)
+        if tool_spec:
+            # Code to integrate and test the new tool via N-1
+            print(f"Tool Forge: Proposed new tool based on task: {tool_spec}")
+            context += f"\n\nProposed Tool Spec: {tool_spec}"
+
+    # Example of Multi-Modal Collaboration integration: if task involves non-code generation
+    if "design ui" in task.lower() or "create image" in task.lower():
+        mm_output = await multimodal_collaborator.generate_multimodal(task, model)
+        if mm_output:
+            print(f"Multi-Modal Collaboration: Generated {mm_output['type']} output.")
+            context += f"\n\nMulti-Modal Output: {mm_output['description']}"
+
     resp = await client.chat.completions.create(
         model=model,
         messages=[
@@ -91,6 +117,10 @@ async def call_model(model, role, task, context, ban_models=[], target=None):
     if model in ["qwen-coder", "deepseek-coder"] and len(out.get("sources", [])) < 2:
         out["approved"] = False
         out["reason"] = "Rejected: Must cite 2+ sources"
+
+    # Example of Self-Evolution integration: Log performance for fine-tuning
+    await model_evolution_manager.log_performance(model, task, out["approved"], out.get("reason", ""))
+
     return out
 
 async def build_for_target(target, task, code_ctx, repo_path):
@@ -124,6 +154,14 @@ async def build_for_target(target, task, code_ctx, repo_path):
     approvals = [r for r in test_results if r["approved"]]
     status = "READY_FOR_REVIEW" if len(approvals) == len(testers) else "FAILED_TESTS"
 
+    # Example of AGI Target Manager integration: if target is AGI
+    if target == "agi-research":
+        agi_status = await agi_target_manager.assess_agi_output(code, test_results)
+        if not agi_status["approved"]:
+            status = "FAILED_AGI_TESTS"
+            print(f"AGI Target Manager: AGI output failed assessment: {agi_status['reason']}")
+
+
     return {
         "target": target, "coder": coder, "code": code, "status": status,
         "approvals": f"{len(approvals)}/{len(testers)}", "test_results": test_results,
@@ -132,11 +170,14 @@ async def build_for_target(target, task, code_ctx, repo_path):
 
 async def parallel_n1_multitarget(task):
     os.makedirs(WORKSPACE, exist_ok=True)
-    repo_path = WORKSPACE
+    repo_path = WORKPACE
 
     # 1. PM picks targets
     pm_res = await call_model("phi-pm", ALL_MODELS["phi-pm"], f"Pick targets for: {task}", "")
     targets = pm_res.get("targets", ["x86-linux", "wasm-web"])
+
+    # Example of Interactive Swarm Visualization integration: Send task start event
+    swarm_visualizer.log_event("task_start", {"task": task, "targets": targets})
 
     # 2. Build all targets in parallel
     context = subprocess.getoutput(f"find {repo_path} -name '*.tari' | head -20")
@@ -144,7 +185,9 @@ async def parallel_n1_multitarget(task):
 
     # 3. Create PR if any target ready
     ready = [r for r in results if r["status"] == "READY_FOR_REVIEW"]
-    if not ready: return {"status": "ALL_FAILED", "targets": results}
+    if not ready:
+        swarm_visualizer.log_event("task_failed", {"task": task, "reason": "All targets failed"})
+        return {"status": "ALL_FAILED", "targets": results}
 
     repo = Repo.init(repo_path)
     branch = f"ai/{task[:20].replace(' ', '-').lower()}"
@@ -154,13 +197,17 @@ async def parallel_n1_multitarget(task):
     repo.git.push("--set-upstream", "origin", branch)
     pr_url = subprocess.getoutput(f"cd {repo_path} && gh pr create --title 'AI: {task}' --body 'N-1 approved: {ready}'")
 
+    swarm_visualizer.log_event("pr_created", {"task": task, "pr_url": pr_url})
+
     return {"pr_url": pr_url, "status": "READY_FOR_REVIEW", "targets": results}
 
 async def human_deploy(target, branch):
     """ONLY called when human clicks Deploy"""
     cfg = TARGETS[target]
     res = subprocess.run(cfg["deploy_cmd"], shell=True, cwd=f"{WORKSPACE}/target/{target}")
-    return {"status": "DEPLOYED" if res.returncode == 0 else "DEPLOY_FAILED", "target": target}
+    final_status = "DEPLOYED" if res.returncode == 0 else "DEPLOY_FAILED"
+    swarm_visualizer.log_event("deploy_attempt", {"target": target, "status": final_status})
+    return {"status": final_status, "target": target}
 
 # Gradio UI
 with gr.Blocks(title="TARIRO Studio v3") as demo:
@@ -172,6 +219,9 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
 
     status = gr.Textbox(label="Overall Status")
     pr_link = gr.Textbox(label="PR URL")
+
+    # Add a placeholder for visualization embed
+    visualization_embed = gr.HTML(label="Swarm Visualization", value="<p>Visualization will appear here (e.g., iframe to http://localhost:3001)</p>")
 
     with gr.Row():
         targets_table = gr.Dataframe(
@@ -185,17 +235,17 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         result = await parallel_n1_multitarget(task_input)
         table_data = []
         for r in result.get("targets", []):
-            # Ensure each row has 4 elements
             row = [r["target"], r["status"], r["approvals"], r["status"] == "READY_FOR_REVIEW"]
             table_data.append(row)
         return {
             status: result["status"],
             pr_link: result.get("pr_url", ""),
             targets_table: table_data,
-            state: result
+            state: result,
+            visualization_embed: f"<iframe src='http://localhost:3001/visualization?task_id={task_input.replace(' ', '_')}' width='100%' height='400px' frameborder='0'></iframe>" if result["status"] != "ALL_FAILED" else "<p>Visualization requires a successful run.</p>"
         }
 
-    run_btn.click(run_and_update, task, [status, pr_link, targets_table, state])
+    run_btn.click(run_and_update, task, [status, pr_link, targets_table, state, visualization_embed])
 
     # Dynamic deploy buttons per target
     @gr.render(inputs=[state])
@@ -204,7 +254,6 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         for t in targets:
             if t["status"] == "READY_FOR_REVIEW":
                 btn = gr.Button(f"DEPLOY {t['target'].upper()}")
-                # Using lambda to capture t at definition time
                 btn.click(lambda target_name=t["target"]: human_deploy(target_name, ""), None, status)
 
 if __name__ == "__main__":

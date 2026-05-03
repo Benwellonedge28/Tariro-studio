@@ -47,6 +47,26 @@ services:
       - ./toolchains:/toolchains
     depends_on: [litellm, searxng, qdrant]
 
+  # New Service: Model Evolution Fine-Tuner
+  model-fine-tuner:
+    image: python:3.10-slim-buster
+    volumes:
+      - ./model_evolution_data:/app/data
+      - ./workspace:/app/workspace # Access to test logs
+    command: python /app/tariro_features.py ModelEvolutionService
+    depends_on: [ollama] # Potentially interacts with Ollama for models
+
+  # New Service: Visualization Server (for Interactive Swarm Visualization)
+  visualization-server:
+    image: node:18-slim
+    ports: ["3001:3001"]
+    volumes:
+      - ./visualization_data:/app/data
+    command: node /app/visualization_server.js # Placeholder for a JS visualization server
+    depends_on: [studio] # Receives data from studio
+
 volumes:
   ollama:
   qdrant:
+  model_evolution_data:
+  visualization_data:
