@@ -1,0 +1,45 @@
+name: TARIRO Studio CI - Build All Targets
+on: [pull_request]
+
+jobs:
+  build-matrix:
+    strategy:
+      matrix:
+        target: [riscv32-baremetal, wasm-web, verilog-fpga, k8s-cloud, x86-linux]
+    runs-on: ubuntu-latest
+    steps:
+            - uses: actions/checkout@v4
+            - name: Install Toolchains
+        run: |
+          sudo apt update
+          sudo apt install -y qemu-system verilator yosys gcc-riscv64-unknown-elf wabt binaryen nodejs
+            - name: Compile TariroLang
+        run: |
+          mkdir -p build
+          if [ "${{ matrix.target }}" = "riscv32-baremetal" ]; then
+            taric --target riscv32-baremetal target/${{ matrix.target }}/main.tari -o build/kernel.elf
+          elif [ "${{ matrix.target }}" = "wasm-web" ]; then
+            taric --target wasm target/${{ matrix.target }}/main.tari -o build/app.wasm
+            wasm-opt -O3 build/app.wasm -o build/app.wasm
+          elif [ "${{ matrix.target }}" = "verilog-fpga" ]; then
+            taric --target verilog target/${{ matrix.target }}/main.tari -o build/top.v
+            yosys -p 'synth_ice40 -top top -json build/top.json' build/top.v
+          fi
+            - name: Test Target
+        run: |
+          if [ "${{ matrix.target }}" = "riscv32-baremetal" ]; then
+            timeout 10 qemu-system-riscv32 -kernel build/kernel.elf -nographic
+          elif [ "${{ matrix.target }}" = "verilog-fpga" ]; then
+            verilator --lint-only build/top.v
+          fi
+            - uses: actions/upload-artifact@v4
+        with: {name: tariro-${{ matrix.target }}, path: build/}
+
+  n1-nist-tests:
+    runs-on: ubuntu-latest
+    needs: build-matrix
+    steps:
+            - uses: actions/checkout@v4
+            - run: pip install pytest
+            - run: pytest tests/ -v # Run NIST AI RMF tests
+            - run: python scripts/verify_no_network.py target/
