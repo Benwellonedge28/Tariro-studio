@@ -5,13 +5,14 @@ import qdrant_client
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from typing import List, Dict, Any, Optional
 import ast
-import uuid # New import for generating unique task IDs
+import uuid # For generating unique task IDs
 
 # Import new feature modules
 import features.tool_forge as tool_forge
 import features.self_evolution as self_evolution
 import features.agi_sandbox as agi_sandbox
-import features.swarm_visualizer as swarm_visualizer # New import
+import features.swarm_visualizer as swarm_visualizer
+import features.multimodal_collaboration as multimodal_collaboration # New import
 
 client = AsyncOpenAI(base_url="http://localhost:4000/v1", api_key="sk-free")
 qdrant = qdrant_client.QdrantClient("http://qdrant:6333")
@@ -19,13 +20,20 @@ SEARXNG = "http://searxng:8080/search"
 
 WORKSPACE = "/app/workspace"
 
+# Extended ALL_MODELS with new multi-modal capabilities.
+# Note: These model names are conceptual. In a real LiteLLM setup, they map to
+# actual providers/models (e.g., "ollama/stable-diffusion", "openai/dall-e-3").
+# For simulation, they'll still route through the primary LLM to generate descriptions/URLs.
 ALL_MODELS = {
     "qwen-coder": "Write TariroLang code. Never test. Must cite 2+ sources.",
     "deepseek-coder": "Write tests + run taric. Never write prod code. Can research for test cases.",
-    "llama-architect": "Design + review specs. Can also propose new command-line tool specifications. Can research for tool design.",
-    "gemma-reviewer": "Security + style review. Never write code. Can test tools.",
-    "phi-pm": "Delegate tasks. Never write code. Orchestrates tool proposal and testing.",
-    "arbiter": "Merge only if N-1 approvals. Never write original code."
+    "llama-architect": "Design + review specs. Can also propose new command-line tool specifications. Can research for tool design. Can also design multi-modal assets.",
+    "gemma-reviewer": "Security + style review. Never write code. Can test tools. Can review multi-modal assets.",
+    "phi-pm": "Delegate tasks. Never write code. Orchestrates tool proposal and testing, and multi-modal asset generation.",
+    "arbiter": "Merge only if N-1 approvals. Never write original code. Can perform ethical review for AGI, and final multi-modal asset review.",
+    "dalle-image-gen": "Specialized model for generating images from text prompts. Never reviews or writes code.", # Conceptual multi-modal model
+    "musicgen-audio-gen": "Specialized model for generating audio from text prompts. Never reviews or writes code.", # Conceptual multi-modal model
+    # Add more as needed, e.g., for video, 3D models
 }
 
 
@@ -313,9 +321,47 @@ async def parallel_n1_multitarget(task_input: str):
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
     agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
     swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Re-initialize to ensure paths are set
+    multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # New initialization
+
+    # --- Multi-Modal Asset Generation Phase ---
+    await swarm_visualizer.log_event(task_id, "multimodal_check", f"Phi-PM checking for multi-modal asset needs for task: {task_input[:50]}", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
+    pm_multimodal_decision = await call_model(
+        "phi-pm",
+        ALL_MODELS["phi-pm"],
+        f"Analyze task: '{task_input}'. Does this task require generating any multi-modal assets (e.g., an image, audio, video) to support the main goal or as a direct output? If so, specify the asset_type ('image' or 'audio'), and a detailed 'prompt' for its generation. Output JSON: {{'needs_multimodal': bool, 'asset_type': str, 'prompt': str}}",
+        "",
+        task_id
+    )
+
+    multimodal_asset_results = []
+    if pm_multimodal_decision.get("needs_multimodal"):
+        asset_type = pm_multimodal_decision.get("asset_type")
+        prompt_for_asset = pm_multimodal_decision.get("prompt")
+        generator_model = ""
+        if asset_type == "image":
+            generator_model = "dalle-image-gen"
+        elif asset_type == "audio":
+            generator_model = "musicgen-audio-gen"
+        
+        if generator_model:
+            await swarm_visualizer.log_event(task_id, "multimodal_gen_orchestration", f"Orchestrating {asset_type} generation for task: {task_input[:50]}", {"asset_type": asset_type, "prompt": prompt_for_asset[:100]}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
+            asset_result = await multimodal_collaboration.generate_multimodal_asset(
+                task_id, asset_type, prompt_for_asset, generator_model, f"Context of the main task: {task_input}"
+            )
+            multimodal_asset_results.append(asset_result)
+            if asset_result["status"] == "VALIDATED":
+                await swarm_visualizer.log_event(task_id, "multimodal_validated", f"Multi-modal {asset_type} successfully generated and N-1 validated.", {"path": asset_result["path"]}, model_name="system", agent_role="orchestrator")
+            else:
+                await swarm_visualizer.log_event(task_id, "multimodal_failed", f"Multi-modal {asset_type} generation/validation failed.", asset_result, model_name="system", agent_role="orchestrator", level="ERROR")
+        else:
+            await swarm_visualizer.log_event(task_id, "multimodal_unsupported", f"Requested multi-modal asset type '{asset_type}' is not supported.", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"], level="WARNING")
+            print(f"Phi-PM requested unsupported multi-modal asset type: {asset_type}")
+
+    # --- END Multi-Modal Asset Generation Phase ---
+
 
     # --- Tool Generation and Testing Phase ---
-    await swarm_visualizer.log_event(task_id, "tool_forge_check", f"Tool Forge check for task: {task_input[:50]}", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
+    await swarm_visualizer.log_event(task_id, "tool_forge_check", f"Tool Forge check for task: '{task_input[:50]}'", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
     print(f"Starting Tool Forge check for task: '{task_input}'")
     tool_proposal_result = await tool_forge.propose_new_tool_spec(task_input, "llama-architect") 
 
@@ -373,10 +419,10 @@ async def parallel_n1_multitarget(task_input: str):
 
     # 3. Create PR if any target ready (Original logic)
     ready = [r for r in results if r["status"] == "READY_FOR_REVIEW"]
-    if not ready: 
-        await self_evolution.log_performance("system_orchestrator", f"Overall task failed: {task_input}", False, {"targets_results": results}, "system")
-        await swarm_visualizer.log_event(task_id, "task_fail_no_pr", f"Overall task failed (no READY_FOR_REVIEW targets).", {"results": results}, model_name="system", agent_role="orchestrator", level="ERROR")
-        return {"status": "ALL_FAILED", "targets": results}
+    if not ready and not multimodal_asset_results: # If no code targets ready AND no multimodal assets were generated
+        await self_evolution.log_performance("system_orchestrator", f"Overall task failed: {task_input}", False, {"targets_results": results, "multimodal_results": multimodal_asset_results}, "system")
+        await swarm_visualizer.log_event(task_id, "task_fail_no_pr", f"Overall task failed (no READY_FOR_REVIEW targets or multimodal assets).", {"results": results}, model_name="system", agent_role="orchestrator", level="ERROR")
+        return {"status": "ALL_FAILED", "targets": results, "multimodal_assets": multimodal_asset_results, "task_id": task_id}
 
     repo = Repo.init(repo_path)
     branch = f"ai/{task_input[:20].replace(' ', '-').lower().replace('/', '-')}"
@@ -397,13 +443,15 @@ async def parallel_n1_multitarget(task_input: str):
         target_path = os.path.join("target", res['target'])
         full_target_path = os.path.join(repo_path, target_path)
         if res['target'] == "agi-research":
-            agi_report_path = os.path.join(agi_sandbox.AGI_RISK_REPORT_DIR, sandbox_results["test_id"] + ".json") # Assuming sandbox_results is available from above
-            if os.path.exists(agi_report_path):
-                repo.index.add([agi_report_path])
-                await swarm_visualizer.log_event(task_id, "git_add_agi_report", f"Added AGI report {os.path.basename(agi_report_path)} to git index.", {}, model_name="system", agent_role="git_manager")
+            # The AGI report is added to git
+            agi_report_files = [f for f in os.listdir(agi_sandbox.AGI_RISK_REPORT_DIR) if f.startswith("agi_test_")]
+            if agi_report_files:
+                latest_agi_report_path = os.path.join(agi_sandbox.AGI_RISK_REPORT_DIR, sorted(agi_report_files)[-1]) # Add latest
+                repo.index.add([latest_agi_report_path]) 
+                await swarm_visualizer.log_event(task_id, "git_add_agi_report", f"Added AGI report {os.path.basename(latest_agi_report_path)} to git index.", {}, model_name="system", agent_role="git_manager")
             else:
-                print(f"Warning: AGI report path {agi_report_path} not found, skipping add to index.")
-                await swarm_visualizer.log_event(task_id, "git_add_agi_report_fail", f"AGI report {os.path.basename(agi_report_path)} not found.", {}, model_name="system", agent_role="git_manager", level="WARNING")
+                print(f"Warning: No AGI report found to add to index.")
+                await swarm_visualizer.log_event(task_id, "git_add_agi_report_fail", f"No AGI report found.", {}, model_name="system", agent_role="git_manager", level="WARNING")
         elif os.path.exists(full_target_path):
             repo.index.add([full_target_path])
             await swarm_visualizer.log_event(task_id, "git_add_target_code", f"Added target {res['target']} code to git index.", {}, model_name="system", agent_role="git_manager")
@@ -411,8 +459,13 @@ async def parallel_n1_multitarget(task_input: str):
             print(f"Warning: Target path {target_path} not found in repository, skipping add to index.")
             await swarm_visualizer.log_event(task_id, "git_add_target_code_fail", f"Target {res['target']} code not found.", {}, model_name="system", agent_role="git_manager", level="WARNING")
 
+    # Add any generated multi-modal assets to git
+    for asset_res in multimodal_asset_results:
+        if asset_res["status"] == "VALIDATED" and "path" in asset_res:
+            repo.index.add([asset_res["path"]])
+            await swarm_visualizer.log_event(task_id, "git_add_multimodal_asset", f"Added multi-modal asset {os.path.basename(asset_res['path'])} to git index.", {}, model_name="system", agent_role="git_manager")
 
-    commit_message = f"AI Swarm: {task_input}\n\nTargets: {','.join([r['target'] for r in ready])}"
+    commit_message = f"AI Swarm: {task_input}\n\nTargets: {','.join([r['target'] for r in ready])}\nMulti-Modal Assets: {', '.join([a['asset_type'] for a in multimodal_asset_results if a['status'] == 'VALIDATED'])}"
     repo.index.commit(commit_message)
     await swarm_visualizer.log_event(task_id, "git_commit_success", f"Committed changes to git.", {"message": commit_message[:100]}, model_name="system", agent_role="git_manager")
     repo.git.push("--set-upstream", "origin", branch)
@@ -437,10 +490,10 @@ async def parallel_n1_multitarget(task_input: str):
         await self_evolution.log_performance("github_integration", f"PR creation exception for {task_input}", False, {"exception": str(e)}, "system")
         await swarm_visualizer.log_event(task_id, "pr_create_exception", f"Exception during GitHub PR creation.", {"exception": str(e)}, model_name="system", agent_role="github_integration", level="ERROR")
 
-    await self_evolution.log_performance("system_orchestrator", f"Overall task completed: {task_input}", True, {"pr_url": pr_url, "targets_results": results}, "system")
-    await swarm_visualizer.log_event(task_id, "task_end", f"Overall task completed. Status: READY_FOR_REVIEW", {"pr_url": pr_url, "results_summary": [{"target": r["target"], "status": r["status"]} for r in results]}, model_name="system", agent_role="orchestrator", level="INFO")
+    await self_evolution.log_performance("system_orchestrator", f"Overall task completed: {task_input}", True, {"pr_url": pr_url, "targets_results": results, "multimodal_assets": multimodal_asset_results}, "system")
+    await swarm_visualizer.log_event(task_id, "task_end", f"Overall task completed. Status: READY_FOR_REVIEW", {"pr_url": pr_url, "results_summary": [{"target": r["target"], "status": r["status"]} for r in results], "multimodal_assets_summary": multimodal_asset_results}, model_name="system", agent_role="orchestrator", level="INFO")
     
-    return {"pr_url": pr_url, "status": "READY_FOR_REVIEW", "targets": results, "task_id": task_id}
+    return {"pr_url": pr_url, "status": "READY_FOR_REVIEW", "targets": results, "multimodal_assets": multimodal_asset_results, "task_id": task_id}
 
 async def human_deploy(task_id: str, target: str, branch: str) -> Dict[str, Any]:
     """ONLY called when human clicks Deploy"""
@@ -486,15 +539,15 @@ async def human_deploy(task_id: str, target: str, branch: str) -> Dict[str, Any]
 
 # Gradio UI
 with gr.Blocks(title="TARIRO Studio v3") as demo:
-    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Tool Forge, Self-Evolution & AGI Sandbox")
-    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox. All agent activities are now traceable.")
+    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Multi-Modal Collaboration")
+    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox. All agent activities are now traceable. Agents can also generate and review multi-modal assets.")
 
-    task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem'")
+    task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem', or generate an image of a 'futuristic cityscape with flying cars'")
     run_btn = gr.Button("Run Swarm", variant="primary")
 
     status = gr.Textbox(label="Overall Status")
     pr_link = gr.Textbox(label="PR URL")
-    current_task_id = gr.Textbox(label="Current Task ID", interactive=False) # To display the generated task ID
+    current_task_id = gr.Textbox(label="Current Task ID", interactive=False)
     
     with gr.Row():
         analyze_ft_btn = gr.Button("Analyze for Fine-Tuning", variant="secondary")
@@ -504,7 +557,11 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         trigger_agi_sandbox_btn = gr.Button("Trigger AGI Sandbox Test", variant="secondary")
         agi_sandbox_output = gr.Textbox(label="AGI Sandbox Report", interactive=False)
 
-    with gr.Row(): # New UI elements for swarm visualization
+    with gr.Row():
+        trigger_multimodal_btn = gr.Button("Trigger Multi-Modal Generation", variant="secondary")
+        multimodal_output = gr.Textbox(label="Multi-Modal Asset Report", interactive=False)
+
+    with gr.Row():
         get_events_btn = gr.Button("Get Swarm Events (Current Task)", variant="secondary")
         swarm_events_output = gr.JSON(label="Swarm Event Log", interactive=False)
 
@@ -512,23 +569,39 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
     with gr.Row():
         targets_table = gr.Dataframe(
             headers=["Target", "Status", "Approvals", "Deploy"],
-            label="Targets", interactive=False
+            label="Generated Code Targets", interactive=False
         )
+    
+    multimodal_assets_table = gr.Dataframe(
+        headers=["Asset Type", "Status", "Description", "Path"],
+        label="Generated Multi-Modal Assets", interactive=False
+    )
+
 
     state = gr.State({})
 
     async def run_and_update(task_input):
         result = await parallel_n1_multitarget(task_input)
-        table_data = []
+        
+        table_data_targets = []
         for r in result.get("targets", []):
-            row = [r["target"], r["status"], r["approvals"], r["status"] == "READY_FOR_REVIEW" and r["target"] != "agi-research"] # AGI always requires human review
-            table_data.append(row)
+            row = [r["target"], r["status"], r["approvals"], r["status"] == "READY_FOR_REVIEW" and r["target"] != "agi-research"]
+            table_data_targets.append(row)
+        
+        table_data_multimodal = []
+        for asset_res in result.get("multimodal_assets", []):
+            # Ensure path is just the filename for brevity in UI, but full path available in log
+            path_display = os.path.basename(asset_res.get("path", "N/A"))
+            table_data_multimodal.append([asset_res.get("asset_type", "N/A"), asset_res.get("status", "N/A"), asset_res.get("description", "N/A")[:100], path_display])
+
+
         return {
             status: result["status"],
             pr_link: result.get("pr_url", ""),
-            targets_table: table_data,
+            targets_table: table_data_targets,
+            multimodal_assets_table: table_data_multimodal, # Update multimodal table
             state: result,
-            current_task_id: result.get("task_id", "") # Update the task ID textbox
+            current_task_id: result.get("task_id", "")
         }
 
     async def trigger_fine_tuning_analysis_ui():
@@ -539,13 +612,16 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         agi_coder = TARGETS["agi-research"]["coder"]
         # Use the global client from studio_v3.py for agi_sandbox internal calls
         agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
-
+        # We need a task_id for logging events for this standalone call
+        temp_task_id = str(uuid.uuid4())
+        swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Ensure it's initialized
+        
         agi_code_res = await call_model(
             agi_coder,
             ALL_MODELS[agi_coder],
             f"Generate Python code for a simple AGI agent that can intelligently respond to complex ethical dilemmas related to: '{task_input}'. The code should be self-contained and focus on decision-making logic, not external APIs. Provide only the Python code.",
             "",
-            str(uuid.uuid4()), # Temporary task_id for this standalone call
+            temp_task_id, # Pass temp task ID
             response_format_type="text"
         )
         agi_agent_code_raw = agi_code_res.get("code", "")
@@ -560,16 +636,34 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         sandbox_results = await agi_sandbox.run_agi_sandbox_test(agi_agent_code, task_input)
         return json.dumps(sandbox_results, indent=2)
 
+    async def trigger_multimodal_generation_ui(task_input):
+        # This allows a human to directly request a multi-modal asset for a given prompt
+        # Here we hardcode to image generation for simplicity.
+        # In a more advanced UI, the user would select asset_type and maybe generator.
+        asset_type = "image" # Default for UI trigger
+        generator_model = "dalle-image-gen"
+        temp_task_id = str(uuid.uuid4())
+        multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # Ensure initialized
+
+        await swarm_visualizer.log_event(temp_task_id, "multimodal_human_trigger", f"Human triggered {asset_type} generation.", {"prompt": task_input[:100]}, model_name="human", agent_role="user")
+        
+        asset_result = await multimodal_collaboration.generate_multimodal_asset(
+            temp_task_id, asset_type, task_input, generator_model, f"Direct request from user for: {task_input}"
+        )
+        return json.dumps(asset_result, indent=2)
+
+
     async def get_current_task_events(task_id_input):
         if not task_id_input:
             return "Please run a task first to get a Task ID."
         return swarm_visualizer.get_events_for_task(task_id_input)
 
 
-    run_btn.click(run_and_update, task, [status, pr_link, targets_table, state, current_task_id])
+    run_btn.click(run_and_update, task, [status, pr_link, targets_table, multimodal_assets_table, state, current_task_id])
     analyze_ft_btn.click(trigger_fine_tuning_analysis_ui, [], ft_analysis_output)
     trigger_agi_sandbox_btn.click(trigger_agi_sandbox_ui, task, agi_sandbox_output)
-    get_events_btn.click(get_current_task_events, current_task_id, swarm_events_output) # New button for events
+    trigger_multimodal_btn.click(trigger_multimodal_generation_ui, task, multimodal_output) # New button for multi-modal
+    get_events_btn.click(get_current_task_events, current_task_id, swarm_events_output)
 
     # Dynamic deploy buttons per target
     @gr.render(inputs=[state])
@@ -578,7 +672,6 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         for t in targets:
             if t["status"] == "READY_FOR_REVIEW":
                 btn = gr.Button(f"DEPLOY {t['target'].upper()}")
-                # Using lambda to capture t at definition time and pass task_id
                 btn.click(lambda target_name=t["target"], task_id=current_state.get("task_id", ""): human_deploy(task_id, target_name, ""), None, status)
 
 if __name__ == "__main__":
@@ -589,13 +682,18 @@ if __name__ == "__main__":
             os.system(f"ollama pull {m}")
         except Exception as e:
             print(f"Failed to pull model {m}: {e}")
+    # Add conceptual multi-modal models to ALL_MODELS for LiteLLM to load if configured
+    # e.g., if you had a LiteLLM proxy for DALL-E, it would be configured there.
+    # For now, these are just treated as LLM calls that return descriptions/URLs.
     print("Ollama model pulling complete.")
     
     # Initialize all feature modules and start background loops
+    # Order matters for dependencies (e.g., multimodal needs swarm_visualizer)
+    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Initialize swarm visualizer first
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
     agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
-    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Initialize swarm visualizer
+    multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # Initialize multimodal collaboration
 
     asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
     print("Started continuous self-evolution analysis loop.")
