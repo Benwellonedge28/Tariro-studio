@@ -5,11 +5,13 @@ import qdrant_client
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from typing import List, Dict, Any, Optional
 import ast
+import uuid # New import for generating unique task IDs
 
 # Import new feature modules
 import features.tool_forge as tool_forge
 import features.self_evolution as self_evolution
-import features.agi_sandbox as agi_sandbox # New import
+import features.agi_sandbox as agi_sandbox
+import features.swarm_visualizer as swarm_visualizer # New import
 
 client = AsyncOpenAI(base_url="http://localhost:4000/v1", api_key="sk-free")
 qdrant = qdrant_client.QdrantClient("http://qdrant:6333")
@@ -58,9 +60,8 @@ TARGETS = {
         "test_cmd": "qemu-system-x86_64 -kernel tariro-os -nographic",
         "deploy_cmd": "docker build -t tariro-os && docker push"
     },
-    # New AGI Research Target
     "agi-research": {
-        "coder": "llama-architect", # The architect designs the AGI structure
+        "coder": "llama-architect",
         "compile_cmd": "echo 'AGI code is conceptual, no direct compile for this target.'",
         "test_cmd": "echo 'AGI testing is handled by agi_sandbox.run_agi_sandbox_test.'",
         "deploy_cmd": "echo 'AGI deployment requires human review and is simulated via sandbox.'"
@@ -85,12 +86,19 @@ def ast_no_network(code: str) -> bool:
             if any(n.name in ["socket", "requests", "urllib"] for n in node.names): return False
     return True
 
-async def call_model(model: str, role: str, task: str, context: str, ban_models: List[str] = [], target: Optional[str] = None) -> Dict[str, Any]:
+async def call_model(model: str, role: str, task: str, context: str, task_id: str, ban_models: List[str] = [], target: Optional[str] = None, response_format_type: str = "json_object") -> Dict[str, Any]:
     # Use the potentially fine-tuned version of the model
     effective_model_name = self_evolution.get_current_model_version(model)
+    
+    await swarm_visualizer.log_event(
+        task_id, "model_call_start", f"Calling {model} for task: {task[:50]}...",
+        {"model": model, "effective_model": effective_model_name, "role": role, "task_prompt": task},
+        model_name=model, agent_role=role
+    )
     print(f"Calling model: {model} (effective: {effective_model_name}) for role: {role}")
 
     if model in ban_models:
+        await swarm_visualizer.log_event(task_id, "model_call_end", f"Model {model} banned.", {"reason": "BANNED"}, model_name=model, agent_role=role, level="WARNING")
         return {"model": model, "approved": False, "reason": "BANNED: Coder cannot test"}
 
     sources = []
@@ -98,45 +106,72 @@ async def call_model(model: str, role: str, task: str, context: str, ban_models:
         sources = await web_search(task + " TariroLang FPGA RISC-V")
         context += f"\n\nWeb Sources:\n" + "\n".join(sources)
 
+    messages = [
+        {"role": "system", "content": f"You are {model}. Role: {role}. Output {response_format_type} only. Cite sources."},
+        {"role": "user", "content": f"Task: {task}\nTarget: {target}\nContext:\n{context}\n\nOutput: {{\"code\": \"...\", \"sources\": [url1, url2], \"approved\": bool, \"reason\": \"...\"}}"}
+    ]
+    
     resp = await client.chat.completions.create(
         model=effective_model_name, # Use effective model name here
-        messages=[
-            {"role": "system", "content": f"You are {model}. Role: {role}. Output JSON only. Cite sources."},
-            {"role": "user", "content": f"Task: {task}\nTarget: {target}\nContext:\n{context}\n\nOutput: {{\"code\": \"...\", \"sources\": [url1, url2], \"approved\": bool, \"reason\": \"...\"}}"}
-        ],
-        response_format={"type": "json_object"},
+        messages=messages,
+        response_format={"type": response_format_type},
         temperature=0.1
     )
-    out = json.loads(resp.choices[0].message.content)
-    out["model"], out["sources"] = model, sources + out.get("sources", [])
+    content = resp.choices[0].message.content
 
-    # Enforce source citation for coders
-    if model in ["qwen-coder", "deepseek-coder"] and len(out.get("sources", [])) < 2:
-        out["approved"] = False
-        out["reason"] = "Rejected: Must cite 2+ sources"
-    
-    # Log performance for this model call
-    await self_evolution.log_performance(
-        model_name=model,
-        task_description=task,
-        success=out.get("approved", True), # Assume success if no explicit rejection
-        details={"output_summary": out.get("reason", out.get("code", "")[:100])},
-        role=role
-    )
-    return out
+    try:
+        if response_format_type == "json_object":
+            out = json.loads(content)
+        else: # Assuming plain text for code generation
+            out = {"code": content}
+        out["model"], out["sources"] = model, sources + out.get("sources", [])
 
-async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str) -> Dict[str, Any]:
+        # Enforce source citation for coders
+        if model in ["qwen-coder", "deepseek-coder"] and len(out.get("sources", [])) < 2:
+            out["approved"] = False
+            out["reason"] = "Rejected: Must cite 2+ sources (enforced by studio_v3.py)"
+        
+        # Log performance for this model call
+        await self_evolution.log_performance(
+            model_name=model,
+            task_description=task,
+            success=out.get("approved", True), # Assume success if no explicit rejection
+            details={"output_summary": out.get("reason", out.get("code", "")[:100])},
+            role=role
+        )
+        await swarm_visualizer.log_event(
+            task_id, "model_call_end", f"Model {model} responded.",
+            {"model": model, "response_summary": out.get("reason", out.get("code", "")[:100]), "approved": out.get("approved", True)},
+            model_name=model, agent_role=role, level="INFO"
+        )
+        return out
+    except json.JSONDecodeError as e:
+        error_details = {"error": f"JSON decode error: {e}", "raw_content": content[:500]}
+        await self_evolution.log_performance(model, f"JSON decode error from model call for task: {task[:50]}", False, error_details, role)
+        await swarm_visualizer.log_event(task_id, "model_call_end", f"Model {model} JSON decode error.", error_details, model_name=model, agent_role=role, level="ERROR")
+        return {"error": str(e), "raw_content": content, "model": model, "approved": False, "reason": "JSON decode error"}
+    except Exception as e:
+        error_details = {"error": str(e), "context_summary": task[:100]}
+        await self_evolution.log_performance(model, f"Error calling model {model} for task: {task[:50]}", False, error_details, role)
+        await swarm_visualizer.log_event(task_id, "model_call_end", f"Model {model} call failed.", error_details, model_name=model, agent_role=role, level="ERROR")
+        return {"error": str(e), "model": model, "approved": False, "reason": "General model call error"}
+
+
+async def build_for_target(task_id: str, target: str, task: str, code_ctx: str, repo_path: str) -> Dict[str, Any]:
     cfg = TARGETS[target]
+    coder = cfg["coder"]
 
     if target == "agi-research":
-        # For AGI research, the "coder" (llama-architect) generates the AGI code itself.
         agi_coder = cfg["coder"]
+        await swarm_visualizer.log_event(task_id, "agi_code_generation_start", f"AGI Coder ({agi_coder}) generating code for AGI Research target: {task[:50]}", {}, model_name=agi_coder, agent_role=ALL_MODELS[agi_coder])
+
         agi_code_res = await call_model(
             agi_coder,
             ALL_MODELS[agi_coder],
             f"Generate Python code for an experimental AGI agent that can intelligently respond to complex ethical dilemmas and propose solutions for: '{task}'. The code should be self-contained and focus on decision-making logic, not external APIs. Provide only the Python code.",
             code_ctx,
-            response_format={"type": "text"} # Expecting raw code
+            task_id,
+            response_format_type="text" # Expecting raw code
         )
         agi_agent_code_raw = agi_code_res.get("code", "")
         if "```python" in agi_agent_code_raw and "```" in agi_agent_code_raw:
@@ -146,9 +181,10 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
 
         if not agi_agent_code:
             await self_evolution.log_performance(agi_coder, f"AGI code generation for {task} failed.", False, {"reason": "No AGI code generated"}, ALL_MODELS[agi_coder])
+            await swarm_visualizer.log_event(task_id, "agi_code_generation_fail", f"AGI Coder ({agi_coder}) failed to generate code.", {"reason": "No AGI code"}, model_name=agi_coder, agent_role=ALL_MODELS[agi_coder], level="ERROR")
             return {"status": "AGI_CODE_FAIL", "reason": "Failed to generate AGI agent code."}
-
-        # Run the AGI agent through the sandbox for evaluation
+        
+        await swarm_visualizer.log_event(task_id, "agi_sandbox_start", f"Running AGI Sandbox evaluation for agent: {task[:50]}", {}, model_name="system", agent_role="agi_sandbox_orchestrator")
         print(f"AGI Sandbox: Running evaluation for AGI agent generated for task: {task}")
         sandbox_results = await agi_sandbox.run_agi_sandbox_test(agi_agent_code, task)
         
@@ -157,6 +193,7 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
                           sandbox_results.get("ethical_score", 0) >= 70 # Example thresholds
 
         await self_evolution.log_performance(agi_coder, f"AGI Sandbox test for {task}", overall_success, sandbox_results, ALL_MODELS[agi_coder])
+        await swarm_visualizer.log_event(task_id, "agi_sandbox_end", f"AGI Sandbox test completed. Overall success: {overall_success}", sandbox_results, model_name="system", agent_role="agi_sandbox_orchestrator", level="INFO" if overall_success else "WARNING")
 
         if overall_success:
             return {"target": target, "coder": agi_coder, "code": agi_agent_code, "status": "READY_FOR_REVIEW",
@@ -168,7 +205,7 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
                     "test_results": [sandbox_results], "deploy_cmd": cfg["deploy_cmd"], "sources": agi_code_res.get("sources", [])}
 
     else: # Existing non-AGI targets
-        coder = cfg["coder"]
+        # Pass available tools to coders if they need to integrate them
         available_tools = tool_forge.get_validated_tools()
         tool_context = f"\n\nAvailable Tools:\n{json.dumps(available_tools, indent=2)}" if available_tools else ""
 
@@ -177,12 +214,17 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
         state = {"target": target, "coder": coder, "status": "CODING"}
 
         # 1. Coder writes
-        code_res = await call_model(coder, ALL_MODELS[coder], task, code_ctx + tool_context, ban_models=[], target=target)
+        await swarm_visualizer.log_event(task_id, "coder_call_start", f"Coder ({coder}) generating code for target: {target} (task: {task[:50]})", {"target": target}, model_name=coder, agent_role=ALL_MODELS[coder])
+        code_res = await call_model(coder, ALL_MODELS[coder], task, code_ctx + tool_context, task_id, ban_models=[], target=target)
         code = code_res.get("code", "")
-        # Use tool_forge's more robust network check if needed, or keep this one for main code
+        
         if not code or not ast_no_network(code):
             await self_evolution.log_performance(coder, f"Code generation for {target} failed: {task}", False, {"reason": code_res.get("reason", "No code or network found"), "code_snippet": code[:100]}, ALL_MODELS[coder])
+            await swarm_visualizer.log_event(task_id, "coder_output_fail", f"Coder ({coder}) failed to generate valid code for {target}", {"reason": code_res.get("reason", "No code or network found")}, model_name=coder, agent_role=ALL_MODELS[coder], level="ERROR")
             return {"status": "CODER_FAIL", "reason": code_res.get("reason", "No code or network found")}
+        
+        await swarm_visualizer.log_event(task_id, "coder_output_success", f"Coder ({coder}) generated code for {target}", {"code_summary": code[:100]}, model_name=coder, agent_role=ALL_MODELS[coder])
+
 
         # 2. Write + compile + test
         target_dir = os.path.join(repo_path, "target", target)
@@ -191,25 +233,31 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
 
         test_results = []
         for tester in testers:
+            await swarm_visualizer.log_event(task_id, "tester_start", f"Tester ({tester}) starting compile/test for {target}", {"target": target}, model_name=tester, agent_role=ALL_MODELS[tester])
             print(f"Tester {tester} attempting to test {target}...")
             test_success = False
             reason = "Unknown error"
             compile_log = ""
             test_log = ""
             try:
+                await swarm_visualizer.log_event(task_id, "compile_start", f"Tester ({tester}) compiling {target}", {"target": target}, model_name=tester, agent_role=ALL_MODELS[tester])
                 compile_out = subprocess.run(cfg["compile_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
                 compile_log = (compile_out.stderr or compile_out.stdout)[:500]
                 if compile_out.returncode != 0:
-                    print(f"Compile failed for {target} by {tester}:\n{compile_log}")
                     reason = "Compile failed"
+                    await swarm_visualizer.log_event(task_id, "compile_fail", f"Tester ({tester}) compile failed for {target}", {"log": compile_log}, model_name=tester, agent_role=ALL_MODELS[tester], level="ERROR")
                 else:
+                    await swarm_visualizer.log_event(task_id, "compile_success", f"Tester ({tester}) compiled {target} successfully", {"log_summary": compile_log[:100]}, model_name=tester, agent_role=ALL_MODELS[tester])
+                    await swarm_visualizer.log_event(task_id, "test_start", f"Tester ({tester}) running tests for {target}", {"target": target}, model_name=tester, agent_role=ALL_MODELS[tester])
                     test_out = subprocess.run(cfg["test_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
                     test_log = (test_out.stderr or test_out.stdout)[:500]
                     if test_out.returncode == 0:
                         test_success = True
                         reason = "Tests passed"
+                        await swarm_visualizer.log_event(task_id, "test_success", f"Tester ({tester}) tests passed for {target}", {"log": test_log}, model_name=tester, agent_role=ALL_MODELS[tester])
                     else:
                         reason = "Tests failed"
+                        await swarm_visualizer.log_event(task_id, "test_fail", f"Tester ({tester}) tests failed for {target}", {"log": test_log}, model_name=tester, agent_role=ALL_MODELS[tester], level="ERROR")
                 
                 test_results.append({
                     "model": tester, "approved": test_success, "reason": reason,
@@ -219,6 +267,7 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
             except subprocess.TimeoutExpired as e:
                 reason = "Test/Compile timed out"
                 test_log = str(e)
+                await swarm_visualizer.log_event(task_id, "test_timeout", f"Tester ({tester}) test timed out for {target}", {"error": str(e)}, model_name=tester, agent_role=ALL_MODELS[tester], level="ERROR")
                 test_results.append({
                     "model": tester, "approved": False, "reason": reason,
                     "compile_log": compile_log, "test_log": test_log
@@ -226,6 +275,7 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
             except Exception as e:
                 reason = f"Testing error: {str(e)}"
                 test_log = str(e)
+                await swarm_visualizer.log_event(task_id, "test_exception", f"Tester ({tester}) encountered exception for {target}", {"error": str(e)}, model_name=tester, agent_role=ALL_MODELS[tester], level="ERROR")
                 test_results.append({
                     "model": tester, "approved": False, "reason": reason,
                     "compile_log": compile_log, "test_log": test_log
@@ -238,10 +288,12 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
                 {"reason": reason, "compile_log_summary": compile_log[:100], "test_log_summary": test_log[:100]},
                 ALL_MODELS[tester]
             )
+            await swarm_visualizer.log_event(task_id, "tester_end", f"Tester ({tester}) finished testing {target}. Success: {test_success}", {"reason": reason}, model_name=tester, agent_role=ALL_MODELS[tester], level="INFO" if test_success else "WARNING")
 
 
         approvals = [r for r in test_results if r["approved"]]
         status = "READY_FOR_REVIEW" if len(approvals) >= len(testers) - 1 else "FAILED_TESTS" # N-1 logic
+        await swarm_visualizer.log_event(task_id, "target_summary", f"Target {target} result: {status}", {"approvals": f"{len(approvals)}/{len(testers)}"}, model_name="system", agent_role="orchestrator", level="INFO")
 
         return {
             "target": target, "coder": coder, "code": code, "status": status,
@@ -249,49 +301,62 @@ async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str
             "deploy_cmd": cfg["deploy_cmd"], "sources": code_res.get("sources", [])
         }
 
-async def parallel_n1_multitarget(task):
+async def parallel_n1_multitarget(task_input: str):
+    task_id = str(uuid.uuid4()) # Generate a unique ID for this task run
     os.makedirs(WORKSPACE, exist_ok=True)
     repo_path = WORKSPACE
+
+    await swarm_visualizer.log_event(task_id, "task_start", f"New task initiated: {task_input}", {"task_input": task_input}, model_name="human", agent_role="user")
 
     # Initialize all modules first
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
-    agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS) # New initialization
+    agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
+    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Re-initialize to ensure paths are set
 
     # --- Tool Generation and Testing Phase ---
-    print(f"Starting Tool Forge check for task: '{task}'")
-    tool_proposal_result = await tool_forge.propose_new_tool_spec(task, "llama-architect") 
+    await swarm_visualizer.log_event(task_id, "tool_forge_check", f"Tool Forge check for task: {task_input[:50]}", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
+    print(f"Starting Tool Forge check for task: '{task_input}'")
+    tool_proposal_result = await tool_forge.propose_new_tool_spec(task_input, "llama-architect") 
 
     if tool_proposal_result["status"] == "success":
+        await swarm_visualizer.log_event(task_id, "tool_proposed", f"New tool '{tool_proposal_result['tool_name']}' proposed.", {"tool_name": tool_proposal_result['tool_name']}, model_name="llama-architect", agent_role=ALL_MODELS["llama-architect"])
         print(f"New tool '{tool_proposal_result['tool_name']}' proposed. Starting N-1 testing...")
         n1_test_result = await tool_forge.n1_test_tool(
             tool_proposal_result["spec_path"],
-            f"Verify the functionality of the newly proposed tool: {tool_proposal_result['tool_name']} for task: '{task}'"
+            f"Verify the functionality of the newly proposed tool: {tool_proposal_result['tool_name']} for task: '{task_input}'"
         )
 
         if n1_test_result["status"] == "VALIDATED":
+            await swarm_visualizer.log_event(task_id, "tool_n1_validated", f"Tool '{n1_test_result['tool_name']}' N-1 validated.", {"tool_name": n1_test_result['tool_name']}, model_name="system", agent_role="tool_forge_orchestrator")
             print(f"Tool '{n1_test_result['tool_name']}' N-1 validated and ready for use.")
             await self_evolution.log_performance("tool_forge_system", f"Tool '{n1_test_result['tool_name']}' N-1 validated", True, n1_test_result, "system")
         else:
+            await swarm_visualizer.log_event(task_id, "tool_n1_failed", f"Tool '{n1_test_result['tool_name']}' N-1 testing failed.", n1_test_result, model_name="system", agent_role="tool_forge_orchestrator", level="WARNING")
             print(f"Tool '{tool_proposal_result.get('tool_name', 'Unknown')}' failed N-1 testing. Reason: {n1_test_result.get('reason', 'See logs')}")
             await self_evolution.log_performance("tool_forge_system", f"Tool '{tool_proposal_result.get('tool_name', 'Unknown')}' N-1 failed", False, n1_test_result, "system")
     elif tool_proposal_result["status"] == "no_tool_needed":
+        await swarm_visualizer.log_event(task_id, "tool_forge_no_tool", "Phi-PM determined no new tool is needed.", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
         print("Phi-PM determined no new tool is needed for this task.")
-        await self_evolution.log_performance("phi-pm", f"Decision: No new tool needed for {task}", True, {"task": task}, "pm")
+        await self_evolution.log_performance("phi-pm", f"Decision: No new tool needed for {task_input}", True, {"task": task_input}, "pm")
     else:
+        await swarm_visualizer.log_event(task_id, "tool_forge_proposal_error", f"Tool proposal failed: {tool_proposal_result.get('reason', 'Unknown error')}", tool_proposal_result, model_name="system", agent_role="tool_forge_orchestrator", level="ERROR")
         print(f"Tool proposal failed: {tool_proposal_result.get('reason', 'Unknown error')}. Details: {tool_proposal_result.get('details', 'N/A')}")
-        await self_evolution.log_performance("tool_forge_system", f"Tool proposal failed for {task}", False, tool_proposal_result, "system")
+        await self_evolution.log_performance("tool_forge_system", f"Tool proposal failed for {task_input}", False, tool_proposal_result, "system")
     
     available_tools = tool_forge.get_validated_tools()
     if available_tools:
+        await swarm_visualizer.log_event(task_id, "available_tools", "Validated tools available.", {"tools": [t['name'] for t in available_tools]}, model_name="system", agent_role="orchestrator")
         print(f"Currently available validated tools for use in coding phase: {[t['name'] for t in available_tools]}")
 
     # --- END Tool Generation Phase ---
 
     # 1. PM picks targets (Original logic)
-    pm_res = await call_model("phi-pm", ALL_MODELS["phi-pm"], f"Pick targets for: {task}", "")
+    await swarm_visualizer.log_event(task_id, "target_selection_start", f"Phi-PM selecting targets for task: {task_input[:50]}", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
+    pm_res = await call_model("phi-pm", ALL_MODELS["phi-pm"], f"Pick targets for: {task_input}", "", task_id)
     targets = pm_res.get("targets", ["x86-linux", "wasm-web", "agi-research"]) # Added agi-research as default
-    await self_evolution.log_performance("phi-pm", f"Target selection for: {task}", True, {"targets": targets}, "pm")
+    await self_evolution.log_performance("phi-pm", f"Target selection for: {task_input}", True, {"targets": targets}, "pm")
+    await swarm_visualizer.log_event(task_id, "target_selection_end", f"Phi-PM selected targets: {', '.join(targets)}", {"targets": targets}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
     
     # Start continuous self-evolution loop as a background task if not already running
     if not hasattr(parallel_n1_multitarget, '_self_evolution_loop_started'):
@@ -300,73 +365,92 @@ async def parallel_n1_multitarget(task):
 
 
     # 2. Build all targets in parallel (Original logic)
+    await swarm_visualizer.log_event(task_id, "build_targets_start", f"Building code for {len(targets)} targets in parallel.", {"targets": targets}, model_name="system", agent_role="orchestrator")
     context = subprocess.getoutput(f"find {repo_path} -name '*.tari' | head -20")
-    results = await asyncio.gather(*[build_for_target(t, task, context, repo_path) for t in targets])
+    results = await asyncio.gather(*[build_for_target(task_id, t, task_input, context, repo_path) for t in targets])
+    await swarm_visualizer.log_event(task_id, "build_targets_end", f"All targets build/test phase completed.", {"results_summary": [{"target": r["target"], "status": r["status"]} for r in results]}, model_name="system", agent_role="orchestrator")
+
 
     # 3. Create PR if any target ready (Original logic)
     ready = [r for r in results if r["status"] == "READY_FOR_REVIEW"]
     if not ready: 
-        await self_evolution.log_performance("system_orchestrator", f"Overall task failed: {task}", False, {"targets_results": results}, "system")
+        await self_evolution.log_performance("system_orchestrator", f"Overall task failed: {task_input}", False, {"targets_results": results}, "system")
+        await swarm_visualizer.log_event(task_id, "task_fail_no_pr", f"Overall task failed (no READY_FOR_REVIEW targets).", {"results": results}, model_name="system", agent_role="orchestrator", level="ERROR")
         return {"status": "ALL_FAILED", "targets": results}
 
     repo = Repo.init(repo_path)
-    branch = f"ai/{task[:20].replace(' ', '-').lower().replace('/', '-')}"
+    branch = f"ai/{task_input[:20].replace(' ', '-').lower().replace('/', '-')}"
+    await swarm_visualizer.log_event(task_id, "git_branch_checkout", f"Attempting to checkout/create branch: {branch}", {"branch": branch}, model_name="system", agent_role="git_manager")
     try:
         current_branches = [head.name for head in repo.heads]
         if branch in current_branches:
             repo.git.checkout(branch)
-            print(f"Checked out existing branch: {branch}")
         else:
             repo.git.checkout('-b', branch)
-            print(f"Created and checked out new branch: {branch}")
+        await swarm_visualizer.log_event(task_id, "git_branch_success", f"Successfully checked out/created branch: {branch}", {"branch": branch}, model_name="system", agent_role="git_manager")
     except Exception as e:
+        await swarm_visualizer.log_event(task_id, "git_branch_fail", f"Failed to checkout/create branch: {branch}", {"error": str(e)}, model_name="system", agent_role="git_manager", level="ERROR")
         print(f"Error creating/checking out branch {branch}. Falling back to main. Error: {e}")
         repo.git.checkout('main')
 
     for res in ready:
         target_path = os.path.join("target", res['target'])
         full_target_path = os.path.join(repo_path, target_path)
-        # For AGI Research target, we don't add generated code to git directly, just the report
         if res['target'] == "agi-research":
-            agi_report_path = os.path.join(agi_sandbox.AGI_RISK_REPORT_DIR, f"agi_test_{datetime.now().strftime('%Y%m%d%H%M%S')}.json")
+            agi_report_path = os.path.join(agi_sandbox.AGI_RISK_REPORT_DIR, sandbox_results["test_id"] + ".json") # Assuming sandbox_results is available from above
             if os.path.exists(agi_report_path):
-                repo.index.add([agi_report_path]) # Add the report to git
+                repo.index.add([agi_report_path])
+                await swarm_visualizer.log_event(task_id, "git_add_agi_report", f"Added AGI report {os.path.basename(agi_report_path)} to git index.", {}, model_name="system", agent_role="git_manager")
             else:
                 print(f"Warning: AGI report path {agi_report_path} not found, skipping add to index.")
+                await swarm_visualizer.log_event(task_id, "git_add_agi_report_fail", f"AGI report {os.path.basename(agi_report_path)} not found.", {}, model_name="system", agent_role="git_manager", level="WARNING")
         elif os.path.exists(full_target_path):
             repo.index.add([full_target_path])
+            await swarm_visualizer.log_event(task_id, "git_add_target_code", f"Added target {res['target']} code to git index.", {}, model_name="system", agent_role="git_manager")
         else:
             print(f"Warning: Target path {target_path} not found in repository, skipping add to index.")
+            await swarm_visualizer.log_event(task_id, "git_add_target_code_fail", f"Target {res['target']} code not found.", {}, model_name="system", agent_role="git_manager", level="WARNING")
 
-    commit_message = f"AI Swarm: {task}\n\nTargets: {','.join([r['target'] for r in ready])}"
+
+    commit_message = f"AI Swarm: {task_input}\n\nTargets: {','.join([r['target'] for r in ready])}"
     repo.index.commit(commit_message)
+    await swarm_visualizer.log_event(task_id, "git_commit_success", f"Committed changes to git.", {"message": commit_message[:100]}, model_name="system", agent_role="git_manager")
     repo.git.push("--set-upstream", "origin", branch)
-    
+    await swarm_visualizer.log_event(task_id, "git_push_success", f"Pushed branch {branch} to origin.", {}, model_name="system", agent_role="git_manager")
+
     pr_url = "PR creation skipped (requires 'gh' CLI login or specific GITHUB_TOKEN setup for CLI)"
+    await swarm_visualizer.log_event(task_id, "pr_create_attempt", f"Attempting to create GitHub PR.", {}, model_name="system", agent_role="github_integration")
     try:
-        pr_command = f"cd {repo_path} && gh pr create --title 'AI: {task}' --body 'N-1 approved: {ready}' --head {branch} --base main"
+        pr_command = f"cd {repo_path} && gh pr create --title 'AI: {task_input}' --body 'N-1 approved: {ready}' --head {branch} --base main"
         pr_process = subprocess.run(pr_command, shell=True, capture_output=True, text=True, timeout=30)
         if pr_process.returncode == 0:
             pr_url = pr_process.stdout.strip()
             print(f"GitHub PR created: {pr_url}")
-            await self_evolution.log_performance("github_integration", f"PR created for {task}", True, {"pr_url": pr_url}, "system")
+            await self_evolution.log_performance("github_integration", f"PR created for {task_input}", True, {"pr_url": pr_url}, "system")
+            await swarm_visualizer.log_event(task_id, "pr_create_success", f"GitHub PR created: {pr_url}", {"pr_url": pr_url}, model_name="system", agent_role="github_integration")
         else:
             print(f"Failed to create GitHub PR: {pr_process.stderr.strip()}")
-            await self_evolution.log_performance("github_integration", f"PR creation failed for {task}", False, {"error": pr_process.stderr.strip()}, "system")
+            await self_evolution.log_performance("github_integration", f"PR creation failed for {task_input}", False, {"error": pr_process.stderr.strip()}, "system")
+            await swarm_visualizer.log_event(task_id, "pr_create_fail", f"Failed to create GitHub PR.", {"error": pr_process.stderr.strip()}, model_name="system", agent_role="github_integration", level="ERROR")
     except Exception as e:
         print(f"Error executing gh pr create: {e}")
-        await self_evolution.log_performance("github_integration", f"PR creation exception for {task}", False, {"exception": str(e)}, "system")
+        await self_evolution.log_performance("github_integration", f"PR creation exception for {task_input}", False, {"exception": str(e)}, "system")
+        await swarm_visualizer.log_event(task_id, "pr_create_exception", f"Exception during GitHub PR creation.", {"exception": str(e)}, model_name="system", agent_role="github_integration", level="ERROR")
 
-    await self_evolution.log_performance("system_orchestrator", f"Overall task completed: {task}", True, {"pr_url": pr_url, "targets_results": results}, "system")
-    return {"pr_url": pr_url, "status": "READY_FOR_REVIEW", "targets": results}
+    await self_evolution.log_performance("system_orchestrator", f"Overall task completed: {task_input}", True, {"pr_url": pr_url, "targets_results": results}, "system")
+    await swarm_visualizer.log_event(task_id, "task_end", f"Overall task completed. Status: READY_FOR_REVIEW", {"pr_url": pr_url, "results_summary": [{"target": r["target"], "status": r["status"]} for r in results]}, model_name="system", agent_role="orchestrator", level="INFO")
+    
+    return {"pr_url": pr_url, "status": "READY_FOR_REVIEW", "targets": results, "task_id": task_id}
 
-async def human_deploy(target: str, branch: str) -> Dict[str, Any]:
+async def human_deploy(task_id: str, target: str, branch: str) -> Dict[str, Any]:
     """ONLY called when human clicks Deploy"""
     cfg = TARGETS[target]
-    # For AGI, deployment is purely conceptual or involves reporting
+    await swarm_visualizer.log_event(task_id, "deployment_start", f"Human initiated deployment for target: {target}", {"target": target}, model_name="human", agent_role="user")
+
     if target == "agi-research":
         print(f"AGI Research deployment simulated. Review latest AGI risk reports in {agi_sandbox.AGI_RISK_REPORT_DIR}.")
         await self_evolution.log_performance("human_deployment", f"AGI Research deployment review requested for {target}", True, {"note": "AGI deployment is review-based"}, "human_action")
+        await swarm_visualizer.log_event(task_id, "deployment_agi_review_prompt", f"AGI Research deployment. Requires human review.", {}, model_name="system", agent_role="orchestrator")
         return {"status": "REVIEW_PENDING", "target": target, "log": "AGI deployment requires human review of risk reports."}
     
     deploy_cwd = os.path.join(WORKSPACE, "target", target)
@@ -379,18 +463,22 @@ async def human_deploy(target: str, branch: str) -> Dict[str, Any]:
             print(f"Deployment successful for {target}:\n{res.stdout}")
             deploy_success = True
             log = res.stdout[:500]
+            await swarm_visualizer.log_event(task_id, "deployment_success", f"Deployment successful for {target}", {"log_summary": log}, model_name="system", agent_role="orchestrator")
             return {"status": "DEPLOYED", "target": target, "log": log}
         else:
             print(f"Deployment failed for {target}:\n{res.stderr or res.stdout}")
             log = (res.stderr or res.stdout)[:500]
+            await swarm_visualizer.log_event(task_id, "deployment_fail", f"Deployment failed for {target}", {"log_summary": log}, model_name="system", agent_role="orchestrator", level="ERROR")
             return {"status": "DEPLOY_FAILED", "target": target, "log": log}
     except subprocess.TimeoutExpired as e:
         log = f"Deployment timed out: {e}"
         print(f"Deployment timed out for {target}: {e}")
+        await swarm_visualizer.log_event(task_id, "deployment_timeout", f"Deployment timed out for {target}", {"error": str(e)}, model_name="system", agent_role="orchestrator", level="ERROR")
         return {"status": "DEPLOY_FAILED", "target": target, "log": log}
     except Exception as e:
         log = f"Deployment error: {str(e)}"
         print(f"Error during deployment of {target}: {e}")
+        await swarm_visualizer.log_event(task_id, "deployment_exception", f"Deployment exception for {target}", {"error": str(e)}, model_name="system", agent_role="orchestrator", level="ERROR")
         return {"status": "DEPLOY_FAILED", "target": target, "log": log}
     finally:
         await self_evolution.log_performance("human_deployment", f"Deployment of {target}", deploy_success, {"log_summary": log[:100]}, "human_action")
@@ -399,13 +487,14 @@ async def human_deploy(target: str, branch: str) -> Dict[str, Any]:
 # Gradio UI
 with gr.Blocks(title="TARIRO Studio v3") as demo:
     gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Tool Forge, Self-Evolution & AGI Sandbox")
-    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox.")
+    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox. All agent activities are now traceable.")
 
     task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem'")
     run_btn = gr.Button("Run Swarm", variant="primary")
 
     status = gr.Textbox(label="Overall Status")
     pr_link = gr.Textbox(label="PR URL")
+    current_task_id = gr.Textbox(label="Current Task ID", interactive=False) # To display the generated task ID
     
     with gr.Row():
         analyze_ft_btn = gr.Button("Analyze for Fine-Tuning", variant="secondary")
@@ -414,6 +503,10 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
     with gr.Row():
         trigger_agi_sandbox_btn = gr.Button("Trigger AGI Sandbox Test", variant="secondary")
         agi_sandbox_output = gr.Textbox(label="AGI Sandbox Report", interactive=False)
+
+    with gr.Row(): # New UI elements for swarm visualization
+        get_events_btn = gr.Button("Get Swarm Events (Current Task)", variant="secondary")
+        swarm_events_output = gr.JSON(label="Swarm Event Log", interactive=False)
 
 
     with gr.Row():
@@ -428,14 +521,14 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         result = await parallel_n1_multitarget(task_input)
         table_data = []
         for r in result.get("targets", []):
-            # Ensure each row has 4 elements
             row = [r["target"], r["status"], r["approvals"], r["status"] == "READY_FOR_REVIEW" and r["target"] != "agi-research"] # AGI always requires human review
             table_data.append(row)
         return {
             status: result["status"],
             pr_link: result.get("pr_url", ""),
             targets_table: table_data,
-            state: result
+            state: result,
+            current_task_id: result.get("task_id", "") # Update the task ID textbox
         }
 
     async def trigger_fine_tuning_analysis_ui():
@@ -443,15 +536,17 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         return analysis_result.get("status", "Analysis complete.")
 
     async def trigger_agi_sandbox_ui(task_input):
-        # This UI button can manually trigger a sandbox test independent of a full parallel_n1_multitarget run
-        # For simplicity, we'll ask llama-architect to generate a basic AGI agent code for the task
         agi_coder = TARGETS["agi-research"]["coder"]
+        # Use the global client from studio_v3.py for agi_sandbox internal calls
+        agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
+
         agi_code_res = await call_model(
             agi_coder,
             ALL_MODELS[agi_coder],
             f"Generate Python code for a simple AGI agent that can intelligently respond to complex ethical dilemmas related to: '{task_input}'. The code should be self-contained and focus on decision-making logic, not external APIs. Provide only the Python code.",
             "",
-            response_format={"type": "text"}
+            str(uuid.uuid4()), # Temporary task_id for this standalone call
+            response_format_type="text"
         )
         agi_agent_code_raw = agi_code_res.get("code", "")
         if "```python" in agi_agent_code_raw and "```" in agi_agent_code_raw:
@@ -465,10 +560,16 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         sandbox_results = await agi_sandbox.run_agi_sandbox_test(agi_agent_code, task_input)
         return json.dumps(sandbox_results, indent=2)
 
+    async def get_current_task_events(task_id_input):
+        if not task_id_input:
+            return "Please run a task first to get a Task ID."
+        return swarm_visualizer.get_events_for_task(task_id_input)
 
-    run_btn.click(run_and_update, task, [status, pr_link, targets_table, state])
+
+    run_btn.click(run_and_update, task, [status, pr_link, targets_table, state, current_task_id])
     analyze_ft_btn.click(trigger_fine_tuning_analysis_ui, [], ft_analysis_output)
-    trigger_agi_sandbox_btn.click(trigger_agi_sandbox_ui, task, agi_sandbox_output) # Added AGI sandbox button
+    trigger_agi_sandbox_btn.click(trigger_agi_sandbox_ui, task, agi_sandbox_output)
+    get_events_btn.click(get_current_task_events, current_task_id, swarm_events_output) # New button for events
 
     # Dynamic deploy buttons per target
     @gr.render(inputs=[state])
@@ -477,8 +578,8 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         for t in targets:
             if t["status"] == "READY_FOR_REVIEW":
                 btn = gr.Button(f"DEPLOY {t['target'].upper()}")
-                # AGI target deployments trigger a review notice rather than direct action
-                btn.click(lambda target_name=t["target"]: human_deploy(target_name, ""), None, status)
+                # Using lambda to capture t at definition time and pass task_id
+                btn.click(lambda target_name=t["target"], task_id=current_state.get("task_id", ""): human_deploy(task_id, target_name, ""), None, status)
 
 if __name__ == "__main__":
     # Auto-pull models on start
@@ -491,10 +592,10 @@ if __name__ == "__main__":
     print("Ollama model pulling complete.")
     
     # Initialize all feature modules and start background loops
-    # WORKSPACE is defined globally, so no need to pass it again to `initialize_self_evolution`
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
-    agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS) # Initialize AGI sandbox
+    agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
+    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Initialize swarm visualizer
 
     asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
     print("Started continuous self-evolution analysis loop.")
