@@ -13,7 +13,9 @@ import features.self_evolution as self_evolution
 import features.agi_sandbox as agi_sandbox
 import features.swarm_visualizer as swarm_visualizer
 import features.multimodal_collaboration as multimodal_collaboration
-import features.spatial_intelligence as spatial_intelligence # New import
+import features.spatial_intelligence as spatial_intelligence
+import features.sdk_manager as sdk_manager
+import features.crud_manager as crud_manager # New import
 
 client = AsyncOpenAI(base_url="http://localhost:4000/v1", api_key="sk-free")
 qdrant = qdrant_client.QdrantClient("http://qdrant:6333")
@@ -28,7 +30,7 @@ WORKSPACE = "/app/workspace"
 ALL_MODELS = {
     "qwen-coder": "Write TariroLang code. Never test. Must cite 2+ sources.",
     "deepseek-coder": "Write tests + run taric. Never write prod code. Can research for test cases.",
-    "llama-architect": "Design + review specs. Can also propose new command-line tool specifications. Can research for tool design. Can also design multi-modal assets. Performs spatial analysis tasks.", # Updated role
+    "llama-architect": "Design + review specs. Can also propose new command-line tool specifications. Can research for tool design. Can also design multi-modal assets. Performs spatial analysis tasks. Generates SDKs.", # Updated role
     "gemma-reviewer": "Security + style review. Never write code. Can test tools. Can review multi-modal assets.",
     "phi-pm": "Delegate tasks. Never write code. Orchestrates tool proposal and testing, and multi-modal asset generation.",
     "arbiter": "Merge only if N-1 approvals. Never write original code. Can perform ethical review for AGI, and final multi-modal asset review.",
@@ -317,13 +319,15 @@ async def parallel_n1_multitarget(task_input: str):
 
     await swarm_visualizer.log_event(task_id, "task_start", f"New task initiated: {task_input}", {"task_input": task_input}, model_name="human", agent_role="user")
 
-    # Initialize all modules first
-    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Initialize swarm visualizer first
+    # Initialize all modules first (order matters for dependencies)
+    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE)
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
     agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
     multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
-    spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # New initialization
+    spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
+    sdk_manager.initialize_sdk_manager(WORKSPACE, client, ALL_MODELS, swarm_visualizer, tool_forge, multimodal_collaboration)
+    crud_manager.initialize_crud_manager(WORKSPACE, swarm_visualizer) # New initialization
 
 
     # --- Multi-Modal Asset Generation Phase ---
@@ -542,60 +546,83 @@ async def human_deploy(task_id: str, target: str, branch: str) -> Dict[str, Any]
 
 # Gradio UI
 with gr.Blocks(title="TARIRO Studio v3") as demo:
-    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Spatial Intelligence")
-    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox. All agent activities are now traceable. Agents can also generate and review multi-modal assets. Now includes Spatial Intelligence capabilities.")
+    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Full Capabilities")
+    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox. All agent activities are now traceable. Agents can also generate and review multi-modal assets. Spatial Intelligence capabilities are integrated. Dynamic SDKs can be generated. Inline CRUD is available for entity management.")
 
-    task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem', or generate an image of a 'futuristic cityscape with flying cars', or analyze the spatial layout of 'Eiffel Tower' on a map.")
-    run_btn = gr.Button("Run Swarm", variant="primary")
+    with gr.Tab("Swarm Orchestration"):
+        task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem', or generate an image of a 'futuristic cityscape with flying cars', or analyze the spatial layout of 'Eiffel Tower' on a map.")
+        run_btn = gr.Button("Run Swarm", variant="primary")
 
-    status = gr.Textbox(label="Overall Status")
-    pr_link = gr.Textbox(label="PR URL")
-    current_task_id = gr.Textbox(label="Current Task ID", interactive=False)
-    
-    with gr.Row():
-        analyze_ft_btn = gr.Button("Analyze for Fine-Tuning", variant="secondary")
-        ft_analysis_output = gr.Textbox(label="Fine-Tuning Analysis Result", interactive=False)
-    
-    with gr.Row():
-        trigger_agi_sandbox_btn = gr.Button("Trigger AGI Sandbox Test", variant="secondary")
-        agi_sandbox_output = gr.Textbox(label="AGI Sandbox Report", interactive=False)
+        status = gr.Textbox(label="Overall Status")
+        pr_link = gr.Textbox(label="PR URL")
+        current_task_id = gr.Textbox(label="Current Task ID", interactive=False)
+        
+        with gr.Row():
+            analyze_ft_btn = gr.Button("Analyze for Fine-Tuning", variant="secondary")
+            ft_analysis_output = gr.Textbox(label="Fine-Tuning Analysis Result", interactive=False)
+        
+        with gr.Row():
+            trigger_agi_sandbox_btn = gr.Button("Trigger AGI Sandbox Test", variant="secondary")
+            agi_sandbox_output = gr.Textbox(label="AGI Sandbox Report", interactive=False)
 
-    with gr.Row():
-        trigger_multimodal_btn = gr.Button("Trigger Multi-Modal Generation", variant="secondary")
-        multimodal_output = gr.Textbox(label="Multi-Modal Asset Report", interactive=False)
+        with gr.Row():
+            trigger_multimodal_btn = gr.Button("Trigger Multi-Modal Generation", variant="secondary")
+            multimodal_output = gr.Textbox(label="Multi-Modal Asset Report", interactive=False)
 
-    with gr.Row(): # New UI elements for Spatial Intelligence
-        trigger_geo_search_btn = gr.Button("Perform Geographic Search", variant="secondary")
-        geo_search_query = gr.Textbox(label="Location Query", placeholder="e.g., Paris, France")
-        geo_search_output = gr.Textbox(label="Geographic Search Report", interactive=False)
-    
-    with gr.Row():
-        trigger_img_spatial_btn = gr.Button("Analyze Image Spatially", variant="secondary")
-        img_spatial_desc = gr.Textbox(label="Image Description", placeholder="e.g., A crowded market street in Mumbai")
-        img_spatial_type = gr.Dropdown(["layout", "depth", "objects", "navigation"], label="Analysis Type", value="layout")
-        img_spatial_output = gr.Textbox(label="Image Spatial Analysis Report", interactive=False)
+        with gr.Row():
+            trigger_geo_search_btn = gr.Button("Perform Geographic Search", variant="secondary")
+            geo_search_query = gr.Textbox(label="Location Query", placeholder="e.g., Paris, France")
+            geo_search_output = gr.Textbox(label="Geographic Search Report", interactive=False)
+        
+        with gr.Row():
+            trigger_img_spatial_btn = gr.Button("Analyze Image Spatially", variant="secondary")
+            img_spatial_desc = gr.Textbox(label="Image Description", placeholder="e.g., A crowded market street in Mumbai")
+            img_spatial_type = gr.Dropdown(["layout", "depth", "objects", "navigation"], label="Analysis Type", value="layout")
+            img_spatial_output = gr.Textbox(label="Image Spatial Analysis Report", interactive=False)
 
-    with gr.Row():
-        trigger_kg_btn = gr.Button("Generate Knowledge Graph", variant="secondary")
-        kg_seed_entities = gr.Textbox(label="Seed Entities (comma-separated)", placeholder="e.g., goal:ProjectX, file:design.pdf")
-        kg_output = gr.Textbox(label="Knowledge Graph Report", interactive=False)
+        with gr.Row():
+            trigger_kg_btn = gr.Button("Generate Knowledge Graph", variant="secondary")
+            kg_seed_entities = gr.Textbox(label="Seed Entities (comma-separated)", placeholder="e.g., goal:ProjectX, file:design.pdf")
+            kg_output = gr.Textbox(label="Knowledge Graph Report", interactive=False)
+
+        with gr.Row():
+            trigger_sdk_gen_btn = gr.Button("Generate SDK", variant="secondary")
+            sdk_app_name = gr.Textbox(label="App Name for SDK", placeholder="e.g., MyCustomApp")
+            sdk_language = gr.Dropdown(["python", "javascript"], label="SDK Language", value="python")
+            sdk_version = gr.Textbox(label="SDK Version", value="1.0.0")
+            sdk_output = gr.Textbox(label="SDK Generation Report", interactive=False)
 
 
-    with gr.Row():
-        get_events_btn = gr.Button("Get Swarm Events (Current Task)", variant="secondary")
-        swarm_events_output = gr.JSON(label="Swarm Event Log", interactive=False)
+        with gr.Row():
+            get_events_btn = gr.Button("Get Swarm Events (Current Task)", variant="secondary")
+            swarm_events_output = gr.JSON(label="Swarm Event Log", interactive=False)
 
 
-    with gr.Row():
-        targets_table = gr.Dataframe(
-            headers=["Target", "Status", "Approvals", "Deploy"],
-            label="Generated Code Targets", interactive=False
+        with gr.Row():
+            targets_table = gr.Dataframe(
+                headers=["Target", "Status", "Approvals", "Deploy"],
+                label="Generated Code Targets", interactive=False
+            )
+        
+        multimodal_assets_table = gr.Dataframe(
+            headers=["Asset Type", "Status", "Description", "Path"],
+            label="Generated Multi-Modal Assets", interactive=False
         )
-    
-    multimodal_assets_table = gr.Dataframe(
-        headers=["Asset Type", "Status", "Description", "Path"],
-        label="Generated Multi-Modal Assets", interactive=False
-    )
+
+    with gr.Tab("Entity Management (CRUD)"): # New Tab for CRUD
+        entity_type_dropdown = gr.Dropdown(["Goal", "FeatureProposal", "PerformanceLog"], label="Select Entity Type")
+        crud_id_input = gr.Textbox(label="Entity ID (for Update/Delete/Read Specific)", placeholder="UUID of the entity")
+        crud_data_input = gr.Textbox(label="Entity Data (JSON)", placeholder='{"title": "New Goal", "status": "active"}')
+        crud_query_input = gr.Textbox(label="Query (JSON for Read)", placeholder='{"status": "active"}')
+
+        with gr.Row():
+            create_btn = gr.Button("Create", variant="primary")
+            read_btn = gr.Button("Read All / Filter", variant="secondary")
+            update_btn = gr.Button("Update", variant="secondary")
+            delete_btn = gr.Button("Delete", variant="secondary")
+        
+        crud_output = gr.JSON(label="CRUD Operation Result", interactive=False)
+        crud_records_table = gr.Dataframe(label="Entity Records", interactive=False)
 
 
     state = gr.State({})
@@ -687,6 +714,52 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         result = await spatial_intelligence.generate_knowledge_graph(temp_task_id, seed_entities)
         return json.dumps(result, indent=2)
 
+    async def trigger_sdk_gen_ui(app_name, language, version):
+        temp_task_id = str(uuid.uuid4())
+        sdk_manager.initialize_sdk_manager(WORKSPACE, client, ALL_MODELS, swarm_visualizer, tool_forge, multimodal_collaboration)
+        result = await sdk_manager.generate_sdk(temp_task_id, app_name, language, version)
+        return json.dumps(result, indent=2)
+
+    async def crud_create_ui(entity_type, data_json):
+        temp_task_id = str(uuid.uuid4())
+        crud_manager.initialize_crud_manager(WORKSPACE, swarm_visualizer)
+        try:
+            data = json.loads(data_json)
+            result = await crud_manager.create_entity(temp_task_id, entity_type, data)
+            return json.dumps(result, indent=2), await crud_manager.read_entities(temp_task_id, entity_type)
+        except json.JSONDecodeError:
+            return "Invalid JSON for data.", []
+    
+    async def crud_read_ui(entity_type, query_json):
+        temp_task_id = str(uuid.uuid4())
+        crud_manager.initialize_crud_manager(WORKSPACE, swarm_visualizer)
+        query = None
+        if query_json:
+            try:
+                query = json.loads(query_json)
+            except json.JSONDecodeError:
+                return "Invalid JSON for query.", []
+        
+        records = await crud_manager.read_entities(temp_task_id, entity_type, query)
+        return "Records retrieved.", records
+
+    async def crud_update_ui(entity_type, entity_id, updates_json):
+        temp_task_id = str(uuid.uuid4())
+        crud_manager.initialize_crud_manager(WORKSPACE, swarm_visualizer)
+        try:
+            updates = json.loads(updates_json)
+            result = await crud_manager.update_entity(temp_task_id, entity_type, entity_id, updates)
+            return json.dumps(result, indent=2), await crud_manager.read_entities(temp_task_id, entity_type)
+        except json.JSONDecodeError:
+            return "Invalid JSON for updates.", []
+
+    async def crud_delete_ui(entity_type, entity_id):
+        temp_task_id = str(uuid.uuid4())
+        crud_manager.initialize_crud_manager(WORKSPACE, swarm_visualizer)
+        result = await crud_manager.delete_entity(temp_task_id, entity_type, entity_id)
+        return json.dumps(result, indent=2), await crud_manager.read_entities(temp_task_id, entity_type)
+
+
     async def get_current_task_events(task_id_input):
         if not task_id_input:
             return "Please run a task first to get a Task ID."
@@ -703,7 +776,24 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
     trigger_img_spatial_btn.click(trigger_img_spatial_ui, [img_spatial_desc, img_spatial_type], img_spatial_output)
     trigger_kg_btn.click(trigger_kg_ui, kg_seed_entities, kg_output)
 
+    # SDK Generation button
+    trigger_sdk_gen_btn.click(trigger_sdk_gen_ui, [sdk_app_name, sdk_language, sdk_version], sdk_output)
+
     get_events_btn.click(get_current_task_events, current_task_id, swarm_events_output)
+
+    # CRUD event handlers
+    create_btn.click(crud_create_ui, [entity_type_dropdown, crud_data_input], [crud_output, crud_records_table])
+    read_btn.click(crud_read_ui, [entity_type_dropdown, crud_query_input], [crud_output, crud_records_table])
+    update_btn.click(crud_update_ui, [entity_type_dropdown, crud_id_input, crud_data_input], [crud_output, crud_records_table])
+    delete_btn.click(crud_delete_ui, [entity_type_dropdown, crud_id_input], [crud_output, crud_records_table])
+
+    # Load initial records when entity type is selected
+    entity_type_dropdown.change(
+        lambda entity_type: crud_read_ui(entity_type, None),
+        entity_type_dropdown,
+        [crud_output, crud_records_table]
+    )
+
 
     # Dynamic deploy buttons per target
     @gr.render(inputs=[state])
@@ -724,12 +814,15 @@ if __name__ == "__main__":
     print("Ollama model pulling complete.")
     
     # Initialize all feature modules and start background loops
+    # Order matters for dependencies (e.g., multimodal needs swarm_visualizer, sdk_manager needs tool_forge, multimodal)
     swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Initialize swarm visualizer first
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
     agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
     multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
-    spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # Initialize spatial intelligence
+    spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
+    sdk_manager.initialize_sdk_manager(WORKSPACE, client, ALL_MODELS, swarm_visualizer, tool_forge, multimodal_collaboration)
+    crud_manager.initialize_crud_manager(WORKSPACE, swarm_visualizer) # Initialize CRUD Manager
 
     asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
     print("Started continuous self-evolution analysis loop.")
