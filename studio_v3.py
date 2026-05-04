@@ -1,24 +1,21 @@
 import asyncio, gradio as gr, os, json, subprocess, httpx
 from openai import AsyncOpenAI
 from git import Repo
-# from qdrant_client import QdrantClient # Commented out if not directly used here or causing issues
-import qdrant_client # Keeping the import for QdrantClient for potential future use or to avoid removing it entirely
+import qdrant_client
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import ast
 
 # Import new feature modules
 import features.tool_forge as tool_forge
 import features.self_evolution as self_evolution
+import features.agi_sandbox as agi_sandbox # New import
 
 client = AsyncOpenAI(base_url="http://localhost:4000/v1", api_key="sk-free")
-qdrant = qdrant_client.QdrantClient("http://qdrant:6333") # Use qdrant_client.QdrantClient explicitly
+qdrant = qdrant_client.QdrantClient("http://qdrant:6333")
 SEARXNG = "http://searxng:8080/search"
 
-# Define WORKSPACE earlier for module initialization
 WORKSPACE = "/app/workspace"
-# TOOLS_BIN is now managed within tool_forge.py
-
 
 ALL_MODELS = {
     "qwen-coder": "Write TariroLang code. Never test. Must cite 2+ sources.",
@@ -50,16 +47,23 @@ TARGETS = {
         "deploy_cmd": "iceprog top.bin"
     },
     "k8s-cloud": {
-        "coder": "qwen-coder", # Corrected from gemma-reviewer
+        "coder": "qwen-coder",
         "compile_cmd": "taric --target yaml src/cloud.tari -o k8s/",
         "test_cmd": "kubectl apply --dry-run=client -f k8s/",
         "deploy_cmd": "kubectl apply -f k8s/"
     },
     "x86-linux": {
-        "coder": "deepseek-coder", # Corrected from llama-architect
+        "coder": "deepseek-coder",
         "compile_cmd": "taric --target x86_64-linux src/main.tari -o tariro-os",
         "test_cmd": "qemu-system-x86_64 -kernel tariro-os -nographic",
         "deploy_cmd": "docker build -t tariro-os && docker push"
+    },
+    # New AGI Research Target
+    "agi-research": {
+        "coder": "llama-architect", # The architect designs the AGI structure
+        "compile_cmd": "echo 'AGI code is conceptual, no direct compile for this target.'",
+        "test_cmd": "echo 'AGI testing is handled by agi_sandbox.run_agi_sandbox_test.'",
+        "deploy_cmd": "echo 'AGI deployment requires human review and is simulated via sandbox.'"
     }
 }
 
@@ -123,100 +127,139 @@ async def call_model(model: str, role: str, task: str, context: str, ban_models:
 
 async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str) -> Dict[str, Any]:
     cfg = TARGETS[target]
-    coder = cfg["coder"]
-    # Pass available tools to coders if they need to integrate them
-    available_tools = tool_forge.get_validated_tools()
-    tool_context = f"\n\nAvailable Tools:\n{json.dumps(available_tools, indent=2)}" if available_tools else ""
 
-
-    testers = [m for m in ALL_MODELS if m not in [coder, "arbiter"] and "never test" not in ALL_MODELS[m].lower() and "never write prod code" not in ALL_MODELS[m].lower()]
-    state = {"target": target, "coder": coder, "status": "CODING"}
-
-    # 1. Coder writes
-    code_res = await call_model(coder, ALL_MODELS[coder], task, code_ctx + tool_context, ban_models=[], target=target)
-    code = code_res.get("code", "")
-    # Use tool_forge's more robust network check if needed, or keep this one for main code
-    if not code or not ast_no_network(code):
-        await self_evolution.log_performance(coder, f"Code generation for {target} failed: {task}", False, {"reason": code_res.get("reason", "No code or network found"), "code_snippet": code[:100]}, ALL_MODELS[coder])
-        return {"status": "CODER_FAIL", "reason": code_res.get("reason", "No code or network found")}
-
-    # 2. Write + compile + test
-    target_dir = os.path.join(repo_path, "target", target)
-    os.makedirs(target_dir, exist_ok=True)
-    with open(os.path.join(target_dir, "main.tari"), "w") as f: f.write(code)
-
-    test_results = []
-    for tester in testers:
-        print(f"Tester {tester} attempting to test {target}...")
-        test_success = False
-        reason = "Unknown error"
-        compile_log = ""
-        test_log = ""
-        try:
-            compile_out = subprocess.run(cfg["compile_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
-            compile_log = (compile_out.stderr or compile_out.stdout)[:500]
-            if compile_out.returncode != 0:
-                print(f"Compile failed for {target} by {tester}:\n{compile_log}")
-                reason = "Compile failed"
-            else:
-                test_out = subprocess.run(cfg["test_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
-                test_log = (test_out.stderr or test_out.stdout)[:500]
-                if test_out.returncode == 0:
-                    test_success = True
-                    reason = "Tests passed"
-                else:
-                    reason = "Tests failed"
-            
-            test_results.append({
-                "model": tester, "approved": test_success, "reason": reason,
-                "compile_log": compile_log,
-                "test_log": test_log
-            })
-        except subprocess.TimeoutExpired as e:
-            reason = "Test/Compile timed out"
-            test_log = str(e)
-            test_results.append({
-                "model": tester, "approved": False, "reason": reason,
-                "compile_log": compile_log, "test_log": test_log
-            })
-        except Exception as e:
-            reason = f"Testing error: {str(e)}"
-            test_log = str(e)
-            test_results.append({
-                "model": tester, "approved": False, "reason": reason,
-                "compile_log": compile_log, "test_log": test_log
-            })
-        
-        await self_evolution.log_performance(
-            tester,
-            f"Testing {target} for task: {task}",
-            test_success,
-            {"reason": reason, "compile_log_summary": compile_log[:100], "test_log_summary": test_log[:100]},
-            ALL_MODELS[tester]
+    if target == "agi-research":
+        # For AGI research, the "coder" (llama-architect) generates the AGI code itself.
+        agi_coder = cfg["coder"]
+        agi_code_res = await call_model(
+            agi_coder,
+            ALL_MODELS[agi_coder],
+            f"Generate Python code for an experimental AGI agent that can intelligently respond to complex ethical dilemmas and propose solutions for: '{task}'. The code should be self-contained and focus on decision-making logic, not external APIs. Provide only the Python code.",
+            code_ctx,
+            response_format={"type": "text"} # Expecting raw code
         )
+        agi_agent_code_raw = agi_code_res.get("code", "")
+        if "```python" in agi_agent_code_raw and "```" in agi_agent_code_raw:
+            agi_agent_code = agi_agent_code_raw.split("```python")[1].split("```")[0].strip()
+        else:
+            agi_agent_code = agi_agent_code_raw.strip()
+
+        if not agi_agent_code:
+            await self_evolution.log_performance(agi_coder, f"AGI code generation for {task} failed.", False, {"reason": "No AGI code generated"}, ALL_MODELS[agi_coder])
+            return {"status": "AGI_CODE_FAIL", "reason": "Failed to generate AGI agent code."}
+
+        # Run the AGI agent through the sandbox for evaluation
+        print(f"AGI Sandbox: Running evaluation for AGI agent generated for task: {task}")
+        sandbox_results = await agi_sandbox.run_agi_sandbox_test(agi_agent_code, task)
+        
+        overall_success = sandbox_results.get("status") == "complete" and \
+                          sandbox_results.get("nist_overall_risk", 100) <= 50 and \
+                          sandbox_results.get("ethical_score", 0) >= 70 # Example thresholds
+
+        await self_evolution.log_performance(agi_coder, f"AGI Sandbox test for {task}", overall_success, sandbox_results, ALL_MODELS[agi_coder])
+
+        if overall_success:
+            return {"target": target, "coder": agi_coder, "code": agi_agent_code, "status": "READY_FOR_REVIEW",
+                    "approvals": f"NIST Risk: {sandbox_results.get('nist_overall_risk')}, Ethical Score: {sandbox_results.get('ethical_score')}",
+                    "test_results": [sandbox_results], "deploy_cmd": cfg["deploy_cmd"], "sources": agi_code_res.get("sources", [])}
+        else:
+            return {"target": target, "coder": agi_coder, "code": agi_agent_code, "status": "FAILED_TESTS",
+                    "approvals": f"NIST Risk: {sandbox_results.get('nist_overall_risk')}, Ethical Score: {sandbox_results.get('ethical_score')}",
+                    "test_results": [sandbox_results], "deploy_cmd": cfg["deploy_cmd"], "sources": agi_code_res.get("sources", [])}
+
+    else: # Existing non-AGI targets
+        coder = cfg["coder"]
+        available_tools = tool_forge.get_validated_tools()
+        tool_context = f"\n\nAvailable Tools:\n{json.dumps(available_tools, indent=2)}" if available_tools else ""
 
 
-    approvals = [r for r in test_results if r["approved"]]
-    status = "READY_FOR_REVIEW" if len(approvals) >= len(testers) - 1 else "FAILED_TESTS" # N-1 logic
+        testers = [m for m in ALL_MODELS if m not in [coder, "arbiter"] and "never test" not in ALL_MODELS[m].lower() and "never write prod code" not in ALL_MODELS[m].lower()]
+        state = {"target": target, "coder": coder, "status": "CODING"}
 
-    return {
-        "target": target, "coder": coder, "code": code, "status": status,
-        "approvals": f"{len(approvals)}/{len(testers)}", "test_results": test_results,
-        "deploy_cmd": cfg["deploy_cmd"], "sources": code_res.get("sources", [])
-    }
+        # 1. Coder writes
+        code_res = await call_model(coder, ALL_MODELS[coder], task, code_ctx + tool_context, ban_models=[], target=target)
+        code = code_res.get("code", "")
+        # Use tool_forge's more robust network check if needed, or keep this one for main code
+        if not code or not ast_no_network(code):
+            await self_evolution.log_performance(coder, f"Code generation for {target} failed: {task}", False, {"reason": code_res.get("reason", "No code or network found"), "code_snippet": code[:100]}, ALL_MODELS[coder])
+            return {"status": "CODER_FAIL", "reason": code_res.get("reason", "No code or network found")}
+
+        # 2. Write + compile + test
+        target_dir = os.path.join(repo_path, "target", target)
+        os.makedirs(target_dir, exist_ok=True)
+        with open(os.path.join(target_dir, "main.tari"), "w") as f: f.write(code)
+
+        test_results = []
+        for tester in testers:
+            print(f"Tester {tester} attempting to test {target}...")
+            test_success = False
+            reason = "Unknown error"
+            compile_log = ""
+            test_log = ""
+            try:
+                compile_out = subprocess.run(cfg["compile_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
+                compile_log = (compile_out.stderr or compile_out.stdout)[:500]
+                if compile_out.returncode != 0:
+                    print(f"Compile failed for {target} by {tester}:\n{compile_log}")
+                    reason = "Compile failed"
+                else:
+                    test_out = subprocess.run(cfg["test_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
+                    test_log = (test_out.stderr or test_out.stdout)[:500]
+                    if test_out.returncode == 0:
+                        test_success = True
+                        reason = "Tests passed"
+                    else:
+                        reason = "Tests failed"
+                
+                test_results.append({
+                    "model": tester, "approved": test_success, "reason": reason,
+                    "compile_log": compile_log,
+                    "test_log": test_log
+                })
+            except subprocess.TimeoutExpired as e:
+                reason = "Test/Compile timed out"
+                test_log = str(e)
+                test_results.append({
+                    "model": tester, "approved": False, "reason": reason,
+                    "compile_log": compile_log, "test_log": test_log
+                })
+            except Exception as e:
+                reason = f"Testing error: {str(e)}"
+                test_log = str(e)
+                test_results.append({
+                    "model": tester, "approved": False, "reason": reason,
+                    "compile_log": compile_log, "test_log": test_log
+                })
+            
+            await self_evolution.log_performance(
+                tester,
+                f"Testing {target} for task: {task}",
+                test_success,
+                {"reason": reason, "compile_log_summary": compile_log[:100], "test_log_summary": test_log[:100]},
+                ALL_MODELS[tester]
+            )
+
+
+        approvals = [r for r in test_results if r["approved"]]
+        status = "READY_FOR_REVIEW" if len(approvals) >= len(testers) - 1 else "FAILED_TESTS" # N-1 logic
+
+        return {
+            "target": target, "coder": coder, "code": code, "status": status,
+            "approvals": f"{len(approvals)}/{len(testers)}", "test_results": test_results,
+            "deploy_cmd": cfg["deploy_cmd"], "sources": code_res.get("sources", [])
+        }
 
 async def parallel_n1_multitarget(task):
     os.makedirs(WORKSPACE, exist_ok=True)
     repo_path = WORKSPACE
 
-    # Initialize self_evolution module first
+    # Initialize all modules first
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
-    # Initialize tool_forge module with necessary global configurations
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
+    agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS) # New initialization
 
-    # --- NEW: Step 0 - Tool Generation and Testing Phase ---
+    # --- Tool Generation and Testing Phase ---
     print(f"Starting Tool Forge check for task: '{task}'")
-    # Using 'phi-pm' to orchestrate tool proposal, 'llama-architect' to propose detailed spec
     tool_proposal_result = await tool_forge.propose_new_tool_spec(task, "llama-architect") 
 
     if tool_proposal_result["status"] == "success":
@@ -228,35 +271,29 @@ async def parallel_n1_multitarget(task):
 
         if n1_test_result["status"] == "VALIDATED":
             print(f"Tool '{n1_test_result['tool_name']}' N-1 validated and ready for use.")
-            # The tool script is already in TOOLS_BIN_DIR and its spec in TOOL_SPEC_DIR
-            # Other agents can now discover it via tool_forge.get_validated_tools()
             await self_evolution.log_performance("tool_forge_system", f"Tool '{n1_test_result['tool_name']}' N-1 validated", True, n1_test_result, "system")
         else:
             print(f"Tool '{tool_proposal_result.get('tool_name', 'Unknown')}' failed N-1 testing. Reason: {n1_test_result.get('reason', 'See logs')}")
             await self_evolution.log_performance("tool_forge_system", f"Tool '{tool_proposal_result.get('tool_name', 'Unknown')}' N-1 failed", False, n1_test_result, "system")
-            # Decide whether to proceed with main task or halt if tool was critical
     elif tool_proposal_result["status"] == "no_tool_needed":
         print("Phi-PM determined no new tool is needed for this task.")
         await self_evolution.log_performance("phi-pm", f"Decision: No new tool needed for {task}", True, {"task": task}, "pm")
     else:
         print(f"Tool proposal failed: {tool_proposal_result.get('reason', 'Unknown error')}. Details: {tool_proposal_result.get('details', 'N/A')}")
         await self_evolution.log_performance("tool_forge_system", f"Tool proposal failed for {task}", False, tool_proposal_result, "system")
-        # Decide whether to proceed with main task or halt if tool was critical
     
-    # After potential tool generation, now get any newly validated tools or existing ones
     available_tools = tool_forge.get_validated_tools()
     if available_tools:
         print(f"Currently available validated tools for use in coding phase: {[t['name'] for t in available_tools]}")
 
-    # --- END NEW TOOL GENERATION PHASE ---
+    # --- END Tool Generation Phase ---
 
     # 1. PM picks targets (Original logic)
     pm_res = await call_model("phi-pm", ALL_MODELS["phi-pm"], f"Pick targets for: {task}", "")
-    targets = pm_res.get("targets", ["x86-linux", "wasm-web"])
+    targets = pm_res.get("targets", ["x86-linux", "wasm-web", "agi-research"]) # Added agi-research as default
     await self_evolution.log_performance("phi-pm", f"Target selection for: {task}", True, {"targets": targets}, "pm")
     
     # Start continuous self-evolution loop as a background task if not already running
-    # This ensures the loop runs once even if parallel_n1_multitarget is called multiple times
     if not hasattr(parallel_n1_multitarget, '_self_evolution_loop_started'):
         asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
         parallel_n1_multitarget._self_evolution_loop_started = True
@@ -273,10 +310,8 @@ async def parallel_n1_multitarget(task):
         return {"status": "ALL_FAILED", "targets": results}
 
     repo = Repo.init(repo_path)
-    # Ensure the branch name is valid GitHub format
     branch = f"ai/{task[:20].replace(' ', '-').lower().replace('/', '-')}"
     try:
-        # Check if branch exists
         current_branches = [head.name for head in repo.heads]
         if branch in current_branches:
             repo.git.checkout(branch)
@@ -286,14 +321,19 @@ async def parallel_n1_multitarget(task):
             print(f"Created and checked out new branch: {branch}")
     except Exception as e:
         print(f"Error creating/checking out branch {branch}. Falling back to main. Error: {e}")
-        repo.git.checkout('main') # Fallback
-        # If fallback, then we would need to commit to main or fail.
-        # For this example, let's assume we can create the branch.
+        repo.git.checkout('main')
 
     for res in ready:
         target_path = os.path.join("target", res['target'])
         full_target_path = os.path.join(repo_path, target_path)
-        if os.path.exists(full_target_path):
+        # For AGI Research target, we don't add generated code to git directly, just the report
+        if res['target'] == "agi-research":
+            agi_report_path = os.path.join(agi_sandbox.AGI_RISK_REPORT_DIR, f"agi_test_{datetime.now().strftime('%Y%m%d%H%M%S')}.json")
+            if os.path.exists(agi_report_path):
+                repo.index.add([agi_report_path]) # Add the report to git
+            else:
+                print(f"Warning: AGI report path {agi_report_path} not found, skipping add to index.")
+        elif os.path.exists(full_target_path):
             repo.index.add([full_target_path])
         else:
             print(f"Warning: Target path {target_path} not found in repository, skipping add to index.")
@@ -302,9 +342,6 @@ async def parallel_n1_multitarget(task):
     repo.index.commit(commit_message)
     repo.git.push("--set-upstream", "origin", branch)
     
-    # This `gh pr create` will require the gh CLI tool to be configured in the container or host
-    # and the GITHUB_TOKEN environment variable to have appropriate scopes.
-    # It also needs the 'gh' CLI tool installed, which is in the Dockerfile.
     pr_url = "PR creation skipped (requires 'gh' CLI login or specific GITHUB_TOKEN setup for CLI)"
     try:
         pr_command = f"cd {repo_path} && gh pr create --title 'AI: {task}' --body 'N-1 approved: {ready}' --head {branch} --base main"
@@ -326,7 +363,12 @@ async def parallel_n1_multitarget(task):
 async def human_deploy(target: str, branch: str) -> Dict[str, Any]:
     """ONLY called when human clicks Deploy"""
     cfg = TARGETS[target]
-    # Ensure cwd is correct for deployment
+    # For AGI, deployment is purely conceptual or involves reporting
+    if target == "agi-research":
+        print(f"AGI Research deployment simulated. Review latest AGI risk reports in {agi_sandbox.AGI_RISK_REPORT_DIR}.")
+        await self_evolution.log_performance("human_deployment", f"AGI Research deployment review requested for {target}", True, {"note": "AGI deployment is review-based"}, "human_action")
+        return {"status": "REVIEW_PENDING", "target": target, "log": "AGI deployment requires human review of risk reports."}
+    
     deploy_cwd = os.path.join(WORKSPACE, "target", target)
     print(f"Attempting to deploy {target} from {deploy_cwd} using: {cfg['deploy_cmd']}")
     deploy_success = False
@@ -356,19 +398,22 @@ async def human_deploy(target: str, branch: str) -> Dict[str, Any]:
 
 # Gradio UI
 with gr.Blocks(title="TARIRO Studio v3") as demo:
-    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Tool Forge & Self-Evolution")
-    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement.")
+    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Tool Forge, Self-Evolution & AGI Sandbox")
+    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox.")
 
-    task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words")
+    task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem'")
     run_btn = gr.Button("Run Swarm", variant="primary")
 
     status = gr.Textbox(label="Overall Status")
     pr_link = gr.Textbox(label="PR URL")
     
     with gr.Row():
-        # Added a button to manually trigger fine-tuning analysis
         analyze_ft_btn = gr.Button("Analyze for Fine-Tuning", variant="secondary")
         ft_analysis_output = gr.Textbox(label="Fine-Tuning Analysis Result", interactive=False)
+    
+    with gr.Row():
+        trigger_agi_sandbox_btn = gr.Button("Trigger AGI Sandbox Test", variant="secondary")
+        agi_sandbox_output = gr.Textbox(label="AGI Sandbox Report", interactive=False)
 
 
     with gr.Row():
@@ -384,7 +429,7 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         table_data = []
         for r in result.get("targets", []):
             # Ensure each row has 4 elements
-            row = [r["target"], r["status"], r["approvals"], r["status"] == "READY_FOR_REVIEW"]
+            row = [r["target"], r["status"], r["approvals"], r["status"] == "READY_FOR_REVIEW" and r["target"] != "agi-research"] # AGI always requires human review
             table_data.append(row)
         return {
             status: result["status"],
@@ -397,8 +442,33 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         analysis_result = await self_evolution.analyze_and_propose_fine_tuning()
         return analysis_result.get("status", "Analysis complete.")
 
+    async def trigger_agi_sandbox_ui(task_input):
+        # This UI button can manually trigger a sandbox test independent of a full parallel_n1_multitarget run
+        # For simplicity, we'll ask llama-architect to generate a basic AGI agent code for the task
+        agi_coder = TARGETS["agi-research"]["coder"]
+        agi_code_res = await call_model(
+            agi_coder,
+            ALL_MODELS[agi_coder],
+            f"Generate Python code for a simple AGI agent that can intelligently respond to complex ethical dilemmas related to: '{task_input}'. The code should be self-contained and focus on decision-making logic, not external APIs. Provide only the Python code.",
+            "",
+            response_format={"type": "text"}
+        )
+        agi_agent_code_raw = agi_code_res.get("code", "")
+        if "```python" in agi_agent_code_raw and "```" in agi_agent_code_raw:
+            agi_agent_code = agi_agent_code_raw.split("```python")[1].split("```")[0].strip()
+        else:
+            agi_agent_code = agi_agent_code_raw.strip()
+
+        if not agi_agent_code:
+            return "Failed to generate AGI agent code for sandbox test."
+        
+        sandbox_results = await agi_sandbox.run_agi_sandbox_test(agi_agent_code, task_input)
+        return json.dumps(sandbox_results, indent=2)
+
+
     run_btn.click(run_and_update, task, [status, pr_link, targets_table, state])
     analyze_ft_btn.click(trigger_fine_tuning_analysis_ui, [], ft_analysis_output)
+    trigger_agi_sandbox_btn.click(trigger_agi_sandbox_ui, task, agi_sandbox_output) # Added AGI sandbox button
 
     # Dynamic deploy buttons per target
     @gr.render(inputs=[state])
@@ -407,7 +477,7 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         for t in targets:
             if t["status"] == "READY_FOR_REVIEW":
                 btn = gr.Button(f"DEPLOY {t['target'].upper()}")
-                # Using lambda to capture t at definition time
+                # AGI target deployments trigger a review notice rather than direct action
                 btn.click(lambda target_name=t["target"]: human_deploy(target_name, ""), None, status)
 
 if __name__ == "__main__":
@@ -420,9 +490,12 @@ if __name__ == "__main__":
             print(f"Failed to pull model {m}: {e}")
     print("Ollama model pulling complete.")
     
-    # Initialize self-evolution and start its continuous loop as soon as possible
+    # Initialize all feature modules and start background loops
+    # WORKSPACE is defined globally, so no need to pass it again to `initialize_self_evolution`
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
-    # Create the background task for self-evolution analysis
+    tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
+    agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS) # Initialize AGI sandbox
+
     asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
     print("Started continuous self-evolution analysis loop.")
 
