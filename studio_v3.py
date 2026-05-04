@@ -12,7 +12,8 @@ import features.tool_forge as tool_forge
 import features.self_evolution as self_evolution
 import features.agi_sandbox as agi_sandbox
 import features.swarm_visualizer as swarm_visualizer
-import features.multimodal_collaboration as multimodal_collaboration # New import
+import features.multimodal_collaboration as multimodal_collaboration
+import features.spatial_intelligence as spatial_intelligence # New import
 
 client = AsyncOpenAI(base_url="http://localhost:4000/v1", api_key="sk-free")
 qdrant = qdrant_client.QdrantClient("http://qdrant:6333")
@@ -27,7 +28,7 @@ WORKSPACE = "/app/workspace"
 ALL_MODELS = {
     "qwen-coder": "Write TariroLang code. Never test. Must cite 2+ sources.",
     "deepseek-coder": "Write tests + run taric. Never write prod code. Can research for test cases.",
-    "llama-architect": "Design + review specs. Can also propose new command-line tool specifications. Can research for tool design. Can also design multi-modal assets.",
+    "llama-architect": "Design + review specs. Can also propose new command-line tool specifications. Can research for tool design. Can also design multi-modal assets. Performs spatial analysis tasks.", # Updated role
     "gemma-reviewer": "Security + style review. Never write code. Can test tools. Can review multi-modal assets.",
     "phi-pm": "Delegate tasks. Never write code. Orchestrates tool proposal and testing, and multi-modal asset generation.",
     "arbiter": "Merge only if N-1 approvals. Never write original code. Can perform ethical review for AGI, and final multi-modal asset review.",
@@ -317,11 +318,13 @@ async def parallel_n1_multitarget(task_input: str):
     await swarm_visualizer.log_event(task_id, "task_start", f"New task initiated: {task_input}", {"task_input": task_input}, model_name="human", agent_role="user")
 
     # Initialize all modules first
+    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Initialize swarm visualizer first
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
     agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
-    swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Re-initialize to ensure paths are set
-    multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # New initialization
+    multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
+    spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # New initialization
+
 
     # --- Multi-Modal Asset Generation Phase ---
     await swarm_visualizer.log_event(task_id, "multimodal_check", f"Phi-PM checking for multi-modal asset needs for task: {task_input[:50]}", {}, model_name="phi-pm", agent_role=ALL_MODELS["phi-pm"])
@@ -539,10 +542,10 @@ async def human_deploy(task_id: str, target: str, branch: str) -> Dict[str, Any]
 
 # Gradio UI
 with gr.Blocks(title="TARIRO Studio v3") as demo:
-    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Multi-Modal Collaboration")
-    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox. All agent activities are now traceable. Agents can also generate and review multi-modal assets.")
+    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Spatial Intelligence")
+    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement. AGI agents can be developed and safely evaluated in a sandbox. All agent activities are now traceable. Agents can also generate and review multi-modal assets. Now includes Spatial Intelligence capabilities.")
 
-    task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem', or generate an image of a 'futuristic cityscape with flying cars'")
+    task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words, or develop an AGI agent to solve the 'ethical trolley problem', or generate an image of a 'futuristic cityscape with flying cars', or analyze the spatial layout of 'Eiffel Tower' on a map.")
     run_btn = gr.Button("Run Swarm", variant="primary")
 
     status = gr.Textbox(label="Overall Status")
@@ -560,6 +563,23 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
     with gr.Row():
         trigger_multimodal_btn = gr.Button("Trigger Multi-Modal Generation", variant="secondary")
         multimodal_output = gr.Textbox(label="Multi-Modal Asset Report", interactive=False)
+
+    with gr.Row(): # New UI elements for Spatial Intelligence
+        trigger_geo_search_btn = gr.Button("Perform Geographic Search", variant="secondary")
+        geo_search_query = gr.Textbox(label="Location Query", placeholder="e.g., Paris, France")
+        geo_search_output = gr.Textbox(label="Geographic Search Report", interactive=False)
+    
+    with gr.Row():
+        trigger_img_spatial_btn = gr.Button("Analyze Image Spatially", variant="secondary")
+        img_spatial_desc = gr.Textbox(label="Image Description", placeholder="e.g., A crowded market street in Mumbai")
+        img_spatial_type = gr.Dropdown(["layout", "depth", "objects", "navigation"], label="Analysis Type", value="layout")
+        img_spatial_output = gr.Textbox(label="Image Spatial Analysis Report", interactive=False)
+
+    with gr.Row():
+        trigger_kg_btn = gr.Button("Generate Knowledge Graph", variant="secondary")
+        kg_seed_entities = gr.Textbox(label="Seed Entities (comma-separated)", placeholder="e.g., goal:ProjectX, file:design.pdf")
+        kg_output = gr.Textbox(label="Knowledge Graph Report", interactive=False)
+
 
     with gr.Row():
         get_events_btn = gr.Button("Get Swarm Events (Current Task)", variant="secondary")
@@ -590,7 +610,6 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         
         table_data_multimodal = []
         for asset_res in result.get("multimodal_assets", []):
-            # Ensure path is just the filename for brevity in UI, but full path available in log
             path_display = os.path.basename(asset_res.get("path", "N/A"))
             table_data_multimodal.append([asset_res.get("asset_type", "N/A"), asset_res.get("status", "N/A"), asset_res.get("description", "N/A")[:100], path_display])
 
@@ -599,7 +618,7 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
             status: result["status"],
             pr_link: result.get("pr_url", ""),
             targets_table: table_data_targets,
-            multimodal_assets_table: table_data_multimodal, # Update multimodal table
+            multimodal_assets_table: table_data_multimodal,
             state: result,
             current_task_id: result.get("task_id", "")
         }
@@ -610,9 +629,7 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
 
     async def trigger_agi_sandbox_ui(task_input):
         agi_coder = TARGETS["agi-research"]["coder"]
-        # Use the global client from studio_v3.py for agi_sandbox internal calls
-        agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
-        # We need a task_id for logging events for this standalone call
+        agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS) # Re-initialize for standalone call
         temp_task_id = str(uuid.uuid4())
         swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Ensure it's initialized
         
@@ -637,13 +654,10 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         return json.dumps(sandbox_results, indent=2)
 
     async def trigger_multimodal_generation_ui(task_input):
-        # This allows a human to directly request a multi-modal asset for a given prompt
-        # Here we hardcode to image generation for simplicity.
-        # In a more advanced UI, the user would select asset_type and maybe generator.
         asset_type = "image" # Default for UI trigger
         generator_model = "dalle-image-gen"
         temp_task_id = str(uuid.uuid4())
-        multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # Ensure initialized
+        multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
 
         await swarm_visualizer.log_event(temp_task_id, "multimodal_human_trigger", f"Human triggered {asset_type} generation.", {"prompt": task_input[:100]}, model_name="human", agent_role="user")
         
@@ -652,6 +666,26 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
         )
         return json.dumps(asset_result, indent=2)
 
+    async def trigger_geo_search_ui(query_input):
+        temp_task_id = str(uuid.uuid4())
+        spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
+        result = await spatial_intelligence.perform_geographic_search(temp_task_id, query_input)
+        return json.dumps(result, indent=2)
+
+    async def trigger_img_spatial_ui(image_desc, analysis_type):
+        temp_task_id = str(uuid.uuid4())
+        spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
+        result = await spatial_intelligence.analyze_image_spatially(temp_task_id, image_desc, analysis_type)
+        return json.dumps(result, indent=2)
+
+    async def trigger_kg_ui(seed_entities_str):
+        temp_task_id = str(uuid.uuid4())
+        spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
+        seed_entities = [e.strip() for e in seed_entities_str.split(',') if e.strip()]
+        if not seed_entities:
+            return "Please provide at least one seed entity."
+        result = await spatial_intelligence.generate_knowledge_graph(temp_task_id, seed_entities)
+        return json.dumps(result, indent=2)
 
     async def get_current_task_events(task_id_input):
         if not task_id_input:
@@ -662,7 +696,13 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
     run_btn.click(run_and_update, task, [status, pr_link, targets_table, multimodal_assets_table, state, current_task_id])
     analyze_ft_btn.click(trigger_fine_tuning_analysis_ui, [], ft_analysis_output)
     trigger_agi_sandbox_btn.click(trigger_agi_sandbox_ui, task, agi_sandbox_output)
-    trigger_multimodal_btn.click(trigger_multimodal_generation_ui, task, multimodal_output) # New button for multi-modal
+    trigger_multimodal_btn.click(trigger_multimodal_generation_ui, task, multimodal_output)
+    
+    # Spatial Intelligence buttons
+    trigger_geo_search_btn.click(trigger_geo_search_ui, geo_search_query, geo_search_output)
+    trigger_img_spatial_btn.click(trigger_img_spatial_ui, [img_spatial_desc, img_spatial_type], img_spatial_output)
+    trigger_kg_btn.click(trigger_kg_ui, kg_seed_entities, kg_output)
+
     get_events_btn.click(get_current_task_events, current_task_id, swarm_events_output)
 
     # Dynamic deploy buttons per target
@@ -675,25 +715,21 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
                 btn.click(lambda target_name=t["target"], task_id=current_state.get("task_id", ""): human_deploy(task_id, target_name, ""), None, status)
 
 if __name__ == "__main__":
-    # Auto-pull models on start
     print("Pulling Ollama models. This may take some time...")
     for m in ["llama3.1:70b", "qwen2.5-coder:32b", "deepseek-coder-v2:16b", "gemma2:27b", "phi-3:mini", "qwen2.5:72b"]:
         try:
             os.system(f"ollama pull {m}")
         except Exception as e:
             print(f"Failed to pull model {m}: {e}")
-    # Add conceptual multi-modal models to ALL_MODELS for LiteLLM to load if configured
-    # e.g., if you had a LiteLLM proxy for DALL-E, it would be configured there.
-    # For now, these are just treated as LLM calls that return descriptions/URLs.
     print("Ollama model pulling complete.")
     
     # Initialize all feature modules and start background loops
-    # Order matters for dependencies (e.g., multimodal needs swarm_visualizer)
     swarm_visualizer.initialize_swarm_visualizer(WORKSPACE) # Initialize swarm visualizer first
     self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
     agi_sandbox.initialize_agi_sandbox(WORKSPACE, client, ALL_MODELS)
-    multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # Initialize multimodal collaboration
+    multimodal_collaboration.initialize_multimodal_collaboration(WORKSPACE, client, ALL_MODELS, swarm_visualizer)
+    spatial_intelligence.initialize_spatial_intelligence(WORKSPACE, client, ALL_MODELS, swarm_visualizer) # Initialize spatial intelligence
 
     asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
     print("Started continuous self-evolution analysis loop.")
