@@ -4,19 +4,20 @@ from git import Repo
 # from qdrant_client import QdrantClient # Commented out if not directly used here or causing issues
 import qdrant_client # Keeping the import for QdrantClient for potential future use or to avoid removing it entirely
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from typing import List, Dict
+from typing import List, Dict, Any
 import ast
 
-# Import the new tool_forge module
+# Import new feature modules
 import features.tool_forge as tool_forge
+import features.self_evolution as self_evolution
 
 client = AsyncOpenAI(base_url="http://localhost:4000/v1", api_key="sk-free")
 qdrant = qdrant_client.QdrantClient("http://qdrant:6333") # Use qdrant_client.QdrantClient explicitly
 SEARXNG = "http://searxng:8080/search"
 
-# Define WORKSPACE earlier for tool_forge initialization
+# Define WORKSPACE earlier for module initialization
 WORKSPACE = "/app/workspace"
-# TOOLS_BIN = "/app/workspace/tools/bin" # Now managed by tool_forge
+# TOOLS_BIN is now managed within tool_forge.py
 
 
 ALL_MODELS = {
@@ -49,23 +50,18 @@ TARGETS = {
         "deploy_cmd": "iceprog top.bin"
     },
     "k8s-cloud": {
-        "coder": "gemma-reviewer", # This seems like an error from previous code, coder should be a coder model
+        "coder": "qwen-coder", # Corrected from gemma-reviewer
         "compile_cmd": "taric --target yaml src/cloud.tari -o k8s/",
         "test_cmd": "kubectl apply --dry-run=client -f k8s/",
         "deploy_cmd": "kubectl apply -f k8s/"
     },
     "x86-linux": {
-        "coder": "llama-architect", # This seems like an error from previous code, coder should be a coder model
+        "coder": "deepseek-coder", # Corrected from llama-architect
         "compile_cmd": "taric --target x86_64-linux src/main.tari -o tariro-os",
         "test_cmd": "qemu-system-x86_64 -kernel tariro-os -nographic",
         "deploy_cmd": "docker build -t tariro-os && docker push"
     }
 }
-# --- Fixing errors in TARGETS dict based on ALL_MODELS roles ---
-# Coder models should be qwen-coder or deepseek-coder.
-# Correcting 'k8s-cloud' and 'x86-linux' coders:
-TARGETS["k8s-cloud"]["coder"] = "qwen-coder" # Or deepseek-coder if it generates YAML
-TARGETS["x86-linux"]["coder"] = "qwen-coder" # Or deepseek-coder for system-level code
 
 
 async def web_search(query: str) -> List[str]:
@@ -85,7 +81,11 @@ def ast_no_network(code: str) -> bool:
             if any(n.name in ["socket", "requests", "urllib"] for n in node.names): return False
     return True
 
-async def call_model(model, role, task, context, ban_models=[], target=None):
+async def call_model(model: str, role: str, task: str, context: str, ban_models: List[str] = [], target: Optional[str] = None) -> Dict[str, Any]:
+    # Use the potentially fine-tuned version of the model
+    effective_model_name = self_evolution.get_current_model_version(model)
+    print(f"Calling model: {model} (effective: {effective_model_name}) for role: {role}")
+
     if model in ban_models:
         return {"model": model, "approved": False, "reason": "BANNED: Coder cannot test"}
 
@@ -95,7 +95,7 @@ async def call_model(model, role, task, context, ban_models=[], target=None):
         context += f"\n\nWeb Sources:\n" + "\n".join(sources)
 
     resp = await client.chat.completions.create(
-        model=model,
+        model=effective_model_name, # Use effective model name here
         messages=[
             {"role": "system", "content": f"You are {model}. Role: {role}. Output JSON only. Cite sources."},
             {"role": "user", "content": f"Task: {task}\nTarget: {target}\nContext:\n{context}\n\nOutput: {{\"code\": \"...\", \"sources\": [url1, url2], \"approved\": bool, \"reason\": \"...\"}}"}
@@ -110,9 +110,18 @@ async def call_model(model, role, task, context, ban_models=[], target=None):
     if model in ["qwen-coder", "deepseek-coder"] and len(out.get("sources", [])) < 2:
         out["approved"] = False
         out["reason"] = "Rejected: Must cite 2+ sources"
+    
+    # Log performance for this model call
+    await self_evolution.log_performance(
+        model_name=model,
+        task_description=task,
+        success=out.get("approved", True), # Assume success if no explicit rejection
+        details={"output_summary": out.get("reason", out.get("code", "")[:100])},
+        role=role
+    )
     return out
 
-async def build_for_target(target, task, code_ctx, repo_path):
+async def build_for_target(target: str, task: str, code_ctx: str, repo_path: str) -> Dict[str, Any]:
     cfg = TARGETS[target]
     coder = cfg["coder"]
     # Pass available tools to coders if they need to integrate them
@@ -128,6 +137,7 @@ async def build_for_target(target, task, code_ctx, repo_path):
     code = code_res.get("code", "")
     # Use tool_forge's more robust network check if needed, or keep this one for main code
     if not code or not ast_no_network(code):
+        await self_evolution.log_performance(coder, f"Code generation for {target} failed: {task}", False, {"reason": code_res.get("reason", "No code or network found"), "code_snippet": code[:100]}, ALL_MODELS[coder])
         return {"status": "CODER_FAIL", "reason": code_res.get("reason", "No code or network found")}
 
     # 2. Write + compile + test
@@ -138,40 +148,52 @@ async def build_for_target(target, task, code_ctx, repo_path):
     test_results = []
     for tester in testers:
         print(f"Tester {tester} attempting to test {target}...")
+        test_success = False
+        reason = "Unknown error"
+        compile_log = ""
+        test_log = ""
         try:
             compile_out = subprocess.run(cfg["compile_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
-            compile_log = compile_out.stderr or compile_out.stdout # Capture error or stdout
+            compile_log = (compile_out.stderr or compile_out.stdout)[:500]
             if compile_out.returncode != 0:
-                print(f"Compile failed for {target} by {tester}:\n{compile_log[:500]}")
-                test_results.append({
-                    "model": tester, "approved": False, "reason": "Compile failed",
-                    "compile_log": compile_log[:500], "test_log": ""
-                })
-                continue # Skip test if compile fails
-
-            test_out = subprocess.run(cfg["test_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
-            test_log = test_out.stderr or test_out.stdout
-            approved = test_out.returncode == 0
-            if not approved:
-                print(f"Test failed for {target} by {tester}:\n{test_log[:500]}")
+                print(f"Compile failed for {target} by {tester}:\n{compile_log}")
+                reason = "Compile failed"
+            else:
+                test_out = subprocess.run(cfg["test_cmd"], shell=True, cwd=target_dir, capture_output=True, text=True, timeout=60)
+                test_log = (test_out.stderr or test_out.stdout)[:500]
+                if test_out.returncode == 0:
+                    test_success = True
+                    reason = "Tests passed"
+                else:
+                    reason = "Tests failed"
             
             test_results.append({
-                "model": tester, "approved": approved,
-                "compile_log": compile_log[:500],
-                "test_log": test_log[:500]
+                "model": tester, "approved": test_success, "reason": reason,
+                "compile_log": compile_log,
+                "test_log": test_log
             })
         except subprocess.TimeoutExpired as e:
-            print(f"Test timed out for {target} by {tester}: {e}")
+            reason = "Test/Compile timed out"
+            test_log = str(e)
             test_results.append({
-                "model": tester, "approved": False, "reason": "Test timed out",
-                "compile_log": "", "test_log": str(e)
+                "model": tester, "approved": False, "reason": reason,
+                "compile_log": compile_log, "test_log": test_log
             })
         except Exception as e:
-            print(f"Error during testing {target} by {tester}: {e}")
+            reason = f"Testing error: {str(e)}"
+            test_log = str(e)
             test_results.append({
-                "model": tester, "approved": False, "reason": f"Testing error: {str(e)}",
-                "compile_log": "", "test_log": str(e)
+                "model": tester, "approved": False, "reason": reason,
+                "compile_log": compile_log, "test_log": test_log
             })
+        
+        await self_evolution.log_performance(
+            tester,
+            f"Testing {target} for task: {task}",
+            test_success,
+            {"reason": reason, "compile_log_summary": compile_log[:100], "test_log_summary": test_log[:100]},
+            ALL_MODELS[tester]
+        )
 
 
     approvals = [r for r in test_results if r["approved"]]
@@ -187,6 +209,8 @@ async def parallel_n1_multitarget(task):
     os.makedirs(WORKSPACE, exist_ok=True)
     repo_path = WORKSPACE
 
+    # Initialize self_evolution module first
+    self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
     # Initialize tool_forge module with necessary global configurations
     tool_forge.initialize_tool_forge(ALL_MODELS, client, SEARXNG, WORKSPACE)
 
@@ -206,13 +230,17 @@ async def parallel_n1_multitarget(task):
             print(f"Tool '{n1_test_result['tool_name']}' N-1 validated and ready for use.")
             # The tool script is already in TOOLS_BIN_DIR and its spec in TOOL_SPEC_DIR
             # Other agents can now discover it via tool_forge.get_validated_tools()
+            await self_evolution.log_performance("tool_forge_system", f"Tool '{n1_test_result['tool_name']}' N-1 validated", True, n1_test_result, "system")
         else:
             print(f"Tool '{tool_proposal_result.get('tool_name', 'Unknown')}' failed N-1 testing. Reason: {n1_test_result.get('reason', 'See logs')}")
+            await self_evolution.log_performance("tool_forge_system", f"Tool '{tool_proposal_result.get('tool_name', 'Unknown')}' N-1 failed", False, n1_test_result, "system")
             # Decide whether to proceed with main task or halt if tool was critical
     elif tool_proposal_result["status"] == "no_tool_needed":
         print("Phi-PM determined no new tool is needed for this task.")
+        await self_evolution.log_performance("phi-pm", f"Decision: No new tool needed for {task}", True, {"task": task}, "pm")
     else:
         print(f"Tool proposal failed: {tool_proposal_result.get('reason', 'Unknown error')}. Details: {tool_proposal_result.get('details', 'N/A')}")
+        await self_evolution.log_performance("tool_forge_system", f"Tool proposal failed for {task}", False, tool_proposal_result, "system")
         # Decide whether to proceed with main task or halt if tool was critical
     
     # After potential tool generation, now get any newly validated tools or existing ones
@@ -225,6 +253,14 @@ async def parallel_n1_multitarget(task):
     # 1. PM picks targets (Original logic)
     pm_res = await call_model("phi-pm", ALL_MODELS["phi-pm"], f"Pick targets for: {task}", "")
     targets = pm_res.get("targets", ["x86-linux", "wasm-web"])
+    await self_evolution.log_performance("phi-pm", f"Target selection for: {task}", True, {"targets": targets}, "pm")
+    
+    # Start continuous self-evolution loop as a background task if not already running
+    # This ensures the loop runs once even if parallel_n1_multitarget is called multiple times
+    if not hasattr(parallel_n1_multitarget, '_self_evolution_loop_started'):
+        asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
+        parallel_n1_multitarget._self_evolution_loop_started = True
+
 
     # 2. Build all targets in parallel (Original logic)
     context = subprocess.getoutput(f"find {repo_path} -name '*.tari' | head -20")
@@ -232,23 +268,33 @@ async def parallel_n1_multitarget(task):
 
     # 3. Create PR if any target ready (Original logic)
     ready = [r for r in results if r["status"] == "READY_FOR_REVIEW"]
-    if not ready: return {"status": "ALL_FAILED", "targets": results}
+    if not ready: 
+        await self_evolution.log_performance("system_orchestrator", f"Overall task failed: {task}", False, {"targets_results": results}, "system")
+        return {"status": "ALL_FAILED", "targets": results}
 
     repo = Repo.init(repo_path)
     # Ensure the branch name is valid GitHub format
     branch = f"ai/{task[:20].replace(' ', '-').lower().replace('/', '-')}"
     try:
-        repo.git.checkout('-b', branch)
+        # Check if branch exists
+        current_branches = [head.name for head in repo.heads]
+        if branch in current_branches:
+            repo.git.checkout(branch)
+            print(f"Checked out existing branch: {branch}")
+        else:
+            repo.git.checkout('-b', branch)
+            print(f"Created and checked out new branch: {branch}")
     except Exception as e:
-        print(f"Could not create or checkout branch {branch}. Attempting to checkout existing main branch. Error: {e}")
+        print(f"Error creating/checking out branch {branch}. Falling back to main. Error: {e}")
         repo.git.checkout('main') # Fallback
         # If fallback, then we would need to commit to main or fail.
         # For this example, let's assume we can create the branch.
 
     for res in ready:
         target_path = os.path.join("target", res['target'])
-        if os.path.exists(os.path.join(repo_path, target_path)):
-            repo.index.add([target_path])
+        full_target_path = os.path.join(repo_path, target_path)
+        if os.path.exists(full_target_path):
+            repo.index.add([full_target_path])
         else:
             print(f"Warning: Target path {target_path} not found in repository, skipping add to index.")
 
@@ -266,44 +312,64 @@ async def parallel_n1_multitarget(task):
         if pr_process.returncode == 0:
             pr_url = pr_process.stdout.strip()
             print(f"GitHub PR created: {pr_url}")
+            await self_evolution.log_performance("github_integration", f"PR created for {task}", True, {"pr_url": pr_url}, "system")
         else:
             print(f"Failed to create GitHub PR: {pr_process.stderr.strip()}")
+            await self_evolution.log_performance("github_integration", f"PR creation failed for {task}", False, {"error": pr_process.stderr.strip()}, "system")
     except Exception as e:
         print(f"Error executing gh pr create: {e}")
+        await self_evolution.log_performance("github_integration", f"PR creation exception for {task}", False, {"exception": str(e)}, "system")
 
+    await self_evolution.log_performance("system_orchestrator", f"Overall task completed: {task}", True, {"pr_url": pr_url, "targets_results": results}, "system")
     return {"pr_url": pr_url, "status": "READY_FOR_REVIEW", "targets": results}
 
-async def human_deploy(target, branch):
+async def human_deploy(target: str, branch: str) -> Dict[str, Any]:
     """ONLY called when human clicks Deploy"""
     cfg = TARGETS[target]
     # Ensure cwd is correct for deployment
     deploy_cwd = os.path.join(WORKSPACE, "target", target)
     print(f"Attempting to deploy {target} from {deploy_cwd} using: {cfg['deploy_cmd']}")
+    deploy_success = False
+    log = ""
     try:
         res = subprocess.run(cfg["deploy_cmd"], shell=True, cwd=deploy_cwd, capture_output=True, text=True, timeout=120)
         if res.returncode == 0:
             print(f"Deployment successful for {target}:\n{res.stdout}")
-            return {"status": "DEPLOYED", "target": target, "log": res.stdout[:500]}
+            deploy_success = True
+            log = res.stdout[:500]
+            return {"status": "DEPLOYED", "target": target, "log": log}
         else:
             print(f"Deployment failed for {target}:\n{res.stderr or res.stdout}")
-            return {"status": "DEPLOY_FAILED", "target": target, "log": (res.stderr or res.stdout)[:500]}
+            log = (res.stderr or res.stdout)[:500]
+            return {"status": "DEPLOY_FAILED", "target": target, "log": log}
     except subprocess.TimeoutExpired as e:
+        log = f"Deployment timed out: {e}"
         print(f"Deployment timed out for {target}: {e}")
-        return {"status": "DEPLOY_FAILED", "target": target, "log": f"Deployment timed out: {e}"}
+        return {"status": "DEPLOY_FAILED", "target": target, "log": log}
     except Exception as e:
+        log = f"Deployment error: {str(e)}"
         print(f"Error during deployment of {target}: {e}")
-        return {"status": "DEPLOY_FAILED", "target": target, "log": f"Deployment error: {str(e)}"}
+        return {"status": "DEPLOY_FAILED", "target": target, "log": log}
+    finally:
+        await self_evolution.log_performance("human_deployment", f"Deployment of {target}", deploy_success, {"log_summary": log[:100]}, "human_action")
+
 
 # Gradio UI
 with gr.Blocks(title="TARIRO Studio v3") as demo:
-    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Tool Forge")
-    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools.")
+    gr.Markdown("# TARIRO Studio v3 - N-1 Tested Swarm with Tool Forge & Self-Evolution")
+    gr.Markdown("Rule: Coder ≠ Tester. N-1 must approve. Human deploys each target. Agents can now propose and N-1 test new CLI tools. The system continuously logs performance for self-improvement.")
 
     task = gr.Textbox(label="Task", placeholder="Build @hw SHA256 for Ice40 + WASM wallet, or create a 'text_processor' tool that counts words")
     run_btn = gr.Button("Run Swarm", variant="primary")
 
     status = gr.Textbox(label="Overall Status")
     pr_link = gr.Textbox(label="PR URL")
+    
+    with gr.Row():
+        # Added a button to manually trigger fine-tuning analysis
+        analyze_ft_btn = gr.Button("Analyze for Fine-Tuning", variant="secondary")
+        ft_analysis_output = gr.Textbox(label="Fine-Tuning Analysis Result", interactive=False)
+
 
     with gr.Row():
         targets_table = gr.Dataframe(
@@ -327,7 +393,12 @@ with gr.Blocks(title="TARIRO Studio v3") as demo:
             state: result
         }
 
+    async def trigger_fine_tuning_analysis_ui():
+        analysis_result = await self_evolution.analyze_and_propose_fine_tuning()
+        return analysis_result.get("status", "Analysis complete.")
+
     run_btn.click(run_and_update, task, [status, pr_link, targets_table, state])
+    analyze_ft_btn.click(trigger_fine_tuning_analysis_ui, [], ft_analysis_output)
 
     # Dynamic deploy buttons per target
     @gr.render(inputs=[state])
@@ -348,4 +419,11 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Failed to pull model {m}: {e}")
     print("Ollama model pulling complete.")
+    
+    # Initialize self-evolution and start its continuous loop as soon as possible
+    self_evolution.initialize_self_evolution(WORKSPACE, client, ALL_MODELS)
+    # Create the background task for self-evolution analysis
+    asyncio.create_task(self_evolution.start_continuous_self_evolution_loop())
+    print("Started continuous self-evolution analysis loop.")
+
     demo.launch(server_name="0.0.0.0")
