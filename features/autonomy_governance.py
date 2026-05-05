@@ -24,9 +24,15 @@ def initialize_autonomy_governance(workspace_path: str, swarm_visualizer_module:
 
 async def set_autonomy_level(task_id: str, domain: str, level: Literal['full_auto', 'suggest_only', 'human_required'], justification: str) -> Dict[str, Any]:
     """
-    Sets the autonomy level for a specific domain.
+    Sets the autonomy level for a specific domain and logs the change to the audit trail.
     Levels: 'full_auto', 'suggest_only', 'human_required'
     """
+    policy_path = os.path.join(AUTONOMY_POLICIES_DIR, f"policy_{domain.replace(' ', '_').lower()}.json")
+    old_policy_data = {"domain": domain, "level": "not_set"}
+    if os.path.exists(policy_path):
+        with open(policy_path, "r") as f:
+            old_policy_data = json.load(f)
+
     policy_data = {
         "domain": domain,
         "level": level,
@@ -34,8 +40,6 @@ async def set_autonomy_level(task_id: str, domain: str, level: Literal['full_aut
         "timestamp": datetime.now().isoformat()
     }
     
-    # Save the policy to disk and contextual memory
-    policy_path = os.path.join(AUTONOMY_POLICIES_DIR, f"policy_{domain.replace(' ', '_').lower()}.json")
     try:
         with open(policy_path, "w") as f:
             json.dump(policy_data, f, indent=2)
@@ -45,6 +49,16 @@ async def set_autonomy_level(task_id: str, domain: str, level: Literal['full_aut
             f"Updated autonomy level to {level} for domain: {domain}."
         )
         
+        # Log this change to the new policy_audit_trail
+        await policy_audit_trail.log_policy_change(
+            task_id, 
+            f"autonomy_level_{domain}", 
+            old_policy_data.get("level"), 
+            new_value=level, 
+            authorized_by="Admin UI", # Assuming changes from Admin UI
+            justification=justification
+        )
+
         await _SWARM_VISUALIZER.log_event(
             task_id, "autonomy_level_changed", f"Autonomy level updated.",
             {"domain": domain, "level": level},
