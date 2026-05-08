@@ -1,10 +1,14 @@
 # Upgraded `Dockerfile` - Ultra Autonomous + Hardened (Python-only version)
 # syntax=docker/dockerfile:1.7
 
+# Define platform for multi-arch builds
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+
 # STAGE 1: TOOLCHAIN - Install core tools and utilities
 FROM ubuntu:24.04 AS toolchain
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt upgrade -y && \
+RUN umask 0022 && apt update && apt upgrade -y && \
     apt install -y --no-install-recommends \
     build-essential curl git python3 python3-pip ca-certificates gnupg \
     nodejs npm wabt binaryen \
@@ -13,15 +17,13 @@ RUN apt update && apt upgrade -y && \
     cosign slsa-verifier syft grype \
     qemu-system-misc qemu-system-x86 qemu-system-riscv32 \
     && npm install -g wrangler && \
-    apt clean && rm -rf /var/lib/apt/lists/* && \
-    # Set a restrictive umask for files created during build
-    umask 0022
+    apt clean && rm -rf /var/lib/apt/lists/*
 
 # STAGE 2: PYTHON BUILDER - Create venv, install Python dependencies, scan deps, PRE-COMPILE PYTHON CODE
 FROM python:3.12-slim AS py_builder
-WORKDIR /app
-# Set a restrictive umask for files created during build
+ARG TARGETPLATFORM
 RUN umask 0022
+WORKDIR /app
 
 COPY requirements.txt .
 RUN python -m venv /opt/venv && \
@@ -85,6 +87,10 @@ ENTRYPOINT ["/app/ENTRYPOINT.sh"]
 VOLUME ["/app/workspace", "/tmp"]
 ENV TMPDIR=/tmp
 ENV WORKSPACE=/app/workspace
+
+# Environment variables for application-level resource tuning (can be overridden at runtime)
+ENV TARIRO_MAX_MEMORY_MB="" # Application can read this to limit its own memory use
+ENV TARIRO_THREAD_COUNT=""  # Application can read this to adjust thread/process count
 
 # Healthcheck: Check if the Python application is responding on port 7860
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
