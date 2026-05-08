@@ -1,0 +1,9 @@
+gradio==4.30.0
+openai==1.28.1
+autogen-agentchat==0.2.20
+gitpython==3.1.43
+qdrant-client==1.8.0
+httpx==0.27.0
+apscheduler==4.1.0
+redis==5.0.4
+python-dotenv==1.0.1
