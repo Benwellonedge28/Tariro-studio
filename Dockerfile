@@ -91,6 +91,9 @@ ENV WORKSPACE=/app/workspace
 # Environment variables for application-level resource tuning (can be overridden at runtime)
 ENV TARIRO_MAX_MEMORY_MB="" # Application can read this to limit its own memory use
 ENV TARIRO_THREAD_COUNT=""  # Application can read this to adjust thread/process count
+ENV TARIRO_LOG_LEVEL="INFO" # Application can adjust logging verbosity (DEBUG, INFO, WARNING, ERROR)
+ENV TARIRO_WORKER_POOL_SIZE="" # Application can adjust internal worker pool size
+ENV TARIRO_FEATURE_FLAGS="" # Comma-separated list of feature flags for dynamic behavior
 
 # Healthcheck: Check if the Python application is responding on port 7860
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
