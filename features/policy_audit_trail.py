@@ -1,80 +1,115 @@
 import os
 import json
-from datetime import datetime
-from typing import Dict, Any, List
+import hashlib
+import time
+import logging
+from typing import Dict, Any, Optional
 
-# --- Configuration & Shared Data ---
-_WORKSPACE: str = ""
-_SWARM_VISUALIZER: Any = None
-_CONTEXTUAL_MEMORY: Any = None
+logger = logging.getLogger("PolicyAuditTrail")
 
-POLICY_AUDIT_LOG_DIR: str = ""
+# Global constant, assumed to be set by the main studio_v3.py
+WORKSPACE = os.getenv("WORKSPACE", "/app/workspace")
+AUDIT_LOG_FILE = os.path.join(WORKSPACE, "policy_audit_trail.log")
+MERKLE_ROOT_FILE = os.path.join(WORKSPACE, "merkle_root.json")
 
-def initialize_policy_audit_trail(workspace_path: str, swarm_visualizer_module: Any, contextual_memory_module: Any):
-    """Initializes the Self-Governance Policy Audit Trail module."""
-    global _WORKSPACE, _SWARM_VISUALIZER, _CONTEXTUAL_MEMORY, POLICY_AUDIT_LOG_DIR
-    _WORKSPACE = workspace_path
-    _SWARM_VISUALIZER = swarm_visualizer_module
-    _CONTEXTUAL_MEMORY = contextual_memory_module
-
-    POLICY_AUDIT_LOG_DIR = os.path.join(_WORKSPACE, "policy_audit_logs")
-    os.makedirs(POLICY_AUDIT_LOG_DIR, exist_ok=True)
-    print(f"Policy Audit Trail initialized. Logs stored in: {POLICY_AUDIT_LOG_DIR}")
-
-async def log_policy_change(task_id: str, policy_name: str, old_value: Any, new_value: Any, authorized_by: str, justification: str) -> Dict[str, Any]:
-    """
-    Records an immutable log of a policy change.
-    """
-    audit_entry = {
-        "timestamp": datetime.now().isoformat(),
+async def log_change(
+    task_id: str,
+    event_type: str,
+    old_value: Optional[Any],
+    new_value: Any,
+    actor: str,
+    description: str,
+    metadata: Optional[Dict[str, Any]] = None,
+) -> None:
+    """Logs a system change to an append-only, tamper-evident audit trail."""
+    timestamp = int(time.time())
+    log_entry = {
+        "timestamp": timestamp,
         "task_id": task_id,
-        "policy_name": policy_name,
+        "event_type": event_type,
         "old_value": old_value,
         "new_value": new_value,
-        "authorized_by": authorized_by,
-        "justification": justification
+        "actor": actor,
+        "description": description,
+        "metadata": metadata or {},
     }
-    
-    log_filename = os.path.join(POLICY_AUDIT_LOG_DIR, f"policy_change_{task_id}_{datetime.now().strftime('%H%M%S')}.json")
-    try:
-        with open(log_filename, "w") as f:
-            json.dump(audit_entry, f, indent=2)
-            
-        await _CONTEXTUAL_MEMORY.store_memory(
-            task_id, "system", f"policy_audit_{policy_name}_{uuid.uuid4().hex}", audit_entry, 
-            f"Logged policy change for {policy_name} from {old_value} to {new_value}."
-        )
-        
-        await _SWARM_VISUALIZER.log_event(
-            task_id, "policy_audit_logged", f"Policy change for {policy_name} logged.",
-            audit_entry, model_name="system", agent_role="policy_auditor", level="INFO"
-        )
-        return {"status": "success", "audit_entry": audit_entry, "message": f"Policy change for '{policy_name}' logged successfully."}
-    except Exception as e:
-        await _SWARM_VISUALIZER.log_event(task_id, "policy_audit_error", f"Error logging policy change for {policy_name}.", {"error": str(e)}, model_name="system", agent_role="policy_auditor", level="ERROR")
-        return {"status": "failed", "error": str(e), "message": f"Failed to log policy change for '{policy_name}'."}
+    log_json = json.dumps(log_entry, sort_keys=True)
+    entry_hash = hashlib.sha256(log_json.encode('utf-8')).hexdigest()
 
-async def get_audit_trail(task_id: str, filter_policy: Optional[str] = None) -> List[Dict[str, Any]]:
-    """
-    Retrieves the audit trail of policy changes, optionally filtered by policy name.
-    """
-    audit_entries = []
+    # Read previous Merkle root for chaining
+    previous_root = "0" * 64 # Default for first entry
     try:
-        for filename in os.listdir(POLICY_AUDIT_LOG_DIR):
-            if filename.startswith("policy_change_") and filename.endswith(".json"):
-                file_path = os.path.join(POLICY_AUDIT_LOG_DIR, filename)
-                with open(file_path, "r") as f:
-                    entry = json.load(f)
-                    if filter_policy is None or entry.get("policy_name") == filter_policy:
-                        audit_entries.append(entry)
-        
-        audit_entries.sort(key=lambda x: x["timestamp"]) # Sort by timestamp
-        
-        await _SWARM_VISUALIZER.log_event(
-            task_id, "audit_trail_retrieved", f"Retrieved audit trail. Entries: {len(audit_entries)}",
-            {"filter": filter_policy}, model_name="system", agent_role="policy_auditor", level="INFO"
-        )
-        return {"status": "success", "audit_trail": audit_entries, "message": f"Retrieved {len(audit_entries)} audit entries."}
+        with open(MERKLE_ROOT_FILE, 'r') as f:
+            data = json.load(f)
+            previous_root = data.get("merkle_root", previous_root)
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass # Root will be default or created
+
+    # Calculate new Merkle root (simple chain hash for this implementation)
+    # In a full Merkle tree, this would be more complex, hashing pairs of entries.
+    current_root = hashlib.sha256(f"{previous_root}{entry_hash}".encode('utf-8')).hexdigest()
+    log_entry["entry_hash"] = entry_hash
+    log_entry["previous_root"] = previous_root
+    log_entry["current_root"] = current_root
+
+    # Append to log file
+    try:
+        with open(AUDIT_LOG_FILE, 'a') as f:
+            f.write(json.dumps(log_entry) + '\n')
+        # Update Merkle root file
+        with open(MERKLE_ROOT_FILE, 'w') as f:
+            json.dump({"merkle_root": current_root, "last_entry_hash": entry_hash}, f)
+        logger.info(f"Audit: {event_type} by {actor} (Root: {current_root[:8]}...)")
     except Exception as e:
-        await _SWARM_VISUALIZER.log_event(task_id, "audit_trail_error", f"Error retrieving audit trail.", {"error": str(e)}, model_name="system", agent_role="policy_auditor", level="ERROR")
-        return {"status": "failed", "error": str(e), "message": "Failed to retrieve audit trail."}
+        logger.error(f"Failed to write to audit log or update Merkle root: {e}")
+
+async def verify_audit_trail() -> Tuple[bool, str]:
+    """Verifies the integrity of the audit trail using Merkle root chaining."""
+    logger.info("Verifying audit trail integrity...")
+    try:
+        with open(AUDIT_LOG_FILE, 'r') as f:
+            lines = f.readlines()
+
+        if not lines: # Empty log is valid
+            return True, "Audit trail is empty and valid."
+
+        calculated_merkle_root = "0" * 64
+        for i, line in enumerate(lines):
+            entry = json.loads(line)
+            entry_hash = entry.pop("entry_hash") # Remove this before recalculating hash
+            previous_root_in_entry = entry.pop("previous_root")
+            current_root_in_entry = entry.pop("current_root")
+            
+            recalculated_entry_hash = hashlib.sha256(json.dumps(entry, sort_keys=True).encode('utf-8')).hexdigest()
+            
+            if recalculated_entry_hash != entry_hash:
+                return False, f"Integrity FAIL: Entry {i} hash mismatch. Expected {entry_hash}, got {recalculated_entry_hash}."
+            
+            # Verify chaining
+            if i == 0:
+                if previous_root_in_entry != "0" * 64: # First entry's previous root must be default
+                    return False, f"Integrity FAIL: First entry's previous_root is not default. ({previous_root_in_entry})"
+            else:
+                # Use the current_root from the PREVIOUS entry to check current entry's previous_root
+                prev_entry = json.loads(lines[i-1])
+                if prev_entry["current_root"] != previous_root_in_entry:
+                    return False, f"Integrity FAIL: Entry {i} chain broken. Previous entry root {prev_entry["current_root"]} != entry's previous_root {previous_root_in_entry}."
+            
+            # Update for next iteration's chaining check
+            calculated_merkle_root = current_root_in_entry
+        
+        # Finally, check the last written root against the final calculated one
+        with open(MERKLE_ROOT_FILE, 'r') as f:
+            final_root_data = json.load(f)
+            stored_merkle_root = final_root_data.get("merkle_root")
+            if stored_merkle_root != calculated_merkle_root:
+                return False, f"Integrity FAIL: Final stored Merkle root mismatch. Expected {calculated_merkle_root}, got {stored_merkle_root}."
+
+        logger.info("Audit trail integrity verified successfully.")
+        return True, "Audit trail integrity verified successfully."
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        return False, f"Error verifying audit trail: {e}"
+    except Exception as e:
+        logger.error(f"An unexpected error occurred during audit trail verification: {e}")
+        return False, f"An unexpected error occurred: {e}"
+
