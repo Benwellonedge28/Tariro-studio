@@ -46,6 +46,26 @@ services:
       - ./workspace:/app/workspace
       - ./toolchains:/toolchains
     depends_on: [litellm, searxng, qdrant]
+    # >>> START: infinity Advanced and Secure Infinitely additions <<<
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/workspace:rw # Grant write access only to workspace
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:seccomp.json # Reference the custom seccomp profile
+    cap_drop: ["ALL"] # Drop all Linux capabilities by default
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID # Only add necessary capabilities, e.g., for git operations if needed
+    restart: unless-stopped # Automatically restart if container stops
+    deploy:
+      resources:
+        limits: {cpus: '4', memory: 8G} # Resource limits for stability
+        reservations: {devices: [{driver: nvidia, count: 1, capabilities: [gpu]}]} # Reserve GPU
+    # >>> END: infinity Advanced and Secure Infinitely additions <<<
+
 
   # New Service: Model Evolution Fine-Tuner
   model-fine-tuner:

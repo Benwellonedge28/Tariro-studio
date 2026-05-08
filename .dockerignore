@@ -1,0 +1,44 @@
+# Ignore Git-related files
+.git
+.gitignore
+.gitmodules
+
+# Ignore common build and cache directories
+__pycache__
+*.pyc
+*.egg-info/
+*.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv
+venv/
+target/ # Rust build artifacts
+
+# Ignore documentation, tests, and non-essential development files
+docs/
+tests/
+*.md
+.github/ # CI/CD configurations might be relevant for some builds, but generally not for the final image
+
+# Ignore editor/IDE-specific files
+.vscode/
+.idea/
+*.swp
+*~
+.#*
+
+# Ignore log files and temporary data
+*.log
+*.tmp
+tmp/
+
+# Ignore local environment variables
+.env
+.env.*
+
+# Exclude workspace (it's a volume)
+workspace/
+
+# Exclude specific files not needed in the build context
+litellm_config.yaml # Copied explicitly as a volume in docker-compose, not needed in build context
+visualization_server.js # If built separately
