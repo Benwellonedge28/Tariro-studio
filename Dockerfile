@@ -42,6 +42,7 @@ COPY tariro_features.py /app/
 COPY tool_forge.py /app/
 COPY litellm_config.yaml /app/
 COPY ENTRYPOINT.sh /app/ 
+COPY allowed_hashes.json /app/ # Copy allowed_hashes.json for immutable core verification
 RUN chmod +x /app/ENTRYPOINT.sh # Ensure ENTRYPOINT.sh is executable early
 
 # Pre-compile Python source files to bytecode and remove source .py files

@@ -1,0 +1,20 @@
+import json
+
+# Placeholder for SHA256 hashes of immutable core files, signed by Samuel Mukandara.
+# In a real scenario, these would be cryptographically signed hashes.
+# Example format:
+# {
+#    "studio_v3.py": "sha256:abc...",
+#    "features/rbac_manager.py": "sha256:def...",
+#    "tariro_core.py": "sha256:ghi...",
+#    "signature_by_samuel": "base64_encoded_signature_of_all_hashes"
+# }
+
+# This file would be loaded and verified on startup by integrity_verification.
+# For now, it's a simple placeholder.
+{
+    "tariro_core.py": "sha256:d4e9c7f6b3a2e1d0c5b8a7f9e0d1c2b3a4e5f6d7c8b9a0e1d2c3b4a5e6f7d8c9",
+    "studio_v3.py": "sha256:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+    "features/rbac_manager.py": "sha256:b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3",
+    "signature_by_samuel": "PLACEHOLDER_SIGNATURE_BY_SAMUEL_MUKANDARA"
+}
