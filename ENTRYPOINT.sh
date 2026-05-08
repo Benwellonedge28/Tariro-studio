@@ -23,6 +23,7 @@ wait # Wait for background pulls to complete if you want them before the main ap
 echo "Starting TARIRO Studio with firejail sandbox..."
 
 # Execute the main application with firejail
+# Note: python3 is explicitly called from the venv via PATH in Dockerfile
 exec firejail --noprofile --caps.drop=all --seccomp --nonewprivs \
      --private-tmp --read-only=/app --read-write=/app/workspace --read-write=/tmp \
      python3 /app/studio_v3.py
