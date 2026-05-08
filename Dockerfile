@@ -13,11 +13,16 @@ RUN apt update && apt upgrade -y && \
     cosign slsa-verifier syft grype \
     qemu-system-misc qemu-system-x86 qemu-system-riscv32 \
     && npm install -g wrangler && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+    apt clean && rm -rf /var/lib/apt/lists/* && \
+    # Set a restrictive umask for files created during build
+    umask 0022
 
 # STAGE 2: PYTHON BUILDER - Create venv, install Python dependencies, scan deps, PRE-COMPILE PYTHON CODE
 FROM python:3.12-slim AS py_builder
 WORKDIR /app
+# Set a restrictive umask for files created during build
+RUN umask 0022
+
 COPY requirements.txt .
 RUN python -m venv /opt/venv && \
     /opt/venv/bin/pip install --no-cache-dir -U pip wheel && \
@@ -34,14 +39,13 @@ COPY scripts/ /app/scripts/
 COPY tariro_features.py /app/
 COPY tool_forge.py /app/
 COPY litellm_config.yaml /app/
-COPY ENTRYPOINT.sh /app/ # Copy ENTRYPOINT.sh for permissions and later use
+COPY ENTRYPOINT.sh /app/ 
+RUN chmod +x /app/ENTRYPOINT.sh # Ensure ENTRYPOINT.sh is executable early
 
 # Pre-compile Python source files to bytecode and remove source .py files
 RUN /opt/venv/bin/python -m compileall -f /app 
-    # Ensure only .pyc files remain, reducing final image size and source code exposure
     && find /app -name '*.py' -type f -delete 
-    && find /app -name '*.pyc' -exec chmod a+r {} + # Ensure pyc files are readable by nonroot
-
+    && find /app -name '*.pyc' -exec chmod a+r {} + 
 
 # STAGE 3: FINAL - Distroless + Nonroot + ReadOnlyRoot + Seccomp
 FROM gcr.io/distroless/cc-debian12:nonroot
@@ -53,8 +57,11 @@ LABEL org.opencontainers.image.licenses="Apache-2.0"
 USER nonroot:nonroot
 WORKDIR /app
 
+# Set a restrictive umask for files created at runtime (if any)
+RUN umask 0022
+
 # Copy essential tools from toolchain
-COPY --from=toolchain --chown=nonroot:nonroot /usr/bin/curl /usr/bin/ # Curl needed for HEALTHCHECK
+COPY --from=toolchain --chown=nonroot:nonroot /usr/bin/curl /usr/bin/ 
 COPY --from=toolchain --chown=nonroot:nonroot /usr/bin/qemu-system-riscv32 /usr/bin/
 COPY --from=toolchain --chown=nonroot:nonroot /usr/bin/node /usr/bin/
 COPY --from=toolchain --chown=nonroot:nonroot /usr/bin/gh /usr/bin/
@@ -71,8 +78,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 # App code: now copy pre-compiled Python from py_builder stage
 COPY --from=py_builder --chown=nonroot:nonroot /app /app
 
-# Ensure ENTRYPOINT.sh is executable and used
-RUN chmod +x /app/ENTRYPOINT.sh
+# Set ENTRYPOINT
 ENTRYPOINT ["/app/ENTRYPOINT.sh"]
 
 # Security: Read-only rootfs + tmpfs for workspace
@@ -84,5 +90,5 @@ ENV WORKSPACE=/app/workspace
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
   CMD ["/usr/bin/curl", "--fail", "http://localhost:7860/health"] || exit 1
 
-# Final CMD is now in ENTRYPOINT.sh
+# Final CMD is now handled by ENTRYPOINT.sh
 CMD ["python3", "studio_v3.py"]
