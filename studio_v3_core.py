@@ -688,7 +688,7 @@ class TariroStudio:
     # New: Methods to manage background workers
     def start_background_workers(self, num_workers: int = 2):
         if not self.background_workers_started and self.background_worker_framework and hasattr(self.background_worker_framework, "start_worker_pool"):
-            logger.info(f"Starting {num_workers} background worker(s)...")
+            logger.info(f"Starting {num_workers} background worker(s).")
             self.background_worker_framework.start_worker_pool(num_workers)
             self.background_workers_started = True
         else:
@@ -696,7 +696,7 @@ class TariroStudio:
 
     def stop_background_workers(self):
         if self.background_workers_started and self.background_worker_framework and hasattr(self.background_worker_framework, "stop_worker_pool"):
-            logger.info("Stopping background worker(s)...")
+            logger.info("Stopping background worker(s).")
             self.background_worker_framework.stop_worker_pool()
             self.background_workers_started = False
         else:
