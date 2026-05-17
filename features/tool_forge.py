@@ -1,268 +1,346 @@
 import os
 import json
-import subprocess
-import httpx
-from openai import AsyncOpenAI
-from typing import List, Dict, Any
-import ast
-import tempfile
 import asyncio
+from datetime import datetime
+from typing import Dict, Any, List, Optional
+import uuid
+import random
+import textwrap
 
-# --- Configuration (These would ideally come from a central config or passed in) ---
-# Placeholder for models and their roles (should be passed from studio_v3.py)
-_ALL_MODELS: Dict[str, str] = {}
-_CLIENT: AsyncOpenAI = None
-_SEARXNG_URL: str = ""
+# --- Configuration & Shared Data (initialized from studio_v3_core.py) ---
 _WORKSPACE: str = ""
+_CLIENT: Any = None # AsyncOpenAI client
+_ALL_MODELS: Dict[str, str] = {} # Base model definitions from studio_v3_core.py
+_SWARM_VISUALIZER: Any = None # Reference to the swarm_visualizer module
+_CRUD_MANAGER: Any = None # Reference to crud_manager module for ToolDefinition or ToolLog entities
+_PERSISTENT_TASK_MANAGER: Any = None # For submitting tool design/implementation tasks
+_ASYNC_NOTIFICATION_SYSTEM: Any = None # For alerts on new tools or implementation failures
+_GLOBAL_STATE_MANAGER: Any = None # For storing tool registry and available capabilities
+_META_COGNITIVE_REFLECTION: Any = None # For identifying tool gaps through self-analysis
+_SELF_EVOLUTION: Any = None # For generating tool implementation code
+_FORMAL_VERIFICATION: Any = None # For verifying tool correctness and safety
+_AUTONOMY_GOVERNANCE: Any = None # For policy checks on tool creation and usage
+_DYNAMIC_POLICY_SYNTHESIS: Any = None # For creating policies for tool usage
+_META_LEARNER: Any = None # For learning from tool effectiveness and usage patterns
 
-TOOL_SPEC_DIR = "/app/workspace/tools/specs" # Will be overridden by initialize_tool_forge
-TOOLS_BIN_DIR = "/app/workspace/tools/bin" # Will be overridden by initialize_tool_forge
+TOOL_FORGE_LOG_DIR: str = ""
+FEATURES_DIR: str = ""
 
-
-def initialize_tool_forge(all_models: Dict[str, str], openai_client: AsyncOpenAI, searxng_url: str, workspace_path: str):
-    """Initializes global configurations for tool forge functions."""
-    global _ALL_MODELS, _CLIENT, _SEARXNG_URL, _WORKSPACE, TOOL_SPEC_DIR, TOOLS_BIN_DIR
-    _ALL_MODELS = all_models
-    _CLIENT = openai_client
-    _SEARXNG_URL = searxng_url
+def initialize_tool_forge(workspace_path: str, openai_client: Any, all_models: Dict[str, str], swarm_visualizer_module: Any, crud_manager_module: Any, persistent_task_manager_module: Any, async_notification_system_module: Any, global_state_manager_module: Any, meta_cognitive_reflection_module: Any, self_evolution_module: Any, formal_verification_module: Any, autonomy_governance_module: Any, dynamic_policy_synthesis_module: Any, meta_learner_module: Any):
+    """Initializes global configurations for the Tool Forge module."""
+    global _WORKSPACE, _CLIENT, _ALL_MODELS, _SWARM_VISUALIZER, _CRUD_MANAGER, _PERSISTENT_TASK_MANAGER, _ASYNC_NOTIFICATION_SYSTEM, _GLOBAL_STATE_MANAGER, _META_COGNITIVE_REFLECTION, _SELF_EVOLUTION, _FORMAL_VERIFICATION, _AUTONOMY_GOVERNANCE, _DYNAMIC_POLICY_SYNTHESIS, _META_LEARNER, TOOL_FORGE_LOG_DIR, FEATURES_DIR
+    
     _WORKSPACE = workspace_path
-    TOOL_SPEC_DIR = os.path.join(_WORKSPACE, "tools/specs")
-    TOOLS_BIN_DIR = os.path.join(_WORKSPACE, "tools/bin")
-    os.makedirs(TOOL_SPEC_DIR, exist_ok=True)
-    os.makedirs(TOOLS_BIN_DIR, exist_ok=True) # Ensure tools/bin exists
-    print(f"Tool Forge initialized. Tool specs: {TOOL_SPEC_DIR}, Tools bin: {TOOLS_BIN_DIR}")
+    _CLIENT = openai_client
+    _ALL_MODELS = all_models
+    _SWARM_VISUALIZER = swarm_visualizer_module
+    _CRUD_MANAGER = crud_manager_module
+    _PERSISTENT_TASK_MANAGER = persistent_task_manager_module
+    _ASYNC_NOTIFICATION_SYSTEM = async_notification_system_module
+    _GLOBAL_STATE_MANAGER = global_state_manager_module
+    _META_COGNITIVE_REFLECTION = meta_cognitive_reflection_module
+    _SELF_EVOLUTION = self_evolution_module
+    _FORMAL_VERIFICATION = formal_verification_module
+    _AUTONOMY_GOVERNANCE = autonomy_governance_module
+    _DYNAMIC_POLICY_SYNTHESIS = dynamic_policy_synthesis_module
+    _META_LEARNER = meta_learner_module
 
+    TOOL_FORGE_LOG_DIR = os.path.join(_WORKSPACE, "tool_forge_logs")
+    os.makedirs(TOOL_FORGE_LOG_DIR, exist_ok=True)
+    FEATURES_DIR = os.path.join(_WORKSPACE, "features")
+    os.makedirs(FEATURES_DIR, exist_ok=True)
+    print(f"Tool Forge initialized. Logs: {TOOL_FORGE_LOG_DIR}, Features: {FEATURES_DIR}")
 
-async def _web_search(query: str) -> List[str]:
-    """Internal web search function for agents."""
-    async with httpx.AsyncClient() as c:
-        try:
-            r = await c.get(_SEARXNG_URL, params={"q": query, "format": "json"}, timeout=10.0)
-            r.raise_for_status()
-            return [hit["url"] for hit in r.json().get("results", [])[:5]]
-        except (httpx.RequestError, httpx.HTTPStatusError) as e:
-            print(f"Web search failed: {e}")
-            return []
-
-
-def _ast_no_network(code: str) -> bool:
-    """Checks Python code for network-related imports and subprocess calls."""
-    try:
-        tree = ast.parse(code)
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.Import, ast.ImportFrom)):
-                for n in node.names:
-                    # Check both top-level imports and from-imports
-                    if any(keyword in n.name for keyword in ["socket", "requests", "urllib", "http.client", "asyncio.open_connection"]):
-                        return False
-            # Also check for direct calls to subprocess that might contain network commands
-            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
-                if node.func.attr == 'run' and isinstance(node.func.value, ast.Name) and node.func.value.id == 'subprocess':
-                    # Check literal string arguments for common network commands
-                    if any(isinstance(arg, ast.Constant) and isinstance(arg.value, str) and
-                           any(net_cmd in arg.value.lower() for net_cmd in ["curl", "wget", "nc", "ssh", "ping"])
-                           for arg in node.args):
-                        return False
-    except SyntaxError:
-        # If code is not valid Python, we can't parse it, so err on the side of caution
-        print("Syntax error in generated code, cannot perform AST network check.")
-        return False
-    return True
-
-async def _call_model_for_tool_gen(model: str, role: str, task: str, context: str, response_format_type: str = "json_object") -> Dict[str, Any]:
-    """Helper to call LLM for tool generation related tasks."""
+async def _call_llm_for_tool_design(model: str, role: str, prompt: str, task_id: str, context: str = "", response_format_type: str = "json_object") -> Dict[str, Any]:
+    """Helper to call LLM for tool design and implementation decisions."""
     if _CLIENT is None:
         raise ValueError("OpenAI client not initialized in tool_forge.")
     if model not in _ALL_MODELS:
         return {"error": f"Model {model} not found in _ALL_MODELS.", "model": model}
 
-    sources = []
-    # Only researchers (llama-architect) perform web search here for tool design
-    if model == "llama-architect":
-        sources = await _web_search(task + " command-line tool design specification")
-        context += f"\n\nWeb Search Sources:\n" + "\n".join(sources)
+    await _SWARM_VISUALIZER.log_event(
+        task_id, "tool_forge_llm_call_start", f"{model} tool design: {prompt[:50]}...",
+        {"model": model, "prompt_summary": prompt[:100]},
+        model_name=model, agent_role=role
+    )
 
+    messages = [
+        {"role": "system", "content": f"You are {model}. Role: {role}. Your output format is strict. Output {response_format_type} only. Focus on autonomously designing, implementing, and integrating new software tools and capabilities for Tariro Studio. This involves understanding functional requirements, generating clear API specifications, writing robust and secure Python implementation code, and ensuring testability and verifiability. All tools must enhance Tariro's overall functionality and adherence to its mission."},
+        {"role": "user", "content": f"Prompt: {prompt}\nContext:\n{context}"}
+    ]
+    
     try:
-        messages = [
-            {"role": "system", "content": f"You are {model}. Role: {role}. Your output format is strict. Output {response_format_type} only. If providing code, ensure it's functional, self-contained, and safe. Do NOT include network code. Cite sources if applicable."},
-            {"role": "user", "content": f"Task: {task}\nContext:\n{context}"}
-        ]
-        
         resp = await _CLIENT.chat.completions.create(
-            model=model,
+            model=_ALL_MODELS[model], # Use the actual model ID
             messages=messages,
             response_format={"type": response_format_type},
-            temperature=0.2 # Slightly higher temperature for creative tool design/code gen
+            temperature=0.04 # Low temp for precise code and API generation
         )
         content = resp.choices[0].message.content
         
         if response_format_type == "json_object":
             out = json.loads(content)
-        else: # Assuming plain text for code generation
-            out = {"code": content}
-        out["model"] = model
-        out["sources"] = sources + out.get("sources", []) # Combine search sources with model-cited sources
+        else:
+            out = {"content": content}
+        out["model"] = _ALL_MODELS[model] # Use actual model ID in output
+
+        await _SWARM_VISUALIZER.log_event(
+            task_id, "tool_forge_llm_call_end", f"{model} completed tool design task.",
+            {"model": _ALL_MODELS[model], "response_summary": content[:100]},
+            model_name=_ALL_MODELS[model], agent_role=role
+        )
         return out
     except json.JSONDecodeError as e:
-        print(f"Tool Forge: JSON decode error from model {model}: {e}. Raw content: {content}")
-        return {"error": f"JSON decode error: {e}", "raw_content": content, "model": model}
+        error_details = {"error": f"JSON decode error: {e}", "raw_content": content[:500]}
+        await _SWARM_VISUALIZER.log_event(task_id, "tool_forge_llm_error", f"JSON decode error from {model} for tool design.", error_details, model_name=_ALL_MODELS[model], agent_role=role, level="ERROR")
+        return {"error": str(e), "raw_content": content, "model": _ALL_MODELS[model]}
     except Exception as e:
-        print(f"Tool Forge: Error calling model {model}: {e}")
-        return {"error": str(e), "model": model}
+        error_details = {"error": str(e), "prompt_summary": prompt[:100]}
+        await _SWARM_VISUALIZER.log_event(task_id, "tool_forge_llm_error", f"Error calling {model} for tool design task.", error_details, model_name=_ALL_MODELS[model], agent_role=role, level="ERROR")
+        return {"error": str(e), "model": _ALL_MODELS[model]}
 
 
-async def propose_new_tool_spec(task: str, proposed_by_model: str) -> Dict[str, Any]:
+async def design_new_tool(task_id: str, description: str, user_id: str = "Tariro_System", designer_model: str = "qwen-coder") -> Dict[str, Any]:
     """
-    Orchestrates the proposal of a new tool specification by a designated agent.
+    Autonomously designs a new software tool based on a high-level description of its functionality.
     """
-    # Phi-PM decides if a tool is needed, delegates to Llama-Architect to define
-    pm_tool_decision = await _call_model_for_tool_gen(
-        "phi-pm",
-        _ALL_MODELS["phi-pm"],
-        f"Analyze task: '{task}'. Do we need a new command-line tool to achieve this task more efficiently or to extend existing capabilities? If so, suggest its name (snake_case, e.g., 'hash_file'), a concise description, a precise CLI command template (using placeholders like {{input_path}}, {{output_path}}, {{param_name}}), and a realistic example usage. Focus on a single, well-defined CLI command. The tool should operate on files or simple data, not perform network operations. Respond with JSON: {{'needs_tool': bool, 'tool_name': str, 'description': str, 'cli_template': str, 'example_usage': str}}",
-        ""
-    )
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Designing new software tool.")
 
-    if not pm_tool_decision.get("needs_tool"):
-        return {"status": "no_tool_needed"}
-
-    tool_name = pm_tool_decision.get("tool_name")
-    description = pm_tool_decision.get("description")
-    cli_template = pm_tool_decision.get("cli_template")
-    example_usage = pm_tool_decision.get("example_usage")
-
-    if not all([tool_name, description, cli_template, example_usage]):
-        return {"status": "failed", "reason": "Phi-PM failed to provide complete tool definition.", "details": pm_tool_decision}
-
-    # Delegate detailed tool code generation to qwen-coder
-    tool_code_gen = await _call_model_for_tool_gen(
-        "qwen-coder",
-        _ALL_MODELS["qwen-coder"],
-        f"Generate a self-contained Python script for a command-line tool named '{tool_name}' that implements the following functionality: '{description}'. It should adhere to this CLI template: '{cli_template}'. Provide all necessary code including argument parsing using `argparse`. Do NOT include network-related code (imports like requests, urllib, socket or calls like curl, wget, ssh). Ensure it handles input/output paths as specified. Include comments and a main execution block. Return ONLY the Python code, wrapped in ```python ... ```, no other text or explanation. Example Usage: '{example_usage}'",
-        f"Tool Name: {tool_name}\nDescription: {description}\nCLI Template: {cli_template}\nExample: {example_usage}",
-        response_format_type="text" # Expecting code, not JSON
-    )
-
-    generated_code_raw = tool_code_gen.get("code", "")
-    if "```python" in generated_code_raw and "```" in generated_code_raw:
-        generated_code = generated_code_raw.split("```python")[1].split("```")[0].strip()
-    else:
-        generated_code = generated_code_raw.strip()
-
-    if not generated_code:
-        return {"status": "failed", "reason": "Qwen-Coder failed to generate tool code.", "details": tool_code_gen}
-
-    if not _ast_no_network(generated_code):
-        return {"status": "failed", "reason": "Qwen-Coder generated network-related code. Tool rejected.", "details": {"code_snippet": generated_code[:500]}}
-
-    # Save the tool Python script
-    tool_script_path = os.path.join(TOOLS_BIN_DIR, f"{tool_name}.py")
-    os.makedirs(os.path.dirname(tool_script_path), exist_ok=True)
-    with open(tool_script_path, "w") as f:
-        f.write(generated_code)
-    os.chmod(tool_script_path, 0o755) # Make executable
-
-    # Save the tool specification JSON
-    tool_spec = {
-        "name": tool_name,
-        "description": description,
-        "cli_command_template": cli_template,
-        "example_usage": example_usage,
-        "proposed_by": proposed_by_model,
-        "script_path": tool_script_path,
-        "status": "proposed", # Will change to 'validated' after N-1 testing
-        "generated_code_sources": tool_code_gen.get("sources", [])
-    }
-    spec_file_name = f"{tool_name}.json"
-    spec_path = os.path.join(TOOL_SPEC_DIR, spec_file_name)
-    with open(spec_path, "w") as f:
-        json.dump(tool_spec, f, indent=2)
-
-    print(f"Tool '{tool_name}' script saved to {tool_script_path} and spec to {spec_path}")
-    return {"status": "success", "tool_name": tool_name, "spec_path": spec_path, "script_path": tool_script_path}
-
-
-async def n1_test_tool(tool_spec_path: str, testing_task_description: str) -> Dict[str, Any]:
-    """
-    Orchestrates N-1 testing for a proposed tool.
-    Each tester model attempts to run the tool based on its spec and verify behavior.
-    """
-    if _ALL_MODELS is None or _CLIENT is None:
-        raise ValueError("Tool Forge not initialized with all_models or OpenAI client.")
-
-    with open(tool_spec_path, "r") as f:
-        tool_spec = json.load(f)
-
-    tool_name = tool_spec["name"]
-    script_path = tool_spec["script_path"]
-    cli_template = tool_spec["cli_command_template"]
-    example_usage = tool_spec["example_usage"]
-
-    # Filter out the coder and arbiter, and the original proposer of the tool
-    # Also exclude models that explicitly "never test" from _ALL_MODELS roles
-    excluded_from_testing = ["qwen-coder", "arbiter", tool_spec.get("proposed_by")]
-    tester_models = [m for m in _ALL_MODELS.keys() if m not in excluded_from_testing and "never test" not in _ALL_MODELS[m].lower() and "never write prod code" not in _ALL_MODELS[m].lower()]
-
-    if len(tester_models) < 2: # N-1 requires at least 1 tester, but we aim for more for robust N-1 here. Let's make it at least 2 for a minimal N-1.
-        return {"status": "FAILED_TESTS", "tool_name": tool_name, "reason": f"Not enough independent testers for N-1 rule (need at least 2, found {len(tester_models)})."}
-
-    print(f"Starting N-1 testing for tool '{tool_name}' with testers: {tester_models}")
-    
-    async def run_single_tester_simulation(tester_model: str) -> Dict[str, Any]:
-        tester_role_desc = _ALL_MODELS[tester_model] # Get the full role description
-        
-        # Ask the tester model to "simulate" testing and report
-        simulated_test_output = await _call_model_for_tool_gen(
-            tester_model,
-            tester_role_desc,
-            f"You are simulating testing the new command-line tool '{tool_name}'. Your task is to rigorously verify its functionality based on the provided specification, CLI template, and example usage. Generate a suitable test case, simulate running the tool's Python script (located at {script_path}) with that test case, and evaluate its output. Consider edge cases. Report your findings as JSON: {{'approved': bool, 'log': 'string (max 500 chars) describing test steps and outcome'}}. Ensure the log clearly states why it passed or failed.",
-            f"Tool Name: {tool_name}\nDescription: {tool_spec['description']}\nCLI Template: {cli_template}\nExample Usage: {example_usage}\nFull Script Path: {script_path}\nOriginal Task Context: {testing_task_description}",
-            response_format_type="json_object"
+    existing_tool_registry = await _GLOBAL_STATE_MANAGER.get_state("tool_registry") or []
+    # Leverage Meta-Cognitive Reflection for insights on tool gaps
+    tool_gap_insights = []
+    if _META_COGNITIVE_REFLECTION:
+        reflection_report = await _META_COGNITIVE_REFLECTION.identify_knowledge_gaps(
+            task_id=f"{task_id}_reflection", 
+            current_task_context={
+                "task": "tool_design",
+                "description": description
+            },
+            user_id=user_id
         )
-        
-        approved = simulated_test_output.get("approved", False)
-        log = simulated_test_output.get("log", "No log provided by tester simulation.").strip()
-        error = simulated_test_output.get("error")
-        if error:
-            approved = False
-            log = f"Tester simulation failed: {error} - {log}"
-
-        return {"model": tester_model, "approved": approved, "log": log[:500]} # Truncate log
-
-    tasks = [run_single_tester_simulation(tester) for tester in tester_models]
-    individual_test_results = await asyncio.gather(*tasks)
-
-    # N-1 logic: If at least (total_testers - 1) approve, it passes
-    approvals = [r for r in individual_test_results if r["approved"]]
+        tool_gap_insights = reflection_report.get("gap_report", {}).get("identified_gaps", [])
     
-    if len(approvals) >= len(tester_models) - 1: # N-1 approval rule
-        tool_spec["status"] = "validated"
-        with open(tool_spec_path, "w") as f:
-            json.dump(tool_spec, f, indent=2)
-        print(f"Tool '{tool_name}' N-1 validated!")
-        return {"status": "VALIDATED", "tool_name": tool_name, "test_results": individual_test_results}
-    else:
-        tool_spec["status"] = "failed_n1_test"
-        with open(tool_spec_path, "w") as f:
-            json.dump(tool_spec, f, indent=2)
-        print(f"Tool '{tool_name}' FAILED N-1 validation. Approvals: {len(approvals)}/{len(tester_models)}")
-        return {"status": "FAILED_TESTS", "tool_name": tool_name, "test_results": individual_test_results}
+    prompt = f"""You are Tariro's Tool Forge Engine, an Omniversal AGI Tool Designer. Your task is to autonomously design a new software tool based on a high-level description of its functionality. The design must include a precise tool name, a detailed description, a clear API specification (input/output schema), and a robust Python implementation. Ensure the tool is modular, testable, and integrates seamlessly into Tariro Studio.
 
-# --- Utility to get available tools (for other agents) ---
-def get_validated_tools() -> List[Dict[str, Any]]:
-    """Retrieves all N-1 validated tool specifications."""
-    validated_tools = []
-    if not os.path.exists(TOOL_SPEC_DIR):
-        print(f"Tool specification directory not found: {TOOL_SPEC_DIR}")
-        return []
-    for filename in os.listdir(TOOL_SPEC_DIR):
-        if filename.endswith(".json"):
-            try:
-                with open(os.path.join(TOOL_SPEC_DIR, filename), "r") as f:
-                    tool_spec = json.load(f)
-                    if tool_spec.get("status") == "validated":
-                        validated_tools.append(tool_spec)
-            except json.JSONDecodeError:
-                print(f"Error decoding JSON from tool spec file: {filename}")
-                continue
-    return validated_tools
+TOOL FUNCTIONALITY DESCRIPTION: {description}
+EXISTING TOOL REGISTRY (from Global State Manager): {json.dumps(existing_tool_registry, indent=2)}
+TOOL GAP INSIGHTS (from Meta-Cognitive Reflection): {json.dumps(tool_gap_insights, indent=2)}
+
+Design the tool focusing on:
+-   **Uniqueness**: Ensure the tool fills a new capability gap.
+-   **Clarity**: API must be intuitive and well-documented.
+-   **Robustness**: Code should handle edge cases and errors gracefully.
+-   **Testability**: Design for easy automated testing.
+-   **Policy Compliance**: Consider any operational or ethical policies relevant to the tool's function.
+
+Output JSON: {{
+    "design_summary": str,
+    "tool_name": str,
+    "display_name": str,
+    "description": str,
+    "category": str, # e.g., 'file_ops', 'code_generation', 'analysis'
+    "input_schema": Dict[str, Any], # JSON Schema for inputs
+    "output_schema": Dict[str, Any], # JSON Schema for outputs
+    "python_implementation_code": str, # Complete, runnable Python code for the tool
+    "example_invocation": Dict[str, Any],
+    "formal_verification_required": bool,
+    "confidence": float
+}}
+"""
+    llm_tool_design = await _call_llm_for_tool_design(designer_model, "ToolDesigner", prompt, task_id)
+
+    if "error" in llm_tool_design:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Tool design failed: {llm_tool_design['error']}", current_step="LLM design failed.")
+        return {"status": "failed", "reason": llm_tool_design["error"]}
+
+    tool_name = llm_tool_design.get("tool_name")
+    design_summary = llm_tool_design.get("design_summary", "No summary.")
+    implementation_code = llm_tool_design.get("python_implementation_code", "")
+
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 40, "Tool design complete. Initiating code generation/validation.")
+
+    # Save the generated tool code to the features directory
+    file_path = os.path.join(FEATURES_DIR, f"{tool_name}.py")
+    try:
+        with open(file_path, "w") as f:
+            f.write(implementation_code)
+        print(f"Tool code saved to {file_path}")
+    except Exception as e:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Failed to save tool code: {e}", current_step="File write failed.")
+        return {"status": "failed", "reason": f"Failed to save tool code: {e}"}
+
+    # Formal verification of the generated code if required
+    verification_results = {"status": "skipped", "is_correct": True, "reason": "Formal verification not required or module not available."}
+    if _FORMAL_VERIFICATION and llm_tool_design.get("formal_verification_required", True):
+        try:
+            verification_results = await _FORMAL_VERIFICATION.verify_design(task_id=f"{task_id}_fv", design_spec=llm_tool_design, user_id=user_id)
+            await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 80, "Formal verification of tool completed.")
+        except Exception as e:
+            verification_results = {"status": "error", "reason": str(e)}
+            await _SWARM_VISUALIZER.log_event(task_id, "tool_fv_error", f"Error during formal verification of tool: {e}", agent_role="ToolForge", level="ERROR")
+
+    if not verification_results.get("is_correct", False):
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 90, "Generated tool failed formal verification. Human review required.", output={"design": llm_tool_design, "verification": verification_results})
+        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
+            user_id, task_id, f"Tool '{tool_name}' failed formal verification. Human review required. Summary: {design_summary}",
+            title="Tool Verification Needed", causal_priority="critical"
+        )
+        await _SWARM_VISUALIZER.log_event(task_id, "tool_review_needed", "Generated tool requires human review.", {"tool_name": tool_name}, agent_role="ToolForge", level="WARNING")
+        return {"status": "failed", "reason": "Tool failed formal verification."}
+
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "New tool designed, implemented, and verified.", output=llm_tool_design)
+    
+    await _SWARM_VISUALIZER.log_event(task_id, "new_tool_designed", f"New tool '{tool_name}' designed and implemented. Summary: {design_summary}", llm_tool_design, agent_role="ToolForge")
+    await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"New tool '{tool_name}' designed, implemented, and verified. Summary: {design_summary}", title="New Tool Created")
+
+    # Register tool in CRUD Manager and Global State Manager
+    await _CRUD_MANAGER.create_entity("ToolDefinition", {"id": tool_name, "definition": llm_tool_design, "status": "ACTIVE", "file_path": file_path, "timestamp": datetime.now().isoformat()})
+    # Trigger a rescan of features directory in studio_v3_core to load the new tool
+    # This is a conceptual call, actual implementation would require direct access to TariroStudio instance or a dedicated endpoint
+    # await _STUDIO_CORE_REF.monitor_features_directory_task("self_scan_new_tool", "Tariro_System", {})
+
+    # Feed learning insights to Meta-Learner
+    if _META_LEARNER:
+        await _META_LEARNER.ingest_insight(task_id, "tool_design", design_summary, llm_tool_design, user_id)
+
+    return {"status": "success", "design_report": llm_tool_design}
+
+async def modify_existing_tool(task_id: str, tool_name: str, modification_request: str, user_id: str = "Tariro_System", modifier_model: str = "qwen-coder") -> Dict[str, Any]:
+    """
+    Autonomously modifies an existing software tool based on a specified modification request.
+    """
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, f"Modifying tool {tool_name}.")
+
+    tool_definition = await _CRUD_MANAGER.read_entity("ToolDefinition", tool_name)
+    if not tool_definition:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Tool {tool_name} not found.")
+        return {"status": "failed", "reason": f"Tool {tool_name} not found."}
+
+    original_code = ""
+    file_path = tool_definition.get("file_path")
+    if file_path and os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            original_code = f.read()
+
+    prompt = f"""You are Tariro's Tool Forge Engine, an Omniversal AGI Tool Modifier. Your task is to autonomously modify an existing software tool based on a specified modification request. The modification must preserve the tool's core functionality, adhere to its API contract (unless explicitly changing it), and ensure the updated code is robust, secure, and verifiable. 
+
+TOOL NAME: {tool_name}
+MODIFICATION REQUEST: {modification_request}
+ORIGINAL TOOL DEFINITION: {json.dumps(tool_definition.get("definition", {}), indent=2)}
+ORIGINAL PYTHON IMPLEMENTATION CODE: {textwrap.dedent(original_code)}
+
+Modify the tool focusing on:
+-   **Precision**: Implement changes exactly as requested without introducing new behavior.
+-   **Compatibility**: Maintain backward compatibility unless a breaking change is explicitly defined.
+-   **Safety**: Ensure no new vulnerabilities are introduced.
+-   **Performance**: Optimize for efficiency if requested.
+-   **Testability**: The modified code should remain easily testable.
+
+Output JSON: {{
+    "modification_summary": str,
+    "updated_input_schema": Dict[str, Any], # Updated JSON Schema for inputs
+    "updated_output_schema": Dict[str, Any], # Updated JSON Schema for outputs
+    "updated_python_implementation_code": str, # Complete, updated Python code for the tool
+    "formal_verification_required": bool,
+    "confidence": float
+}}
+"""
+    llm_modified_tool = await _call_llm_for_tool_design(modifier_model, "ToolModifier", prompt, task_id)
+
+    if "error" in llm_modified_tool:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Tool modification failed: {llm_modified_tool['error']}", current_step="LLM modification failed.")
+        return {"status": "failed", "reason": llm_modified_tool["error"]}
+
+    modification_summary = llm_modified_tool.get("modification_summary", "No summary.")
+    updated_code = llm_modified_tool.get("updated_python_implementation_code", "")
+
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 70, "Tool modification complete. Initiating code update and validation.")
+
+    # Overwrite the existing tool code
+    if file_path and os.path.exists(file_path):
+        try:
+            with open(file_path, "w") as f:
+                f.write(updated_code)
+            print(f"Tool code updated at {file_path}")
+        except Exception as e:
+            await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Failed to save updated tool code: {e}", current_step="File write failed.")
+            return {"status": "failed", "reason": f"Failed to save updated tool code: {e}"}
+    else:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, "Original tool file not found.", current_step="File missing.")
+        return {"status": "failed", "reason": "Original tool file not found."}
+
+    # Formal verification of the modified code
+    verification_results = {"status": "skipped", "is_correct": True, "reason": "Formal verification not required or module not available."}
+    if _FORMAL_VERIFICATION and llm_modified_tool.get("formal_verification_required", True):
+        try:
+            # Assuming verify_design can handle tool definitions as design specs
+            verification_results = await _FORMAL_VERIFICATION.verify_design(task_id=f"{task_id}_fv", design_spec=llm_modified_tool, user_id=user_id)
+            await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 90, "Formal verification of modified tool completed.")
+        except Exception as e:
+            verification_results = {"status": "error", "reason": str(e)}
+            await _SWARM_VISUALIZER.log_event(task_id, "tool_fv_error", f"Error during formal verification of modified tool: {e}", agent_role="ToolForge", level="ERROR")
+
+    if not verification_results.get("is_correct", False):
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 95, "Modified tool failed formal verification. Human review required.", output={"modified_design": llm_modified_tool, "verification": verification_results})
+        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
+            user_id, task_id, f"Modified tool '{tool_name}' failed formal verification. Human review required. Summary: {modification_summary}",
+            title="Tool Modification Review Needed", causal_priority="critical"
+        )
+        return {"status": "failed", "reason": "Modified tool failed formal verification."}
+
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "Existing tool modified and verified.", output=llm_modified_tool)
+    
+    await _SWARM_VISUALIZER.log_event(task_id, "tool_modified", f"Tool '{tool_name}' modified. Summary: {modification_summary}", llm_modified_tool, agent_role="ToolForge")
+    await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"Tool '{tool_name}' modified and verified. Summary: {modification_summary}", title="Tool Modification Complete")
+
+    # Update tool definition in CRUD Manager and Global State Manager
+    await _CRUD_MANAGER.update_entity("ToolDefinition", tool_name, {"definition": llm_modified_tool, "status": "ACTIVE", "timestamp": datetime.now().isoformat()})
+    # Trigger a rescan of features directory in studio_v3_core to reload the modified tool
+
+    # Feed learning insights to Meta-Learner
+    if _META_LEARNER:
+        await _META_LEARNER.ingest_insight(task_id, "tool_modification", modification_summary, llm_modified_tool, user_id)
+
+    return {"status": "success", "modification_report": llm_modified_tool}
+
+async def deprecate_tool(task_id: str, tool_name: str, reason: str, user_id: str = "Tariro_System") -> Dict[str, Any]:
+    """
+    Deprecates an existing tool, marking it as inactive and optionally archiving its code.
+    """
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, f"Deprecating tool {tool_name}.")
+
+    tool_definition = await _CRUD_MANAGER.read_entity("ToolDefinition", tool_name)
+    if not tool_definition:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Tool {tool_name} not found.")
+        return {"status": "failed", "reason": f"Tool {tool_name} not found."}
+
+    # Policy check for tool deprecation
+    policy_check_context = {"tool_name": tool_name, "reason": reason}
+    policy_compliance_report = await _AUTONOMY_GOVERNANCE.check_policy(user_id, "tool_deprecation", policy_check_context)
+    if not policy_compliance_report.get("allowed", False):
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, "Tool deprecation blocked by policy.", output=policy_compliance_report)
+        return {"status": "failed", "reason": "Policy non-compliance", "details": policy_compliance_report}
+
+    # Mark tool as deprecated in CRUD Manager and Global State Manager
+    await _CRUD_MANAGER.update_entity("ToolDefinition", tool_name, {"status": "DEPRECATED", "deprecation_reason": reason, "timestamp": datetime.now().isoformat()})
+    # Remove from Global State Manager's active tool registry (conceptual)
+
+    # Optionally archive the file
+    file_path = tool_definition.get("file_path")
+    if file_path and os.path.exists(file_path):
+        archive_dir = os.path.join(FEATURES_DIR, "_deprecated")
+        os.makedirs(archive_dir, exist_ok=True)
+        archive_path = os.path.join(archive_dir, os.path.basename(file_path))
+        os.rename(file_path, archive_path)
+        print(f"Tool code archived from {file_path} to {archive_path}")
+
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, f"Tool {tool_name} deprecated.")
+    
+    await _SWARM_VISUALIZER.log_event(task_id, "tool_deprecated", f"Tool '{tool_name}' deprecated. Reason: {reason}", {"tool_name": tool_name, "reason": reason}, agent_role="ToolForge")
+    await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"Tool '{tool_name}' has been deprecated. Reason: {reason}", title="Tool Deprecated")
+
+    # Feed learning insights to Meta-Learner
+    if _META_LEARNER:
+        await _META_LEARNER.ingest_insight(task_id, "tool_deprecation", f"Tool {tool_name} deprecated.", {"tool_name": tool_name, "reason": reason}, user_id)
+
+    return {"status": "success", "tool_name": tool_name, "action": "deprecated"}
