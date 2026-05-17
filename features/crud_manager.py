@@ -1,139 +1,152 @@
 import os
 import json
+import asyncio
 from datetime import datetime
 from typing import Dict, Any, List, Optional
 import uuid
 
-# --- Configuration & Shared Data (initialized from studio_v3.py) ---
+# --- Configuration & Shared Data ---
 _WORKSPACE: str = ""
-_SWARM_VISUALIZER: Any = None # Reference to the swarm_visualizer module
+_POLICY_AUDIT_TRAIL: Any = None # Reference to Policy Audit Trail module
 
-ENTITY_DATA_DIR: str = ""
+CRUD_MANAGER_LOG_DIR: str = ""
 
-def initialize_crud_manager(workspace_path: str, swarm_visualizer_module: Any):
-    """Initializes global configurations for the CRUD Manager."""
-    global _WORKSPACE, _SWARM_VISUALIZER, ENTITY_DATA_DIR
+# In-memory mock database for entities. In a real system, this would be a persistent DB.
+_MOCKED_DATABASE: Dict[str, Dict[str, Any]] = {}
+
+def initialize_crud_manager(workspace_path: str, policy_audit_trail_module: Any):
+    """Initializes global CRUD configurations."""
+    global _WORKSPACE, _POLICY_AUDIT_TRAIL, CRUD_MANAGER_LOG_DIR
+    
     _WORKSPACE = workspace_path
-    _SWARM_VISUALIZER = swarm_visualizer_module
+    _POLICY_AUDIT_TRAIL = policy_audit_trail_module
 
-    ENTITY_DATA_DIR = os.path.join(_WORKSPACE, "entity_data")
-    os.makedirs(ENTITY_DATA_DIR, exist_ok=True)
-    print(f"CRUD Manager initialized. Entity data: {ENTITY_DATA_DIR}")
+    CRUD_MANAGER_LOG_DIR = os.path.join(_WORKSPACE, "crud_manager_logs")
+    os.makedirs(CRUD_MANAGER_LOG_DIR, exist_ok=True)
+    print(f"CRUD Manager initialized. Logs: {CRUD_MANAGER_LOG_DIR}")
 
-def _get_entity_file_path(entity_name: str) -> str:
-    """Returns the file path for a given entity type."""
-    return os.path.join(ENTITY_DATA_DIR, f"{entity_name.lower()}.json")
-
-def _load_entities(entity_name: str) -> List[Dict[str, Any]]:
-    """Loads all records for a given entity type."""
-    file_path = _get_entity_file_path(entity_name)
-    if os.path.exists(file_path):
-        with open(file_path, "r") as f:
-            try:
-                return json.load(f)
-            except json.JSONDecodeError:
-                return [] # Return empty list if file is corrupted
-    return []
-
-def _save_entities(entity_name: str, entities: List[Dict[str, Any]]):
-    """Saves all records for a given entity type."""
-    file_path = _get_entity_file_path(entity_name)
-    with open(file_path, "w") as f:
-        json.dump(entities, f, indent=2)
-
-async def create_entity(task_id: str, entity_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-    """Creates a new entity record."""
-    entities = _load_entities(entity_name)
-    new_id = str(uuid.uuid4())
-    new_entity = {
-        "id": new_id,
-        "created_at": datetime.now().isoformat(),
-        **data
-    }
-    entities.append(new_entity)
-    _save_entities(entity_name, entities)
-
-    await _SWARM_VISUALIZER.log_event(
-        task_id, "crud_create", f"Created new {entity_name} record.",
-        {"entity_name": entity_name, "id": new_id, "data_summary": json.dumps(data)[:100]},
-        model_name="human", agent_role="user"
-    )
-    print(f"Created new {entity_name} with ID: {new_id}")
-    return {"status": "success", "id": new_id, "entity": new_entity}
-
-async def read_entities(task_id: str, entity_name: str, query: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
-    """Reads entity records, optionally filtered by query."""
-    entities = _load_entities(entity_name)
-    if query:
-        filtered_entities = []
-        for entity in entities:
-            match = True
-            for key, value in query.items():
-                if entity.get(key) != value:
-                    match = False
-                    break
-            if match:
-                filtered_entities.append(entity)
-        entities = filtered_entities
-
-    await _SWARM_VISUALIZER.log_event(
-        task_id, "crud_read", f"Read {len(entities)} {entity_name} records.",
-        {"entity_name": entity_name, "query_summary": json.dumps(query)[:100] if query else "None"},
-        model_name="human", agent_role="user"
-    )
-    print(f"Read {len(entities)} {entity_name} records.")
-    return entities
-
-async def update_entity(task_id: str, entity_name: str, entity_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
-    """Updates an existing entity record."""
-    entities = _load_entities(entity_name)
-    found = False
-    updated_entity = None
-    for i, entity in enumerate(entities):
-        if entity.get("id") == entity_id:
-            entities[i] = {**entity, **updates, "updated_at": datetime.now().isoformat()}
-            updated_entity = entities[i]
-            found = True
-            break
+async def create_entity(entity_type: str, data: Dict[str, Any], user_id: str = "Tariro_System") -> Dict[str, Any]:
+    """
+    Creates a new entity of a given type.
     
-    if found:
-        _save_entities(entity_name, entities)
-        await _SWARM_VISUALIZER.log_event(
-            task_id, "crud_update", f"Updated {entity_name} record {entity_id}.",
-            {"entity_name": entity_name, "id": entity_id, "updates_summary": json.dumps(updates)[:100]},
-            model_name="human", agent_role="user"
-        )
-        print(f"Updated {entity_name} with ID: {entity_id}")
-        return {"status": "success", "id": entity_id, "entity": updated_entity}
-    else:
-        await _SWARM_VISUALIZER.log_event(
-            task_id, "crud_update_fail", f"Failed to update {entity_name} record {entity_id}.",
-            {"entity_name": entity_name, "id": entity_id, "reason": "Not found"},
-            model_name="human", agent_role="user", level="ERROR"
-        )
-        print(f"Failed to update {entity_name} with ID: {entity_id} - Not Found")
-        return {"status": "failed", "reason": "Entity not found"}
+    Args:
+        entity_type (str): The type of the entity (e.g., "Goal", "Task", "AuditLog").
+        data (Dict[str, Any]): The data for the new entity. Must contain an 'id' field or one will be generated.
+        user_id (str): The ID of the user or entity creating this record.
 
-async def delete_entity(task_id: str, entity_name: str, entity_id: str) -> Dict[str, Any]:
-    """Deletes an entity record."""
-    entities = _load_entities(entity_name)
-    initial_count = len(entities)
-    entities = [entity for entity in entities if entity.get("id") != entity_id]
+    Returns:
+        Dict[str, Any]: The created entity data with an 'id' and metadata.
+    """
+    if entity_type not in _MOCKED_DATABASE:
+        _MOCKED_DATABASE[entity_type] = {}
+
+    entity_id = data.get("id", str(uuid.uuid4()))
+    if "id" not in data: # Ensure the 'id' is in the data dict
+        data["id"] = entity_id
     
-    if len(entities) < initial_count:
-        _save_entities(entity_name, entities)
-        await _SWARM_VISUALIZER.log_event(
-            task_id, "crud_delete", f"Deleted {entity_name} record {entity_id}.",
-            {"entity_name": entity_name, "id": entity_id},
-            model_name="human", agent_role="user"
+    # Add creation/update metadata
+    data["created_at"] = datetime.now().isoformat()
+    data["created_by"] = user_id
+    data["updated_at"] = datetime.now().isoformat()
+    data["updated_by"] = user_id
+
+    _MOCKED_DATABASE[entity_type][entity_id] = data
+
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(
+            session_id=str(uuid.uuid4()),
+            event_type="crud_create",
+            description=f"Created entity {entity_type} with ID {entity_id}.",
+            metadata={
+                "entity_type": entity_type,
+                "entity_id": entity_id,
+                "data_preview": str(data)[:100] # Log a preview
+            },
+            user_id=user_id,
+            agent_role="CRUD_Manager",
+            level="INFO"
         )
-        print(f"Deleted {entity_name} with ID: {entity_id}")
-        return {"status": "success", "id": entity_id}
-    else:
-        await _SWARM_VISUALIZER.log_event(
-            task_id, "crud_delete_fail", f"Failed to delete {entity_name} record {entity_id}.",
-            {"entity_name": entity_name, "id": entity_id, "reason": "Not found"},
-            model_name="human", agent_role="user", level="ERROR"
+
+    return {"status": "success", "entity_id": entity_id, "data": data}
+
+async def read_entity(entity_type: str, entity_id: str) -> Optional[Dict[str, Any]]:
+    """
+    Reads an entity of a given type by its ID.
+    """
+    entity = _MOCKED_DATABASE.get(entity_type, {}).get(entity_id)
+    return entity
+
+async def update_entity(entity_type: str, entity_id: str, updates: Dict[str, Any], user_id: str = "Tariro_System") -> Dict[str, Any]:
+    """
+    Updates an existing entity of a given type.
+    """
+    if entity_type not in _MOCKED_DATABASE or entity_id not in _MOCKED_DATABASE[entity_type]:
+        return {"status": "failed", "reason": f"Entity {entity_type}:{entity_id} not found."}
+
+    current_data = _MOCKED_DATABASE[entity_type][entity_id]
+    current_data.update(updates)
+    current_data["updated_at"] = datetime.now().isoformat()
+    current_data["updated_by"] = user_id
+
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(
+            session_id=str(uuid.uuid4()),
+            event_type="crud_update",
+            description=f"Updated entity {entity_type} with ID {entity_id}.",
+            metadata={
+                "entity_type": entity_type,
+                "entity_id": entity_id,
+                "updates_preview": str(updates)[:100]
+            },
+            user_id=user_id,
+            agent_role="CRUD_Manager",
+            level="INFO"
         )
-        print(f"Failed to delete {entity_name} with ID: {entity_id} - Not Found")
-        return {"status": "failed", "reason": "Entity not found"}
+
+    return {"status": "success", "entity_id": entity_id, "data": current_data}
+
+async def delete_entity(entity_type: str, entity_id: str, user_id: str = "Tariro_System") -> Dict[str, Any]:
+    """
+    Deletes an entity of a given type by its ID.
+    """
+    if entity_type in _MOCKED_DATABASE and entity_id in _MOCKED_DATABASE[entity_type]:
+        del _MOCKED_DATABASE[entity_type][entity_id]
+        if _POLICY_AUDIT_TRAIL:
+            await _POLICY_AUDIT_TRAIL.log_event(
+                session_id=str(uuid.uuid4()),
+                event_type="crud_delete",
+                description=f"Deleted entity {entity_type} with ID {entity_id}.",
+                metadata={
+                    "entity_type": entity_type,
+                    "entity_id": entity_id
+                },
+                user_id=user_id,
+                agent_role="CRUD_Manager",
+                level="WARNING"
+            )
+        return {"status": "success", "message": f"Entity {entity_type}:{entity_id} deleted."}
+    return {"status": "failed", "reason": f"Entity {entity_type}:{entity_id} not found."}
+
+async def filter_entities(entity_type: str, query: Dict[str, Any], limit: int = 100, sort_by: Optional[str] = None) -> List[Dict[str, Any]]:
+    """
+    Filters entities of a given type based on query parameters.
+    (Basic implementation: exact match for query values. No complex operators like $gt, $lt).
+    """
+    if entity_type not in _MOCKED_DATABASE:
+        return []
+
+    results = []
+    for entity_id, entity_data in _MOCKED_DATABASE[entity_type].items():
+        match = True
+        for key, value in query.items():
+            if entity_data.get(key) != value:
+                match = False
+                break
+        if match:
+            results.append(entity_data)
+    
+    if sort_by and results:
+        results.sort(key=lambda x: x.get(sort_by, x["created_at"]))
+
+    return results[:limit]
+
