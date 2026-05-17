@@ -1,126 +1,182 @@
 import os
 import json
-import hmac
-import hashlib
-import time
-import logging
-from typing import Dict, List, Tuple, Any, Set, Optional
+import asyncio
+from datetime import datetime
+from typing import Dict, Any, List, Optional
+import uuid
 
-logger = logging.getLogger("RbacManager")
+# --- Configuration & Shared Data ---
+_WORKSPACE: str = ""
+_POLICY_AUDIT_TRAIL: Any = None # Reference to Policy Audit Trail module
+_CRUD_MANAGER: Any = None # Reference to CRUD Manager for Role/Permission entities
+_GLOBAL_STATE_MANAGER: Any = None # For storing/retrieving current RBAC configurations
 
-# Global constant, assumed to be set by the main studio_v3.py
-# This WORKSPACE path must be consistent with studio_v3.py and Dockerfile VOLUME
-WORKSPACE = os.getenv("WORKSPACE", "/app/workspace")
-ADMINS_FILE = os.path.join(WORKSPACE, "admins.json")
-DEFAULT_ROOT_ADMIN = "Samuel Mukandara" # hardcoded, immutable root admin
+RBAC_MANAGER_LOG_DIR: str = ""
 
-# Permissions for roles
-# Define comprehensive permissions that align with system capabilities
-ROLE_PERMS: Dict[str, Set[str]] = {
-    "root": {"system_mutation", "deployment", "governance", "user_admin", "view_architecture", 
-             "admin_chat_access", "debug_access", "full_override", "audit_access", "read_any_log"},
-    "sysop": {"deployment", "code_generation", "view_logs", "admin_chat_access", "read_own_logs"},
-    "analyst": {"run_queries", "view_dashboard", "admin_chat_access"},
-    "developer": {"code_generation", "view_logs", "test_execution"},
-    "user": set() # Standard users have no special permissions by default
+# Mock RBAC configuration (in a real system, this would be persistent and dynamic)
+_MOCKED_ROLES_PERMISSIONS: Dict[str, Dict[str, List[str]]] = {
+    "super_admin": {
+        "permissions": [
+            "*
+        ],
+        "description": "Full control over all system functions and data."
+    },
+    "developer": {
+        "permissions": [
+            "chat",
+            "initiate_lang_dev_pipeline",
+            "initiate_app_dev_pipeline",
+            "read_system_logs",
+            "debug_modules",
+            "upload_files",
+            "access_crud_manager",
+            "scan_for_new_modules",
+            "learn_new_lang_framework"
+        ],
+        "description": "Permissions for development activities."
+    },
+    "security_auditor": {
+        "permissions": [
+            "read_system_logs",
+            "review_policy_violations",
+            "audit_security_configs",
+            "access_crud_manager"
+        ],
+        "description": "View system logs and security-related configurations."
+    },
+    "guest": {
+        "permissions": [
+            "chat",
+            "view_public_info"
+        ],
+        "description": "Limited view and chat capabilities."
+    }
 }
 
-# Reference to the policy_audit_trail module for logging actions
-policy_audit_trail_module: Optional[Any] = None
+_MOCKED_USER_ROLES: Dict[str, List[str]] = {
+    "Samuel Mukandara": ["super_admin"],  # Root admin
+    "dev_user_1": ["developer"],
+    "auditor_1": ["security_auditor"],
+    "guest_user": ["guest"]
+}
 
-def initialize_rbac_manager(audit_trail_module: Any):
-    """Initializes the RBAC manager, ensuring default root admin exists and setting up audit logging."""
-    global policy_audit_trail_module
-    policy_audit_trail_module = audit_trail_module
+def initialize_rbac_manager(workspace_path: str, policy_audit_trail_module: Any, crud_manager_module: Any, global_state_manager_module: Any):
+    """Initializes global RBAC configurations."""
+    global _WORKSPACE, _POLICY_AUDIT_TRAIL, _CRUD_MANAGER, _GLOBAL_STATE_MANAGER, RBAC_MANAGER_LOG_DIR
     
-    os.makedirs(WORKSPACE, exist_ok=True)
-    if not os.path.exists(ADMINS_FILE):
-        initial_admins = {DEFAULT_ROOT_ADMIN: "root"}
-        with open(ADMINS_FILE, "w") as f:
-            json.dump(initial_admins, f, indent=2)
-        logger.info(f"Initialized RBAC with default root admin: {DEFAULT_ROOT_ADMIN}")
+    _WORKSPACE = workspace_path
+    _POLICY_AUDIT_TRAIL = policy_audit_trail_module
+    _CRUD_MANAGER = crud_manager_module
+    _GLOBAL_STATE_MANAGER = global_state_manager_module
+
+    RBAC_MANAGER_LOG_DIR = os.path.join(_WORKSPACE, "rbac_manager_logs")
+    os.makedirs(RBAC_MANAGER_LOG_DIR, exist_ok=True)
+    print(f"RBAC Manager initialized. Logs: {RBAC_MANAGER_LOG_DIR}")
+
+    # Load or initialize roles/permissions in Global State Manager
+    initial_roles = asyncio.run(_GLOBAL_STATE_MANAGER.get_state("rbac_roles_permissions"))
+    if initial_roles:
+        _MOCKED_ROLES_PERMISSIONS.update(initial_roles)
     else:
-        # Ensure Samuel Mukandara is always root if file exists but might be modified
-        try:
-            with open(ADMINS_FILE, "r+") as f:
-                admins = json.load(f)
-                if admins.get(DEFAULT_ROOT_ADMIN) != "root":
-                    admins[DEFAULT_ROOT_ADMIN] = "root"
-                    f.seek(0)
-                    json.dump(admins, f, indent=2)
-                    f.truncate()
-                    logger.warning(f"Ensured {DEFAULT_ROOT_ADMIN} is set as 'root' in {ADMINS_FILE}.")
-        except (FileNotFoundError, json.JSONDecodeError):
-            logger.error(f"Admins file {ADMINS_FILE} corrupted. Recreating with default root.")
-            initialize_rbac_manager(audit_trail_module) # Re-initialize if corrupted
+        asyncio.run(_GLOBAL_STATE_MANAGER.set_state("rbac_roles_permissions", _MOCKED_ROLES_PERMISSIONS, "Tariro_System", auditable=True))
 
-async def get_user_role(username: str) -> Tuple[str, Set[str]]:
-    """Retrieve a user's role string and a set of their associated permissions."""
-    try:
-        with open(ADMINS_FILE) as f:
-            admins = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        logger.error(f"Admins file not found or corrupted: {ADMINS_FILE}. Returning 'user' role.")
-        return "user", ROLE_PERMS.get("user", set())
+    initial_user_roles = asyncio.run(_GLOBAL_STATE_MANAGER.get_state("rbac_user_roles"))
+    if initial_user_roles:
+        _MOCKED_USER_ROLES.update(initial_user_roles)
+    else:
+        asyncio.run(_GLOBAL_STATE_MANAGER.set_state("rbac_user_roles", _MOCKED_USER_ROLES, "Tariro_System", auditable=True))
 
-    role_str = admins.get(username, "user")
-    perms = ROLE_PERMS.get(role_str, set())
-    return role_str, perms
+async def check_permission(user_id: str, permission: str, policy_audit_trail: Any) -> bool:
+    """
+    Checks if a given user has the specified permission.
 
-async def add_admin(task_id: str, requester: str, new_user: str, new_role: str) -> Dict:
-    """Add or update an admin user's role, with permission checks and immutable root rule."""
-    req_role_str, req_perms = await get_user_role(requester)
-    
-    # Check if requester has permission to manage users
-    if "user_admin" not in req_perms and "full_override" not in req_perms:
-        logger.warning(f"Access denied: {requester} attempted to add admin without 'user_admin' perm.")
-        return {"status": "DENIED", "reason": "Insufficient permissions: 'user_admin' required."}
-    
-    # Enforce immutable root admin rule
-    if new_user == DEFAULT_ROOT_ADMIN and new_role != "root":
-        logger.warning(f"Access denied: {requester} attempted to demote immutable root admin {DEFAULT_ROOT_ADMIN}.")
-        return {"status": "DENIED", "reason": f"Cannot demote {DEFAULT_ROOT_ADMIN}."}
-    
-    # Enforce 2-man rule for granting 'root' role: Only the default root can grant 'root'
-    if new_role == "root" and requester != DEFAULT_ROOT_ADMIN:
-        logger.warning(f"Access denied: {requester} attempted to grant 'root' role but is not {DEFAULT_ROOT_ADMIN}.")
-        return {"status": "DENIED", "reason": f"Only {DEFAULT_ROOT_ADMIN} can grant 'root' role."}
+    Args:
+        user_id (str): The ID of the user.
+        permission (str): The permission string to check.
+        policy_audit_trail (Any): The policy audit trail module for logging.
 
-    try:
-        with open(ADMINS_FILE, "r+") as f:
-            admins = json.load(f)
-            old_role = admins.get(new_user, "none")
-            admins[new_user] = new_role
-            f.seek(0) # Rewind to beginning
-            json.dump(admins, f, indent=2)
-            f.truncate() # Truncate any remaining old content
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        logger.error(f"Failed to update {ADMINS_FILE}: {e}")
-        return {"status": "ERROR", "reason": f"Failed to update admin file: {e}"}
-    
-    if policy_audit_trail_module:
-        await policy_audit_trail_module.log_change(
-            task_id=task_id, 
-            event_type="rbac_user_role_update", 
-            old_value=old_role, 
-            new_value=new_role, 
-            actor=requester, 
-            description=f"Role changed for {new_user} from {old_role} to {new_role}."
+    Returns:
+        bool: True if the user has the permission, False otherwise.
+    """
+    user_roles = _MOCKED_USER_ROLES.get(user_id, [])
+    roles_permissions = _MOCKED_ROLES_PERMISSIONS # Access directly from global for simplicity
+
+    has_permission = False
+    for role_name in user_roles:
+        role = roles_permissions.get(role_name)
+        if role and ("*" in role["permissions"] or permission in role["permissions"]):
+            has_permission = True
+            break
+
+    if policy_audit_trail:
+        await policy_audit_trail.log_event(
+            session_id=str(uuid.uuid4()), # New session for RBAC check
+            event_type="rbac_check",
+            description=f"Permission check for user {user_id} on {permission}: {has_permission}",
+            metadata={
+                "user_id": user_id,
+                "permission": permission,
+                "user_roles": user_roles,
+                "result": has_permission
+            },
+            user_id=user_id,
+            agent_role="RBAC_Manager",
+            level="INFO"
         )
-    else:
-        logger.warning("Policy audit trail module not initialized for RBAC manager. Audit log skipped.")
 
-    logger.info(f"Admin user {new_user} role changed to {new_role} by {requester}.")
-    return {"status": "SUCCESS", "user": new_user, "role": new_role, "previous_role": old_role}
+    return has_permission
 
-async def get_all_admins() -> List[List[str]]:
-    """Return a list of all admins and their roles for display (e.g., in UI)."""
-    try:
-        with open(ADMINS_FILE) as f:
-            admins = json.load(f)
-        return [[user, role] for user, role in admins.items()]
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        logger.error(f"Error reading admins file {ADMINS_FILE}: {e}. Returning empty list.")
-        return []
+async def add_role(role_name: str, permissions: List[str], description: str, user_id: str = "Tariro_System") -> Dict[str, Any]:
+    """
+    Adds a new role to the RBAC system.
+    """
+    if role_name in _MOCKED_ROLES_PERMISSIONS:
+        return {"status": "failed", "reason": f"Role {role_name} already exists."}
+    
+    _MOCKED_ROLES_PERMISSIONS[role_name] = {"permissions": permissions, "description": description}
+    await _GLOBAL_STATE_MANAGER.set_state("rbac_roles_permissions", _MOCKED_ROLES_PERMISSIONS, user_id, auditable=True)
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(str(uuid.uuid4()), "rbac_add_role", f"Role {role_name} added.", {"role_name": role_name, "permissions": permissions}, user_id=user_id, agent_role="RBAC_Manager")
+    return {"status": "success", "message": f"Role {role_name} added."}
 
+async def assign_role_to_user(user_id_target: str, role_name: str, admin_user_id: str = "Tariro_System") -> Dict[str, Any]:
+    """
+    Assigns a role to a user.
+    """
+    if role_name not in _MOCKED_ROLES_PERMISSIONS:
+        return {"status": "failed", "reason": f"Role {role_name} does not exist."}
 
+    if user_id_target not in _MOCKED_USER_ROLES:
+        _MOCKED_USER_ROLES[user_id_target] = []
+    if role_name not in _MOCKED_USER_ROLES[user_id_target]:
+        _MOCKED_USER_ROLES[user_id_target].append(role_name)
+    
+    await _GLOBAL_STATE_MANAGER.set_state("rbac_user_roles", _MOCKED_USER_ROLES, admin_user_id, auditable=True)
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(str(uuid.uuid4()), "rbac_assign_role", f"Role {role_name} assigned to {user_id_target}.", {"user_id": user_id_target, "role_name": role_name}, user_id=admin_user_id, agent_role="RBAC_Manager")
+    return {"status": "success", "message": f"Role {role_name} assigned to {user_id_target}."}
+
+async def remove_role_from_user(user_id_target: str, role_name: str, admin_user_id: str = "Tariro_System") -> Dict[str, Any]:
+    """
+    Removes a role from a user.
+    """
+    if user_id_target in _MOCKED_USER_ROLES and role_name in _MOCKED_USER_ROLES[user_id_target]:
+        _MOCKED_USER_ROLES[user_id_target].remove(role_name)
+        await _GLOBAL_STATE_MANAGER.set_state("rbac_user_roles", _MOCKED_USER_ROLES, admin_user_id, auditable=True)
+        if _POLICY_AUDIT_TRAIL:
+            await _POLICY_AUDIT_TRAIL.log_event(str(uuid.uuid4()), "rbac_remove_role", f"Role {role_name} removed from {user_id_target}.", {"user_id": user_id_target, "role_name": role_name}, user_id=admin_user_id, agent_role="RBAC_Manager")
+        return {"status": "success", "message": f"Role {role_name} removed from {user_id_target}."}
+    return {"status": "failed", "reason": f"User {user_id_target} does not have role {role_name}."}
+
+async def get_user_roles(user_id: str) -> List[str]:
+    """
+    Retrieves all roles assigned to a user.
+    """
+    return _MOCKED_USER_ROLES.get(user_id, [])
+
+async def get_role_permissions(role_name: str) -> List[str]:
+    """
+    Retrieves all permissions for a specific role.
+    """
+    role = _MOCKED_ROLES_PERMISSIONS.get(role_name)
+    return role["permissions"] if role else []
