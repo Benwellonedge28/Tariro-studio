@@ -1,115 +1,124 @@
 import os
 import json
-import hashlib
-import time
-import logging
-from typing import Dict, Any, Optional
+import asyncio
+from datetime import datetime
+from typing import Dict, Any, List, Optional
+import uuid
 
-logger = logging.getLogger("PolicyAuditTrail")
+# --- Configuration & Shared Data (initialized from studio_v3_core.py) ---
+_WORKSPACE: str = ""
+_CLIENT: Any = None # AsyncOpenAI client
+_ALL_MODELS: Dict[str, str] = {} # Base model definitions from studio_v3_core.py
+_SWARM_VISUALIZER: Any = None # Reference to the swarm_visualizer module
+_CRUD_MANAGER: Any = None # Reference to crud_manager module for AuditLog entities
 
-# Global constant, assumed to be set by the main studio_v3.py
-WORKSPACE = os.getenv("WORKSPACE", "/app/workspace")
-AUDIT_LOG_FILE = os.path.join(WORKSPACE, "policy_audit_trail.log")
-MERKLE_ROOT_FILE = os.path.join(WORKSPACE, "merkle_root.json")
+POLICY_AUDIT_TRAIL_LOG_DIR: str = ""
 
-async def log_change(
-    task_id: str,
-    event_type: str,
-    old_value: Optional[Any],
-    new_value: Any,
-    actor: str,
-    description: str,
-    metadata: Optional[Dict[str, Any]] = None,
-) -> None:
-    """Logs a system change to an append-only, tamper-evident audit trail."""
-    timestamp = int(time.time())
+def initialize_policy_audit_trail(workspace_path: str, openai_client: Any, all_models: Dict[str, str], swarm_visualizer_module: Any, crud_manager_module: Any):
+    """Initializes global configurations for the Policy Audit Trail module."""
+    global _WORKSPACE, _CLIENT, _ALL_MODELS, _SWARM_VISUALIZER, _CRUD_MANAGER, POLICY_AUDIT_TRAIL_LOG_DIR
+    
+    _WORKSPACE = workspace_path
+    _CLIENT = openai_client
+    _ALL_MODELS = all_models
+    _SWARM_VISUALIZER = swarm_visualizer_module
+    _CRUD_MANAGER = crud_manager_module
+
+    POLICY_AUDIT_TRAIL_LOG_DIR = os.path.join(_WORKSPACE, "policy_audit_trail_logs")
+    os.makedirs(POLICY_AUDIT_TRAIL_LOG_DIR, exist_ok=True)
+    print(f"Policy Audit Trail initialized. Logs: {POLICY_AUDIT_TRAIL_LOG_DIR}")
+
+async def log_event(session_id: str, event_type: str, description: str, metadata: Dict[str, Any], user_id: str = "Tariro_System", agent_role: str = "System", level: str = "INFO") -> Dict[str, Any]:
+    """
+    Logs an auditable event to the system. This function is called by other modules
+    to record significant actions, decisions, or system states for accountability,
+    debugging, and meta-cognitive reflection.
+
+    Args:
+        session_id (str): A unique identifier for the current session or task.
+        event_type (str): Categorization of the event (e.g., "rbac_check", "firewall_action", "module_load_failure").
+        description (str): A concise natural language description of the event.
+        metadata (Dict[str, Any]): A dictionary containing relevant structured data about the event.
+        user_id (str): The ID of the user or entity that initiated the action (defaults to "Tariro_System").
+        agent_role (str): The specific role or module within Tariro that generated the event.
+        level (str): Severity level of the log ("INFO", "WARNING", "ERROR", "CRITICAL").
+
+    Returns:
+        Dict[str, Any]: A dictionary containing the status of the log operation and the created log entry.
+    """
     log_entry = {
-        "timestamp": timestamp,
-        "task_id": task_id,
+        "id": str(uuid.uuid4()),
+        "timestamp": datetime.now().isoformat(),
+        "session_id": session_id,
+        "user_id": user_id,
+        "agent_role": agent_role,
         "event_type": event_type,
-        "old_value": old_value,
-        "new_value": new_value,
-        "actor": actor,
         "description": description,
-        "metadata": metadata or {},
+        "metadata": metadata,
+        "level": level
     }
-    log_json = json.dumps(log_entry, sort_keys=True)
-    entry_hash = hashlib.sha256(log_json.encode('utf-8')).hexdigest()
 
-    # Read previous Merkle root for chaining
-    previous_root = "0" * 64 # Default for first entry
+    # Log to local file for persistence and immediate access
+    log_filename = os.path.join(POLICY_AUDIT_TRAIL_LOG_DIR, f"audit_log_{datetime.now().strftime("%Y%m%d")}.jsonl")
     try:
-        with open(MERKLE_ROOT_FILE, 'r') as f:
-            data = json.load(f)
-            previous_root = data.get("merkle_root", previous_root)
-    except (FileNotFoundError, json.JSONDecodeError):
-        pass # Root will be default or created
-
-    # Calculate new Merkle root (simple chain hash for this implementation)
-    # In a full Merkle tree, this would be more complex, hashing pairs of entries.
-    current_root = hashlib.sha256(f"{previous_root}{entry_hash}".encode('utf-8')).hexdigest()
-    log_entry["entry_hash"] = entry_hash
-    log_entry["previous_root"] = previous_root
-    log_entry["current_root"] = current_root
-
-    # Append to log file
-    try:
-        with open(AUDIT_LOG_FILE, 'a') as f:
-            f.write(json.dumps(log_entry) + '\n')
-        # Update Merkle root file
-        with open(MERKLE_ROOT_FILE, 'w') as f:
-            json.dump({"merkle_root": current_root, "last_entry_hash": entry_hash}, f)
-        logger.info(f"Audit: {event_type} by {actor} (Root: {current_root[:8]}...)")
+        with open(log_filename, "a") as f:
+            f.write(json.dumps(log_entry) + "\n")
     except Exception as e:
-        logger.error(f"Failed to write to audit log or update Merkle root: {e}")
+        print(f"ERROR: Failed to write to audit log file: {e}")
+        # Fallback if file logging fails
 
-async def verify_audit_trail() -> Tuple[bool, str]:
-    """Verifies the integrity of the audit trail using Merkle root chaining."""
-    logger.info("Verifying audit trail integrity...")
+    # Also store in CRUD Manager for structured querying
+    if _CRUD_MANAGER:
+        try:
+            # The CRUD manager would typically define the schema for 'AuditLog' entities.
+            # For now, we pass the dictionary directly.
+            await _CRUD_MANAGER.create_entity("AuditLog", log_entry)
+        except Exception as e:
+            print(f"ERROR: Failed to store audit log in CRUD Manager: {e}")
+            # This could be a critical error depending on system design.
+
+    # Log to swarm visualizer (if initialized) for real-time monitoring
+    if _SWARM_VISUALIZER:
+        try:
+            await _SWARM_VISUALIZER.log_event(session_id, event_type, description, metadata, user_id, agent_role, level)
+        except Exception as e:
+            print(f"ERROR: Failed to log event to Swarm Visualizer: {e}")
+
+    return {"status": "success", "log_entry_id": log_entry["id"], "log_entry": log_entry}
+
+async def get_logs_for_session(session_id: str, limit: int = 100) -> List[Dict[str, Any]]:
+    """
+    Retrieves a list of audit logs for a given session ID.
+
+    Args:
+        session_id (str): The ID of the session to retrieve logs for.
+        limit (int): The maximum number of log entries to retrieve.
+
+    Returns:
+        List[Dict[str, Any]]: A list of audit log entries.
+    """
+    if not _CRUD_MANAGER:
+        print("WARNING: CRUD Manager not initialized. Cannot retrieve audit logs.")
+        return []
     try:
-        with open(AUDIT_LOG_FILE, 'r') as f:
-            lines = f.readlines()
-
-        if not lines: # Empty log is valid
-            return True, "Audit trail is empty and valid."
-
-        calculated_merkle_root = "0" * 64
-        for i, line in enumerate(lines):
-            entry = json.loads(line)
-            entry_hash = entry.pop("entry_hash") # Remove this before recalculating hash
-            previous_root_in_entry = entry.pop("previous_root")
-            current_root_in_entry = entry.pop("current_root")
-            
-            recalculated_entry_hash = hashlib.sha256(json.dumps(entry, sort_keys=True).encode('utf-8')).hexdigest()
-            
-            if recalculated_entry_hash != entry_hash:
-                return False, f"Integrity FAIL: Entry {i} hash mismatch. Expected {entry_hash}, got {recalculated_entry_hash}."
-            
-            # Verify chaining
-            if i == 0:
-                if previous_root_in_entry != "0" * 64: # First entry's previous root must be default
-                    return False, f"Integrity FAIL: First entry's previous_root is not default. ({previous_root_in_entry})"
-            else:
-                # Use the current_root from the PREVIOUS entry to check current entry's previous_root
-                prev_entry = json.loads(lines[i-1])
-                if prev_entry["current_root"] != previous_root_in_entry:
-                    return False, f"Integrity FAIL: Entry {i} chain broken. Previous entry root {prev_entry["current_root"]} != entry's previous_root {previous_root_in_entry}."
-            
-            # Update for next iteration's chaining check
-            calculated_merkle_root = current_root_in_entry
-        
-        # Finally, check the last written root against the final calculated one
-        with open(MERKLE_ROOT_FILE, 'r') as f:
-            final_root_data = json.load(f)
-            stored_merkle_root = final_root_data.get("merkle_root")
-            if stored_merkle_root != calculated_merkle_root:
-                return False, f"Integrity FAIL: Final stored Merkle root mismatch. Expected {calculated_merkle_root}, got {stored_merkle_root}."
-
-        logger.info("Audit trail integrity verified successfully.")
-        return True, "Audit trail integrity verified successfully."
-    except (FileNotFoundError, json.JSONDecodeError) as e:
-        return False, f"Error verifying audit trail: {e}"
+        # Assuming CRUD Manager has a filter method that supports querying by session_id
+        logs = await _CRUD_MANAGER.filter_entities("AuditLog", {"session_id": session_id}, limit=limit, sort_by="timestamp")
+        return logs
     except Exception as e:
-        logger.error(f"An unexpected error occurred during audit trail verification: {e}")
-        return False, f"An unexpected error occurred: {e}"
+        print(f"ERROR: Failed to retrieve audit logs from CRUD Manager: {e}")
+        return []
 
+async def get_recent_logs_for_component(component_name: str, limit: int = 20) -> List[Dict[str, Any]]:
+    """
+    Retrieves recent audit logs generated by a specific component/agent role.
+    """
+    if not _CRUD_MANAGER:
+        print("WARNING: CRUD Manager not initialized. Cannot retrieve audit logs.")
+        return []
+    try:
+        # Assuming CRUD Manager has a filter method that supports querying by agent_role
+        logs = await _CRUD_MANAGER.filter_entities("AuditLog", {"agent_role": component_name}, limit=limit, sort_by="timestamp")
+        return logs
+    except Exception as e:
+        print(f"ERROR: Failed to retrieve audit logs from CRUD Manager for component {component_name}: {e}")
+        return []
