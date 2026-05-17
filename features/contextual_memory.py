@@ -5,153 +5,231 @@ from datetime import datetime
 from typing import Dict, Any, List, Optional
 import uuid
 
-# --- Configuration & Shared Data (initialized from studio_v3.py) ---
+# --- Third-Party (Qdrant specific) ---
+# from qdrant_client import AsyncQdrantClient, models
+# from qdrant_client.http.models import Distance, VectorParams
+# from sentence_transformers import SentenceTransformer
+
+# --- Configuration & Shared Data ---
 _WORKSPACE: str = ""
-_CLIENT: Any = None # AsyncOpenAI client
-_ALL_MODELS: Dict[str, str] = {} # Base model definitions from studio_v3.py
-_SWARM_VISUALIZER: Any = None # Reference to the swarm_visualizer module
+_POLICY_AUDIT_TRAIL: Any = None # Reference to Policy Audit Trail module
+_SWARM_VISUALIZER: Any = None # Reference to Swarm Visualizer module
+_CRUD_MANAGER: Any = None # For storing metadata about memories if needed
 
-MEMORY_DATA_DIR: str = ""
+_QDRANT_URL: str = "" # Initialized from studio_v3_core
+_QDRANT_CLIENT: Any = None # AsyncQdrantClient instance
+_EMBEDDING_MODEL: Any = None # SentenceTransformer model
+_COLLECTION_NAME = "tariro_contextual_memory"
 
-def initialize_contextual_memory(workspace_path: str, openai_client: Any, all_models: Dict[str, str], swarm_visualizer_module: Any):
-    """Initializes global configurations for Contextual Memory."""
-    global _WORKSPACE, _CLIENT, _ALL_MODELS, _SWARM_VISUALIZER, MEMORY_DATA_DIR
+CONTEXTUAL_MEMORY_LOG_DIR: str = ""
+
+def initialize_contextual_memory(workspace_path: str, qdrant_url: str, policy_audit_trail_module: Any, swarm_visualizer_module: Any, crud_manager_module: Any):
+    """Initializes global configurations for the Contextual Memory module."""
+    global _WORKSPACE, _QDRANT_URL, _QDRANT_CLIENT, _EMBEDDING_MODEL, _POLICY_AUDIT_TRAIL, _SWARM_VISUALIZER, _CRUD_MANAGER, CONTEXTUAL_MEMORY_LOG_DIR
+    
     _WORKSPACE = workspace_path
-    _CLIENT = openai_client
-    _ALL_MODELS = all_models
+    _QDRANT_URL = qdrant_url
+    _POLICY_AUDIT_TRAIL = policy_audit_trail_module
     _SWARM_VISUALIZER = swarm_visualizer_module
+    _CRUD_MANAGER = crud_manager_module
 
-    MEMORY_DATA_DIR = os.path.join(_WORKSPACE, "contextual_memory_data")
-    os.makedirs(MEMORY_DATA_DIR, exist_ok=True)
-    print(f"Contextual Memory initialized. Memory data: {MEMORY_DATA_DIR}")
+    CONTEXTUAL_MEMORY_LOG_DIR = os.path.join(_WORKSPACE, "contextual_memory_logs")
+    os.makedirs(CONTEXTUAL_MEMORY_LOG_DIR, exist_ok=True)
+    print(f"Contextual Memory initialized. Logs: {CONTEXTUAL_MEMORY_LOG_DIR}")
 
-def _get_memory_file_path(task_id: str) -> str:
-    """Returns the file path for memories of a given task ID."""
-    return os.path.join(MEMORY_DATA_DIR, f"task_{task_id}.json")
+    # Initialize Qdrant client and embedding model
+    # _QDRANT_CLIENT = AsyncQdrantClient(host=_QDRANT_URL.replace("http://", "").replace("https://", "").split(":")[0], port=6333) # Assumes default Qdrant port
+    # _EMBEDDING_MODEL = SentenceTransformer('all-MiniLM-L6-v2') # Load a common embedding model
 
-def _load_task_memories(task_id: str) -> List[Dict[str, Any]]:
-    """Loads all memories for a given task ID."""
-    file_path = _get_memory_file_path(task_id)
-    if os.path.exists(file_path):
-        with open(file_path, "r") as f:
-            try:
-                return json.load(f)
-            except json.JSONDecodeError:
-                return [] # Return empty list if file is corrupted
-    return []
+    # Mock initialization for now without actual Qdrant client or model
+    print("WARNING: Qdrant client and Embedding model are MOCKED for now in Contextual Memory.")
 
-def _save_task_memories(task_id: str, memories: List[Dict[str, Any]]):
-    """Saves all memories for a given task ID."""
-    file_path = _get_memory_file_path(task_id)
-    with open(file_path, "w") as f:
-        json.dump(memories, f, indent=2)
+    # asyncio.run(setup_qdrant_collection()) # Setup collection on init
 
-async def store_memory(task_id: str, agent_name: str, key: str, value: Any, description: str):
-    """Stores a piece of contextual memory for a given task."""
-    memories = _load_task_memories(task_id)
-    timestamp = datetime.now().isoformat()
-    memory_entry = {
-        "timestamp": timestamp,
-        "agent_name": agent_name,
-        "key": key,
-        "value": value,
-        "description": description
+async def setup_qdrant_collection():
+    """Ensures the Qdrant collection exists and is configured."""
+    if not _QDRANT_CLIENT: return
+
+    # try:
+    #     await _QDRANT_CLIENT.recreate_collection(
+    #         collection_name=_COLLECTION_NAME,
+    #         vectors_config=VectorParams(size=_EMBEDDING_MODEL.get_sentence_embedding_dimension(), distance=Distance.COSINE),
+    #     )
+    #     print(f"Qdrant collection '{_COLLECTION_NAME}' recreated.")
+    # except Exception as e:
+    #     print(f"Error recreating Qdrant collection: {e}. Checking if exists.")
+    #     # If recreate fails, check if it exists, if not, create.
+    #     collections = await _QDRANT_CLIENT.get_collections()
+    #     if _COLLECTION_NAME not in [c.name for c in collections.collections]:
+    #         await _QDRANT_CLIENT.create_collection(
+    #             collection_name=_COLLECTION_NAME,
+    #             vectors_config=VectorParams(size=_EMBEDDING_MODEL.get_sentence_embedding_dimension(), distance=Distance.COSINE),
+    #         )
+    #         print(f"Qdrant collection '{_COLLECTION_NAME}' created.")
+
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(
+            str(uuid.uuid4()), "contextual_memory_init", "Qdrant collection setup attempted.",
+            {"collection": _COLLECTION_NAME},
+            agent_role="ContextualMemory"
+        )
+
+
+async def store(user_id: str, session_id: str, role: str, content: str, metadata: Dict[str, Any] = {}) -> Dict[str, Any]:
+    """
+    Stores a piece of contextual information in the vector database.
+
+    Args:
+        user_id (str): The ID of the user associated with the memory.
+        session_id (str): The current session ID.
+        role (str): The role of the content source (e.g., "user", "assistant", "document").
+        content (str): The textual content to store.
+        metadata (Dict[str, Any]): Additional metadata for the content.
+
+    Returns:
+        Dict[str, Any]: Status of the storage operation.
+    """
+    if not content.strip():
+        return {"status": "failed", "reason": "Content is empty."}
+
+    # Mock embedding and Qdrant storage
+    # vector = _EMBEDDING_MODEL.encode(content).tolist()
+    vector = [random.random() for _ in range(384)] # Mock vector
+
+    memory_id = str(uuid.uuid4())
+    payload = {
+        "user_id": user_id,
+        "session_id": session_id,
+        "role": role,
+        "content": content,
+        "timestamp": datetime.now().isoformat(),
+        **metadata
     }
-    memories.append(memory_entry)
-    _save_task_memories(task_id, memories)
 
-    await _SWARM_VISUALIZER.log_event(
-        task_id, "memory_store", f"Agent {agent_name} stored memory: {key}",
-        {"agent": agent_name, "key": key, "description": description, "value_summary": str(value)[:100]},
-        model_name=agent_name, agent_role=_ALL_MODELS.get(agent_name, "Unknown")
-    )
-    print(f"[{agent_name}] Stored memory '{key}' for task {task_id}")
+    # try:
+    #     await _QDRANT_CLIENT.upsert(
+    #         collection_name=_COLLECTION_NAME,
+    #         points=[models.PointStruct(id=memory_id, vector=vector, payload=payload)],
+    #     )
+    #     status = "success"
+    # except Exception as e:
+    #     print(f"Error storing in Qdrant: {e}")
+    #     status = "failed"
 
-async def retrieve_memory(task_id: str, key: str) -> Optional[Any]:
-    """Retrieves the latest value for a specific memory key for a given task."""
-    memories = _load_task_memories(task_id)
-    # Return the most recent entry for the key
-    for entry in reversed(memories):
-        if entry["key"] == key:
-            await _SWARM_VISUALIZER.log_event(
-                task_id, "memory_retrieve", f"Retrieved memory: {key}",
-                {"key": key, "value_summary": str(entry["value"])[:100]},
-                model_name="system", agent_role="orchestrator"
-            )
-            return entry["value"]
-    return None
+    status = "success" # Mock status
 
-async def query_memory_rag(task_id: str, query: str, agent_name: str, rag_model: str = "llama-architect") -> Dict[str, Any]:
-    """
-    Performs a RAG query over all stored memories for a task, synthesizing a coherent answer.
-    """
-    if _CLIENT is None:
-        raise ValueError("OpenAI client not initialized in contextual_memory.")
-    if rag_model not in _ALL_MODELS:
-        return {"error": f"RAG model {rag_model} not found in _ALL_MODELS.", "model": rag_model}
-
-    memories = _load_task_memories(task_id)
-    if not memories:
-        return {"response": "No relevant context found in memory.", "sources": []}
-
-    # Prepare context for the RAG model
-    context_str = "\n".join([f"[{m['agent_name']}/{m['key']} @ {m['timestamp']}] {m['description']}: {m['value']}" for m in memories])
-    
-    rag_prompt = f"""You are a highly capable RAG system. Based on the following contextual memories for a task, answer the user's query.
-    
-Contextual Memories:
----
-{context_str}
----
-
-User Query from {agent_name}: "{query}"
-
-Synthesize a concise and accurate answer, citing the memory keys used as sources. If the information is not directly available, state that.
-Output JSON: {{'response': str, 'sources': list[str] (memory keys)}}
-"""
-    await _SWARM_VISUALIZER.log_event(
-        task_id, "memory_rag_query", f"Agent {agent_name} querying contextual memory: {query[:50]}",
-        {"agent": agent_name, "query": query, "rag_model": rag_model},
-        model_name=agent_name, agent_role=_ALL_MODELS.get(agent_name, "Unknown")
-    )
-
-    try:
-        resp = await _CLIENT.chat.completions.create(
-            model=rag_model,
-            messages=[
-                {"role": "system", "content": f"You are {rag_model}. Role: {_ALL_MODELS.get(rag_model, 'RAG Processor')}. Output JSON only."},
-                {"role": "user", "content": rag_prompt}
-            ],
-            response_format={"type": "json_object"},
-            temperature=0.1
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(
+            session_id=session_id,
+            event_type="contextual_memory_store",
+            description=f"Stored content in contextual memory for user {user_id}.",
+            metadata={
+                "user_id": user_id,
+                "role": role,
+                "memory_id": memory_id,
+                "content_preview": content[:50]
+            },
+            user_id=user_id,
+            agent_role="ContextualMemory",
+            level="INFO"
         )
-        content = resp.choices[0].message.content
-        out = json.loads(content)
+    if _SWARM_VISUALIZER:
         await _SWARM_VISUALIZER.log_event(
-            task_id, "memory_rag_response", f"RAG query answered for {agent_name}: {query[:50]}",
-            {"response_summary": out.get("response", "")[:100], "sources": out.get("sources", [])},
-            model_name=rag_model, agent_role=_ALL_MODELS.get(rag_model, "RAG Processor")
+            session_id=session_id,
+            event_type="contextual_memory_store",
+            message=f"Content stored ({role})",
+            details={
+                "user_id": user_id,
+                "role": role,
+                "memory_id": memory_id
+            },
+            agent_id=user_id,
+            agent_role="ContextualMemory",
+            level="INFO"
         )
-        return {"response": out.get("response"), "sources": out.get("sources", []), "model": rag_model}
-    except json.JSONDecodeError as e:
-        error_details = {"error": f"JSON decode error: {e}", "raw_content": content[:500]}
-        await _SWARM_VISUALIZER.log_event(task_id, "memory_rag_error", f"RAG model {rag_model} JSON decode error.", error_details, model_name=rag_model, agent_role=_ALL_MODELS.get(rag_model, "RAG Processor"), level="ERROR")
-        return {"error": str(e), "response": "Error processing RAG query.", "model": rag_model}
-    except Exception as e:
-        error_details = {"error": str(e), "query_summary": query[:100]}
-        await _SWARM_VISUALIZER.log_event(task_id, "memory_rag_error", f"RAG model {rag_model} general error.", error_details, model_name=rag_model, agent_role=_ALL_MODELS.get(rag_model, "RAG Processor"), level="ERROR")
-        return {"error": str(e), "response": "Error processing RAG query.", "model": rag_model}
 
+    return {"status": status, "memory_id": memory_id}
 
-def get_all_memories(task_id: str) -> List[Dict[str, Any]]:
-    """Retrieves all stored memory entries for a specific task."""
-    return _load_task_memories(task_id)
+async def query(user_id: str, query_text: str, limit: int = 5, min_score: float = 0.7, filter_role: Optional[str] = None) -> List[Dict[str, Any]]:
+    """
+    Queries the vector database for relevant contextual information.
 
-def clear_task_memory(task_id: str):
-    """Clears all memories for a given task ID."""
-    file_path = _get_memory_file_path(task_id)
-    if os.path.exists(file_path):
-        os.remove(file_path)
-        print(f"Cleared all memories for task {task_id}")
-    else:
-        print(f"No memories found for task {task_id} to clear.")
+    Args:
+        user_id (str): The ID of the user for whom to retrieve context.
+        query_text (str): The query string.
+        limit (int): Maximum number of results to return.
+        min_score (float): Minimum similarity score for results.
+        filter_role (Optional[str]): Filter by the role of the content source (e.g., "document", "user").
+
+    Returns:
+        List[Dict[str, Any]]: A list of relevant memory payloads.
+    """
+    if not query_text.strip():
+        return []
+
+    # Mock embedding
+    # query_vector = _EMBEDDING_MODEL.encode(query_text).tolist()
+    query_vector = [random.random() for _ in range(384)] # Mock vector
+
+    # Mock Qdrant search results
+    # In a real scenario, this would involve a Qdrant search operation
+    # search_filter = models.Filter(must=[models.FieldCondition(key="user_id", match=models.MatchValue(value=user_id))])
+    # if filter_role:
+    #     search_filter.must.append(models.FieldCondition(key="role", match=models.MatchValue(value=filter_role)))
+
+    # search_result = await _QDRANT_CLIENT.search(
+    #     collection_name=_COLLECTION_NAME,
+    #     query_vector=query_vector,
+    #     query_filter=search_filter,
+    #     limit=limit,
+    # )
+    # relevant_memories = [hit.payload for hit in search_result if hit.score >= min_score]
+
+    relevant_memories = [
+        {"user_id": user_id, "session_id": str(uuid.uuid4()), "role": "document", "content": f"Relevant info for '{query_text}' - mock result 1", "timestamp": datetime.now().isoformat()},
+        {"user_id": user_id, "session_id": str(uuid.uuid4()), "role": "user", "content": f"User's past question related to '{query_text}' - mock result 2", "timestamp": datetime.now().isoformat()},
+    ] # Mock results
+
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(
+            session_id=str(uuid.uuid4()),
+            event_type="contextual_memory_query",
+            description=f"Queried contextual memory for user {user_id}.",
+            metadata={
+                "user_id": user_id,
+                "query_text": query_text,
+                "results_count": len(relevant_memories)
+            },
+            user_id=user_id,
+            agent_role="ContextualMemory",
+            level="INFO"
+        )
+    if _SWARM_VISUALIZER:
+        await _SWARM_VISUALIZER.log_event(
+            session_id=str(uuid.uuid4()),
+            event_type="contextual_memory_query",
+            message=f"Memory queried: '{query_text[:50]}'",
+            details={
+                "user_id": user_id,
+                "query": query_text,
+                "results_count": len(relevant_memories)
+            },
+            agent_id=user_id,
+            agent_role="ContextualMemory",
+            level="INFO"
+        )
+
+    return relevant_memories
+
+async def retrieve_by_id(memory_id: str) -> Optional[Dict[str, Any]]:
+    """
+    Retrieves a specific memory by its ID.
+    """
+    # Mock implementation: in real Qdrant, you'd fetch by ID
+    if _POLICY_AUDIT_TRAIL:
+        await _POLICY_AUDIT_TRAIL.log_event(
+            str(uuid.uuid4()), "contextual_memory_retrieve", f"Attempted retrieve memory by ID: {memory_id}.",
+            {"memory_id": memory_id},
+            agent_role="ContextualMemory"
+        )
+    return {"status": "mock_success", "memory_id": memory_id, "content": "Mock content for ID"}
