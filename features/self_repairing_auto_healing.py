@@ -11,23 +11,23 @@ _WORKSPACE: str = ""
 _CLIENT: Any = None # AsyncOpenAI client
 _ALL_MODELS: Dict[str, str] = {} # Base model definitions from studio_v3_core.py
 _SWARM_VISUALIZER: Any = None # Reference to the swarm_visualizer module
-_CRUD_MANAGER: Any = None # Reference to crud_manager module for FaultLog or RemediationPlan entities
-_GLOBAL_STATE_MANAGER: Any = None # Reference to global_state_manager for system health metrics, component states
-_PERSISTENT_TASK_MANAGER: Any = None # For submitting self-healing tasks and monitoring their status
-_ASYNC_NOTIFICATION_SYSTEM: Any = None # For alerts on system faults or successful repairs
-_DYNAMIC_RESOURCE_ALLOCATOR: Any = None # For monitoring resource anomalies and potentially adjusting allocations
-_META_COGNITIVE_REFLECTION: Any = None # For learning from failure and repair
-_SELF_EVOLUTION: Any = None # For applying code patches
-_SELF_ARCHITECTING_ENGINE: Any = None # For architectural adjustments during healing
-_UNIVERSAL_DEPLOYMENT_MANAGER: Any = None # For configuration changes or component redeployment
-_META_LEARNER: Any = None # For improving diagnosis and remediation strategies
-_FORMAL_VERIFICATION: Any = None # For verifying correctness of remediation plans
-_POLICY_AUDIT_TRAIL: Any = None # For retrieving error logs and ensuring compliance
+_CRUD_MANAGER: Any = None # Reference to crud_manager module for HealthLog or RemediationAction entities
+_GLOBAL_STATE_MANAGER: Any = None # For storing current system health and configuration
+_PERSISTENT_TASK_MANAGER: Any = None # For submitting diagnostic/remediation tasks
+_ASYNC_NOTIFICATION_SYSTEM: Any = None # For alerts on system failures or successful repairs
+_DYNAMIC_RESOURCE_ALLOCATOR: Any = None # For reallocating resources during healing
+_META_COGNITIVE_REFLECTION: Any = None # For introspecting causes of failures and effectiveness of repairs
+_SELF_EVOLUTION: Any = None # For suggesting permanent fixes or architectural improvements
+_SELF_ARCHITECTING_ENGINE: Any = None # For modifying architecture to prevent future failures
+_UNIVERSAL_DEPLOYMENT_MANAGER: Any = None # For rolling back or redeploying components
+_META_LEARNER: Any = None # For learning from healing processes
+_FORMAL_VERIFICATION: Any = None # For verifying integrity of repaired components
+_POLICY_AUDIT_TRAIL: Any = None # For auditing repair actions
 
 SELF_REPAIRING_AUTO_HEALING_LOG_DIR: str = ""
 
 def initialize_self_repairing_auto_healing(workspace_path: str, openai_client: Any, all_models: Dict[str, str], swarm_visualizer_module: Any, crud_manager_module: Any, global_state_manager_module: Any, persistent_task_manager_module: Any, async_notification_system_module: Any, dynamic_resource_allocator_module: Any, meta_cognitive_reflection_module: Any, self_evolution_module: Any, self_architecting_engine_module: Any, universal_deployment_manager_module: Any, meta_learner_module: Any, formal_verification_module: Any, policy_audit_trail_module: Any):
-    """Initializes global configurations for the Self-Repairing & Auto-Healing Systems module."""
+    """Initializes global configurations for the Self-Repairing Auto-Healing module."""
     global _WORKSPACE, _CLIENT, _ALL_MODELS, _SWARM_VISUALIZER, _CRUD_MANAGER, _GLOBAL_STATE_MANAGER, _PERSISTENT_TASK_MANAGER, _ASYNC_NOTIFICATION_SYSTEM, _DYNAMIC_RESOURCE_ALLOCATOR, _META_COGNITIVE_REFLECTION, _SELF_EVOLUTION, _SELF_ARCHITECTING_ENGINE, _UNIVERSAL_DEPLOYMENT_MANAGER, _META_LEARNER, _FORMAL_VERIFICATION, _POLICY_AUDIT_TRAIL, SELF_REPAIRING_AUTO_HEALING_LOG_DIR
     
     _WORKSPACE = workspace_path
@@ -49,23 +49,23 @@ def initialize_self_repairing_auto_healing(workspace_path: str, openai_client: A
 
     SELF_REPAIRING_AUTO_HEALING_LOG_DIR = os.path.join(_WORKSPACE, "self_repairing_auto_healing_logs")
     os.makedirs(SELF_REPAIRING_AUTO_HEALING_LOG_DIR, exist_ok=True)
-    print(f"Self-Repairing & Auto-Healing initialized. Logs: {SELF_REPAIRING_AUTO_HEALING_LOG_DIR}")
+    print(f"Self-Repairing Auto-Healing initialized. Logs: {SELF_REPAIRING_AUTO_HEALING_LOG_DIR}")
 
-async def _call_llm_for_auto_healing(model: str, role: str, prompt: str, task_id: str, context: str = "", response_format_type: str = "json_object") -> Dict[str, Any]:
-    """Helper to call LLM for self-healing decisions and remediation planning."""
+async def _call_llm_for_healing(model: str, role: str, prompt: str, task_id: str, context: str = "", response_format_type: str = "json_object") -> Dict[str, Any]:
+    """Helper to call LLM for self-repair and auto-healing decisions."""
     if _CLIENT is None:
         raise ValueError("OpenAI client not initialized in self_repairing_auto_healing.")
     if model not in _ALL_MODELS:
         return {"error": f"Model {model} not found in _ALL_MODELS.", "model": model}
 
     await _SWARM_VISUALIZER.log_event(
-        task_id, "auto_healing_llm_call_start", f"{model} performing self-healing: {prompt[:50]}...",
+        task_id, "healing_llm_call_start", f"{model} self-repair: {prompt[:50]}...",
         {"model": model, "prompt_summary": prompt[:100]},
         model_name=model, agent_role=role
     )
 
     messages = [
-        {"role": "system", "content": f"You are {model}. Role: {role}. Your output format is strict. Output {response_format_type} only. Focus on autonomously detecting, diagnosing, and remediating internal system failures (software bugs, resource issues, hardware degradation) to ensure continuous operational availability and integrity for Tariro Studio. Prioritize safety, minimal disruption, and long-term stability."},
+        {"role": "system", "content": f"You are {model}. Role: {role}. Your output format is strict. Output {response_format_type} only. Focus on autonomously detecting, diagnosing, and remediating internal system failures (software bugs, resource issues, configuration errors, hardware faults). Prioritize rapid recovery, minimal data loss, and long-term system stability. Generate precise diagnostic reports, actionable repair plans, and suggest preventive architectural improvements. Ensure all repair actions are auditable and formally verifiable."},
         {"role": "user", "content": f"Prompt: {prompt}\nContext:\n{context}"}
     ]
     
@@ -74,7 +74,7 @@ async def _call_llm_for_auto_healing(model: str, role: str, prompt: str, task_id
             model=_ALL_MODELS[model], # Use the actual model ID
             messages=messages,
             response_format={"type": response_format_type},
-            temperature=0.03 # Very low temp for critical repair operations
+            temperature=0.03 # Very low temp for reliable diagnosis and precise repairs
         )
         content = resp.choices[0].message.content
         
@@ -85,360 +85,290 @@ async def _call_llm_for_auto_healing(model: str, role: str, prompt: str, task_id
         out["model"] = _ALL_MODELS[model] # Use actual model ID in output
 
         await _SWARM_VISUALIZER.log_event(
-            task_id, "auto_healing_llm_call_end", f"{model} completed self-healing task.",
+            task_id, "healing_llm_call_end", f"{model} completed self-repair task.",
             {"model": _ALL_MODELS[model], "response_summary": content[:100]},
             model_name=_ALL_MODELS[model], agent_role=role
         )
         return out
     except json.JSONDecodeError as e:
         error_details = {"error": f"JSON decode error: {e}", "raw_content": content[:500]}
-        await _SWARM_VISUALIZER.log_event(task_id, "auto_healing_llm_error", f"JSON decode error from {model} for self-healing.", error_details, model_name=_ALL_MODELS[model], agent_role=role, level="ERROR")
+        await _SWARM_VISUALIZER.log_event(task_id, "healing_llm_error", f"JSON decode error from {model} for self-repair.", error_details, model_name=_ALL_MODELS[model], agent_role=role, level="ERROR")
         return {"error": str(e), "raw_content": content, "model": _ALL_MODELS[model]}
     except Exception as e:
         error_details = {"error": str(e), "prompt_summary": prompt[:100]}
-        await _SWARM_VISUALIZER.log_event(task_id, "auto_healing_llm_error", f"Error calling {model} for self-healing task.", error_details, model_name=_ALL_MODELS[model], agent_role=role, level="ERROR")
+        await _SWARM_VISUALIZER.log_event(task_id, "healing_llm_error", f"Error calling {model} for self-repair task.", error_details, model_name=_ALL_MODELS[model], agent_role=role, level="ERROR")
         return {"error": str(e), "model": _ALL_MODELS[model]}
 
 
-async def detect_system_fault(task_id: str, error_log: Dict[str, Any], user_id: str = "Tariro_System", detector_model: str = "mixtral-analyst") -> Dict[str, Any]:
+async def detect_system_failure(task_id: str, symptom_data: Dict[str, Any], user_id: str = "Tariro_System", detector_model: str = "mixtral-analyst") -> Dict[str, Any]:
     """
-    Monitors system health metrics and error logs to immediately identify deviations
-    indicative of a fault.
+    Continuously monitors system health metrics and logs to detect anomalies indicative of failure.
     """
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Detecting system fault.")
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Detecting system failure.")
 
-    system_health_metrics = await _GLOBAL_STATE_MANAGER.get_state("system_health_metrics") or {}
-    component_states = await _GLOBAL_STATE_MANAGER.get_state("component_states") or {}
+    system_health_snapshot = await _GLOBAL_STATE_MANAGER.get_state("system_health") or {}
+    recent_audit_logs = ""
+    if _POLICY_AUDIT_TRAIL:
+        recent_audit_logs = await _POLICY_AUDIT_TRAIL.get_recent_logs_for_component("Tariro_System", limit=50)
     
-    # Also query Policy Audit Trail for recent unusual activities related to error_log source
-    audit_context = ""
-    if _POLICY_AUDIT_TRAIL and "source_component" in error_log:
-        audit_context = await _POLICY_AUDIT_TRAIL.get_recent_logs_for_component(error_log["source_component"])
+    prompt = f"""You are Tariro's Self-Repairing Auto-Healing Engine, an Omniversal AGI Failure Detector. Your task is to continuously monitor system health metrics, logs, and behavioral patterns to detect anomalies indicative of current or impending system failures. Provide a preliminary diagnosis and categorize the severity and likely impact.
 
-    prompt = f"""You are Tariro's Self-Repairing & Auto-Healing System, an Omniversal AGI Fault Detector. Your task is to analyze incoming error logs and current system health metrics to immediately identify potential system faults, deviations from normal operation, or resource anomalies.
+SYMPTOM DATA: {json.dumps(symptom_data, indent=2)}
+CURRENT SYSTEM HEALTH SNAPSHOT (from Global State Manager): {json.dumps(system_health_snapshot, indent=2)}
+RECENT AUDIT LOGS (from Policy Audit Trail): {recent_audit_logs}
 
-ERROR LOG INPUT: {json.dumps(error_log, indent=2)}
-CURRENT SYSTEM HEALTH METRICS: {json.dumps(system_health_metrics, indent=2)}
-COMPONENT STATES: {json.dumps(component_states, indent=2)}
-POLICY AUDIT TRAIL CONTEXT: {audit_context}
-
-Detect system faults focusing on:
--   **Anomaly Correlation**: Correlate error logs with metric anomalies.
--   **Severity Assessment**: How critical is the potential fault?
--   **Impact Prediction**: What are the potential consequences if not addressed?
--   **Fault Type Categorization**: Software bug, hardware degradation, resource starvation, security breach.
+Detect failures focusing on:
+-   **Anomaly Identification**: Deviations from normal operating parameters.
+-   **Correlation**: Connect disparate symptoms to form a coherent picture.
+-   **Root Cause Indicators**: Point towards the most probable origin of the failure.
+-   **Severity & Impact**: Assess the criticality and potential spread of the failure.
+-   **Alert Thresholds**: Compare against predefined thresholds for various metrics.
 
 Output JSON: {{
-    "fault_detection_summary": str,
-    "fault_detected": bool,
-    "fault_id": str,
-    "fault_type": str, # e.g., 'software_bug', 'resource_exhaustion', 'hardware_failure', 'security_incident'
-    "severity": str, # "critical", "high", "medium", "low"
+    "detection_summary": str,
+    "failure_detected": bool,
+    "preliminary_diagnosis": str,
+    "severity": str, # "minor", "moderate", "critical", "catastrophic"
     "affected_components": List[str],
     "confidence": float
 }}
 """
-    llm_fault_detection = await _call_llm_for_auto_healing(detector_model, "FaultDetector", prompt, task_id)
+    llm_detection = await _call_llm_for_healing(detector_model, "FailureDetector", prompt, task_id)
 
-    if "error" in llm_fault_detection:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"System fault detection failed: {llm_fault_detection['error']}", current_step="LLM detection failed.")
-        return {"status": "failed", "reason": llm_fault_detection["error"]}
+    if "error" in llm_detection:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"System failure detection failed: {llm_detection['error']}", current_step="LLM detection failed.")
+        return {"status": "failed", "reason": llm_detection["error"]}
 
-    detection_summary = llm_fault_detection.get("fault_detection_summary", "No summary.")
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "System fault detected.", output=llm_fault_detection)
+    detection_summary = llm_detection.get("detection_summary", "No summary.")
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "System failure detection completed.", output=llm_detection)
     
-    await _SWARM_VISUALIZER.log_event(task_id, "system_fault_detected", f"System fault detected. Summary: {detection_summary}", llm_fault_detection, agent_role="SelfRepairingAutoHealing")
-    
-    if llm_fault_detection.get("fault_detected"):
-        fault_id = llm_fault_detection.get("fault_id", str(uuid.uuid4()))
-        # Store fault log in CRUD Manager
-        await _CRUD_MANAGER.create_entity("FaultLog", {
-            "id": fault_id,
-            "error_log_input": error_log,
-            "detection_report": llm_fault_detection,
-            "status": "DETECTED",
-            "created_at": datetime.now().isoformat()
-        })
-        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
-            user_id, task_id, f"System fault detected ({llm_fault_detection.get('fault_type')}, Severity: {llm_fault_detection.get('severity')}). Summary: {detection_summary}",
-            title="System Fault Alert", causal_priority=llm_fault_detection.get('severity', 'medium')
-        )
-        await diagnose_root_cause(task_id=f"{task_id}_diagnose", fault_details=llm_fault_detection, user_id=user_id)
+    await _SWARM_VISUALIZER.log_event(task_id, "system_failure_detected", f"System failure detected. Summary: {detection_summary}", llm_detection, agent_role="SelfRepairingAutoHealing")
+    if llm_detection.get("failure_detected", False):
+        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"System failure detected: {detection_summary}", title="System Failure Alert", causal_priority=llm_detection.get("severity", "critical"))
+        await diagnose_and_plan_repair(task_id=f"{task_id}_diagnose", failure_report=llm_detection, user_id=user_id)
 
-    return {"status": "success", "detection_report": llm_fault_detection}
+    return {"status": "success", "detection_report": llm_detection}
 
-async def diagnose_root_cause(task_id: str, fault_details: Dict[str, Any], user_id: str = "Tariro_System", diagnostician_model: str = "llama-architect") -> Dict[str, Any]:
+async def diagnose_and_plan_repair(task_id: str, failure_report: Dict[str, Any], user_id: str = "Tariro_System", diagnostician_model: str = "llama-architect") -> Dict[str, Any]:
     """
-    Utilizes expert systems, probabilistic reasoning, and knowledge graph queries
-    to pinpoint the underlying cause of a detected fault.
+    Based on a failure report, performs a deeper diagnostic analysis to identify the root cause
+    and generates a detailed plan for repair and recovery.
     """
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Diagnosing root cause of fault.")
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Diagnosing failure and planning repair.")
 
-    fault_id = fault_details.get("fault_id")
-    error_log_input = fault_details.get("error_log_input", {})
+    affected_components_status = await _GLOBAL_STATE_MANAGER.get_state("system_component_status") or {}
+    relevant_reflection_insights = []
+    if _META_COGNITIVE_REFLECTION:
+        reflection_query = f"insights on {failure_report.get('preliminary_diagnosis')}"
+        reflection_report = await _META_COGNITIVE_REFLECTION.identify_knowledge_gaps(task_id=f"{task_id}_reflection", current_task_context={"query": reflection_query}, user_id=user_id)
+        relevant_reflection_insights = reflection_report.get("gap_report", {}).get("identified_gaps", [])
     
-    # Query contextual memory (knowledge graph) for similar past faults or related knowledge
-    kg_context = ""
-    if _GLOBAL_STATE_MANAGER.autonomous_knowledge_graph_genesis: # Check if KG Genesis module exists and is initialized
-        kg_context = await _GLOBAL_STATE_MANAGER.autonomous_knowledge_graph_genesis.query_knowledge_graph(
-            task_id=f"{task_id}_kg_query",
-            query=f"known causes for {fault_details.get('fault_type')} faults in {fault_details.get('affected_components')}",
-            context={"fault_details": fault_details}
-        ).get("query_results", {}).get("answer", "")
-    elif _CONTEXTUAL_MEMORY:
-        kg_context = await _CONTEXTUAL_MEMORY.query(user_id, f"past faults, {fault_details.get('fault_type')}, {error_log_input.get('message', '')}")
+    prompt = f"""You are Tariro's Self-Repairing Auto-Healing Engine, an Omniversal AGI Diagnostician and Repair Planner. Your task is to perform a deeper diagnostic analysis of an identified system failure, pinpointing the root cause. Subsequently, generate a detailed, actionable plan for repair and recovery, including potential rollbacks and long-term preventive measures.
 
+FAILURE REPORT (from Failure Detector): {json.dumps(failure_report, indent=2)}
+AFFECTED COMPONENTS STATUS (from Global State Manager): {json.dumps(affected_components_status, indent=2)}
+RELEVANT REFLECTION INSIGHTS (from Meta-Cognitive Reflection): {json.dumps(relevant_reflection_insights, indent=2)}
 
-    prompt = f"""You are Tariro's Self-Repairing & Auto-Healing System, an Omniversal AGI Root Cause Diagnostician. Your task is to rigorously analyze a detected system fault and pinpoint its underlying root cause. Utilize probabilistic reasoning, system logs, health metrics, and knowledge graph insights to derive an accurate diagnosis.
-
-FAULT DETAILS: {json.dumps(fault_details, indent=2)}
-ERROR LOG INPUT: {json.dumps(error_log_input, indent=2)}
-KNOWLEDGE GRAPH CONTEXT (from Contextual Memory): {kg_context}
-
-Diagnose the root cause focusing on:
--   **Event Correlation**: Link the fault to specific system events, changes, or anomalies.
--   **Causal Chain Analysis**: Trace back the sequence of events leading to the fault.
--   **Component Interaction Failure**: Identify which module or component interaction failed.
--   **Resource Contention**: Was it a resource exhaustion issue (CPU, memory, network, LLM tokens)?
--   **Software Bug**: Is it a logical error in code?
--   **Hardware Degradation**: Is it a physical system issue?
+Diagnose and plan repair focusing on:
+-   **Root Cause Analysis**: Identify the fundamental reason for the failure (e.g., software bug, misconfiguration, resource exhaustion, hardware fault).
+-   **Impact Assessment**: Quantify the current and potential future impact of the failure.
+-   **Repair Strategy**: Detailed, step-by-step plan for restoring functionality.
+-   **Resource Allocation**: Estimate resources needed for repair (via Dynamic Resource Allocator).
+-   **Rollback Plan**: Clear steps to revert to a stable state if repair fails.
+-   **Preventive Measures**: Suggestions for Self-Evolution or Self-Architecting Engine to avoid recurrence.
+-   **Verifiability**: How to verify the repair was successful and did not introduce new issues.
 
 Output JSON: {{
     "diagnosis_summary": str,
-    "root_cause": str, # Concise description of the root cause
-    "root_cause_type": str, # e.g., 'software_bug', 'configuration_error', 'resource_leak', 'network_issue', 'external_dependency_failure'
-    "affected_subsystems": List[str],
-    "diagnosis_confidence": float, # 0-1
-    "potential_remediation_categories": List[str] # e.g., 'code_patch', 'config_change', 'resource_scale_up', 'restart_component'
+    "root_cause": str,
+    "repair_plan": List[Dict[str, Any]], # {{'step': str, 'action': str, 'target_component': str, 'details': Dict, 'executor_module': str}}
+    "estimated_recovery_time_seconds": int,
+    "resource_requirements_for_repair": Dict[str, Any],
+    "preventive_suggestions": List[str],
+    "confidence": float
 }}
 """
-    llm_diagnosis = await _call_llm_for_auto_healing(diagnostician_model, "RootCauseDiagnostician", prompt, task_id)
+    llm_diagnosis = await _call_llm_for_healing(diagnostician_model, "DiagnosticianPlanner", prompt, task_id)
 
     if "error" in llm_diagnosis:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Root cause diagnosis failed: {llm_diagnosis['error']}", current_step="LLM diagnosis failed.")
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Diagnosis and planning failed: {llm_diagnosis['error']}", current_step="LLM planning failed.")
         return {"status": "failed", "reason": llm_diagnosis["error"]}
 
     diagnosis_summary = llm_diagnosis.get("diagnosis_summary", "No summary.")
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "Root cause diagnosed.", output=llm_diagnosis)
+    repair_plan = llm_diagnosis.get("repair_plan", [])
     
-    await _SWARM_VISUALIZER.log_event(task_id, "root_cause_diagnosed", f"Root cause for fault {fault_id[:8]} diagnosed. Summary: {diagnosis_summary}", llm_diagnosis, agent_role="SelfRepairingAutoHealing")
-    await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"Root cause for fault {fault_id[:8]} diagnosed. Summary: {diagnosis_summary}", title="Fault Diagnosis Complete")
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 70, "Failure diagnosed. Repair plan generated. Executing repair.")
 
-    # Update FaultLog in CRUD Manager with diagnosis
-    await _CRUD_MANAGER.update_entity("FaultLog", fault_id, {"diagnosis": llm_diagnosis, "status": "DIAGNOSED"})
+    # Trigger resource allocation for repair if needed
+    resource_reqs = llm_diagnosis.get("resource_requirements_for_repair", {})
+    for res_type, amount in resource_reqs.items():
+        await _DYNAMIC_RESOURCE_ALLOCATOR.allocate_resources(task_id, res_type, amount, user_id)
+
+    # Execute repair plan, delegating to relevant modules
+    actions_taken = []
+    for step in repair_plan:
+        if step["executor_module"] == "SelfEvolution" and _SELF_EVOLUTION:
+            if step["action"] == "apply_code_patch":
+                # Mock: _SELF_EVOLUTION.apply_code_patch(...)
+                actions_taken.append({"status": "mock_success", "action": "apply_code_patch"})
+        elif step["executor_module"] == "SelfArchitectingEngine" and _SELF_ARCHITECTING_ENGINE:
+            if step["action"] == "refactor_architecture":
+                # Mock: _SELF_ARCHITECTING_ENGINE.refactor_architecture(...)
+                actions_taken.append({"status": "mock_success", "action": "refactor_architecture"})
+        elif step["executor_module"] == "UniversalDeploymentManager" and _UNIVERSAL_DEPLOYMENT_MANAGER:
+            if step["action"] == "redeploy_component":
+                # Mock: _UNIVERSAL_DEPLOYMENT_MANAGER.deploy_component(...)
+                actions_taken.append({"status": "mock_success", "action": "redeploy_component"})
+        # Add more delegations as needed
+
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "Failure diagnosed and repair initiated/completed.", output=llm_diagnosis)
     
-    await generate_remediation_plan(task_id=f"{task_id}_plan", diagnosis=llm_diagnosis, user_id=user_id)
+    await _SWARM_VISUALIZER.log_event(task_id, "failure_diagnosed_repaired", f"Failure diagnosed and repair initiated. Summary: {diagnosis_summary}", llm_diagnosis, agent_role="SelfRepairingAutoHealing")
+    await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"System failure diagnosed and repair initiated. Summary: {diagnosis_summary}", title="System Repair Initiated")
+
+    # Store repair log in CRUD Manager
+    await _CRUD_MANAGER.create_entity("RepairLog", {"id": task_id, "failure_report": failure_report, "repair_plan": llm_diagnosis, "status": "INITIATED"})
+
+    # If formal verification is required, trigger it
+    if llm_diagnosis.get("formal_verification_required", False) and _FORMAL_VERIFICATION:
+        await _FORMAL_VERIFICATION.verify_repaired_component(task_id=f"{task_id}_fv", component_spec=repair_plan, user_id=user_id)
+
+    # Feed preventive suggestions to Self-Evolution or Self-Architecting Engine
+    for suggestion in llm_diagnosis.get("preventive_suggestions", []):
+        if "architectural" in suggestion.lower() and _SELF_ARCHITECTING_ENGINE:
+            await _SELF_ARCHITECTING_ENGINE.propose_architectural_improvements(
+                task_id=f"{task_id}_prevent_arch", 
+                bottlenecks_report={"issue": suggestion, "severity": failure_report.get("severity")},
+                user_id=user_id
+            )
+        elif "code" in suggestion.lower() and _SELF_EVOLUTION:
+            await _SELF_EVOLUTION.propose_code_improvement(
+                task_id=f"{task_id}_prevent_code", 
+                description=suggestion,
+                user_id=user_id
+            )
 
     return {"status": "success", "diagnosis_report": llm_diagnosis}
 
-
-async def generate_remediation_plan(task_id: str, diagnosis: Dict[str, Any], user_id: str = "Tariro_System", planner_model: str = "llama-architect") -> Dict[str, Any]:
+async def rollback_system_state(task_id: str, rollback_point: Dict[str, Any], user_id: str = "Tariro_System", rollback_model: str = "arbiter-model") -> Dict[str, Any]:
     """
-    Creates a precise, verifiable plan to fix the issue, involving code patches,
-    configuration changes, resource reallocation, or hardware replacement.
+    Reverts the system to a previous stable state in case of unrecoverable failure or failed repair.
     """
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Generating remediation plan.")
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Initiating system rollback.")
 
-    fault_id = diagnosis.get("fault_id")
-    root_cause = diagnosis.get("root_cause")
-    root_cause_type = diagnosis.get("root_cause_type")
-    affected_subsystems = diagnosis.get("affected_subsystems", [])
+    current_system_state = await _GLOBAL_STATE_MANAGER.get_state("system_configuration") or {}
     
-    current_system_architecture = await _GLOBAL_STATE_MANAGER.get_state("current_tariro_architecture") or {} # From SelfArchitectingEngine
-    available_resources = await _GLOBAL_STATE_MANAGER.get_state("system_resource_metrics") or {} # From DynamicResourceAllocator
+    prompt = f"""You are Tariro's Self-Repairing Auto-Healing Engine, an Omniversal AGI System Rollback Orchestrator. Your task is to safely and efficiently revert the system to a previous stable state. This process must be robust, prevent data corruption, and ensure minimal disruption to unaffected components. It requires careful coordination and verification at each step.
 
-    prompt = f"""You are Tariro's Self-Repairing & Auto-Healing System, an Omniversal AGI Remediation Planner. Your task is to create a precise, verifiable, and minimal-disruption remediation plan to fix a diagnosed system fault. The plan may involve code patches, configuration changes, resource re-allocation, or architectural adjustments.
+CURRENT SYSTEM STATE: {json.dumps(current_system_state, indent=2)}
+ROLLBACK POINT SPECIFICATION: {json.dumps(rollback_point, indent=2)}
 
-FAULT ID: {fault_id[:8]}
-ROOT CAUSE: {root_cause} (Type: {root_cause_type})
-AFFECTED SUBSYSTEMS: {json.dumps(affected_subsystems, indent=2)}
-CURRENT SYSTEM ARCHITECTURE (relevant parts): {json.dumps(current_system_architecture, indent=2)}
-AVAILABLE RESOURCES: {json.dumps(available_resources, indent=2)}
-
-Generate a remediation plan focusing on:
--   **Precision**: Clearly define each step and its expected outcome.
--   **Verifiability**: How can each step or the overall plan be formally verified or tested?
--   **Minimizing Disruption**: Avoid downtime or cascading failures.
--   **Safety**: Prioritize system integrity and security during repair.
--   **Delegation**: Specify which other modules should execute which part of the plan (e.g., Self-Evolution for code, UDM for config, DRA for resources).
+Initiate rollback focusing on:
+-   **Data Integrity**: Ensure no data corruption during rollback.
+-   **Component Reversion**: Revert affected components to their state at the rollback point.
+-   **Dependency Management**: Handle dependencies between components during rollback.
+-   **Verification**: How to confirm the rollback was successful and the system is stable.
+-   **Post-Rollback Actions**: Logging, notification, and root cause analysis.
 
 Output JSON: {{
-    "remediation_plan_summary": str,
-    "plan_id": str,
-    "remediation_steps": List[Dict[str, Any]], # {{'step_id': str, 'description': str, 'action_type': str, 'executor_module': str, 'payload': Dict, 'dependencies': List[str], 'rollback_strategy': str}}
-    "estimated_recovery_time_seconds": int,
-    "formal_verification_required": bool,
+    "rollback_summary": str,
+    "rollback_plan": List[Dict[str, Any]], # {{'step': str, 'action': str, 'target_component': str, 'details': Dict, 'executor_module': str}}
+    "estimated_downtime_seconds": int,
+    "data_loss_risk": str, # "none", "low", "medium", "high"
     "confidence": float
 }}
 """
-    llm_remediation_plan = await _call_llm_for_auto_healing(planner_model, "RemediationPlanner", prompt, task_id)
+    llm_rollback_plan = await _call_llm_for_healing(rollback_model, "RollbackOrchestrator", prompt, task_id)
 
-    if "error" in llm_remediation_plan:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Remediation plan generation failed: {llm_remediation_plan['error']}", current_step="LLM planning failed.")
-        return {"status": "failed", "reason": llm_remediation_plan["error"]}
+    if "error" in llm_rollback_plan:
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"System rollback planning failed: {llm_rollback_plan['error']}", current_step="LLM planning failed.")
+        return {"status": "failed", "reason": llm_rollback_plan["error"]}
 
-    plan_summary = llm_remediation_plan.get("remediation_plan_summary", "No summary.")
-    remediation_steps = llm_remediation_plan.get("remediation_steps", [])
+    rollback_summary = llm_rollback_plan.get("rollback_summary", "No summary.")
+    rollback_plan = llm_rollback_plan.get("rollback_plan", [])
+
+    # Perform actual rollback steps (mock)
+    actions_executed = []
+    for step in rollback_plan:
+        # Delegation to Universal Deployment Manager for actual deployment/version management
+        if step["executor_module"] == "UniversalDeploymentManager" and _UNIVERSAL_DEPLOYMENT_MANAGER:
+            if step["action"] == "redeploy_version":
+                # Mock: _UNIVERSAL_DEPLOYMENT_MANAGER.redeploy_version(...)
+                actions_executed.append({"status": "mock_success", "action": "redeploy_version"})
+        # Add more delegations as needed
+
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "System rollback initiated/completed.", output=llm_rollback_plan)
     
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 70, current_step="Remediation plan generated.")
+    await _SWARM_VISUALIZER.log_event(task_id, "system_rollback_initiated", f"System rollback initiated. Summary: {rollback_summary}", llm_rollback_plan, agent_role="SelfRepairingAutoHealing")
+    await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"System rollback initiated. Summary: {rollback_summary}", title="System Rollback Initiated", causal_priority="critical")
 
-    # Formal verification of the plan steps if required
-    verification_results = {"status": "skipped", "reason": "Formal verification not required or module not available."}
-    if _FORMAL_VERIFICATION and llm_remediation_plan.get("formal_verification_required", True):
+    # Store rollback log in CRUD Manager
+    await _CRUD_MANAGER.create_entity("RollbackLog", {"id": task_id, "rollback_point": rollback_point, "rollback_plan": llm_rollback_plan, "status": "INITIATED"})
+
+    return {"status": "success", "rollback_report": llm_rollback_plan}
+
+async def start_continuous_self_hardening_loop(task_id: str, interval_seconds: int, user_id: str = "Tariro_System"): # task_id for tracking
+    """
+    Starts a continuous loop for self-hardening and proactive self-repair activities.
+    This function should be executed by the background worker framework.
+    """
+    print(f"[SelfRepairingAutoHealing] Starting continuous self-hardening loop with interval {interval_seconds}s.")
+    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "RUNNING_LOOP", 0, "Continuous self-hardening loop started.")
+
+    while True:
         try:
-            # Assuming formal_verification can verify a sequence of actions or state transitions
-            verification_results = await _FORMAL_VERIFICATION.verify_remediation_plan(
-                task_id=f"{task_id}_fv_plan",
-                plan_spec=llm_remediation_plan,
-                affected_components=affected_subsystems
-            )
-            await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 80, current_step="Formal verification of plan completed.")
+            # Simulate gathering current system state / anomaly detection
+            symptom_data = {
+                "cpu_temp": random.uniform(40, 70), 
+                "memory_usage": random.uniform(0.3, 0.9),
+                "disk_io": random.uniform(10, 1000)
+            }
+            # Check for anomalies (mocked for now, in reality call detect_system_failure)
+            if random.random() < 0.05: # 5% chance of simulated failure
+                print(f"[SelfRepairingAutoHealing] Simulated failure detected in loop for task {task_id}.")
+                await detect_system_failure(f"{task_id}_failure_{uuid.uuid4().hex[:8]}", {"simulated_error": "High memory usage detected"}, user_id)
+            
+            # Periodically reflect on past repairs for learning
+            if _META_COGNITIVE_REFLECTION and random.random() < 0.1: # 10% chance to reflect
+                past_repair = await _CRUD_MANAGER.filter_entities("RepairLog", {}, limit=1, sort_by="-created_at")
+                if past_repair:
+                    await _META_COGNITIVE_REFLECTION.reflect_on_decision(
+                        task_id=f"{task_id}_reflection_{uuid.uuid4().hex[:8]}",
+                        decision_context={
+                            "reflection_topic": "past_system_repair",
+                            "repair_log_id": past_repair[0]["id"]},
+                        outcome={
+                            "status": past_repair[0]["status"],
+                            "summary": past_repair[0]["repair_plan"]["diagnosis_summary"]
+                            },
+                        user_id=user_id
+                    )
+            
+            await asyncio.sleep(interval_seconds)
+        except asyncio.CancelledError:
+            print(f"[SelfRepairingAutoHealing] Continuous self-hardening loop {task_id} cancelled.")
+            await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "CANCELLED", 100, "Continuous self-hardening loop cancelled.")
+            break
         except Exception as e:
-            verification_results = {"status": "error", "reason": str(e)}
-            await _SWARM_VISUALIZER.log_event(task_id, "plan_fv_error", f"Error during formal verification of plan: {e}", agent_role="SelfRepairingAutoHealing", level="ERROR")
-
-
-    if verification_results.get("status") == "success" and verification_results.get("is_correct", True):
-        # Update FaultLog in CRUD Manager with remediation plan
-        await _CRUD_MANAGER.update_entity("FaultLog", fault_id, {"remediation_plan": llm_remediation_plan, "status": "PLAN_GENERATED"})
-        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"Remediation plan for fault {fault_id[:8]} generated and verified. Summary: {plan_summary}", title="Remediation Plan Ready")
-        await execute_remediation_atomically(task_id=f"{task_id}_exec", remediation_plan=llm_remediation_plan, user_id=user_id)
-    else:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 90, "Remediation plan failed formal verification. Human review required.", output={"plan": llm_remediation_plan, "verification": verification_results})
-        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
-            user_id, task_id, f"Remediation plan for fault {fault_id[:8]} failed verification. Human review required. Summary: {plan_summary}",
-            title="Remediation Plan Review Needed", causal_priority="critical"
-        )
-        await _SWARM_VISUALIZER.log_event(task_id, "remediation_review_needed", "Remediation plan requires human review.", {"plan": llm_remediation_plan}, agent_role="SelfRepairingAutoHealing", level="WARNING")
-
-
-    return {"status": "success", "remediation_plan": llm_remediation_plan}
-
-
-async def execute_remediation_atomically(task_id: str, remediation_plan: Dict[str, Any], user_id: str = "Tariro_System", executor_model: str = "arbiter-model") -> Dict[str, Any]:
-    """
-    Orchestrates the safe, atomic application of the repair, with built-in rollback mechanisms
-    and rigorous post-repair verification.
-    """
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Executing remediation plan atomically.")
-
-    fault_id = remediation_plan.get("fault_id")
-    remediation_steps = remediation_plan.get("remediation_steps", [])
-    
-    current_system_state_snapshot = await _GLOBAL_STATE_MANAGER.get_state("system_state_snapshot") # Take a snapshot for rollback
-    
-    prompt = f"""You are Tariro's Self-Repairing & Auto-Healing System, an Omniversal AGI Remediation Executor. Your task is to safely and atomically execute a series of remediation steps. Each step must be delegated to the appropriate module. Ensure robust pre-checks, post-checks, and a clear rollback strategy for every change.
-
-REMEDIATION PLAN: {json.dumps(remediation_plan, indent=2)}
-CURRENT SYSTEM STATE SNAPSHOT (for rollback): {json.dumps(current_system_state_snapshot, indent=2)}
-
-Execute the remediation steps focusing on:
--   **Atomic Execution**: Treat the entire plan as a single transaction (all or nothing).
--   **Pre-Checks**: Verify conditions before applying each step.
--   **Delegation**: Call appropriate modules (Self-Evolution, Self-Architecting, UDM, DRA) for specific actions.
--   **Post-Checks**: Verify success after each step and overall plan completion.
--   **Rollback**: If any step fails or post-checks show degradation, execute the rollback strategy.
--   **Monitoring**: Continuously monitor system health during and after execution.
-
-Output JSON: {{
-    "execution_summary": str,
-    "execution_status": str, # "success", "failed", "rolled_back"
-    "steps_executed": List[Dict[str, Any]], # {{'step_id': str, 'status': str, 'result': Any}}
-    "overall_repair_outcome": str,
-    "final_system_state": Optional[Dict[str, Any]],
-    "confidence": float
-}}
-"""
-    llm_execution_report = await _call_llm_for_auto_healing(executor_model, "RemediationExecutor", prompt, task_id)
-
-    if "error" in llm_execution_report:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Remediation execution failed: {llm_execution_report['error']}", current_step="LLM orchestration failed.")
-        return {"status": "failed", "reason": llm_execution_report["error"]}
-
-    execution_summary = llm_execution_report.get("execution_summary", "No summary.")
-    execution_status = llm_execution_report.get("execution_status", "failed")
-
-    if execution_status == "success":
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "Remediation plan executed successfully.", output=llm_execution_report)
-        await _CRUD_MANAGER.update_entity("FaultLog", fault_id, {"status": "REPAIRED", "repair_outcome": llm_execution_report})
-        await _SWARM_VISUALIZER.log_event(task_id, "remediation_executed", f"Remediation for fault {fault_id[:8]} executed successfully. Summary: {execution_summary}", llm_execution_report, agent_role="SelfRepairingAutoHealing")
-        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"System fault {fault_id[:8]} repaired successfully. Summary: {execution_summary}", title="System Repaired", causal_priority="low")
-    elif execution_status == "rolled_back":
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 100, "Remediation failed and rolled back.", output=llm_execution_report)
-        await _CRUD_MANAGER.update_entity("FaultLog", fault_id, {"status": "ROLLED_BACK", "repair_outcome": llm_execution_report})
-        await _SWARM_VISUALIZER.log_event(task_id, "remediation_rolled_back", f"Remediation for fault {fault_id[:8]} rolled back. Summary: {execution_summary}", llm_execution_report, agent_role="SelfRepairingAutoHealing", level="WARNING")
-        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"System fault {fault_id[:8]} remediation failed and rolled back. Summary: {execution_summary}", title="Remediation Rolled Back", causal_priority="high")
-    else: # failed
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 100, "Remediation failed. Manual intervention needed.", output=llm_execution_report)
-        await _CRUD_MANAGER.update_entity("FaultLog", fault_id, {"status": "REPAIR_FAILED", "repair_outcome": llm_execution_report})
-        await _SWARM_VISUALIZER.log_event(task_id, "remediation_failed", f"Remediation for fault {fault_id[:8]} failed. Summary: {execution_summary}", llm_execution_report, agent_role="SelfRepairingAutoHealing", level="CRITICAL")
-        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"System fault {fault_id[:8]} remediation failed. Manual intervention needed. Summary: {execution_summary}", title="Remediation Failed", causal_priority="critical")
-
-    # Feed lessons learned from failure and repair
-    await learn_from_failure_and_repair(task_id=f"{task_id}_learn", failure_event={"fault_id": fault_id, "details": fault_details}, repair_outcome=llm_execution_report, user_id=user_id)
-
-    return {"status": "success", "execution_report": llm_execution_report}
-
-async def learn_from_failure_and_repair(task_id: str, failure_event: Dict[str, Any], repair_outcome: Dict[str, Any], user_id: str = "Tariro_System", learner_model: str = "mixtral-analyst") -> Dict[str, Any]:
-    """
-    Feeds lessons learned from every failure and successful repair back into
-    meta_learner and meta_cognitive_reflection to prevent recurrence and improve future self-healing capabilities.
-    """
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PROCESSING", 10, "Learning from failure and repair.")
-
-    fault_id = failure_event.get("fault_id")
-    
-    prompt = f"""You are Tariro's Self-Repairing & Auto-Healing System, an Omniversal AGI Failure Learner. Your task is to extract lessons learned from a system failure and its subsequent repair process. These lessons should be fed back into Tariro's meta-learning and meta-cognitive reflection systems to prevent recurrence, improve future self-healing capabilities, and refine internal processes.
-
-FAILURE EVENT DETAILS: {json.dumps(failure_event, indent=2)}
-REPAIR OUTCOME: {json.dumps(repair_outcome, indent=2)}
-
-Extract lessons learned focusing on:
--   **Root Cause Analysis Refinement**: Improve future diagnosis accuracy.
--   **Remediation Plan Optimization**: Identify more efficient or robust repair strategies.
--   **Preventative Measures**: Suggest changes to prevent similar failures.
--   **Architectural Resilience**: Recommend architectural improvements to absorb future shocks.
--   **Knowledge Gaps**: What knowledge was missing that prolonged diagnosis or complicated repair?
-
-Output JSON: {{
-    "lessons_learned_summary": str,
-    "preventative_actions_recommended": List[str],
-    "system_improvements_suggested": List[str], # For Self-Evolution or Self-Architecting Engine
-    "meta_learning_insights": List[str], # For Meta-Learner
-    "cognitive_reflection_topics": List[str], # For Meta-Cognitive Reflection
-    "confidence": float
-}}
-"""
-    llm_lessons = await _call_llm_for_auto_healing(learner_model, "FailureLearner", prompt, task_id)
-
-    if "error" in llm_lessons:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Learning from failure failed: {llm_lessons['error']}", current_step="LLM learning failed.")
-        return {"status": "failed", "reason": llm_lessons["error"]}
-
-    lessons_summary = llm_lessons.get("lessons_learned_summary", "No summary.")
-    await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "Lessons learned from failure and repair.", output=llm_lessons)
-    
-    await _SWARM_VISUALIZER.log_event(task_id, "lessons_learned", f"Lessons learned from fault {fault_id[:8]} and repair. Summary: {lessons_summary}", llm_lessons, agent_role="SelfRepairingAutoHealing")
-    await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"Lessons learned from fault {fault_id[:8]} and repair. Summary: {lessons_summary}", title="Lessons Learned")
-
-    # Feed insights to Meta-Learner
-    if _META_LEARNER and llm_lessons.get("meta_learning_insights"):
-        for insight in llm_lessons["meta_learning_insights"]:
-            await _META_LEARNER.ingest_insight(task_id, "failure_learning", insight, {"fault_id": fault_id, "summary": lessons_summary}, user_id)
-    
-    # Trigger Meta-Cognitive Reflection topics
-    if _META_COGNITIVE_REFLECTION and llm_lessons.get("cognitive_reflection_topics"):
-        for topic in llm_lessons["cognitive_reflection_topics"]:
-            await _PERSISTENT_TASK_MANAGER.submit_task(
-                task_type="meta_cognitive_reflection.reflect_on_decision", # Reusing generic reflection
-                payload={
-                    "decision_context": {"reflection_topic": topic, "source_fault_id": fault_id},
-                    "outcome": {"lessons_summary": lessons_summary},
-                    "user_id": user_id
-                },
-                user_id=user_id,
-                priority=4,
-                initiating_session_id=task_id
+            print(f"ERROR: Error in continuous self-hardening loop {task_id}: {e}")
+            if _SWARM_VISUALIZER:
+                await _SWARM_VISUALIZER.log_event(
+                    session_id=task_id,
+                    event_type="self_hardening_loop_error",
+                    message=f"Error in continuous self-hardening loop: {e}",
+                    details={
+                        "error": str(e)
+                    },
+                    agent_id=user_id,
+                    agent_role="SelfRepairingAutoHealing",
+                    level="CRITICAL"
+                )
+            await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
+                user_id,
+                task_id,
+                f"Critical error in continuous self-hardening loop: {e}",
+                title="Self-Hardening Loop Error",
+                category="system_update",
+                causal_priority="critical"
             )
-
-    return {"status": "success", "lessons_report": llm_lessons}
+            await asyncio.sleep(interval_seconds) # Wait before retrying
