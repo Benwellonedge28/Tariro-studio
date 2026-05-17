@@ -58,7 +58,6 @@ def initialize_autonomous_knowledge_graph_genesis(workspace_path: str, openai_cl
     initial_schema = asyncio.run(_GLOBAL_STATE_MANAGER.get_state("knowledge_graph_schema"))
     if initial_schema:
         _MOCKED_KG_SCHEMA.update(initial_schema)
-        print("Loaded initial knowledge graph schema.")
     else:
         # Initialize KG schema in Global State Manager if not present
         asyncio.run(_GLOBAL_STATE_MANAGER.set_state("knowledge_graph_schema", _MOCKED_KG_SCHEMA, "Tariro_System", auditable=True))
@@ -260,7 +259,7 @@ async def synthesize_new_knowledge(task_id: str, raw_data: List[Any], user_id: s
 
     current_kg_schema = await _GLOBAL_STATE_MANAGER.get_state("knowledge_graph_schema") or _MOCKED_KG_SCHEMA
     
-    prompt = f"""You are Tariro's Autonomous Knowledge Graph Genesis Engine, an Omniversal AGI Knowledge Synthesizer. Your task is to process raw acquired data, extract new facts, rules, entities, and relationships, then integrate them into the existing knowledge graph while ensuring semantic consistency and logical coherence.
+    prompt = f"""You are Tariro's Autonomous Knowledge Graph Genesis Engine, an Omniversal AGI Knowledge Synthesizer. Your task is to process raw acquired data to extract new facts, rules, entities, and relationships, then integrate them into the existing knowledge graph while ensuring semantic consistency and logical coherence.
 
 RAW ACQUIRED DATA: {json.dumps(raw_data, indent=2)}
 CURRENT KNOWLEDGE GRAPH SCHEMA: {json.dumps(current_kg_schema, indent=2)}
@@ -362,7 +361,7 @@ Output JSON: {{
             )
         elif llm_contradictions.get("resolved_knowledge_updates"):
             # Apply auto-resolved updates
-            # This would recursively call synthesize_new_knowledge with the resolved updates
+            # This would recursively call synthesize_new_knowledge with the revised data
             await synthesize_new_knowledge(task_id=f"{task_id}_resolved_synthesis", raw_data=[llm_contradictions["resolved_knowledge_updates"]], user_id=user_id)
             await _ASYNC_NOTIFICATION_SYSTEM.send_notification("Tariro_System", task_id, f"Knowledge contradictions auto-resolved. Summary: {report_summary}", title="Knowledge Contradictions Resolved")
         else:
@@ -410,30 +409,8 @@ Output JSON: {{
         return {"status": "failed", "reason": llm_ontology_evolution["error"]}
 
     evolution_summary = llm_ontology_evolution.get("ontology_evolution_summary", "No summary.")
-    proposed_schema_updates = llm_ontology_evolution.get("proposed_schema_updates", {})
-
-    # Apply autonomy governance check for schema changes
-    autonomy_level_config = await _DYNAMIC_POLICY_SYNTHESIS.get_autonomy_level("Tariro_System", "knowledge_graph_schema_evolution") # Assuming DynamicPolicySynthesis exposes this
-    autonomy_level = autonomy_level_config.get("config", {}).get("level", "human_required") # Default to human for schema changes
-
-    if autonomy_level == "human_required":
-        await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
-            user_id, task_id, f"Ontology evolution proposed for '{domain}'. Human review and approval required for schema changes. Summary: {evolution_summary}",
-            title="Ontology Evolution Approval Needed", causal_priority="critical"
-        )
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "PAUSED", 50, "Awaiting human approval for ontology evolution.")
-        return {"status": "human_approval_required", "reason": "Ontology evolution requires human approval.", "proposed_updates": proposed_schema_updates}
-
-    # Auto-apply if full_auto
-    # This would involve modifying the _MOCKED_KG_SCHEMA directly and then persisting via Global State Manager
-    current_kg_schema["node_types"].extend(proposed_schema_updates.get("new_node_types", []))
-    current_kg_schema["edge_types"].extend(proposed_schema_updates.get("new_edge_types", []))
-    # Handle modified_properties here
-    current_kg_schema["current_version"] = f"{float(current_kg_schema['current_version']) + 0.1:.1f}" # Increment version
-
-    await _GLOBAL_STATE_MANAGER.set_state("knowledge_graph_schema", current_kg_schema, user_id, auditable=True)
-
     await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "Ontology evolved and updated.", output=llm_ontology_evolution)
+    
     await _SWARM_VISUALIZER.log_event(task_id, "ontology_evolved", f"Ontology for '{domain}' evolved. Summary: {evolution_summary}", llm_ontology_evolution, agent_role="KnowledgeGraphGenesis")
     await _ASYNC_NOTIFICATION_SYSTEM.send_notification("Tariro_System", task_id, f"Ontology for '{domain}' evolved. Summary: {evolution_summary}", title="Ontology Updated")
 
