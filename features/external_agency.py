@@ -176,7 +176,7 @@ async def interact_with_external_api(task_id: str, api_spec: Dict[str, Any], act
     elif configured_api["auth_type"] == "header":
         headers["Authorization"] = f"Bearer {api_key}"
 
-    full_url = f"{configured_api["base_url"]}{endpoint_path}"
+    full_url = f"{configured_api['base_url']}{endpoint_path}"
 
     # Simulate external API call (replace with actual httpx.get/post in real implementation)
     try:
@@ -198,13 +198,13 @@ async def interact_with_external_api(task_id: str, api_spec: Dict[str, Any], act
             api_response = response.json()
 
     except httpx.HTTPStatusError as e:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"External API call failed: HTTP error {e.response.status_code}", output={"error": str(e), "response": e.response.text})
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"External API call failed: HTTP error {e.response.status_code}", output={'error': str(e), 'response': e.response.text})
         return {"status": "failed", "reason": f"HTTP error: {e}"}
     except httpx.RequestError as e:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"External API call failed: Request error {e}", output={"error": str(e)})
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"External API call failed: Request error {e}", output={'error': str(e)})
         return {"status": "failed", "reason": f"Request error: {e}"}
     except Exception as e:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"External API call failed: {e}", output={"error": str(e)})
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"External API call failed: {e}", output={'error': str(e)})
         return {"status": "failed", "reason": str(e)}
 
     # Further process and integrate API response into Global Environmental Model
@@ -218,7 +218,7 @@ async def interact_with_external_api(task_id: str, api_spec: Dict[str, Any], act
 
     await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "COMPLETED", 100, "External API interaction successful.", output=api_response)
     
-    await _SWARM_VISUALIZER.log_event(task_id, "external_api_interaction", f"API {api_name}/{action} interaction successful.", {"api_name": api_name, "action": action, "response_preview": str(api_response)[:100]}, agent_role="ExternalAgency")
+    await _SWARM_VISUALIZER.log_event(task_id, "external_api_interaction", f"API {api_name}/{action} interaction successful.", {'api_name': api_name, 'action': action, 'response_preview': str(api_response)[:100]}, agent_role="ExternalAgency")
     await _ASYNC_NOTIFICATION_SYSTEM.send_notification(user_id, task_id, f"External API {api_name}/{action} interaction successful.", title="External Interaction Complete")
 
     return {"status": "success", "api_response": api_response}
