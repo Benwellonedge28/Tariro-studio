@@ -52,7 +52,7 @@ async def execute_scaling_action(
             logger.warning(msg)
             if policy_audit_trail_module:
                 await policy_audit_trail_module.log_change(
-                    task_id=str(uuid.uuid4()), "scaling_denied", None, scaling_proposal, requester, msg
+                    str(uuid.uuid4()), "scaling_denied", None, scaling_proposal, requester, msg
                 )
             return {"status": "DENIED", "message": msg}
             
@@ -66,7 +66,7 @@ async def execute_scaling_action(
     
     if policy_audit_trail_module:
         await policy_audit_trail_module.log_change(
-            task_id=str(uuid.uuid4()),
+            str(uuid.uuid4()),
             event_type="predictive_scaling_action",
             old_value=None, 
             new_value=scaling_proposal,
