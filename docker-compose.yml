@@ -1,92 +1,170 @@
 version: '3.9'
+
+# ─────────────────────────────────────────────────────────
+# TARIRO Studio v4 — Full Stack
+# Services: studio | litellm | ollama | qdrant | searxng | redis
+# ─────────────────────────────────────────────────────────
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
 services:
-  ollama:
-    image: ollama/ollama:latest
-    ports: ["11434:11434"]
-    volumes: ["ollama:/root/.ollama"]
-    deploy:
-      resources:
-        reservations:
-          devices: [{driver: nvidia, count: all, capabilities: [gpu]}]
-    command: serve
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:11434"]
-      interval: 10s
 
-  searxng:
-    image: searxng/searxng:latest
-    ports: ["8080:8080"]
-    environment:
-            - SEARXNG_BASE_URL=http://localhost:8080/
-
-  qdrant:
-    image: qdrant/qdrant:latest
-    ports: ["6333:6333"]
-    volumes: ["qdrant:/qdrant/storage"]
-
-  litellm:
-    image: ghcr.io/berriai/litellm:main-latest
-    ports: ["4000:4000"]
-    volumes: ["./litellm_config.yaml:/app/config.yaml"]
-    command: --config /app/config.yaml --num_workers 8
-    depends_on: [ollama]
-    environment:
-            - DATABASE_URL=sqlite:////app/litellm.db
-
+  # ── Core AI App ───────────────────────────────────────
   studio:
-    build: .
-    ports: ["7860:7860"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    image: tariro-studio:latest
+    container_name: tariro-studio
+    restart: unless-stopped
+    ports:
+      - "7860:7860"
     environment:
       OPENAI_API_BASE: http://litellm:4000/v1
-      OPENAI_API_KEY: sk-free
-      SEARXNG_URL: http://searxng:8080
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-sk-free}
+      REDIS_HOST: redis
       QDRANT_URL: http://qdrant:6333
-      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      SEARXNG_URL: http://searxng:8080
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      TARIRO_WORKSPACE: /app/workspace
     volumes:
-      - ./workspace:/app/workspace
-      - ./toolchains:/toolchains
-    depends_on: [litellm, searxng, qdrant]
-    # >>> START: infinity Advanced and Secure Infinitely additions <<<
+      - workspace:/app/workspace
+    depends_on:
+      litellm:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     read_only: true
     tmpfs:
       - /tmp
-      - /app/workspace:rw # Grant write access only to workspace
     security_opt:
       - no-new-privileges:true
-      - seccomp:seccomp.json # Reference the custom seccomp profile
-    cap_drop: ["ALL"] # Drop all Linux capabilities by default
-    cap_add:
-      - CHOWN
-      - SETUID
-      - SETGID # Only add necessary capabilities, e.g., for git operations if needed
-    restart: unless-stopped # Automatically restart if container stops
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ── LLM Proxy ─────────────────────────────────────────
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: tariro-litellm
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./litellm_config.yaml:/app/config.yaml:ro
+    command: --config /app/config.yaml --num_workers 4
+    environment:
+      DATABASE_URL: sqlite:////app/litellm.db
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:-sk-free}
+    depends_on:
+      ollama:
+        condition: service_healthy
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ── Local LLM Runtime ─────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    container_name: tariro-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    environment:
+      OLLAMA_KEEP_ALIVE: 24h
     deploy:
       resources:
-        limits: {cpus: '4', memory: 8G} # Resource limits for stability
-        reservations: {devices: [{driver: nvidia, count: 1, capabilities: [gpu]}]} # Reserve GPU
-    # >>> END: infinity Advanced and Secure Infinitely additions <<<
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
 
-
-  # New Service: Model Evolution Fine-Tuner
-  model-fine-tuner:
-    image: python:3.10-slim-buster
+  # ── Vector DB ─────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: tariro-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
     volumes:
-      - ./model_evolution_data:/app/data
-      - ./workspace:/app/workspace # Access to test logs
-    command: python /app/tariro_features.py ModelEvolutionService
-    depends_on: [ollama] # Potentially interacts with Ollama for models
+      - qdrant_storage:/qdrant/storage
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
-  # New Service: Visualization Server (for Interactive Swarm Visualization)
-  visualization-server:
-    image: node:18-slim
-    ports: ["3001:3001"]
+  # ── Search Engine ─────────────────────────────────────
+  searxng:
+    image: searxng/searxng:latest
+    container_name: tariro-searxng
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SEARXNG_BASE_URL: http://localhost:8080/
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # ── Redis (task queue + state) ────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: tariro-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
     volumes:
-      - ./visualization_data:/app/data
-    command: node /app/visualization_server.js # Placeholder for a JS visualization server
-    depends_on: [studio] # Receives data from studio
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 volumes:
-  ollama:
-  qdrant:
-  model_evolution_data:
-  visualization_data:
+  workspace:
+    driver: local
+  ollama_models:
+    driver: local
+  qdrant_storage:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  default:
+    name: tariro-net
+    driver: bridge
