@@ -194,7 +194,7 @@ async def check_stalled_tasks(task_id: str, check_interval_seconds: int, user_id
                     # Note: The SETEX command already handles this. This check is an additional layer
                     # to catch tasks that might have been processed by a failed worker without completing.
                     if time_in_processing > timedelta(seconds=TASK_TIMEOUT_SECONDS):
-                        print(f"[RedisTaskQueue] Detected stalled task {task_entry["task_id"]}. Re-enqueuing.")
+                        print(f"[RedisTaskQueue] Detected stalled task {task_entry['task_id']}. Re-enqueuing.")
                         await _REDIS_CLIENT.lpush(TASK_QUEUE_KEY, json.dumps(task_entry)) # Re-enqueue
                         await _REDIS_CLIENT.delete(key) # Remove from processing
                         stalled_count += 1
@@ -202,7 +202,7 @@ async def check_stalled_tasks(task_id: str, check_interval_seconds: int, user_id
                             await _SWARM_VISUALIZER.log_event(
                                 session_id=task_entry["task_id"],
                                 event_type="task_stalled_re_enqueued",
-                                message=f"Task {task_entry["task_id"]} detected as stalled and re-enqueued.",
+                                message=f"Task {task_entry['task_id']} detected as stalled and re-enqueued.",
                                 details=task_entry,
                                 agent_id=user_id,
                                 agent_role="RedisTaskQueue",
@@ -212,20 +212,20 @@ async def check_stalled_tasks(task_id: str, check_interval_seconds: int, user_id
                             await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
                                 task_entry["user_id"],
                                 task_entry["task_id"],
-                                f"Your task {task_entry["task_id"][:8]} was detected as stalled and has been re-enqueued. It will be processed shortly.",
+                                f"Your task {task_entry['task_id'][:8]} was detected as stalled and has been re-enqueued. It will be processed shortly.",
                                 title="Task Stalled and Re-enqueued",
                                 category="system_update",
                                 causal_priority="high"
                             )
                 else:
                     # Task entry without enqueued_at, might be malformed or old
-                    print(f"[RedisTaskQueue] Malformed or old task entry found: {task_entry.get("task_id", "Unknown")}. Removing.")
+                    print(f"[RedisTaskQueue] Malformed or old task entry found: {task_entry.get('task_id', 'Unknown')}. Removing.")
                     await _REDIS_CLIENT.delete(key)
                     if _SWARM_VISUALIZER:
                         await _SWARM_VISUALIZER.log_event(
                             session_id=task_entry.get("task_id", "unknown"),
                             event_type="malformed_task_removed",
-                            message=f"Malformed task entry {task_entry.get("task_id", "Unknown")} removed from processing.",
+                            message=f"Malformed task entry {task_entry.get('task_id', 'Unknown')} removed from processing.",
                             details=task_entry,
                             agent_id=user_id,
                             agent_role="RedisTaskQueue",
