@@ -150,7 +150,7 @@ async def update_task_status(task_id: str, status: str, progress: float = -1.0, 
         # Optional: Notify user on critical status changes or completion
         if _ASYNC_NOTIFICATION_SYSTEM and (status in ["COMPLETED", "FAILED", "CRITICAL_ERROR"] or progress >= 99.9):
             notification_title = f"Task {task_id[:8]} {status.replace('_', ' ').title()}"
-            notification_content = f"Task of type '{updated_task["data"]["task_type"]}' has changed status to {status}. Current step: {current_step}."
+            notification_content = f"Task of type '{updated_task['data']['task_type']}' has changed status to {status}. Current step: {current_step}."
             if status == "FAILED" or status == "CRITICAL_ERROR":
                 notification_content += f" Error details: {output}"
             await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
