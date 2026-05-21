@@ -52,8 +52,7 @@ class IntelligentSalesForecaster:
         """
         Runs a complete cycle of forecasting and quota optimization.
         """
-        print("
---- Running Sales Forecasting & Quota Optimization Cycle ---")
+        print("--- Running Sales Forecasting & Quota Optimization Cycle ---")
         forecast = self.generate_forecast(period)
         if sales_team_structure is None:
             sales_team_structure = {"regions": 4, "reps_per_region": 10} # Example
@@ -79,9 +78,7 @@ if __name__ == "__main__":
 
     forecast_results, optimized_quotas_results = forecaster.run_optimization_cycle()
 
-    print("
-Final Forecast Results:")
+    print("Final Forecast Results:")
     print(forecast_results)
-    print("
-Final Optimized Quotas:")
+    print("Final Optimized Quotas:")
     print(optimized_quotas_results)
