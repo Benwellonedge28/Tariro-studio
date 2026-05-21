@@ -41,12 +41,11 @@ async def auto_migrate_all_keys(
     if autonomy_governance_module:
         decision = await autonomy_governance_module.check_autonomy_level("pqc_migration", requester)
         if decision["autonomy_level"] != "full_auto":
-            msg = f"PQC key migration denied. Autonomy for 'pqc_migration' is not 'full_auto'. Requires human approval."+
-                   f" Current level: {decision['autonomy_level']}"
+            msg = f"PQC key migration denied. Autonomy for 'pqc_migration' is not 'full_auto'. Requires human approval."+ f" Current level: {decision['autonomy_level']}"
             logger.warning(msg)
             if policy_audit_trail_module:
                 await policy_audit_trail_module.log_change(
-                    task_id=str(uuid.uuid4()), "pqc_migration_denied", None, {"reason": msg}, 
+                    str(uuid.uuid4()), "pqc_migration_denied", None, {"reason": msg}, 
                     requester, "PQC key migration denied due to autonomy policy."
                 )
             return {"status": "DENIED", "message": msg}
@@ -62,7 +61,7 @@ async def auto_migrate_all_keys(
 
     if policy_audit_trail_module:
         await policy_audit_trail_module.log_change(
-            task_id=str(uuid.uuid4()),
+            str(uuid.uuid4()),
             event_type="pqc_key_migration",
             old_value=None, 
             new_value=migration_result,
