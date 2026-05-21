@@ -107,7 +107,6 @@ if __name__ == "__main__":
         customer_segments_example,
         total_marketing_budget
     )
-    print("
-Optimized Marketing Budget Allocations:")
+    print("Optimized Marketing Budget Allocations:")
     for segment, allocation in optimized_allocations.items():
         print(f"{segment}: ${allocation:.2f}")
