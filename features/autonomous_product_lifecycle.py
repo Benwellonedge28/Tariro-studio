@@ -78,8 +78,7 @@ class ProductLifecycleManager:
         """
         Runs through several cycles of product lifecycle management.
         """
-        print("
---- Running Autonomous Product Lifecycle Management Cycle ---")
+        print("--- Running Autonomous Product Lifecycle Management Cycle ---")
         self._transition_phase("ideation")
         self.specs["features"] = [] # Ensure features list is initialized
 
