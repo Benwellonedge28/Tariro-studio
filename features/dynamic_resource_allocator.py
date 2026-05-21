@@ -87,12 +87,12 @@ async def allocate_resources(task_id: str, resource_type: str, amount: Any, user
         return {"status": "failed", "reason": f"Resource type {resource_type} not found."}
 
     if resource_info["allocated"] + amount > resource_info["total"]:
-        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Insufficient {resource_type} available. Total: {resource_info["total"], resource_info["unit"]}, Allocated: {resource_info["allocated"], resource_info["unit"]}")
+        await _PERSISTENT_TASK_MANAGER.update_task_status(task_id, "FAILED", 0, f"Insufficient {resource_type} available. Total: {resource_info['total'], resource_info['unit']}, Allocated: {resource_info['allocated'], resource_info['unit']}")
         # Trigger scale-up suggestion via Self-Evolution or notification
         if _ASYNC_NOTIFICATION_SYSTEM:
             await _ASYNC_NOTIFICATION_SYSTEM.send_notification(
                 user_id, task_id, 
-                f"Resource warning: Insufficient {resource_type} for task {task_id}. Current usage {resource_info["allocated"]}/{resource_info["total"]}.",
+                f"Resource warning: Insufficient {resource_type} for task {task_id}. Current usage {resource_info['allocated']}/{resource_info['total']}.",
                 title="Resource Allocation Warning", causal_priority="high"
             )
         return {"status": "failed", "reason": f"Insufficient {resource_type} available."}
