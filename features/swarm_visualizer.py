@@ -49,7 +49,7 @@ async def log_event(session_id: str, event_type: str, message: str, details: Dic
     }
 
     # Log to local file for persistence and immediate access
-    log_filename = os.path.join(SWARM_VISUALIZER_LOG_DIR, f"swarm_events_{datetime.now().strftime("%Y%m%d")}.jsonl")
+    log_filename = os.path.join(SWARM_VISUALIZER_LOG_DIR, f"swarm_events_{datetime.now().strftime('%Y%m%d')}.jsonl")
     try:
         with open(log_filename, "a") as f:
             f.write(json.dumps(event_entry) + "\n")
