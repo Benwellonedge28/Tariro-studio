@@ -90,7 +90,13 @@ class LegalEntityManager:
 if __name__ == "__main__":
     # Dummy data for demonstration
     business_goals_example = ["market_entry_EU", "risk_mitigation_US"]
-    jurisdiction_data_example = {\n        "Germany": {\"types\": [\"GmbH\", \"AG\"], \"requirements\": {\"min_capital\": 25000}},\n        "US_Delaware": {\"types\": [\"Inc.\", \"LLC\"], \"requirements\": {\"annual_report\": True}}\n    }\n    compliance_data_example = {\n        "LE_1": {\"status\": \"green\", \"next_filing\": (datetime.date.today() + datetime.timedelta(days=90)).isoformat()}, # Compliant\n        "US_Corp_1": {\"status\": \"red\", \"issue\": \"Annual report overdue\", \"next_filing\": (datetime.date.today() - datetime.timedelta(days=30)).isoformat()} # Non-compliant
+    jurisdiction_data_example = {
+        "Germany": {"types": ["GmbH", "AG"], "requirements": {"min_capital": 25000}},
+        "US_Delaware": {"types": ["Inc.", "LLC"], "requirements": {"annual_report": True}}
+    }
+    compliance_data_example = {
+        "LE_1": {"status": "green", "next_filing": (datetime.date.today() + datetime.timedelta(days=90)).isoformat()}, # Compliant
+        "US_Corp_1": {"status": "red", "issue": "Annual report overdue", "next_filing": (datetime.date.today() - datetime.timedelta(days=30)).isoformat()} # Non-compliant
     }
 
     manager = LegalEntityManager(
