@@ -1,6 +1,6 @@
 # Resources crate design
 
-**Contract version** 1.0. Master design §15. Planned implementation.
+**Contract version** 1.1 candidate. Master design §15. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -14,35 +14,13 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [configuration]
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
+[Admission](specifications/modules/admission.md) defines the `ResourceAdmission` port and the request and revision types. All port methods use [ResourceError](specifications/modules/error.md). Reserve returns an opaque `ResourceLease`. The manager owns the durable [reservation](specifications/modules/allocation/reservation.md) and ledger. Start requires admitted identity and installed controls. Charge updates metered balances. Release requires scoped and current teardown and settlement evidence.
 
-- `discover()`
-- `estimate(work)`
-- `reserve(request)`
-- `renew(lease)`
-- `release(lease)`
-
-Record families: CapacitySnapshot, ResourceVector, expiring Reservation, observed usage. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `ResourceVector { cpu_slots, ram_bytes, device_bytes, disk_bytes, processes, deadline_ms }`
-- `Reservation { id, workspace_id, assignment_id, vector, expires_at, epoch }`
-
-- `reserve(request: ResourceRequest, snapshot: CapacityRevision) -> Result<Reservation>`
+Discovery and estimation supply the allocator with revisioned, enforceable capacity and typed demand. Occupancy, metered allowance and operation deadlines have distinct semantics. Resource policy uses validated configuration revisions. Introduce no direct storage or authorization dependency. Inject journal, grant and proof verifiers at composition. Admission may issue a new attempt only after the caller acquires the necessary authority. Lease duration is fixed at admission.
 
 ## Failure, safety and resource limits
 
-Reserve measured per-model memory and obey the resolved `inference.max_loaded_generation_models` cap when one applies. Keep host reserve and active work headroom. Unknown GPU capacity is unavailable for hard guarantees.
-
-- `InsufficientCapacity`
-- `UnknownCapacity`
-- `LeaseExpired`
-- `PressureLimit`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Reserve measured per-model memory and obey the resolved `inference.max_loaded_generation_models` cap when one applies. Preserve host reserve and active-work headroom. Reject unknown hard-guarantee capacity. Normalization, simultaneous pressure and checked accounting follow the [allocator](specifications/modules/allocation/allocator.md). Expose typed denials without revealing unauthorized pool information. Reconcile ambiguous storage or provider outcomes before repeating an effect.
 
 ## Source layout
 
@@ -87,11 +65,11 @@ crates/resources/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Concurrent admissions cannot overcommit. Pressure test confirms fallback unloads only unpinned models.
+Apply the [admission fixtures](../../contracts/acceptance/resources/admission-fixtures.json) to concurrent admission and recovery. Exercise actual platform containment and verify pressure fallback unloads only unpinned models before release qualification.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. Admission and allocation contracts are candidates for independent review. Each remaining file records its own maturity and blocking decisions.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

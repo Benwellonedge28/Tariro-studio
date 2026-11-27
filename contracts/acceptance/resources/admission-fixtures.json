@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-RES-001",
+  "fixture_conventions": {
+    "quantities": "Synthetic decimal strings represent unsigned quantities.",
+    "time": "Monotonic ticks on a test clock. A tick is one millisecond. Values are fixtures, independent of deployed configuration.",
+    "preconditions": "Fresh coherent enforceable observations and valid live policy, authority and proof apply except where a test overrides them. Reserve A and B are distinct authorized attempts."
+  },
+  "cases": [
+    {
+      "id": "ZIP-RES-FIX-001",
+      "requirement": "ZIP-RESOURCES-ALLOCATION-ALLOCATOR-T01",
+      "scenario": "Two competing requests",
+      "input": {"ram_bytes": "12", "workers":"3", "a": ["8", "2"], "b": ["8", "2"]},
+      "procedure": "Run both serial orders and parallel starts with a barrier before the allocator transaction.",
+      "expected": {"outcomes": ["Granted", "CapacityExceeded"], "held_ram_bytes": "8", "held_workers": "2"}
+    },
+    {
+      "id": "ZIP-RES-FIX-002",
+      "requirement": "ZIP-RESOURCES-ALLOCATION-ALLOCATOR-T01",
+      "scenario": "Equivalent probe bases",
+      "input": {"enforced_total": "24", "other_usage": "4", "free": "14", "managed_usage": "6", "headroom": "2", "held": "9"},
+      "procedure": "Normalize both probe bases. Apply the hold once to each normalized result.",
+      "expected": {"managed_capacity": "18", "admissible_free": "9"}
+    },
+    {
+      "id": "ZIP-RES-FIX-003",
+      "requirement": "ZIP-RESOURCES-LIMITS-T01",
+      "scenario": "Independent deadlines",
+      "input": {"now": "5", "shared_deadline": "10", "workers": "2", "workers_per_attempt": "1"},
+      "procedure": "Reserve A and B with the same deadline. Advance the clock to equality and authorize a third request.",
+      "expected": {"before_expiry": ["Granted", "Granted"], "at_expiry": "DeadlineExceeded", "workers_still_held": "2"}
+    },
+    {
+      "id": "ZIP-RES-FIX-004",
+      "requirement": "ZIP-RESOURCES-ERROR-T01",
+      "scenario": "Denial redaction and zero capacity",
+      "input": {"host_readings": ["unknown", "0", "8"], "demand": "1"},
+      "procedure": "Reserve under denied and granted policy for every reading.",
+      "expected": {"denied": ["PolicyDenied", "PolicyDenied", "PolicyDenied"], "allowed": ["UnknownCapacity", "CapacityExceeded", "Granted"]}
+    },
+    {
+      "id": "ZIP-RES-FIX-005",
+      "requirement": "ZIP-RESOURCES-ALLOCATION-LEASE-T01",
+      "scenario": "Fenced worker and current cleanup",
+      "input": {"reservation": "5", "allocation_epoch": "9", "old_cleanup_epoch": "3", "current_cleanup_epoch": "4"},
+      "procedure": "Expire the active worker. Attempt further dispatch, an expired charge, cleanup under the old epoch, and cleanup under the current proof. Retry that cleanup after losing its response.",
+      "expected": {"new_dispatches": "0", "charge": "LeaseExpired", "old_cleanup": "InvalidProof", "held_after_old_proof": "5", "held_after_current_proof_and_replay": "0"}
+    },
+    {
+      "id": "ZIP-RES-FIX-006",
+      "requirement": "ZIP-RESOURCES-ALLOCATION-RESERVATION-T01",
+      "scenario": "Metered receipt after restart",
+      "input": {"cap": "10", "allowance_reserved": "8", "sequence_1": "3", "verified_final_usage": "5"},
+      "procedure": "Charge sequence 1 and replay it. Restart with provider outcome unknown. Settle final cumulative usage under verified cleanup. Replay identical cleanup and then submit a conflicting digest.",
+      "expected": {"used_after_charge_and_replay": "3", "held_unused_after_restart": "5", "used_after_settlement": "5", "available_after_release_and_replay": "5", "different_proof": "Conflict"}
+    },
+    {
+      "id": "ZIP-RES-FIX-007",
+      "requirement": "ZIP-RESOURCES-ALLOCATION-QUOTA-T01",
+      "scenario": "Tightest applicable scope",
+      "input": {"system":"10", "organization":"6", "workspace":"8", "assignment":"3", "demand":"4"},
+      "procedure": "Resolve all ceilings and request demand before any debits.",
+      "expected": {"effective":"3", "outcome":"CapacityExceeded", "total_new_hold":"0"}
+    },
+    {
+      "id": "ZIP-RES-FIX-008",
+      "requirement": "ZIP-CONFIGURATION-RESOURCES-T01",
+      "scenario": "Atomic reload with authority hierarchy",
+      "input": {"active_revision":"4", "organization_egress":"offline", "workspace_override":"online"},
+      "procedure": "Load equivalent unordered inputs, then attempt to activate the forbidden workspace override.",
+      "expected": {"equivalent_digest":true, "unsafe_override":"rejected", "revision_after":"4", "egress_after":"offline"}
+    },
+    {
+      "id": "ZIP-RES-FIX-009",
+      "requirement": "ZIP-RESOURCES-ADMISSION-T01",
+      "scenario": "Single dispatch under replay and revocation",
+      "input": {"required_accelerator":"accelerator-a", "hard_enforcement": false},
+      "procedure": "Reserve without hard enforcement, then install controls and retry under fresh measurement. Lose the start response, retry the same proof and reconcile supervised launch. Revoke after the first launch and try another dispatch.",
+      "expected": {"first_reserve":"UnsupportedCapacity", "total_launches":"1", "launch_after_revocation":"PolicyDenied"}
+    }
+  ]
+}
