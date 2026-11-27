@@ -1,15 +1,11 @@
 # Cross-document rule compatibility
 
-**ZIP-DOCUMENTATION-CONSISTENCY-001 · v1.0 · Owner:** Documentation maintainers. **Maturity:** D3 file contract draft.
+**ZIP-DOCUMENTATION-CONSISTENCY-001 · v1.1 candidate · Owner** Documentation maintainers
 
-**Planned source:** `crates/documentation/src/consistency.rs`
+**Planned source** `crates/documentation/src/consistency.rs`
 
-## Required implementation behavior
+Compare referenced normative rules at the pinned revision and planned candidate overlay. Normalize by stable requirement ID, version, component owner, approved authority, typed unit and scope. Keep behavior constraints separate from examples and explanatory prose. A different amount with another unit or assignment scope is not automatically conflicting. Compare normalized semantics and require an approved escalation record where two applicable canonical definitions disagree.
 
-Compare normative IDs, authority and effective meanings at one revision. Flag conflicts instead of preferring whichever file was read last.
+Report both paths, evidence digests and affected gates. Block a dependent document or batch until the conflict is resolved in the correct authority. Revalidate affected documents when an authoritative contract or requirement changes. Never synthesize a middle value or silently prefer the nearest file.
 
-## Acceptance
-
-**ZIP-DOCUMENTATION-CONSISTENCY-T01.** Two docs defining different mandatory limits produce a blocker.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-DOCUMENTATION-CONSISTENCY-T01.** Two different mandatory limits for the same ID and scope block. Distinct approved defaults and assignment constraints remain distinguishable.

@@ -1,15 +1,11 @@
-# Scoped batch sealing
+# Scoped documentation batch seal
 
-**ZIP-DOCUMENTATION-BATCHING-001 · v1.0 · Owner:** Documentation maintainers. **Maturity:** D3 file contract draft.
+**ZIP-DOCUMENTATION-BATCHING-001 · v1.1 candidate · Owner** Documentation maintainers
 
-**Planned source:** `crates/documentation/src/batching.rs`
+**Planned source** `crates/documentation/src/batching.rs`
 
-## Required implementation behavior
+Read the configured exact count, eligible paths and operation constraints from the live assignment grant. Use the full authoritative staged diff from the [repository contract](../../../../specifications/1400-repositories/repositories.md). Compare changed outputs with the set of required verified units. Require exactly one unit per changed eligible Markdown path, and a matching artifact digest and preimage for each. Check actual cardinality after normalizing approved paths. Duplicate or unchanged files cannot increase the count. Extra, deleted, renamed, binary and out-of-scope entries block the reference workflow.
 
-Deduplicate normalized paths, apply authorized count, verify each candidate and persist deterministic sorted manifest. Short exact batch waits for revised authority.
+Run final-tree validation for all cross-links, anchor obligations, canonical references and dependency consistency. Freeze the reviewed tree, sorted diff, per-file evidence, instructions, assignments and grant identities together. A short exact batch remains AwaitingApproval and preserves its checkpoints. Reject the first over-limit staging proposal before writing. Do not insert filler or silently resize the approved batch. A changed approved count is applied through an explicit revised grant and plan. Reference Vimbai exact count is 30 for that grant.
 
-## Acceptance
-
-**ZIP-DOCUMENTATION-BATCHING-T01.** Thirty-file fixture rejects file 31; other approved counts work without static constants.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-DOCUMENTATION-BATCHING-T01.** Reject file 31 on the 30-file fixture. A 12-file final batch waits for revised scope. Approving 12 can seal under revised authority when all other conditions pass.

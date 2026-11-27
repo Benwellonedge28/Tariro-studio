@@ -1,6 +1,6 @@
 # Documentation crate design
 
-**Contract version** 1.0. Master design §33. Planned implementation.
+**Contract version** 1.1 candidate. Master design §33. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -13,35 +13,11 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [assignments](.
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
-
-- `inventory(snapshot)`
-- `design_document(target)`
-- `review(draft)`
-- `seal_batch(batch)`
-
-Record families: DocumentPlan, Reference, ReviewFinding, VerifiedDocument and batch manifest. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `DocumentPlan { target_path, source_refs, required_sections, requirements }`
-- `VerifiedDocument { path, document_digest, plan_digest, evidence_ref }`
-- `BatchManifest { documents, staged_diff_digest }`
-
-- `seal_batch(batch: VerifiedBatch, scope: DocumentationGrant) -> Result<BatchManifest>`
+[Inventory](specifications/modules/inventory.md) freezes eligible paths and dependencies at the pin. [Generation](specifications/modules/generation.md) returns one staged candidate, then [validation](specifications/modules/validation.md) verifies its bytes, facts and citations. Assignments owns durable checkpoints. [Batching](specifications/modules/batching.md) verifies the complete staged tree before [publication](specifications/modules/publishing.md) asks Repository for scoped effects. Keep existing dependency direction.
 
 ## Failure, safety and resource limits
 
-Only approved Markdown paths in documentation mode. Zero broken internal references or placeholders. Do not fill short batches with unrelated files.
-
-- `MissingSource`
-- `UnsupportedClaim`
-- `BatchSizeMismatch`
-- `ScopeDenied`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Only scoped Markdown creates and modifications are allowed in documentation-only mode. Bind readers, staging and review to admitted budgets. Reject missing or false authoritative evidence, unresolved placeholders and broken final-tree links. Short exact batches preserve checkpoints and await renewed scope. Keep observations, proposed behavior and independent approval distinct.
 
 ## Source layout
 
@@ -88,11 +64,11 @@ crates/documentation/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Test fixed 30-file Vimbai workflow, factual references and restart after document 17.
+Apply the [publication fixtures](../../contracts/acceptance/documentation/publication-fixtures.json) to the Vimbai profile, factual references, final-tree verification and restart after document 17.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. The publication slice is a candidate for independent review. Other modules retain their recorded maturity.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
