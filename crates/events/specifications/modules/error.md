@@ -1,15 +1,30 @@
 # Event failure vocabulary
 
-**ZIP-EVENTS-ERROR-001 · v1.0 · Owner:** Events maintainers. **Maturity:** D3 file contract draft.
+**ZIP-EVENTS-ERROR-001 · v1.1 candidate · Owner** Events maintainers
 
-**Planned source:** `crates/events/src/error.rs`
+**Planned source** `crates/events/src/error.rs`
 
-## Required implementation behavior
+```rust
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum EventError {
+    Denied,
+    InvalidEnvelope,
+    UnsupportedVersion,
+    CorruptEnvelope,
+    InvalidCursor,
+    CursorExpired,
+    SessionLost,
+    Backpressure,
+    DeadlineExceeded,
+    Cancelled,
+    Conflict,
+    SequenceOverflow,
+    Storage,
+    OutcomeUnknown,
+}
+```
 
-EventError classifies InvalidEnvelope, SequenceOverflow, CursorExpired, Backpressure, Conflict, Storage and Denied. Error carries sequence/cursor only for authorized streams.
+Validate authority before disclosing stream or consumer state. Inside authorized scope distinguish malformed input, stale root or truncated history, prior session, invalid forward cursor, corrupt committed envelope and bounded pressure. Conflicts and corrupted entries neither advance progress nor skip delivery. Unknown commit or external effect maps to OutcomeUnknown and requires original-identity reconciliation. A storage or adapter exception cannot imply the operation was absent. Optional context uses a separately authorized result view carrying the durable cursor or approved snapshot reference. Never expose payload bytes in errors.
 
-## Acceptance
-
-**ZIP-EVENTS-ERROR-T01.** A caller outside stream scope cannot distinguish absent versus expired private cursor.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-EVENTS-ERROR-T01.** An outside caller sees Denied for missing, expired, or live private cursors. An authorized caller sees CursorExpired for a compacted position.
