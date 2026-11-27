@@ -1,25 +1,38 @@
 # Runtime and scheduling
 
-**Contract version** 1.0. Master design §71.
+**ZIP-RT-001 · v1.1 · Owner:** Runtime and scheduler maintainers. **Maturity:** D4 candidate for the local attempt lifecycle.
 
-## Contract
+## Ownership and scope
 
-TaskState is Queued, Leased, Running, Cancelling, Succeeded, Failed, Cancelled or RecoveryRequired. Write Leased plus attempt epoch before spawn. The epoch must match to accept a worker result. Keep process-tree ownership and resource lease through cleanup, even after the request ends.
+The scheduler owns eligibility, queue ordering, job claims and retry budget. The runtime owns the local attempt, process containment, cancellation, durable result and teardown. Resources owns admission, permit fencing and ledger release. Storage owns compare-and-swap transactions and the transactional outbox. Each external provider owns verification of its effects. This contract covers a single installation and leaves distributed ownership to the distributed specification.
 
-## Execution and integration
+The scheduler's job claim epoch, the runtime's owner generation and the resource allocator's epoch belong to different owners. Compare each against its owning journal. The shared allocation identity is assignment ID, task ID and nonzero attempt number. A retry receives a new attempt number. Lease renewal stays prohibited by the [resource contract](../../RESOURCE_CONTRACT.md).
 
-Use exclusive outbox cursors, foreground Ctrl-C requests cancellation, and daemon exit drains according to the configured deadline. Only the current fenced lease may checkpoint. After restart, inspect prior task ownership and intent before claiming another attempt.
+## Durable transitions
+
+Record startup intent before host preparation. Atomically consume a one-way launch claim before the adapter is allowed to execute the task body. A dispatch claim records permission to try once. A confirmed start records containment and observed execution. Neither is a completion receipt.
+
+| From | Command or observation | To | Durable change |
+| --- | --- | --- | --- |
+| Queued | Current scheduler claim and matching reserved lease | Leased | Record attempt, owner generation, resource binding and containment locator |
+| Leased | Installed controls verified, lease activated, live checks pass and launch claim commits | Leased | Set permanent launch-claim marker for this attempt before dispatch |
+| Leased | Current owner verifies launch | Running | Store proof reference and emit transition event |
+| Leased or Running | Authorized stop, deadline or lease loss observed | Cancelling | Record first stop cause and forbid worker publication |
+| Leased, Running or Cancelling | Lost owner, ambiguous dispatch/commit, unverified teardown or unresolved provider effect | RecoveryRequired | Fence worker and retain unresolved obligations |
+| RecoveryRequired | Recovery owner confirms live occupancy or pending cleanup | Cancelling | Record recovery progress, retain obligations and forbid launch |
+| Leased, Running, Cancelling or RecoveryRequired | Trustworthy terminal evidence and confirmed release | Succeeded, Failed or Cancelled | Record immutable disposition, receipt and one terminal outbox event |
+| Any terminal | Authorized replay of the same command | Same terminal | Return recorded receipt with no second event |
+
+All other edges deny. An exact accepted command replay returns its stored decision to an authorized caller. It grants neither dispatch nor worker publication. Increment runtime owner generation on a verified takeover and reject earlier worker messages regardless of resource-manager state. An unavailable journal or platform observer prevents launch. An external effect receives its own stable intent and authorization under the [recovery standard](../../RECOVERY_STANDARD.md).
+
+## Stop, deadlines and restart
+
+Check the current claim, runtime ownership, resource permit, grant, cancellation and effective monotonic deadline at launch and worker publication. Derive the effective deadline from the request, resolved policy and the resource permit. Eligibility ends at equality. Stop grace uses resolved `runtime.stop_grace_ms` clipped to the applicable deadline. Continue verified cleanup under cleanup authority when execution authority is revoked or expired. A cancelled foreground wait leaves supervision intact. Daemon shutdown stops intake, drains within its configured deadline and preserves anything unfinished for recovery.
+
+Validate storage before startup. Reconcile each unresolved attempt before the scheduler may run any replacement for its task. Restore the highest contiguous verified checkpoint under the [checkpoint contract](../../crates/runtime/specifications/modules/checkpoint/store.md). Old monotonic instants cannot establish fresh authority. The recovery path and evidence rules are defined in the [crash recovery](../../crates/runtime/specifications/modules/recovery/crash_recovery.md) and [reconciliation](../../crates/runtime/specifications/modules/recovery/reconciliation.md) contracts.
 
 ## Verification
 
-Kill before spawn, after spawn and after durable result. Replay an event twice and verify the task result is accepted once.
+[Lifecycle fixtures](../../contracts/acceptance/runtime/lifecycle-fixtures.json) map launch, checkpoint, fencing, teardown and response loss to ZR-001, ZR-003, ZR-004, ZR-006 and ZR-007. Exercise them first against a deterministic journal/adapter harness and then against each supported real process adapter. Retain exact inputs, resolved limit and policy revisions, observed event counts, final resource state and immutable evidence. See [runtime](../../crates/runtime/DESIGN.md), [scheduler](../../crates/scheduler/DESIGN.md), [events](../../crates/events/DESIGN.md) and [requirements](../../REQUIREMENTS.md).
 
-Capture exact inputs, configured limits, actual result, policy revision and the evidence reference. Map applicable release requirements from [REQUIREMENTS.md](../../REQUIREMENTS.md).
-
-
-
-## Implementing components
-
-- [runtime crate design](../../crates/runtime/DESIGN.md)
-- [scheduler crate design](../../crates/scheduler/DESIGN.md)
-- [events crate design](../../crates/events/DESIGN.md)
+Independent review, compilable Rust signatures and actual fault-injection runs remain completion gates.
