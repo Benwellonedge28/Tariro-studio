@@ -89,3 +89,37 @@ crates/runtime/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Crash on both sides of spawn and checkpoint, verify no orphan and no duplicate effects.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`runtime.rs`](specifications/modules/runtime.md)
+- [`builder.rs`](specifications/modules/builder.md)
+- [`lifecycle.rs`](specifications/modules/lifecycle.md)
+- [`supervisor.rs`](specifications/modules/supervisor.md)
+- [`execution/mod.rs`](specifications/modules/execution/mod.md)
+- [`execution/executor.rs`](specifications/modules/execution/executor.md)
+- [`execution/worker.rs`](specifications/modules/execution/worker.md)
+- [`execution/worker_pool.rs`](specifications/modules/execution/worker_pool.md)
+- [`execution/task.rs`](specifications/modules/execution/task.md)
+- [`execution/task_handle.rs`](specifications/modules/execution/task_handle.md)
+- [`execution/execution_context.rs`](specifications/modules/execution/execution_context.md)
+- [`control/mod.rs`](specifications/modules/control/mod.md)
+- [`control/cancellation.rs`](specifications/modules/control/cancellation.md)
+- [`control/timeout.rs`](specifications/modules/control/timeout.md)
+- [`control/pause.rs`](specifications/modules/control/pause.md)
+- [`control/shutdown.rs`](specifications/modules/control/shutdown.md)
+- [`checkpoint/mod.rs`](specifications/modules/checkpoint/mod.md)
+- [`checkpoint/checkpoint.rs`](specifications/modules/checkpoint/checkpoint.md)
+- [`checkpoint/store.rs`](specifications/modules/checkpoint/store.md)
+- [`checkpoint/restore.rs`](specifications/modules/checkpoint/restore.md)
+- [`recovery/mod.rs`](specifications/modules/recovery/mod.md)
+- [`recovery/retry.rs`](specifications/modules/recovery/retry.md)
+- [`recovery/crash_recovery.rs`](specifications/modules/recovery/crash_recovery.md)
+- [`recovery/reconciliation.rs`](specifications/modules/recovery/reconciliation.md)
+- [`isolation.rs`](specifications/modules/isolation.md)
+- [`health.rs`](specifications/modules/health.md)
+- [`metrics.rs`](specifications/modules/metrics.md)
