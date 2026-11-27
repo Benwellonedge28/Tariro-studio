@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "requirements": [
+    {
+      "id": "ZIP-WORKFLOWS-LIB-001",
+      "planned_source": "crates/workflows/src/lib.rs",
+      "contract": "crates/workflows/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-ERROR-001",
+      "planned_source": "crates/workflows/src/error.rs",
+      "contract": "crates/workflows/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-WORKFLOW-001",
+      "planned_source": "crates/workflows/src/workflow.rs",
+      "contract": "crates/workflows/specifications/modules/workflow.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-WORKFLOW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-DEFINITION-001",
+      "planned_source": "crates/workflows/src/definition.rs",
+      "contract": "crates/workflows/specifications/modules/definition.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-DEFINITION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-PARSER-001",
+      "planned_source": "crates/workflows/src/parser.rs",
+      "contract": "crates/workflows/specifications/modules/parser.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-PARSER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-COMPILER-001",
+      "planned_source": "crates/workflows/src/compiler.rs",
+      "contract": "crates/workflows/specifications/modules/compiler.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-COMPILER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-VALIDATION-001",
+      "planned_source": "crates/workflows/src/validation.rs",
+      "contract": "crates/workflows/specifications/modules/validation.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-STAGE-001",
+      "planned_source": "crates/workflows/src/stage.rs",
+      "contract": "crates/workflows/specifications/modules/stage.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-STAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-STEP-001",
+      "planned_source": "crates/workflows/src/step.rs",
+      "contract": "crates/workflows/specifications/modules/step.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-STEP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-CONDITION-001",
+      "planned_source": "crates/workflows/src/condition.rs",
+      "contract": "crates/workflows/specifications/modules/condition.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-CONDITION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-DEPENDENCY-001",
+      "planned_source": "crates/workflows/src/dependency.rs",
+      "contract": "crates/workflows/specifications/modules/dependency.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-DEPENDENCY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-EXECUTION-001",
+      "planned_source": "crates/workflows/src/execution.rs",
+      "contract": "crates/workflows/specifications/modules/execution.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-EXECUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-BRANCHING-001",
+      "planned_source": "crates/workflows/src/branching.rs",
+      "contract": "crates/workflows/specifications/modules/branching.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-BRANCHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-LOOPING-001",
+      "planned_source": "crates/workflows/src/looping.rs",
+      "contract": "crates/workflows/specifications/modules/looping.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-LOOPING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-PARALLELISM-001",
+      "planned_source": "crates/workflows/src/parallelism.rs",
+      "contract": "crates/workflows/specifications/modules/parallelism.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-PARALLELISM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-VARIABLES-001",
+      "planned_source": "crates/workflows/src/variables.rs",
+      "contract": "crates/workflows/specifications/modules/variables.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-VARIABLES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-ARTIFACTS-001",
+      "planned_source": "crates/workflows/src/artifacts.rs",
+      "contract": "crates/workflows/specifications/modules/artifacts.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-ARTIFACTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-APPROVAL-001",
+      "planned_source": "crates/workflows/src/approval.rs",
+      "contract": "crates/workflows/specifications/modules/approval.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-APPROVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-CHECKPOINT-001",
+      "planned_source": "crates/workflows/src/checkpoint.rs",
+      "contract": "crates/workflows/specifications/modules/checkpoint.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-CHECKPOINT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-RETRY-001",
+      "planned_source": "crates/workflows/src/retry.rs",
+      "contract": "crates/workflows/specifications/modules/retry.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-RETRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-COMPENSATION-001",
+      "planned_source": "crates/workflows/src/compensation.rs",
+      "contract": "crates/workflows/specifications/modules/compensation.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-COMPENSATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-ROLLBACK-001",
+      "planned_source": "crates/workflows/src/rollback.rs",
+      "contract": "crates/workflows/specifications/modules/rollback.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-ROLLBACK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-VERSIONING-001",
+      "planned_source": "crates/workflows/src/versioning.rs",
+      "contract": "crates/workflows/specifications/modules/versioning.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-VERSIONING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-REGISTRY-001",
+      "planned_source": "crates/workflows/src/registry.rs",
+      "contract": "crates/workflows/specifications/modules/registry.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-REGISTRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-WORKFLOWS-REPORTING-001",
+      "planned_source": "crates/workflows/src/reporting.rs",
+      "contract": "crates/workflows/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-WORKFLOWS-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

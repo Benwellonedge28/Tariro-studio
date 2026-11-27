@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "requirements": [
+    {
+      "id": "ZIP-IDENTITY-LIB-001",
+      "planned_source": "crates/identity/src/lib.rs",
+      "contract": "crates/identity/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-ERROR-001",
+      "planned_source": "crates/identity/src/error.rs",
+      "contract": "crates/identity/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-PRINCIPAL-001",
+      "planned_source": "crates/identity/src/principal.rs",
+      "contract": "crates/identity/specifications/modules/principal.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-PRINCIPAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-USER-001",
+      "planned_source": "crates/identity/src/user.rs",
+      "contract": "crates/identity/specifications/modules/user.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-USER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-AGENT-001",
+      "planned_source": "crates/identity/src/agent.rs",
+      "contract": "crates/identity/specifications/modules/agent.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-AGENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-SERVICE-001",
+      "planned_source": "crates/identity/src/service.rs",
+      "contract": "crates/identity/specifications/modules/service.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-SERVICE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-DEVICE-001",
+      "planned_source": "crates/identity/src/device.rs",
+      "contract": "crates/identity/specifications/modules/device.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-DEVICE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-ORGANIZATION-001",
+      "planned_source": "crates/identity/src/organization.rs",
+      "contract": "crates/identity/specifications/modules/organization.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-ORGANIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-WORKSPACE-001",
+      "planned_source": "crates/identity/src/workspace.rs",
+      "contract": "crates/identity/specifications/modules/workspace.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-WORKSPACE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-SESSION-001",
+      "planned_source": "crates/identity/src/session.rs",
+      "contract": "crates/identity/specifications/modules/session.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-SESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-AUTHENTICATION-001",
+      "planned_source": "crates/identity/src/authentication.rs",
+      "contract": "crates/identity/specifications/modules/authentication.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-AUTHENTICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-CREDENTIALS-001",
+      "planned_source": "crates/identity/src/credentials.rs",
+      "contract": "crates/identity/specifications/modules/credentials.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-CREDENTIALS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-FEDERATION-001",
+      "planned_source": "crates/identity/src/federation.rs",
+      "contract": "crates/identity/specifications/modules/federation.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-FEDERATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-DELEGATION-001",
+      "planned_source": "crates/identity/src/delegation.rs",
+      "contract": "crates/identity/specifications/modules/delegation.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-DELEGATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-REVOCATION-001",
+      "planned_source": "crates/identity/src/revocation.rs",
+      "contract": "crates/identity/specifications/modules/revocation.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-REVOCATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-IDENTITY-REGISTRY-001",
+      "planned_source": "crates/identity/src/registry.rs",
+      "contract": "crates/identity/specifications/modules/registry.md",
+      "specified_tests": [
+        "ZIP-IDENTITY-REGISTRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "requirements": [
+    {
+      "id": "ZIP-CONTEXT-LIB-001",
+      "planned_source": "crates/context/src/lib.rs",
+      "contract": "crates/context/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-ERROR-001",
+      "planned_source": "crates/context/src/error.rs",
+      "contract": "crates/context/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-CONTEXT-001",
+      "planned_source": "crates/context/src/context.rs",
+      "contract": "crates/context/specifications/modules/context.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-CONTEXT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-BUILDER-001",
+      "planned_source": "crates/context/src/builder.rs",
+      "contract": "crates/context/specifications/modules/builder.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-BUILDER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-WINDOW-001",
+      "planned_source": "crates/context/src/window.rs",
+      "contract": "crates/context/specifications/modules/window.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-WINDOW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-TOKEN-BUDGET-001",
+      "planned_source": "crates/context/src/token_budget.rs",
+      "contract": "crates/context/specifications/modules/token_budget.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-TOKEN-BUDGET-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-PRIORITIZATION-001",
+      "planned_source": "crates/context/src/prioritization.rs",
+      "contract": "crates/context/specifications/modules/prioritization.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-PRIORITIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-RELEVANCE-001",
+      "planned_source": "crates/context/src/relevance.rs",
+      "contract": "crates/context/specifications/modules/relevance.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-RELEVANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-COMPRESSION-001",
+      "planned_source": "crates/context/src/compression.rs",
+      "contract": "crates/context/specifications/modules/compression.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-COMPRESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-SUMMARIZATION-001",
+      "planned_source": "crates/context/src/summarization.rs",
+      "contract": "crates/context/specifications/modules/summarization.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-SUMMARIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-TRUNCATION-001",
+      "planned_source": "crates/context/src/truncation.rs",
+      "contract": "crates/context/specifications/modules/truncation.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-TRUNCATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-RETRIEVAL-001",
+      "planned_source": "crates/context/src/retrieval.rs",
+      "contract": "crates/context/specifications/modules/retrieval.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-RETRIEVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-DEDUPLICATION-001",
+      "planned_source": "crates/context/src/deduplication.rs",
+      "contract": "crates/context/specifications/modules/deduplication.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-DEDUPLICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-PROVENANCE-001",
+      "planned_source": "crates/context/src/provenance.rs",
+      "contract": "crates/context/specifications/modules/provenance.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-PROVENANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-PROMPT-001",
+      "planned_source": "crates/context/src/prompt.rs",
+      "contract": "crates/context/specifications/modules/prompt.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-PROMPT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-TEMPLATE-001",
+      "planned_source": "crates/context/src/template.rs",
+      "contract": "crates/context/specifications/modules/template.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-TEMPLATE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-ISOLATION-001",
+      "planned_source": "crates/context/src/isolation.rs",
+      "contract": "crates/context/specifications/modules/isolation.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-ISOLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONTEXT-CACHE-001",
+      "planned_source": "crates/context/src/cache.rs",
+      "contract": "crates/context/specifications/modules/cache.md",
+      "specified_tests": [
+        "ZIP-CONTEXT-CACHE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

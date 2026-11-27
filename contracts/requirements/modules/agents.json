@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "requirements": [
+    {
+      "id": "ZIP-AGENTS-LIB-001",
+      "planned_source": "crates/agents/src/lib.rs",
+      "contract": "crates/agents/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-AGENTS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ERROR-001",
+      "planned_source": "crates/agents/src/error.rs",
+      "contract": "crates/agents/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-AGENT-001",
+      "planned_source": "crates/agents/src/agent.rs",
+      "contract": "crates/agents/specifications/modules/agent.md",
+      "specified_tests": [
+        "ZIP-AGENTS-AGENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-IDENTITY-001",
+      "planned_source": "crates/agents/src/identity.rs",
+      "contract": "crates/agents/specifications/modules/identity.md",
+      "specified_tests": [
+        "ZIP-AGENTS-IDENTITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-MANIFEST-001",
+      "planned_source": "crates/agents/src/manifest.rs",
+      "contract": "crates/agents/specifications/modules/manifest.md",
+      "specified_tests": [
+        "ZIP-AGENTS-MANIFEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-CAPABILITIES-001",
+      "planned_source": "crates/agents/src/capabilities.rs",
+      "contract": "crates/agents/specifications/modules/capabilities.md",
+      "specified_tests": [
+        "ZIP-AGENTS-CAPABILITIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-LIFECYCLE-001",
+      "planned_source": "crates/agents/src/lifecycle.rs",
+      "contract": "crates/agents/specifications/modules/lifecycle.md",
+      "specified_tests": [
+        "ZIP-AGENTS-LIFECYCLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-STATE-001",
+      "planned_source": "crates/agents/src/state.rs",
+      "contract": "crates/agents/specifications/modules/state.md",
+      "specified_tests": [
+        "ZIP-AGENTS-STATE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-CONTEXT-001",
+      "planned_source": "crates/agents/src/context.rs",
+      "contract": "crates/agents/specifications/modules/context.md",
+      "specified_tests": [
+        "ZIP-AGENTS-CONTEXT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-EXECUTION-001",
+      "planned_source": "crates/agents/src/execution.rs",
+      "contract": "crates/agents/specifications/modules/execution.md",
+      "specified_tests": [
+        "ZIP-AGENTS-EXECUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-COMMUNICATION-001",
+      "planned_source": "crates/agents/src/communication.rs",
+      "contract": "crates/agents/specifications/modules/communication.md",
+      "specified_tests": [
+        "ZIP-AGENTS-COMMUNICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-MAILBOX-001",
+      "planned_source": "crates/agents/src/mailbox.rs",
+      "contract": "crates/agents/specifications/modules/mailbox.md",
+      "specified_tests": [
+        "ZIP-AGENTS-MAILBOX-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-REGISTRY-001",
+      "planned_source": "crates/agents/src/registry.rs",
+      "contract": "crates/agents/specifications/modules/registry.md",
+      "specified_tests": [
+        "ZIP-AGENTS-REGISTRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-FACTORY-001",
+      "planned_source": "crates/agents/src/factory.rs",
+      "contract": "crates/agents/specifications/modules/factory.md",
+      "specified_tests": [
+        "ZIP-AGENTS-FACTORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-SUPERVISION-001",
+      "planned_source": "crates/agents/src/supervision.rs",
+      "contract": "crates/agents/specifications/modules/supervision.md",
+      "specified_tests": [
+        "ZIP-AGENTS-SUPERVISION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-DELEGATION-001",
+      "planned_source": "crates/agents/src/delegation.rs",
+      "contract": "crates/agents/specifications/modules/delegation.md",
+      "specified_tests": [
+        "ZIP-AGENTS-DELEGATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-COLLABORATION-001",
+      "planned_source": "crates/agents/src/collaboration.rs",
+      "contract": "crates/agents/specifications/modules/collaboration.md",
+      "specified_tests": [
+        "ZIP-AGENTS-COLLABORATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-EVALUATION-001",
+      "planned_source": "crates/agents/src/evaluation.rs",
+      "contract": "crates/agents/specifications/modules/evaluation.md",
+      "specified_tests": [
+        "ZIP-AGENTS-EVALUATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-PERMISSIONS-001",
+      "planned_source": "crates/agents/src/permissions.rs",
+      "contract": "crates/agents/specifications/modules/permissions.md",
+      "specified_tests": [
+        "ZIP-AGENTS-PERMISSIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-LIMITS-001",
+      "planned_source": "crates/agents/src/limits.rs",
+      "contract": "crates/agents/specifications/modules/limits.md",
+      "specified_tests": [
+        "ZIP-AGENTS-LIMITS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-MOD-001",
+      "planned_source": "crates/agents/src/roles/mod.rs",
+      "contract": "crates/agents/specifications/modules/roles/mod.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-COORDINATOR-001",
+      "planned_source": "crates/agents/src/roles/coordinator.rs",
+      "contract": "crates/agents/specifications/modules/roles/coordinator.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-COORDINATOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-RESEARCHER-001",
+      "planned_source": "crates/agents/src/roles/researcher.rs",
+      "contract": "crates/agents/specifications/modules/roles/researcher.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-RESEARCHER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-ARCHITECT-001",
+      "planned_source": "crates/agents/src/roles/architect.rs",
+      "contract": "crates/agents/specifications/modules/roles/architect.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-ARCHITECT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-PLANNER-001",
+      "planned_source": "crates/agents/src/roles/planner.rs",
+      "contract": "crates/agents/specifications/modules/roles/planner.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-PLANNER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-DOCUMENTATION-001",
+      "planned_source": "crates/agents/src/roles/documentation.rs",
+      "contract": "crates/agents/specifications/modules/roles/documentation.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-DOCUMENTATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-DEVELOPER-001",
+      "planned_source": "crates/agents/src/roles/developer.rs",
+      "contract": "crates/agents/specifications/modules/roles/developer.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-DEVELOPER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-REVIEWER-001",
+      "planned_source": "crates/agents/src/roles/reviewer.rs",
+      "contract": "crates/agents/specifications/modules/roles/reviewer.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-REVIEWER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-TESTER-001",
+      "planned_source": "crates/agents/src/roles/tester.rs",
+      "contract": "crates/agents/specifications/modules/roles/tester.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-TESTER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-DEBUGGER-001",
+      "planned_source": "crates/agents/src/roles/debugger.rs",
+      "contract": "crates/agents/specifications/modules/roles/debugger.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-DEBUGGER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-SECURITY-001",
+      "planned_source": "crates/agents/src/roles/security.rs",
+      "contract": "crates/agents/specifications/modules/roles/security.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-SECURITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-DATABASE-001",
+      "planned_source": "crates/agents/src/roles/database.rs",
+      "contract": "crates/agents/specifications/modules/roles/database.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-DATABASE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-PERFORMANCE-001",
+      "planned_source": "crates/agents/src/roles/performance.rs",
+      "contract": "crates/agents/specifications/modules/roles/performance.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-PERFORMANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-DEVOPS-001",
+      "planned_source": "crates/agents/src/roles/devops.rs",
+      "contract": "crates/agents/specifications/modules/roles/devops.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-DEVOPS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-RELEASE-001",
+      "planned_source": "crates/agents/src/roles/release.rs",
+      "contract": "crates/agents/specifications/modules/roles/release.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-RELEASE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-COMPLIANCE-001",
+      "planned_source": "crates/agents/src/roles/compliance.rs",
+      "contract": "crates/agents/specifications/modules/roles/compliance.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-COMPLIANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-MAINTENANCE-001",
+      "planned_source": "crates/agents/src/roles/maintenance.rs",
+      "contract": "crates/agents/specifications/modules/roles/maintenance.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-MAINTENANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-REPOSITORY-001",
+      "planned_source": "crates/agents/src/roles/repository.rs",
+      "contract": "crates/agents/specifications/modules/roles/repository.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-REPOSITORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-ROLES-AUDITOR-001",
+      "planned_source": "crates/agents/src/roles/auditor.rs",
+      "contract": "crates/agents/specifications/modules/roles/auditor.md",
+      "specified_tests": [
+        "ZIP-AGENTS-ROLES-AUDITOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AGENTS-METRICS-001",
+      "planned_source": "crates/agents/src/metrics.rs",
+      "contract": "crates/agents/specifications/modules/metrics.md",
+      "specified_tests": [
+        "ZIP-AGENTS-METRICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

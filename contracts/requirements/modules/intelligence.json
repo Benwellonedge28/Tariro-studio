@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "requirements": [
+    {
+      "id": "ZIP-INTELLIGENCE-LIB-001",
+      "planned_source": "crates/intelligence/src/lib.rs",
+      "contract": "crates/intelligence/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-ERROR-001",
+      "planned_source": "crates/intelligence/src/error.rs",
+      "contract": "crates/intelligence/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-INTELLIGENCE-001",
+      "planned_source": "crates/intelligence/src/intelligence.rs",
+      "contract": "crates/intelligence/specifications/modules/intelligence.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-INTELLIGENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-REQUEST-001",
+      "planned_source": "crates/intelligence/src/request.rs",
+      "contract": "crates/intelligence/specifications/modules/request.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-REQUEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-RESPONSE-001",
+      "planned_source": "crates/intelligence/src/response.rs",
+      "contract": "crates/intelligence/specifications/modules/response.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-RESPONSE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-CAPABILITY-001",
+      "planned_source": "crates/intelligence/src/capability.rs",
+      "contract": "crates/intelligence/specifications/modules/capability.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-CAPABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-MODALITY-001",
+      "planned_source": "crates/intelligence/src/modality.rs",
+      "contract": "crates/intelligence/specifications/modules/modality.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-MODALITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-ROUTER-001",
+      "planned_source": "crates/intelligence/src/router.rs",
+      "contract": "crates/intelligence/specifications/modules/router.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-ROUTER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-SELECTION-001",
+      "planned_source": "crates/intelligence/src/selection.rs",
+      "contract": "crates/intelligence/specifications/modules/selection.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-SELECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-FALLBACK-001",
+      "planned_source": "crates/intelligence/src/fallback.rs",
+      "contract": "crates/intelligence/specifications/modules/fallback.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-FALLBACK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-EVALUATION-001",
+      "planned_source": "crates/intelligence/src/evaluation.rs",
+      "contract": "crates/intelligence/specifications/modules/evaluation.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-EVALUATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-CONFIDENCE-001",
+      "planned_source": "crates/intelligence/src/confidence.rs",
+      "contract": "crates/intelligence/specifications/modules/confidence.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-CONFIDENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-STRUCTURED-OUTPUT-001",
+      "planned_source": "crates/intelligence/src/structured_output.rs",
+      "contract": "crates/intelligence/specifications/modules/structured_output.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-STRUCTURED-OUTPUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-TOOL-CALLING-001",
+      "planned_source": "crates/intelligence/src/tool_calling.rs",
+      "contract": "crates/intelligence/specifications/modules/tool_calling.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-TOOL-CALLING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-STREAMING-001",
+      "planned_source": "crates/intelligence/src/streaming.rs",
+      "contract": "crates/intelligence/specifications/modules/streaming.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-STREAMING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-USAGE-001",
+      "planned_source": "crates/intelligence/src/usage.rs",
+      "contract": "crates/intelligence/specifications/modules/usage.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-USAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-BUDGET-001",
+      "planned_source": "crates/intelligence/src/budget.rs",
+      "contract": "crates/intelligence/specifications/modules/budget.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-BUDGET-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-CACHING-001",
+      "planned_source": "crates/intelligence/src/caching.rs",
+      "contract": "crates/intelligence/specifications/modules/caching.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-CACHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-PROVIDERS-MOD-001",
+      "planned_source": "crates/intelligence/src/providers/mod.rs",
+      "contract": "crates/intelligence/specifications/modules/providers/mod.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-PROVIDERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-PROVIDERS-LOCAL-001",
+      "planned_source": "crates/intelligence/src/providers/local.rs",
+      "contract": "crates/intelligence/specifications/modules/providers/local.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-PROVIDERS-LOCAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-PROVIDERS-REMOTE-001",
+      "planned_source": "crates/intelligence/src/providers/remote.rs",
+      "contract": "crates/intelligence/specifications/modules/providers/remote.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-PROVIDERS-REMOTE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-PROVIDERS-EMBEDDED-001",
+      "planned_source": "crates/intelligence/src/providers/embedded.rs",
+      "contract": "crates/intelligence/specifications/modules/providers/embedded.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-PROVIDERS-EMBEDDED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTELLIGENCE-PROVIDERS-DISTRIBUTED-001",
+      "planned_source": "crates/intelligence/src/providers/distributed.rs",
+      "contract": "crates/intelligence/specifications/modules/providers/distributed.md",
+      "specified_tests": [
+        "ZIP-INTELLIGENCE-PROVIDERS-DISTRIBUTED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
