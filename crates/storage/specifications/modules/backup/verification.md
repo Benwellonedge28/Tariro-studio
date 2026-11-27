@@ -1,15 +1,12 @@
-# Backup integrity proof
+# Backup integrity and closure
 
-**ZIP-STORAGE-BACKUP-VERIFICATION-001 · v1.0 · Owner:** Storage maintainers. **Maturity:** D3 file contract draft.
+**ZIP-STORAGE-BACKUP-VERIFICATION-001 · v1.1 candidate · Owner** Storage maintainers
 
-**Planned source:** `crates/storage/src/backup/verification.rs`
+**Planned source** `crates/storage/src/backup/verification.rs`
 
-## Required implementation behavior
+1. Open only an authorized package within supplied archive, entry, byte and time bounds. Verify manifest version, logical store and approved scope. Verify a required signature against the configured trusted key before using any manifest claim. A checksum provides integrity evidence and never confers authority.
+2. Derive expected rooted destinations from declared object identity. Reject duplicate entries, aliased destinations, extra entries, symlinks and path traversal. Do not extract names supplied by an archive as paths. Decode with checked arithmetic and reject excess decompressed output before making it visible.
+3. Verify metadata export digest and complete decode. Compute reachable objects across the restored record, outbox and audit references. Require exact equality with the manifest set. Verify both archived bytes and logical digest and length after authenticated decryption where required. A missing key, unsupported codec, mismatched digest or cross-scope identity fails verification.
+4. Verify sequence high-water counters, receipt generations, revision compatibility, reference counts and schema. Require an approved migration chain for a readable but incompatible writer format. Revalidate the migrated candidate at its final version. Record manifest digest, verification outcome and evidence under the restore operation identity.
 
-Verify signed/qualified manifest where policy mandates, then verify every declared object's digest and reference consistency. Reject unexpected paths and entries outside authorized workspace.
-
-## Acceptance
-
-**ZIP-STORAGE-BACKUP-VERIFICATION-T01.** Obsolete schema without migration chain, digest mismatch and path escape all block restore.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-STORAGE-BACKUP-VERIFICATION-T01.** Try one missing reachable object, one extra entry, one obsolete format without migration and one bad digest. Each blocks activation. Test a valid signed synthetic manifest under the configured trust policy.

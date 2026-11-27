@@ -1,15 +1,20 @@
 # Storage effect recovery
 
-**ZIP-STORAGE-RECOVERY-RECONCILIATION-001 · v1.0 · Owner:** Storage maintainers. **Maturity:** D3 file contract draft.
+**ZIP-STORAGE-RECOVERY-RECONCILIATION-001 · v1.1 candidate · Owner** Storage maintainers
 
-**Planned source:** `crates/storage/src/recovery/reconciliation.rs`
+**Planned source** `crates/storage/src/recovery/reconciliation.rs`
 
-## Required implementation behavior
+```rust
+pub enum CommitStatus {
+    Committed(crate::transaction::CommitReceipt),
+    Absent,
+    Conflicting,
+    Unresolved,
+}
+```
 
-Read receipt, selector and referenced bytes; classify completed, safely absent, conflicting or unknown. Retry only when absence and invariant checks prove idempotence. Preserve corruption for operator review.
+For an authorized transaction, use its original ID and canonical batch digest. Read a qualified committed snapshot. A matching retained receipt proves Committed. A different digest is Conflicting and cannot be replayed. Absent requires that the original writer can no longer commit, the observed root covers the original operation, and receipt retention or a replay fence establishes complete visibility. No receipt after a restore, retention, an unreliable read or an unfenced writer means Unresolved. An Absent result allows retry only under live authority using the same request identity and immutable input. Resolving a retired request never authorizes a new write under that identity.
 
-## Acceptance
+For restore, reconcile the selection under the installation fence against the out-of-root journal. If the old selector matches, prove the original switch cannot still occur before discarding the candidate. If the new selector and root match the intent, verify durable metadata and bytes and publish one completion receipt. A different or invalid selector is RecoveryRequired. For object deletion, a marker with no durable link permits completion after verified removal and directory sync. A marker with live references is corruption. Preserve original evidence and prohibit affected writes.
 
-**ZIP-STORAGE-RECOVERY-RECONCILIATION-T01.** A mismatched selector and missing staged object cause a blocked verdict instead of unverified success.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-STORAGE-RECOVERY-RECONCILIATION-T01.** Lose a commit reply and prove the retained receipt. Replace the root with an older image that omits the receipt and verify lookup remains Unresolved. A selector naming incomplete staging must never yield successful recovery.

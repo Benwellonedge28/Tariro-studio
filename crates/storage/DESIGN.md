@@ -1,6 +1,6 @@
 # Storage crate design
 
-**Contract version** 1.0. Master design §12. Planned implementation.
+**Contract version** 1.1 candidate. Master design §12. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -14,36 +14,13 @@ First-party dependencies: [foundation](../foundation/DESIGN.md)
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
+The [backend port](specifications/modules/backend.md) owns snapshots, commits and reconciliation. [Transactions](specifications/modules/transaction.md) bind canonical immutable input, compare-and-swap conditions, object links, outbox and the durable receipt. [Schema](specifications/modules/schema.md) defines logical keys and references. Keep redb as the preferred embedded candidate and qualify its persistence and filesystem boundaries before release. The memory adapter can validate logical behavior.
 
-- `read_snapshot()`
-- `transact(expected_revision, operations)`
-- `put_object(stream)`
-- `restore(manifest)`
-
-Record families: Namespaced records, record revision, content-addressed object and migration ledger. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `RecordEnvelope { schema_major, schema_minor, revision, payload_digest, payload }`
-- `ObjectRef { digest, length_bytes }`
-- `Batch { preconditions, writes, events }`
-
-- `transact(batch: Batch) -> Result<CommitReceipt>`
-- `put_object(input: BoundedReader) -> Result<ObjectRef>`
+Promote verified immutable bytes before committing any metadata link. A staging pin fences garbage collection until the writer commits. Backups pin one metadata generation and its complete reachable objects. Restore validates a new private root before a fenced selector cutover and reconciles rewound external effects before dispatch.
 
 ## Failure, safety and resource limits
 
-Resolve record byte and transaction operation limits from `storage.max_record_bytes` and `storage.max_transaction_operations`, then tighten to backend capability. Check free space before staging. Never publish metadata for a missing object.
-
-- `Conflict`
-- `QuotaExceeded`
-- `CorruptObject`
-- `MigrationRequired`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Resolve `storage.max_record_bytes` and `storage.max_transaction_operations` from typed configuration at composition. Intersect with backend ceilings and admitted byte and time budgets. Check available space before staging. Use [typed errors](specifications/modules/error.md) and reconcile ambiguous commit by its original transaction identity. Authorization, configuration and resource adapters remain injected. Foundation remains the only first-party dependency.
 
 ## Source layout
 
@@ -88,11 +65,11 @@ crates/storage/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Crash before and after metadata commit, test duplicate object insertion and full backup restoration.
+Run the [durability fixtures](../../contracts/acceptance/storage/durability-fixtures.json) for atomicity, duplicate insertion, deletion fencing, pinned backup and complete restore. Qualify disk and process crash behavior on each supported adapter.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. The transaction, object and backup slice is a candidate for independent review. Other modules retain their recorded maturity.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
