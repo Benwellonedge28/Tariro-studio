@@ -1,15 +1,9 @@
 # Subscriber pressure decisions
 
-**ZIP-EVENTS-BACKPRESSURE-001 · v1.0 · Owner:** Events maintainers. **Maturity:** D3 file contract draft.
+**ZIP-EVENTS-BACKPRESSURE-001 · v1.1 candidate · Owner** Events maintainers
 
-**Planned source:** `crates/events/src/backpressure.rs`
+**Planned source** `crates/events/src/backpressure.rs`
 
-## Required implementation behavior
+On unavailable capacity stop admitting pages to the affected subscription. An approved pressure policy can wait under a finite stall deadline or close immediately. It cannot exceed admitted memory or block other consumers. Expiry, cancellation or revocation closes the subscription and wakes pending operations. Distinguish queue pressure from permission loss. A slow consumer receives its last durable cursor only under current scope. Dropping an unread item cannot acknowledge it, and a resolved pressure condition may re-read committed rows from durable progress.
 
-Given queue state and policy, decide admit, wait or close. Wait is bounded by deadline and cancellation. Close exposes last acknowledged cursor but cannot imply event deletion.
-
-## Acceptance
-
-**ZIP-EVENTS-BACKPRESSURE-T01.** Cancelled blocked producer leaves the durable cursor unchanged and releases its queue wait.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-EVENTS-BACKPRESSURE-T01.** Cancel while waiting with a full queue. Verify waiters stop, charged memory is reclaimed after all buffered work exits, and acknowledged progress is unchanged.

@@ -1,9 +1,11 @@
 # Durable event standard
 
-**ZIP-EVT-001 · v1.0 · Owner:** Events and storage maintainers. **Maturity:** D4 candidate.
+**ZIP-EVT-001 · v1.1 candidate · Owner** Events and storage maintainers
 
-A durable event envelope carries `schema_version, stream_id, sequence, event_id, kind, occurred_at, correlation_id, payload_ref`. Sequence is a checked monotonic integer within a stream. Capture UTC occurrence time for display; order by sequence. Allocate sequence and insert the outbox event in the same transaction as the corresponding domain transition.
+Storage commits the producer's complete outbox envelope with the originating state change. It allocates a checked sequence per stream. UTC occurrence time is descriptive. Kind comes from the immutable stream registry, while each event carries its supported schema version and scoped immutable payload reference. Producer wake notifications are advisory.
 
-Consumers start from an exclusive cursor. Persist their projection mutation and deduplication marker before acknowledging. Delivery is at least once; a broker acknowledgment does not certify processing. An expired cursor returns typed `CursorExpired` and a fresh snapshot reference. Consumer backpressure closes or pauses a bounded subscription using an admitted lease and retains the last durable cursor.
+Deliver committed events at least once within the retained stream. Progress is an exclusive cursor scoped to stream, consumer and storage root epoch. A qualified local processor commits projection, marker and cursor together. External processing needs an attributable durable receipt and its own effect reconciliation. A transport acknowledgment alone cannot advance progress. A fenced session, lost response or full queue cannot silently skip an event.
 
-Sharable payloads require separate access controls. Telemetry does not replace a durable effect event. Crash tests cover commit before dispatch, processed before acknowledge, duplicate delivery and cursor compaction. Declare event schema compatibility before changing required fields or meaning.
+Expire a cursor below the retained floor or from an old root. At equality resume from the next event. Require an authorized, verified snapshot before replacing an expired projection. Backpressure is bounded by admitted memory and may close a slow subscription. Give an authorized caller its last durable cursor on close. Quarantine preserves identity, stays visible and holds the cursor before the failed delivery.
+
+Durable events and payload access follow independent scope checks. Telemetry does not replace a committed effect event. Check delivery, restart, acknowledgement, cursor compaction, pinned retention and scope under the [Events acceptance fixtures](contracts/acceptance/events/delivery-fixtures.json). Declare version compatibility before changing published fields or their meaning.

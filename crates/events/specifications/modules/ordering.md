@@ -1,15 +1,9 @@
-# Sequence validation
+# Per-stream sequence validation
 
-**ZIP-EVENTS-ORDERING-001 · v1.0 · Owner:** Events maintainers. **Maturity:** D3 file contract draft.
+**ZIP-EVENTS-ORDERING-001 · v1.1 candidate · Owner** Events maintainers
 
-**Planned source:** `crates/events/src/ordering.rs`
+**Planned source** `crates/events/src/ordering.rs`
 
-## Required implementation behavior
+An envelope sequence is positive, immutable and strictly increasing within a committed stream. Sequence zero exists only as an initial cursor. Storage allocates checked sequence numbers without wraparound. Dispatch reads in numeric order. Occurrence time is display and audit data. Across streams there is no total order. After a snapshot starts at cursor n, the next accepted processing receipt must match the next retained sequence, and comparison stops at the committed tail. A sequence with a different event identity or unexpected gap inside the retained prefix is corruption. On replay, suppress duplicates only when a durable receipt establishes exact identity.
 
-Require a positive per-stream sequence, compare using checked integer order and reject reuse with a different event ID. Separate sequence from wall time.
-
-## Acceptance
-
-**ZIP-EVENTS-ORDERING-T01.** Change event timestamps and verify per-stream order is stable.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-EVENTS-ORDERING-T01.** Reverse event timestamps and verify unchanged delivery order. Replay an envelope at the u64 maximum and verify no wrapped sequence is accepted.

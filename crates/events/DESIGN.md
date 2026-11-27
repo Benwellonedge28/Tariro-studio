@@ -1,6 +1,6 @@
 # Events crate design
 
-**Contract version** 1.0. Master design §13. Planned implementation.
+**Contract version** 1.1 candidate. Master design §13. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -14,32 +14,13 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../st
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
+[Publisher](specifications/modules/publisher.md) stages pending events in the caller's Storage batch. Storage owns sequence allocation and commits domain changes and outbox entries together. [Journal](specifications/modules/journal.md) reads committed snapshots. [Subscriber](specifications/modules/subscriber.md) binds its durable cursor and session epoch to the root and stream. [Deduplication](specifications/modules/deduplication.md) defines trusted processing evidence and replay.
 
-- `append_in(tx, event)`
-- `subscribe(topic, after)`
-- `acknowledge(consumer, seq)`
-
-Record families: EventEnvelope v1, monotonic sequence per stream, outbox and cursor records. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `EventEnvelope { stream_id, seq, event_id, schema_major, timestamp, correlation_id, kind, payload_ref }`
-- `ConsumerCursor { stream_id, last_seq }`
-
-- `subscribe(topic: TopicFilter, after: ConsumerCursor) -> Result<BoundedEventStream>`
+Each registered stream has one kind, workspace and payload protection domain. Resolve topics to authorized whole streams and give each stream a separate cursor. Committed rows remain available after a wake or delivery is interrupted. Durable projection state and acknowledgement rules prevent silent skips.
 
 ## Failure, safety and resource limits
 
-At-least-once delivery. Admit each subscriber queue under `events.max_subscriber_queue_items` and observed memory capacity. Disconnect a slow stream with its last cursor. Reject expired cursors with snapshot instructions.
-
-- `Backpressure`
-- `CursorExpired`
-- `CorruptEnvelope`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Apply the [durable event standard](../../EVENT_STANDARD.md). Bound every subscriber queue by `events.max_subscriber_queue_items` and measured admitted memory via an injected permit. Recheck scope on exposure, and close or wait under finite pressure policy. Retain progress across disconnect. For expired cursors require authorized snapshot recovery. Quarantine, ambiguous commits and revoked sessions cannot advance durable progress. See [typed errors](specifications/modules/error.md).
 
 ## Source layout
 
@@ -69,11 +50,11 @@ crates/events/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Crash after commit before dispatch, replay duplicates and resume from cursor.
+Verify the [delivery fixtures](../../contracts/acceptance/events/delivery-fixtures.json) in a logical harness, then exercise a qualified Storage backend and runtime delivery adapter.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. The event-delivery slice is a candidate for independent review.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
