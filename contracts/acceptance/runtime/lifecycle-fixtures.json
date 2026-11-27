@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "scope": "planned local attempt lifecycle",
+  "execution_status": "design_fixture",
+  "source_revision": "116910ef446e0702ceb3133cd7dcb73b8197fb18",
+  "interpretation": {
+    "setup": "Each row begins in an independent synthetic harness. running means one task body has started. verified_exit_and_usage includes an accepted verified success, confirmed containment teardown and matched final usage. unacknowledged_effect_and_verified_cleanup includes one started body, one original provider write attempt with lost response, verified cleanup and an open effect intent. candidate_with_reserved_lease holds a reservation whose submitting owner must unwind separately if Runtime rejects registration.",
+    "steps": "Apply the ordered driver actions. A crash discards volatile ownership and replies while retaining durable state and any previously started process or provider effect. Inspect, verify, and settle actions inject the named trusted observer evidence and persist its acceptance. Recovery steps process only explicitly supplied observations in the row. Unlisted operations may not invent successful observations.",
+    "expect": "Check all listed keys at the end. Counters are per attempt and include setup. body_starts counts task-body starts, release_credits counts successful ledger release transitions, and terminal_events counts committed terminal outbox records. effect_writes counts provider mutation dispatches, including the original attempt, even if the provider shows definitive absence. An eligible successor is not dispatched by the fixture."
+  },
+  "cases": [
+    {
+      "id": "RT-LIFE-01",
+      "setup": "leased_before_preparation",
+      "steps": [
+        "crash_before_prepare",
+        "restart_owner",
+        "inspect_absent",
+        "settle_no_charge",
+        "release",
+        "finalize"
+      ],
+      "expect": {
+        "state": "failed",
+        "cause": "interrupted",
+        "body_starts": 0,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 1,
+        "next_attempt": "eligible_if_fresh_claim"
+      },
+      "requirements": [
+        "ZR-001",
+        "ZR-004",
+        "ZR-006"
+      ]
+    },
+    {
+      "id": "RT-LIFE-02",
+      "setup": "activation_and_launch_claim_committed",
+      "steps": [
+        "crash_before_gate_open",
+        "restart_owner",
+        "try_dispatch_old_attempt",
+        "inspect_absent",
+        "settle_no_charge",
+        "release",
+        "finalize"
+      ],
+      "expect": {
+        "state": "failed",
+        "cause": "interrupted",
+        "body_starts": 0,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 1,
+        "old_dispatch": "denied",
+        "next_attempt": "eligible_if_fresh_claim"
+      },
+      "requirements": [
+        "ZR-003",
+        "ZR-004"
+      ]
+    },
+    {
+      "id": "RT-LIFE-03",
+      "setup": "gate_open_unobserved",
+      "steps": [
+        "crash_after_gate_open",
+        "restart_owner",
+        "inspect_unknown",
+        "submit_old_worker_result",
+        "try_successor"
+      ],
+      "expect": {
+        "state": "recovery_required",
+        "body_starts": 1,
+        "resource": "held",
+        "release_credits": 0,
+        "terminal_events": 0,
+        "old_worker_result": "lease_lost",
+        "next_attempt": "blocked"
+      },
+      "requirements": [
+        "ZR-003",
+        "ZR-004"
+      ]
+    },
+    {
+      "id": "RT-LIFE-04",
+      "setup": "running",
+      "steps": [
+        "stage_checkpoint_1",
+        "commit_checkpoint_1",
+        "stage_checkpoint_2",
+        "crash_before_checkpoint_commit",
+        "restart_owner",
+        "read_contiguous_checkpoint"
+      ],
+      "expect": {
+        "state": "recovery_required",
+        "body_starts": 1,
+        "resource": "held",
+        "release_credits": 0,
+        "terminal_events": 0,
+        "checkpoint": "1",
+        "checkpoint_events": 1
+      },
+      "requirements": [
+        "ZR-001",
+        "ZR-006"
+      ]
+    },
+    {
+      "id": "RT-LIFE-05",
+      "setup": "running",
+      "steps": [
+        "stage_checkpoint_1",
+        "commit_checkpoint_1",
+        "lose_checkpoint_reply",
+        "restart_owner",
+        "read_contiguous_checkpoint",
+        "replay_checkpoint_notification"
+      ],
+      "expect": {
+        "state": "recovery_required",
+        "body_starts": 1,
+        "resource": "held",
+        "release_credits": 0,
+        "terminal_events": 0,
+        "checkpoint": "1",
+        "checkpoint_events": 1
+      },
+      "requirements": [
+        "ZR-001",
+        "ZR-006"
+      ]
+    },
+    {
+      "id": "RT-LIFE-06",
+      "setup": "running",
+      "steps": [
+        "stage_verified_success",
+        "record_explicit_cancel",
+        "inspect_absent",
+        "settle_verified_usage",
+        "release",
+        "commit_terminal",
+        "lose_terminal_reply",
+        "restart_owner",
+        "replay_terminal"
+      ],
+      "expect": {
+        "state": "succeeded",
+        "body_starts": 1,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 1,
+        "receipt": "original"
+      },
+      "requirements": [
+        "ZR-001",
+        "ZR-004",
+        "ZR-006"
+      ]
+    },
+    {
+      "id": "RT-LIFE-07",
+      "setup": "running",
+      "steps": [
+        "record_explicit_cancel",
+        "stage_verified_success",
+        "observe_parent_exit",
+        "observe_live_descendant",
+        "try_successor"
+      ],
+      "expect": {
+        "state": "recovery_required",
+        "cause": "cancelled",
+        "staging": "denied",
+        "cleanup": "cleanup_incomplete",
+        "body_starts": 1,
+        "resource": "held",
+        "release_credits": 0,
+        "terminal_events": 0,
+        "next_attempt": "blocked"
+      },
+      "requirements": [
+        "ZR-003",
+        "ZR-004"
+      ]
+    },
+    {
+      "id": "RT-LIFE-08",
+      "setup": "verified_exit_and_usage",
+      "steps": [
+        "release",
+        "lose_release_reply",
+        "crash_before_terminal_commit",
+        "restart_owner",
+        "replay_same_cleanup_proof",
+        "commit_terminal"
+      ],
+      "expect": {
+        "state": "succeeded",
+        "body_starts": 1,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 1
+      },
+      "requirements": [
+        "ZR-001",
+        "ZR-004"
+      ]
+    },
+    {
+      "id": "RT-LIFE-09",
+      "setup": "unacknowledged_effect_and_verified_cleanup",
+      "steps": [
+        "release",
+        "restart_owner",
+        "verify_exact_provider_receipt",
+        "record_receipt",
+        "replay_receipt",
+        "commit_terminal"
+      ],
+      "expect": {
+        "state": "succeeded",
+        "body_starts": 1,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 1,
+        "accepted_effect_receipts": 1,
+        "effect_writes": 1
+      },
+      "requirements": [
+        "ZR-001",
+        "ZR-007"
+      ]
+    },
+    {
+      "id": "RT-LIFE-10",
+      "setup": "unacknowledged_effect_and_verified_cleanup",
+      "steps": [
+        "release",
+        "restart_owner",
+        "provider_unavailable",
+        "try_successor"
+      ],
+      "expect": {
+        "state": "recovery_required",
+        "body_starts": 1,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 0,
+        "effect": "unknown",
+        "effect_writes": 1,
+        "next_attempt": "blocked"
+      },
+      "requirements": [
+        "ZR-004",
+        "ZR-007"
+      ]
+    },
+    {
+      "id": "RT-LIFE-11",
+      "setup": "unacknowledged_effect_and_verified_cleanup",
+      "steps": [
+        "release",
+        "restart_owner",
+        "verify_conflicting_effect",
+        "try_successor"
+      ],
+      "expect": {
+        "state": "recovery_required",
+        "body_starts": 1,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 0,
+        "effect": "conflict",
+        "effect_writes": 1,
+        "next_attempt": "blocked"
+      },
+      "requirements": [
+        "ZR-007"
+      ]
+    },
+    {
+      "id": "RT-LIFE-12",
+      "setup": "unacknowledged_effect_and_verified_cleanup",
+      "steps": [
+        "release",
+        "restart_owner",
+        "verify_effect_absence_and_preconditions",
+        "finalize_interrupted",
+        "expire_grant",
+        "try_successor"
+      ],
+      "expect": {
+        "state": "failed",
+        "cause": "interrupted",
+        "body_starts": 1,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 1,
+        "effect": "absent",
+        "effect_writes": 1,
+        "next_attempt": "blocked"
+      },
+      "requirements": [
+        "ZR-003",
+        "ZR-007"
+      ]
+    },
+    {
+      "id": "RT-LIFE-13",
+      "setup": "candidate_with_reserved_lease",
+      "steps": [
+        "substitute_reviewed_action",
+        "submit_attempt"
+      ],
+      "expect": {
+        "state": "no_attempt",
+        "body_starts": 0,
+        "resource": "held",
+        "release_credits": 0,
+        "terminal_events": 0,
+        "submission": "invalid_spec"
+      },
+      "requirements": [
+        "ZR-003",
+        "ZR-004"
+      ]
+    },
+    {
+      "id": "RT-LIFE-14",
+      "setup": "activation_and_launch_claim_committed",
+      "steps": [
+        "record_explicit_cancel",
+        "try_open_gate",
+        "inspect_absent",
+        "settle_no_charge",
+        "release",
+        "finalize"
+      ],
+      "expect": {
+        "state": "cancelled",
+        "body_starts": 0,
+        "resource": "released",
+        "release_credits": 1,
+        "terminal_events": 1
+      },
+      "requirements": [
+        "ZR-003",
+        "ZR-004"
+      ]
+    }
+  ]
+}
