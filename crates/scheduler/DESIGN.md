@@ -1,6 +1,6 @@
 # Scheduler crate design
 
-**Contract version** 1.0. Master design §16. Planned implementation.
+**Contract version** 1.1 candidate. Master design §16. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -14,35 +14,13 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../st
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
+[Scheduler](specifications/modules/scheduler.md) owns eligibility, queue revisions, claim epochs and retry decisions. [Job](specifications/modules/job.md) defines immutable demand and attempt bindings. [Persistence](specifications/modules/persistence.md) owns durable queues, receipts and restart reconciliation. Storage, Resources and Foundation remain the only first-party dependencies.
 
-- `enqueue(job)`
-- `claim(worker)`
-- `finish(lease, result)`
-- `recover_expired()`
-
-Record families: Job DAG, ReadyKey, attempt, fencing epoch and lease. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `Job { job_id, workspace_id, priority, deadline, dependencies, demand }`
-- `JobClaim { job_id, worker_id, attempt, epoch, expiry }`
-
-- `claim(worker: WorkerCaps, now: Timestamp) -> Result<Option<JobClaim>>`
+A claim commits its attempt intent before reserving capacity. Dispatch transfers the opaque lease to the runtime only after the scheduler compare-and-swap succeeds. The runtime owns its one-way launch gate and terminal observation. The scheduler consumes a trusted receipt bound to the exact attempt. A lost response leaves an unresolved intent. Recovery reconciles the original resource and runtime obligations before another attempt. Composition supplies trusted authorization, handoff and receipt verification through injected ports.
 
 ## Failure, safety and resource limits
 
-Use `scheduler.max_workspace_queue_items`, `scheduler.max_attempts`, `scheduler.job_deadline_ms` and `scheduler.retry_jitter_ms` within the assignment policy. A timed-out worker cannot publish after lease loss.
-
-- `Cycle`
-- `QueueFull`
-- `DeadlineExceeded`
-- `LeaseLost`
-- `DependencyFailed`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Resolve `scheduler.max_workspace_queue_items`, `scheduler.max_attempts`, `scheduler.job_deadline_ms` and `scheduler.retry_jitter_ms` within assignment policy. Check live authority and timeout at the irreversible boundary. Fence stale work. Preserve committed effects and unsettled capacity across cancellation, restart and recovery. Read [error decisions](specifications/modules/error.md) for terminal, deferred and ambiguous outcomes.
 
 ## Source layout
 
@@ -78,11 +56,11 @@ crates/scheduler/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Test stable ordering, starvation resistance, stale completion rejection and restart.
+Exercise the [dispatch fixtures](../../contracts/acceptance/scheduler/dispatch-fixtures.json) for stable ordering, starvation resistance within a priority class, stale completion and restart. Rust compilation and real journal/adapter qualification are independent acceptance gates.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. The dispatch and recovery slice is a candidate for independent review. Other modules retain their recorded maturity.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
