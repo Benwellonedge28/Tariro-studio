@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-CLI-MAIN-001",
+      "planned_source": "applications/cli/src/main.rs",
+      "contract": "applications/cli/specifications/modules/main.md",
+      "specified_tests": [
+        "ZIP-CLI-MAIN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-ARGUMENTS-001",
+      "planned_source": "applications/cli/src/arguments.rs",
+      "contract": "applications/cli/specifications/modules/arguments.md",
+      "specified_tests": [
+        "ZIP-CLI-ARGUMENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-OUTPUT-001",
+      "planned_source": "applications/cli/src/output.rs",
+      "contract": "applications/cli/specifications/modules/output.md",
+      "specified_tests": [
+        "ZIP-CLI-OUTPUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-INIT-001",
+      "planned_source": "applications/cli/src/commands/init.rs",
+      "contract": "applications/cli/specifications/modules/commands/init.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-INIT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-DOCTOR-001",
+      "planned_source": "applications/cli/src/commands/doctor.rs",
+      "contract": "applications/cli/specifications/modules/commands/doctor.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-DOCTOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-REPOSITORY-001",
+      "planned_source": "applications/cli/src/commands/repository.rs",
+      "contract": "applications/cli/specifications/modules/commands/repository.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-REPOSITORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-ASSIGNMENT-001",
+      "planned_source": "applications/cli/src/commands/assignment.rs",
+      "contract": "applications/cli/specifications/modules/commands/assignment.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-ASSIGNMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-AGENT-001",
+      "planned_source": "applications/cli/src/commands/agent.rs",
+      "contract": "applications/cli/specifications/modules/commands/agent.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-AGENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-MODEL-001",
+      "planned_source": "applications/cli/src/commands/model.rs",
+      "contract": "applications/cli/specifications/modules/commands/model.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-MODEL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-WORKFLOW-001",
+      "planned_source": "applications/cli/src/commands/workflow.rs",
+      "contract": "applications/cli/specifications/modules/commands/workflow.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-WORKFLOW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-MEMORY-001",
+      "planned_source": "applications/cli/src/commands/memory.rs",
+      "contract": "applications/cli/specifications/modules/commands/memory.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-MEMORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-SECURITY-001",
+      "planned_source": "applications/cli/src/commands/security.rs",
+      "contract": "applications/cli/specifications/modules/commands/security.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-SECURITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-SERVER-001",
+      "planned_source": "applications/cli/src/commands/server.rs",
+      "contract": "applications/cli/specifications/modules/commands/server.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-SERVER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CLI-COMMANDS-MESH-001",
+      "planned_source": "applications/cli/src/commands/mesh.rs",
+      "contract": "applications/cli/specifications/modules/commands/mesh.md",
+      "specified_tests": [
+        "ZIP-CLI-COMMANDS-MESH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

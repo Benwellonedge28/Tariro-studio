@@ -364,5 +364,19 @@
       "status": "candidate",
       "evidence": []
     }
+  ],
+  "additional_manifests": [
+    "contracts/requirements/modules/assignments.json",
+    "contracts/requirements/modules/cli.json",
+    "contracts/requirements/modules/configuration.json",
+    "contracts/requirements/modules/events.json",
+    "contracts/requirements/modules/governance.json",
+    "contracts/requirements/modules/mobile.json",
+    "contracts/requirements/modules/repository.json",
+    "contracts/requirements/modules/resources.json",
+    "contracts/requirements/modules/runtime.json",
+    "contracts/requirements/modules/server.json",
+    "contracts/requirements/modules/storage.json",
+    "contracts/requirements/modules/studio.json"
   ]
 }

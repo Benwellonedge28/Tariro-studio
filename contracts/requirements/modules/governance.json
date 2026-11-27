@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-GOVERNANCE-LIB-001",
+      "planned_source": "crates/governance/src/lib.rs",
+      "contract": "crates/governance/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-ERROR-001",
+      "planned_source": "crates/governance/src/error.rs",
+      "contract": "crates/governance/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-CONSTITUTION-001",
+      "planned_source": "crates/governance/src/constitution.rs",
+      "contract": "crates/governance/specifications/modules/constitution.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-CONSTITUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-POLICY-001",
+      "planned_source": "crates/governance/src/policy.rs",
+      "contract": "crates/governance/specifications/modules/policy.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-POLICY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-POLICY-ENGINE-001",
+      "planned_source": "crates/governance/src/policy_engine.rs",
+      "contract": "crates/governance/specifications/modules/policy_engine.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-POLICY-ENGINE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-DECISION-001",
+      "planned_source": "crates/governance/src/decision.rs",
+      "contract": "crates/governance/specifications/modules/decision.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-DECISION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-RULES-001",
+      "planned_source": "crates/governance/src/rules.rs",
+      "contract": "crates/governance/specifications/modules/rules.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-RULES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-CONSTRAINTS-001",
+      "planned_source": "crates/governance/src/constraints.rs",
+      "contract": "crates/governance/specifications/modules/constraints.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-CONSTRAINTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-AUTHORIZATION-MOD-001",
+      "planned_source": "crates/governance/src/authorization/mod.rs",
+      "contract": "crates/governance/specifications/modules/authorization/mod.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-AUTHORIZATION-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-AUTHORIZATION-ASSIGNMENT-001",
+      "planned_source": "crates/governance/src/authorization/assignment.rs",
+      "contract": "crates/governance/specifications/modules/authorization/assignment.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-AUTHORIZATION-ASSIGNMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-AUTHORIZATION-OPERATION-001",
+      "planned_source": "crates/governance/src/authorization/operation.rs",
+      "contract": "crates/governance/specifications/modules/authorization/operation.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-AUTHORIZATION-OPERATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-AUTHORIZATION-APPROVAL-001",
+      "planned_source": "crates/governance/src/authorization/approval.rs",
+      "contract": "crates/governance/specifications/modules/authorization/approval.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-AUTHORIZATION-APPROVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-AUTHORIZATION-DELEGATION-001",
+      "planned_source": "crates/governance/src/authorization/delegation.rs",
+      "contract": "crates/governance/specifications/modules/authorization/delegation.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-AUTHORIZATION-DELEGATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-AUTHORIZATION-EXPIRY-001",
+      "planned_source": "crates/governance/src/authorization/expiry.rs",
+      "contract": "crates/governance/specifications/modules/authorization/expiry.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-AUTHORIZATION-EXPIRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-AUTHORIZATION-REVOCATION-001",
+      "planned_source": "crates/governance/src/authorization/revocation.rs",
+      "contract": "crates/governance/specifications/modules/authorization/revocation.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-AUTHORIZATION-REVOCATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-OVERSIGHT-MOD-001",
+      "planned_source": "crates/governance/src/oversight/mod.rs",
+      "contract": "crates/governance/specifications/modules/oversight/mod.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-OVERSIGHT-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-OVERSIGHT-HUMAN-001",
+      "planned_source": "crates/governance/src/oversight/human.rs",
+      "contract": "crates/governance/specifications/modules/oversight/human.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-OVERSIGHT-HUMAN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-OVERSIGHT-ESCALATION-001",
+      "planned_source": "crates/governance/src/oversight/escalation.rs",
+      "contract": "crates/governance/specifications/modules/oversight/escalation.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-OVERSIGHT-ESCALATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-OVERSIGHT-INTERVENTION-001",
+      "planned_source": "crates/governance/src/oversight/intervention.rs",
+      "contract": "crates/governance/specifications/modules/oversight/intervention.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-OVERSIGHT-INTERVENTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-OVERSIGHT-EMERGENCY-STOP-001",
+      "planned_source": "crates/governance/src/oversight/emergency_stop.rs",
+      "contract": "crates/governance/specifications/modules/oversight/emergency_stop.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-OVERSIGHT-EMERGENCY-STOP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-COMPLIANCE-001",
+      "planned_source": "crates/governance/src/compliance.rs",
+      "contract": "crates/governance/specifications/modules/compliance.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-COMPLIANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-EXCEPTIONS-001",
+      "planned_source": "crates/governance/src/exceptions.rs",
+      "contract": "crates/governance/specifications/modules/exceptions.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-EXCEPTIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-GOVERNANCE-EVALUATION-001",
+      "planned_source": "crates/governance/src/evaluation.rs",
+      "contract": "crates/governance/specifications/modules/evaluation.md",
+      "specified_tests": [
+        "ZIP-GOVERNANCE-EVALUATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

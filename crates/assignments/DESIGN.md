@@ -85,3 +85,35 @@ crates/assignments/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Crash after unit 17 and resume at 18. Deny file 31. Reconcile push and PR ambiguity without duplicate mutation.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`assignment.rs`](specifications/modules/assignment.md)
+- [`identifier.rs`](specifications/modules/identifier.md)
+- [`specification.rs`](specifications/modules/specification.md)
+- [`requirements.rs`](specifications/modules/requirements.md)
+- [`scope.rs`](specifications/modules/scope.md)
+- [`authorization.rs`](specifications/modules/authorization.md)
+- [`plan.rs`](specifications/modules/plan.md)
+- [`task.rs`](specifications/modules/task.md)
+- [`subtask.rs`](specifications/modules/subtask.md)
+- [`dependency.rs`](specifications/modules/dependency.md)
+- [`milestone.rs`](specifications/modules/milestone.md)
+- [`progress.rs`](specifications/modules/progress.md)
+- [`state.rs`](specifications/modules/state.md)
+- [`transitions.rs`](specifications/modules/transitions.md)
+- [`persistence.rs`](specifications/modules/persistence.md)
+- [`checkpoint.rs`](specifications/modules/checkpoint.md)
+- [`recovery.rs`](specifications/modules/recovery.md)
+- [`cancellation.rs`](specifications/modules/cancellation.md)
+- [`pause.rs`](specifications/modules/pause.md)
+- [`resume.rs`](specifications/modules/resume.md)
+- [`batching.rs`](specifications/modules/batching.md)
+- [`acceptance.rs`](specifications/modules/acceptance.md)
+- [`evidence.rs`](specifications/modules/evidence.md)
+- [`result.rs`](specifications/modules/result.md)
+- [`reporting.rs`](specifications/modules/reporting.md)

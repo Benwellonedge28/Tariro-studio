@@ -88,3 +88,35 @@ crates/resources/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Concurrent admissions cannot overcommit. Pressure test confirms fallback unloads only unpinned models.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`discovery/mod.rs`](specifications/modules/discovery/mod.md)
+- [`discovery/cpu.rs`](specifications/modules/discovery/cpu.md)
+- [`discovery/gpu.rs`](specifications/modules/discovery/gpu.md)
+- [`discovery/npu.rs`](specifications/modules/discovery/npu.md)
+- [`discovery/memory.rs`](specifications/modules/discovery/memory.md)
+- [`discovery/storage.rs`](specifications/modules/discovery/storage.md)
+- [`discovery/network.rs`](specifications/modules/discovery/network.md)
+- [`allocation/mod.rs`](specifications/modules/allocation/mod.md)
+- [`allocation/allocator.rs`](specifications/modules/allocation/allocator.md)
+- [`allocation/reservation.rs`](specifications/modules/allocation/reservation.md)
+- [`allocation/quota.rs`](specifications/modules/allocation/quota.md)
+- [`allocation/lease.rs`](specifications/modules/allocation/lease.md)
+- [`monitoring/mod.rs`](specifications/modules/monitoring/mod.md)
+- [`monitoring/utilization.rs`](specifications/modules/monitoring/utilization.md)
+- [`monitoring/thermal.rs`](specifications/modules/monitoring/thermal.md)
+- [`monitoring/battery.rs`](specifications/modules/monitoring/battery.md)
+- [`monitoring/pressure.rs`](specifications/modules/monitoring/pressure.md)
+- [`optimization/mod.rs`](specifications/modules/optimization/mod.md)
+- [`optimization/adaptive.rs`](specifications/modules/optimization/adaptive.md)
+- [`optimization/offloading.rs`](specifications/modules/optimization/offloading.md)
+- [`optimization/eviction.rs`](specifications/modules/optimization/eviction.md)
+- [`profiles.rs`](specifications/modules/profiles.md)
+- [`admission.rs`](specifications/modules/admission.md)
+- [`estimation.rs`](specifications/modules/estimation.md)
+- [`limits.rs`](specifications/modules/limits.md)

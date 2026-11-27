@@ -89,3 +89,35 @@ crates/storage/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Crash before and after metadata commit, test duplicate object insertion and full backup restoration.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`backend.rs`](specifications/modules/backend.md)
+- [`transaction.rs`](specifications/modules/transaction.md)
+- [`repository.rs`](specifications/modules/repository.md)
+- [`schema.rs`](specifications/modules/schema.md)
+- [`migration.rs`](specifications/modules/migration.md)
+- [`integrity.rs`](specifications/modules/integrity.md)
+- [`encryption.rs`](specifications/modules/encryption.md)
+- [`retention.rs`](specifications/modules/retention.md)
+- [`backends/mod.rs`](specifications/modules/backends/mod.md)
+- [`backends/memory.rs`](specifications/modules/backends/memory.md)
+- [`backends/redb.rs`](specifications/modules/backends/redb.md)
+- [`backends/sqlite.rs`](specifications/modules/backends/sqlite.md)
+- [`backends/filesystem.rs`](specifications/modules/backends/filesystem.md)
+- [`backends/remote.rs`](specifications/modules/backends/remote.md)
+- [`objects/mod.rs`](specifications/modules/objects/mod.md)
+- [`objects/content_addressed.rs`](specifications/modules/objects/content_addressed.md)
+- [`objects/blobs.rs`](specifications/modules/objects/blobs.md)
+- [`objects/metadata.rs`](specifications/modules/objects/metadata.md)
+- [`backup/mod.rs`](specifications/modules/backup/mod.md)
+- [`backup/snapshot.rs`](specifications/modules/backup/snapshot.md)
+- [`backup/restore.rs`](specifications/modules/backup/restore.md)
+- [`backup/verification.rs`](specifications/modules/backup/verification.md)
+- [`recovery/mod.rs`](specifications/modules/recovery/mod.md)
+- [`recovery/journal.rs`](specifications/modules/recovery/journal.md)
+- [`recovery/reconciliation.rs`](specifications/modules/recovery/reconciliation.md)

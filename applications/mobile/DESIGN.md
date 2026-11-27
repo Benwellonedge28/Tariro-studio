@@ -9,3 +9,9 @@ Pairing binds server identity and workspace. Reconnect negotiates API features a
 Clear relevant projections on revocation, workspace switch or explicit logout. Notification previews omit private filenames, document content and credentials by default. No platform grants remote access just because a device can display a notification. Lightweight local execution is optional and needs its own qualification; there is no automatic fallback from remote observation to local execution.
 
 Test device revocation, stale cache, connectivity loss mid-decision, mismatched server identity, and notification privacy on each supported platform. Refer to [protocol negotiation](../../specifications/2800-interoperability/interoperability.md).
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`main.rs`](specifications/modules/main.md)

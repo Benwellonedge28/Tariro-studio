@@ -75,3 +75,31 @@ crates/configuration/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Permute unordered inputs and obtain identical digests. Verify a project cannot enable network against an offline policy.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`schema.rs`](specifications/modules/schema.md)
+- [`loader.rs`](specifications/modules/loader.md)
+- [`parser.rs`](specifications/modules/parser.md)
+- [`defaults.rs`](specifications/modules/defaults.md)
+- [`environment.rs`](specifications/modules/environment.md)
+- [`overrides.rs`](specifications/modules/overrides.md)
+- [`validation.rs`](specifications/modules/validation.md)
+- [`migration.rs`](specifications/modules/migration.md)
+- [`profiles/mod.rs`](specifications/modules/profiles/mod.md)
+- [`profiles/minimal.rs`](specifications/modules/profiles/minimal.md)
+- [`profiles/lightweight.rs`](specifications/modules/profiles/lightweight.md)
+- [`profiles/standard.rs`](specifications/modules/profiles/standard.md)
+- [`profiles/workstation.rs`](specifications/modules/profiles/workstation.md)
+- [`profiles/server.rs`](specifications/modules/profiles/server.md)
+- [`profiles/distributed.rs`](specifications/modules/profiles/distributed.md)
+- [`user.rs`](specifications/modules/user.md)
+- [`project.rs`](specifications/modules/project.md)
+- [`organization.rs`](specifications/modules/organization.md)
+- [`security.rs`](specifications/modules/security.md)
+- [`inference.rs`](specifications/modules/inference.md)
+- [`resources.rs`](specifications/modules/resources.md)

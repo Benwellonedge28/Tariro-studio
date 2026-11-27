@@ -1,0 +1,486 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-REPOSITORY-LIB-001",
+      "planned_source": "crates/repository/src/lib.rs",
+      "contract": "crates/repository/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ERROR-001",
+      "planned_source": "crates/repository/src/error.rs",
+      "contract": "crates/repository/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-REPOSITORY-001",
+      "planned_source": "crates/repository/src/repository.rs",
+      "contract": "crates/repository/specifications/modules/repository.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-REPOSITORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-DISCOVERY-001",
+      "planned_source": "crates/repository/src/discovery.rs",
+      "contract": "crates/repository/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-WORKSPACE-001",
+      "planned_source": "crates/repository/src/workspace.rs",
+      "contract": "crates/repository/specifications/modules/workspace.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-WORKSPACE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-MANIFEST-001",
+      "planned_source": "crates/repository/src/manifest.rs",
+      "contract": "crates/repository/specifications/modules/manifest.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-MANIFEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-SNAPSHOT-001",
+      "planned_source": "crates/repository/src/snapshot.rs",
+      "contract": "crates/repository/specifications/modules/snapshot.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-SNAPSHOT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-INDEXING-001",
+      "planned_source": "crates/repository/src/indexing.rs",
+      "contract": "crates/repository/specifications/modules/indexing.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-INDEXING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-INSTRUCTIONS-MOD-001",
+      "planned_source": "crates/repository/src/instructions/mod.rs",
+      "contract": "crates/repository/specifications/modules/instructions/mod.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-INSTRUCTIONS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-INSTRUCTIONS-DISCOVERY-001",
+      "planned_source": "crates/repository/src/instructions/discovery.rs",
+      "contract": "crates/repository/specifications/modules/instructions/discovery.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-INSTRUCTIONS-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-INSTRUCTIONS-AGENTS-MD-001",
+      "planned_source": "crates/repository/src/instructions/agents_md.rs",
+      "contract": "crates/repository/specifications/modules/instructions/agents_md.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-INSTRUCTIONS-AGENTS-MD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-INSTRUCTIONS-HIERARCHY-001",
+      "planned_source": "crates/repository/src/instructions/hierarchy.rs",
+      "contract": "crates/repository/specifications/modules/instructions/hierarchy.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-INSTRUCTIONS-HIERARCHY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-INSTRUCTIONS-PRECEDENCE-001",
+      "planned_source": "crates/repository/src/instructions/precedence.rs",
+      "contract": "crates/repository/specifications/modules/instructions/precedence.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-INSTRUCTIONS-PRECEDENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-INSTRUCTIONS-VALIDATION-001",
+      "planned_source": "crates/repository/src/instructions/validation.rs",
+      "contract": "crates/repository/specifications/modules/instructions/validation.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-INSTRUCTIONS-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-MOD-001",
+      "planned_source": "crates/repository/src/git/mod.rs",
+      "contract": "crates/repository/specifications/modules/git/mod.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-CLONE-001",
+      "planned_source": "crates/repository/src/git/clone.rs",
+      "contract": "crates/repository/specifications/modules/git/clone.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-CLONE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-FETCH-001",
+      "planned_source": "crates/repository/src/git/fetch.rs",
+      "contract": "crates/repository/specifications/modules/git/fetch.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-FETCH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-BRANCH-001",
+      "planned_source": "crates/repository/src/git/branch.rs",
+      "contract": "crates/repository/specifications/modules/git/branch.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-BRANCH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-WORKTREE-001",
+      "planned_source": "crates/repository/src/git/worktree.rs",
+      "contract": "crates/repository/specifications/modules/git/worktree.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-WORKTREE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-COMMIT-001",
+      "planned_source": "crates/repository/src/git/commit.rs",
+      "contract": "crates/repository/specifications/modules/git/commit.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-COMMIT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-DIFF-001",
+      "planned_source": "crates/repository/src/git/diff.rs",
+      "contract": "crates/repository/specifications/modules/git/diff.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-DIFF-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-MERGE-001",
+      "planned_source": "crates/repository/src/git/merge.rs",
+      "contract": "crates/repository/specifications/modules/git/merge.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-MERGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-REBASE-001",
+      "planned_source": "crates/repository/src/git/rebase.rs",
+      "contract": "crates/repository/specifications/modules/git/rebase.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-REBASE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-HISTORY-001",
+      "planned_source": "crates/repository/src/git/history.rs",
+      "contract": "crates/repository/specifications/modules/git/history.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-HISTORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-REMOTE-001",
+      "planned_source": "crates/repository/src/git/remote.rs",
+      "contract": "crates/repository/specifications/modules/git/remote.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-REMOTE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-TAG-001",
+      "planned_source": "crates/repository/src/git/tag.rs",
+      "contract": "crates/repository/specifications/modules/git/tag.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-TAG-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-GIT-CONFLICT-001",
+      "planned_source": "crates/repository/src/git/conflict.rs",
+      "contract": "crates/repository/specifications/modules/git/conflict.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-GIT-CONFLICT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PROVIDERS-MOD-001",
+      "planned_source": "crates/repository/src/providers/mod.rs",
+      "contract": "crates/repository/specifications/modules/providers/mod.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PROVIDERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PROVIDERS-GITHUB-001",
+      "planned_source": "crates/repository/src/providers/github.rs",
+      "contract": "crates/repository/specifications/modules/providers/github.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PROVIDERS-GITHUB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PROVIDERS-GITLAB-001",
+      "planned_source": "crates/repository/src/providers/gitlab.rs",
+      "contract": "crates/repository/specifications/modules/providers/gitlab.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PROVIDERS-GITLAB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PROVIDERS-BITBUCKET-001",
+      "planned_source": "crates/repository/src/providers/bitbucket.rs",
+      "contract": "crates/repository/specifications/modules/providers/bitbucket.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PROVIDERS-BITBUCKET-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PROVIDERS-FORGEJO-001",
+      "planned_source": "crates/repository/src/providers/forgejo.rs",
+      "contract": "crates/repository/specifications/modules/providers/forgejo.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PROVIDERS-FORGEJO-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PROVIDERS-GITEA-001",
+      "planned_source": "crates/repository/src/providers/gitea.rs",
+      "contract": "crates/repository/specifications/modules/providers/gitea.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PROVIDERS-GITEA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PROVIDERS-LOCAL-001",
+      "planned_source": "crates/repository/src/providers/local.rs",
+      "contract": "crates/repository/specifications/modules/providers/local.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PROVIDERS-LOCAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PULL-REQUESTS-MOD-001",
+      "planned_source": "crates/repository/src/pull_requests/mod.rs",
+      "contract": "crates/repository/specifications/modules/pull_requests/mod.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PULL-REQUESTS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PULL-REQUESTS-CREATION-001",
+      "planned_source": "crates/repository/src/pull_requests/creation.rs",
+      "contract": "crates/repository/specifications/modules/pull_requests/creation.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PULL-REQUESTS-CREATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PULL-REQUESTS-REVIEW-001",
+      "planned_source": "crates/repository/src/pull_requests/review.rs",
+      "contract": "crates/repository/specifications/modules/pull_requests/review.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PULL-REQUESTS-REVIEW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PULL-REQUESTS-CHECKS-001",
+      "planned_source": "crates/repository/src/pull_requests/checks.rs",
+      "contract": "crates/repository/specifications/modules/pull_requests/checks.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PULL-REQUESTS-CHECKS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PULL-REQUESTS-STATUS-001",
+      "planned_source": "crates/repository/src/pull_requests/status.rs",
+      "contract": "crates/repository/specifications/modules/pull_requests/status.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PULL-REQUESTS-STATUS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-PULL-REQUESTS-RECONCILIATION-001",
+      "planned_source": "crates/repository/src/pull_requests/reconciliation.rs",
+      "contract": "crates/repository/specifications/modules/pull_requests/reconciliation.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-PULL-REQUESTS-RECONCILIATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ANALYSIS-MOD-001",
+      "planned_source": "crates/repository/src/analysis/mod.rs",
+      "contract": "crates/repository/specifications/modules/analysis/mod.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ANALYSIS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ANALYSIS-STRUCTURE-001",
+      "planned_source": "crates/repository/src/analysis/structure.rs",
+      "contract": "crates/repository/specifications/modules/analysis/structure.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ANALYSIS-STRUCTURE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ANALYSIS-DEPENDENCIES-001",
+      "planned_source": "crates/repository/src/analysis/dependencies.rs",
+      "contract": "crates/repository/specifications/modules/analysis/dependencies.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ANALYSIS-DEPENDENCIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ANALYSIS-ARCHITECTURE-001",
+      "planned_source": "crates/repository/src/analysis/architecture.rs",
+      "contract": "crates/repository/specifications/modules/analysis/architecture.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ANALYSIS-ARCHITECTURE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ANALYSIS-COVERAGE-001",
+      "planned_source": "crates/repository/src/analysis/coverage.rs",
+      "contract": "crates/repository/specifications/modules/analysis/coverage.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ANALYSIS-COVERAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ANALYSIS-TECHNICAL-DEBT-001",
+      "planned_source": "crates/repository/src/analysis/technical_debt.rs",
+      "contract": "crates/repository/specifications/modules/analysis/technical_debt.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ANALYSIS-TECHNICAL-DEBT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-ANALYSIS-PLACEHOLDERS-001",
+      "planned_source": "crates/repository/src/analysis/placeholders.rs",
+      "contract": "crates/repository/specifications/modules/analysis/placeholders.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-ANALYSIS-PLACEHOLDERS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REPOSITORY-SYNCHRONIZATION-001",
+      "planned_source": "crates/repository/src/synchronization.rs",
+      "contract": "crates/repository/specifications/modules/synchronization.md",
+      "specified_tests": [
+        "ZIP-REPOSITORY-SYNCHRONIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

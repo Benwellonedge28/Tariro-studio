@@ -70,3 +70,24 @@ crates/events/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Crash after commit before dispatch, replay duplicates and resume from cursor.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`event.rs`](specifications/modules/event.md)
+- [`envelope.rs`](specifications/modules/envelope.md)
+- [`topic.rs`](specifications/modules/topic.md)
+- [`publisher.rs`](specifications/modules/publisher.md)
+- [`subscriber.rs`](specifications/modules/subscriber.md)
+- [`dispatcher.rs`](specifications/modules/dispatcher.md)
+- [`queue.rs`](specifications/modules/queue.md)
+- [`journal.rs`](specifications/modules/journal.md)
+- [`ordering.rs`](specifications/modules/ordering.md)
+- [`replay.rs`](specifications/modules/replay.md)
+- [`deduplication.rs`](specifications/modules/deduplication.md)
+- [`backpressure.rs`](specifications/modules/backpressure.md)
+- [`dead_letter.rs`](specifications/modules/dead_letter.md)
+- [`retention.rs`](specifications/modules/retention.md)

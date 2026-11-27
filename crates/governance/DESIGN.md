@@ -84,3 +84,31 @@ crates/governance/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test missing attributes, grant expiry during execution, and policy change before external write.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`constitution.rs`](specifications/modules/constitution.md)
+- [`policy.rs`](specifications/modules/policy.md)
+- [`policy_engine.rs`](specifications/modules/policy_engine.md)
+- [`decision.rs`](specifications/modules/decision.md)
+- [`rules.rs`](specifications/modules/rules.md)
+- [`constraints.rs`](specifications/modules/constraints.md)
+- [`authorization/mod.rs`](specifications/modules/authorization/mod.md)
+- [`authorization/assignment.rs`](specifications/modules/authorization/assignment.md)
+- [`authorization/operation.rs`](specifications/modules/authorization/operation.md)
+- [`authorization/approval.rs`](specifications/modules/authorization/approval.md)
+- [`authorization/delegation.rs`](specifications/modules/authorization/delegation.md)
+- [`authorization/expiry.rs`](specifications/modules/authorization/expiry.md)
+- [`authorization/revocation.rs`](specifications/modules/authorization/revocation.md)
+- [`oversight/mod.rs`](specifications/modules/oversight/mod.md)
+- [`oversight/human.rs`](specifications/modules/oversight/human.md)
+- [`oversight/escalation.rs`](specifications/modules/oversight/escalation.md)
+- [`oversight/intervention.rs`](specifications/modules/oversight/intervention.md)
+- [`oversight/emergency_stop.rs`](specifications/modules/oversight/emergency_stop.md)
+- [`compliance.rs`](specifications/modules/compliance.md)
+- [`exceptions.rs`](specifications/modules/exceptions.md)
+- [`evaluation.rs`](specifications/modules/evaluation.md)

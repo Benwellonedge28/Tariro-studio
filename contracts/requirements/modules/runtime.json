@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-RUNTIME-LIB-001",
+      "planned_source": "crates/runtime/src/lib.rs",
+      "contract": "crates/runtime/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-ERROR-001",
+      "planned_source": "crates/runtime/src/error.rs",
+      "contract": "crates/runtime/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-RUNTIME-001",
+      "planned_source": "crates/runtime/src/runtime.rs",
+      "contract": "crates/runtime/specifications/modules/runtime.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-RUNTIME-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-BUILDER-001",
+      "planned_source": "crates/runtime/src/builder.rs",
+      "contract": "crates/runtime/specifications/modules/builder.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-BUILDER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-LIFECYCLE-001",
+      "planned_source": "crates/runtime/src/lifecycle.rs",
+      "contract": "crates/runtime/specifications/modules/lifecycle.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-LIFECYCLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-SUPERVISOR-001",
+      "planned_source": "crates/runtime/src/supervisor.rs",
+      "contract": "crates/runtime/specifications/modules/supervisor.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-SUPERVISOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-EXECUTION-MOD-001",
+      "planned_source": "crates/runtime/src/execution/mod.rs",
+      "contract": "crates/runtime/specifications/modules/execution/mod.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-EXECUTION-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-EXECUTION-EXECUTOR-001",
+      "planned_source": "crates/runtime/src/execution/executor.rs",
+      "contract": "crates/runtime/specifications/modules/execution/executor.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-EXECUTION-EXECUTOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-EXECUTION-WORKER-001",
+      "planned_source": "crates/runtime/src/execution/worker.rs",
+      "contract": "crates/runtime/specifications/modules/execution/worker.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-EXECUTION-WORKER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-EXECUTION-WORKER-POOL-001",
+      "planned_source": "crates/runtime/src/execution/worker_pool.rs",
+      "contract": "crates/runtime/specifications/modules/execution/worker_pool.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-EXECUTION-WORKER-POOL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-EXECUTION-TASK-001",
+      "planned_source": "crates/runtime/src/execution/task.rs",
+      "contract": "crates/runtime/specifications/modules/execution/task.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-EXECUTION-TASK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-EXECUTION-TASK-HANDLE-001",
+      "planned_source": "crates/runtime/src/execution/task_handle.rs",
+      "contract": "crates/runtime/specifications/modules/execution/task_handle.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-EXECUTION-TASK-HANDLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-EXECUTION-EXECUTION-CONTEXT-001",
+      "planned_source": "crates/runtime/src/execution/execution_context.rs",
+      "contract": "crates/runtime/specifications/modules/execution/execution_context.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-EXECUTION-EXECUTION-CONTEXT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CONTROL-MOD-001",
+      "planned_source": "crates/runtime/src/control/mod.rs",
+      "contract": "crates/runtime/specifications/modules/control/mod.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CONTROL-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CONTROL-CANCELLATION-001",
+      "planned_source": "crates/runtime/src/control/cancellation.rs",
+      "contract": "crates/runtime/specifications/modules/control/cancellation.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CONTROL-CANCELLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CONTROL-TIMEOUT-001",
+      "planned_source": "crates/runtime/src/control/timeout.rs",
+      "contract": "crates/runtime/specifications/modules/control/timeout.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CONTROL-TIMEOUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CONTROL-PAUSE-001",
+      "planned_source": "crates/runtime/src/control/pause.rs",
+      "contract": "crates/runtime/specifications/modules/control/pause.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CONTROL-PAUSE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CONTROL-SHUTDOWN-001",
+      "planned_source": "crates/runtime/src/control/shutdown.rs",
+      "contract": "crates/runtime/specifications/modules/control/shutdown.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CONTROL-SHUTDOWN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CHECKPOINT-MOD-001",
+      "planned_source": "crates/runtime/src/checkpoint/mod.rs",
+      "contract": "crates/runtime/specifications/modules/checkpoint/mod.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CHECKPOINT-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CHECKPOINT-CHECKPOINT-001",
+      "planned_source": "crates/runtime/src/checkpoint/checkpoint.rs",
+      "contract": "crates/runtime/specifications/modules/checkpoint/checkpoint.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CHECKPOINT-CHECKPOINT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CHECKPOINT-STORE-001",
+      "planned_source": "crates/runtime/src/checkpoint/store.rs",
+      "contract": "crates/runtime/specifications/modules/checkpoint/store.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CHECKPOINT-STORE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-CHECKPOINT-RESTORE-001",
+      "planned_source": "crates/runtime/src/checkpoint/restore.rs",
+      "contract": "crates/runtime/specifications/modules/checkpoint/restore.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-CHECKPOINT-RESTORE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-RECOVERY-MOD-001",
+      "planned_source": "crates/runtime/src/recovery/mod.rs",
+      "contract": "crates/runtime/specifications/modules/recovery/mod.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-RECOVERY-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-RECOVERY-RETRY-001",
+      "planned_source": "crates/runtime/src/recovery/retry.rs",
+      "contract": "crates/runtime/specifications/modules/recovery/retry.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-RECOVERY-RETRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-RECOVERY-CRASH-RECOVERY-001",
+      "planned_source": "crates/runtime/src/recovery/crash_recovery.rs",
+      "contract": "crates/runtime/specifications/modules/recovery/crash_recovery.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-RECOVERY-CRASH-RECOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-RECOVERY-RECONCILIATION-001",
+      "planned_source": "crates/runtime/src/recovery/reconciliation.rs",
+      "contract": "crates/runtime/specifications/modules/recovery/reconciliation.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-RECOVERY-RECONCILIATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-ISOLATION-001",
+      "planned_source": "crates/runtime/src/isolation.rs",
+      "contract": "crates/runtime/specifications/modules/isolation.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-ISOLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-HEALTH-001",
+      "planned_source": "crates/runtime/src/health.rs",
+      "contract": "crates/runtime/specifications/modules/health.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-HEALTH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RUNTIME-METRICS-001",
+      "planned_source": "crates/runtime/src/metrics.rs",
+      "contract": "crates/runtime/specifications/modules/metrics.md",
+      "specified_tests": [
+        "ZIP-RUNTIME-METRICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

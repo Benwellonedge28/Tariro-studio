@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-RESOURCES-LIB-001",
+      "planned_source": "crates/resources/src/lib.rs",
+      "contract": "crates/resources/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ERROR-001",
+      "planned_source": "crates/resources/src/error.rs",
+      "contract": "crates/resources/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-DISCOVERY-MOD-001",
+      "planned_source": "crates/resources/src/discovery/mod.rs",
+      "contract": "crates/resources/specifications/modules/discovery/mod.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-DISCOVERY-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-DISCOVERY-CPU-001",
+      "planned_source": "crates/resources/src/discovery/cpu.rs",
+      "contract": "crates/resources/specifications/modules/discovery/cpu.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-DISCOVERY-CPU-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-DISCOVERY-GPU-001",
+      "planned_source": "crates/resources/src/discovery/gpu.rs",
+      "contract": "crates/resources/specifications/modules/discovery/gpu.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-DISCOVERY-GPU-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-DISCOVERY-NPU-001",
+      "planned_source": "crates/resources/src/discovery/npu.rs",
+      "contract": "crates/resources/specifications/modules/discovery/npu.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-DISCOVERY-NPU-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-DISCOVERY-MEMORY-001",
+      "planned_source": "crates/resources/src/discovery/memory.rs",
+      "contract": "crates/resources/specifications/modules/discovery/memory.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-DISCOVERY-MEMORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-DISCOVERY-STORAGE-001",
+      "planned_source": "crates/resources/src/discovery/storage.rs",
+      "contract": "crates/resources/specifications/modules/discovery/storage.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-DISCOVERY-STORAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-DISCOVERY-NETWORK-001",
+      "planned_source": "crates/resources/src/discovery/network.rs",
+      "contract": "crates/resources/specifications/modules/discovery/network.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-DISCOVERY-NETWORK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ALLOCATION-MOD-001",
+      "planned_source": "crates/resources/src/allocation/mod.rs",
+      "contract": "crates/resources/specifications/modules/allocation/mod.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ALLOCATION-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ALLOCATION-ALLOCATOR-001",
+      "planned_source": "crates/resources/src/allocation/allocator.rs",
+      "contract": "crates/resources/specifications/modules/allocation/allocator.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ALLOCATION-ALLOCATOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ALLOCATION-RESERVATION-001",
+      "planned_source": "crates/resources/src/allocation/reservation.rs",
+      "contract": "crates/resources/specifications/modules/allocation/reservation.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ALLOCATION-RESERVATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ALLOCATION-QUOTA-001",
+      "planned_source": "crates/resources/src/allocation/quota.rs",
+      "contract": "crates/resources/specifications/modules/allocation/quota.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ALLOCATION-QUOTA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ALLOCATION-LEASE-001",
+      "planned_source": "crates/resources/src/allocation/lease.rs",
+      "contract": "crates/resources/specifications/modules/allocation/lease.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ALLOCATION-LEASE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-MONITORING-MOD-001",
+      "planned_source": "crates/resources/src/monitoring/mod.rs",
+      "contract": "crates/resources/specifications/modules/monitoring/mod.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-MONITORING-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-MONITORING-UTILIZATION-001",
+      "planned_source": "crates/resources/src/monitoring/utilization.rs",
+      "contract": "crates/resources/specifications/modules/monitoring/utilization.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-MONITORING-UTILIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-MONITORING-THERMAL-001",
+      "planned_source": "crates/resources/src/monitoring/thermal.rs",
+      "contract": "crates/resources/specifications/modules/monitoring/thermal.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-MONITORING-THERMAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-MONITORING-BATTERY-001",
+      "planned_source": "crates/resources/src/monitoring/battery.rs",
+      "contract": "crates/resources/specifications/modules/monitoring/battery.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-MONITORING-BATTERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-MONITORING-PRESSURE-001",
+      "planned_source": "crates/resources/src/monitoring/pressure.rs",
+      "contract": "crates/resources/specifications/modules/monitoring/pressure.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-MONITORING-PRESSURE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-OPTIMIZATION-MOD-001",
+      "planned_source": "crates/resources/src/optimization/mod.rs",
+      "contract": "crates/resources/specifications/modules/optimization/mod.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-OPTIMIZATION-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-OPTIMIZATION-ADAPTIVE-001",
+      "planned_source": "crates/resources/src/optimization/adaptive.rs",
+      "contract": "crates/resources/specifications/modules/optimization/adaptive.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-OPTIMIZATION-ADAPTIVE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-OPTIMIZATION-OFFLOADING-001",
+      "planned_source": "crates/resources/src/optimization/offloading.rs",
+      "contract": "crates/resources/specifications/modules/optimization/offloading.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-OPTIMIZATION-OFFLOADING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-OPTIMIZATION-EVICTION-001",
+      "planned_source": "crates/resources/src/optimization/eviction.rs",
+      "contract": "crates/resources/specifications/modules/optimization/eviction.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-OPTIMIZATION-EVICTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-PROFILES-001",
+      "planned_source": "crates/resources/src/profiles.rs",
+      "contract": "crates/resources/specifications/modules/profiles.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-PROFILES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ADMISSION-001",
+      "planned_source": "crates/resources/src/admission.rs",
+      "contract": "crates/resources/specifications/modules/admission.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ADMISSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-ESTIMATION-001",
+      "planned_source": "crates/resources/src/estimation.rs",
+      "contract": "crates/resources/specifications/modules/estimation.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-ESTIMATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESOURCES-LIMITS-001",
+      "planned_source": "crates/resources/src/limits.rs",
+      "contract": "crates/resources/specifications/modules/limits.md",
+      "specified_tests": [
+        "ZIP-RESOURCES-LIMITS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

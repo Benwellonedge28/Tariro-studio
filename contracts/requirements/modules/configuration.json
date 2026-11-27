@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-CONFIGURATION-LIB-001",
+      "planned_source": "crates/configuration/src/lib.rs",
+      "contract": "crates/configuration/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-ERROR-001",
+      "planned_source": "crates/configuration/src/error.rs",
+      "contract": "crates/configuration/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-SCHEMA-001",
+      "planned_source": "crates/configuration/src/schema.rs",
+      "contract": "crates/configuration/specifications/modules/schema.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-SCHEMA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-LOADER-001",
+      "planned_source": "crates/configuration/src/loader.rs",
+      "contract": "crates/configuration/specifications/modules/loader.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-LOADER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PARSER-001",
+      "planned_source": "crates/configuration/src/parser.rs",
+      "contract": "crates/configuration/specifications/modules/parser.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PARSER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-DEFAULTS-001",
+      "planned_source": "crates/configuration/src/defaults.rs",
+      "contract": "crates/configuration/specifications/modules/defaults.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-DEFAULTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-ENVIRONMENT-001",
+      "planned_source": "crates/configuration/src/environment.rs",
+      "contract": "crates/configuration/specifications/modules/environment.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-ENVIRONMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-OVERRIDES-001",
+      "planned_source": "crates/configuration/src/overrides.rs",
+      "contract": "crates/configuration/specifications/modules/overrides.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-OVERRIDES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-MIGRATION-001",
+      "planned_source": "crates/configuration/src/migration.rs",
+      "contract": "crates/configuration/specifications/modules/migration.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-MIGRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROFILES-MOD-001",
+      "planned_source": "crates/configuration/src/profiles/mod.rs",
+      "contract": "crates/configuration/specifications/modules/profiles/mod.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROFILES-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROFILES-MINIMAL-001",
+      "planned_source": "crates/configuration/src/profiles/minimal.rs",
+      "contract": "crates/configuration/specifications/modules/profiles/minimal.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROFILES-MINIMAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROFILES-LIGHTWEIGHT-001",
+      "planned_source": "crates/configuration/src/profiles/lightweight.rs",
+      "contract": "crates/configuration/specifications/modules/profiles/lightweight.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROFILES-LIGHTWEIGHT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROFILES-STANDARD-001",
+      "planned_source": "crates/configuration/src/profiles/standard.rs",
+      "contract": "crates/configuration/specifications/modules/profiles/standard.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROFILES-STANDARD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROFILES-WORKSTATION-001",
+      "planned_source": "crates/configuration/src/profiles/workstation.rs",
+      "contract": "crates/configuration/specifications/modules/profiles/workstation.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROFILES-WORKSTATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROFILES-SERVER-001",
+      "planned_source": "crates/configuration/src/profiles/server.rs",
+      "contract": "crates/configuration/specifications/modules/profiles/server.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROFILES-SERVER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROFILES-DISTRIBUTED-001",
+      "planned_source": "crates/configuration/src/profiles/distributed.rs",
+      "contract": "crates/configuration/specifications/modules/profiles/distributed.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROFILES-DISTRIBUTED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-USER-001",
+      "planned_source": "crates/configuration/src/user.rs",
+      "contract": "crates/configuration/specifications/modules/user.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-USER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-PROJECT-001",
+      "planned_source": "crates/configuration/src/project.rs",
+      "contract": "crates/configuration/specifications/modules/project.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-PROJECT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-ORGANIZATION-001",
+      "planned_source": "crates/configuration/src/organization.rs",
+      "contract": "crates/configuration/specifications/modules/organization.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-ORGANIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-SECURITY-001",
+      "planned_source": "crates/configuration/src/security.rs",
+      "contract": "crates/configuration/specifications/modules/security.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-SECURITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-INFERENCE-001",
+      "planned_source": "crates/configuration/src/inference.rs",
+      "contract": "crates/configuration/specifications/modules/inference.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-INFERENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-CONFIGURATION-RESOURCES-001",
+      "planned_source": "crates/configuration/src/resources.rs",
+      "contract": "crates/configuration/specifications/modules/resources.md",
+      "specified_tests": [
+        "ZIP-CONFIGURATION-RESOURCES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
