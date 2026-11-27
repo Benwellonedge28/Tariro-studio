@@ -32,7 +32,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Bound traversal depth to 8 and result size to 1,000 by default. Unknown edges remain uncertain, with provenance.
+Stop traversal at the resolved `knowledge.max_traversal_depth` and `knowledge.max_results` or the admitted execution budget, whichever is exhausted first. Unknown edges remain uncertain, with provenance.
 
 - `InvalidRelation`
 - `RevisionConflict`

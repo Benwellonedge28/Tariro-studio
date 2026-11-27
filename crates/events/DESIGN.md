@@ -33,7 +33,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-At-least-once delivery. Queue 256 items per subscriber by default. Disconnect a slow stream with its last cursor. Reject expired cursors with snapshot instructions.
+At-least-once delivery. Admit each subscriber queue under `events.max_subscriber_queue_items` and observed memory capacity. Disconnect a slow stream with its last cursor. Reject expired cursors with snapshot instructions.
 
 - `Backpressure`
 - `CursorExpired`

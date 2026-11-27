@@ -36,7 +36,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Maximum record 1 MiB and 512 operations per transaction by default. Check free space before staging. Never publish metadata for a missing object.
+Resolve record byte and transaction operation limits from `storage.max_record_bytes` and `storage.max_transaction_operations`, then tighten to backend capability. Check free space before staging. Never publish metadata for a missing object.
 
 - `Conflict`
 - `QuotaExceeded`

@@ -33,7 +33,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Default grace 2 seconds for cooperative stop, then terminate container or process tree and verify exit. Escalate unreaped work and keep its lease.
+Use the resolved `runtime.stop_grace_ms` clipped to the applicable deadline, then terminate the contained process tree and verify exit. Escalate unreaped work and keep its lease.
 
 - `SpawnFailed`
 - `Timeout`

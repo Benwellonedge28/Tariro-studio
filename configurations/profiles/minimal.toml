@@ -1,0 +1,13 @@
+schema_version = 1
+profile = "minimal"
+
+[preferences]
+concurrency = "serial"
+inference = "deterministic_first"
+locality = "local_only"
+
+[limits.inference]
+max_loaded_generation_models = 0
+
+[limits.orchestration]
+max_concurrent_agents = 1

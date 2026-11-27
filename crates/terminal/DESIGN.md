@@ -32,7 +32,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-No shell by default. Interactive shell requires user intent and sandbox. Default 1 MiB combined output and 60 seconds for generic task tools.
+No shell by default. Interactive shell requires user intent and sandbox. Bound combined standard streams and execution with `terminal.max_output_bytes` and `terminal.deadline_ms` under the admitted task lease.
 
 - `ExecutableDenied`
 - `SpawnFailed`

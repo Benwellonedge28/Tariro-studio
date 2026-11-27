@@ -31,7 +31,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Max 256 expanded steps and 16 nesting levels by default. Loops carry a static bound. Compensation is an independently authorized operation.
+Enforce `workflows.max_expanded_steps` and `workflows.max_nesting_depth` during expansion before scheduling. Loops carry a static bound. Compensation is an independently authorized operation.
 
 - `InvalidDefinition`
 - `Cycle`

@@ -1,0 +1,10 @@
+schema_version = 1
+profile = "enterprise"
+
+[preferences]
+concurrency = "admission_controlled"
+inference = "policy_selected"
+locality = "policy_selected"
+
+[derive_from_admission]
+keys = ["inference.max_loaded_generation_models", "orchestration.max_concurrent_agents"]

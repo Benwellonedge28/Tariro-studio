@@ -34,7 +34,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Default 256 queued jobs per workspace, 3 attempts, per-job deadline and bounded jitter. A timed-out worker cannot publish after lease loss.
+Use `scheduler.max_workspace_queue_items`, `scheduler.max_attempts`, `scheduler.job_deadline_ms` and `scheduler.retry_jitter_ms` within the assignment policy. A timed-out worker cannot publish after lease loss.
 
 - `Cycle`
 - `QueueFull`
