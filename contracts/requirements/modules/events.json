@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-EVENTS-LIB-001",
+      "planned_source": "crates/events/src/lib.rs",
+      "contract": "crates/events/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-EVENTS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-ERROR-001",
+      "planned_source": "crates/events/src/error.rs",
+      "contract": "crates/events/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-EVENTS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-EVENT-001",
+      "planned_source": "crates/events/src/event.rs",
+      "contract": "crates/events/specifications/modules/event.md",
+      "specified_tests": [
+        "ZIP-EVENTS-EVENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-ENVELOPE-001",
+      "planned_source": "crates/events/src/envelope.rs",
+      "contract": "crates/events/specifications/modules/envelope.md",
+      "specified_tests": [
+        "ZIP-EVENTS-ENVELOPE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-TOPIC-001",
+      "planned_source": "crates/events/src/topic.rs",
+      "contract": "crates/events/specifications/modules/topic.md",
+      "specified_tests": [
+        "ZIP-EVENTS-TOPIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-PUBLISHER-001",
+      "planned_source": "crates/events/src/publisher.rs",
+      "contract": "crates/events/specifications/modules/publisher.md",
+      "specified_tests": [
+        "ZIP-EVENTS-PUBLISHER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-SUBSCRIBER-001",
+      "planned_source": "crates/events/src/subscriber.rs",
+      "contract": "crates/events/specifications/modules/subscriber.md",
+      "specified_tests": [
+        "ZIP-EVENTS-SUBSCRIBER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-DISPATCHER-001",
+      "planned_source": "crates/events/src/dispatcher.rs",
+      "contract": "crates/events/specifications/modules/dispatcher.md",
+      "specified_tests": [
+        "ZIP-EVENTS-DISPATCHER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-QUEUE-001",
+      "planned_source": "crates/events/src/queue.rs",
+      "contract": "crates/events/specifications/modules/queue.md",
+      "specified_tests": [
+        "ZIP-EVENTS-QUEUE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-JOURNAL-001",
+      "planned_source": "crates/events/src/journal.rs",
+      "contract": "crates/events/specifications/modules/journal.md",
+      "specified_tests": [
+        "ZIP-EVENTS-JOURNAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-ORDERING-001",
+      "planned_source": "crates/events/src/ordering.rs",
+      "contract": "crates/events/specifications/modules/ordering.md",
+      "specified_tests": [
+        "ZIP-EVENTS-ORDERING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-REPLAY-001",
+      "planned_source": "crates/events/src/replay.rs",
+      "contract": "crates/events/specifications/modules/replay.md",
+      "specified_tests": [
+        "ZIP-EVENTS-REPLAY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-DEDUPLICATION-001",
+      "planned_source": "crates/events/src/deduplication.rs",
+      "contract": "crates/events/specifications/modules/deduplication.md",
+      "specified_tests": [
+        "ZIP-EVENTS-DEDUPLICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-BACKPRESSURE-001",
+      "planned_source": "crates/events/src/backpressure.rs",
+      "contract": "crates/events/specifications/modules/backpressure.md",
+      "specified_tests": [
+        "ZIP-EVENTS-BACKPRESSURE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-DEAD-LETTER-001",
+      "planned_source": "crates/events/src/dead_letter.rs",
+      "contract": "crates/events/specifications/modules/dead_letter.md",
+      "specified_tests": [
+        "ZIP-EVENTS-DEAD-LETTER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVENTS-RETENTION-001",
+      "planned_source": "crates/events/src/retention.rs",
+      "contract": "crates/events/specifications/modules/retention.md",
+      "specified_tests": [
+        "ZIP-EVENTS-RETENTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

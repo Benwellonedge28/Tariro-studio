@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_revision": "7adf3d5d0f481eee3072d9c541d55c5f58cfc378",
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
   "mapping": "Replace the .rs suffix with .md and resolve relative to contract_root. A path listed in candidate_files has a draft; every other enumerated file is missing a file contract.",
   "crates": [
     {
@@ -85,8 +85,33 @@
         "reporting.rs"
       ],
       "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "assignment.rs",
+        "identifier.rs",
+        "specification.rs",
+        "requirements.rs",
+        "scope.rs",
+        "authorization.rs",
+        "plan.rs",
+        "task.rs",
+        "subtask.rs",
+        "dependency.rs",
+        "milestone.rs",
+        "progress.rs",
+        "state.rs",
+        "transitions.rs",
+        "persistence.rs",
         "checkpoint.rs",
-        "recovery.rs"
+        "recovery.rs",
+        "cancellation.rs",
+        "pause.rs",
+        "resume.rs",
+        "batching.rs",
+        "acceptance.rs",
+        "evidence.rs",
+        "result.rs",
+        "reporting.rs"
       ]
     },
     {
@@ -174,7 +199,29 @@
         "resources.rs"
       ],
       "candidate_files": [
-        "validation.rs"
+        "lib.rs",
+        "error.rs",
+        "schema.rs",
+        "loader.rs",
+        "parser.rs",
+        "defaults.rs",
+        "environment.rs",
+        "overrides.rs",
+        "validation.rs",
+        "migration.rs",
+        "profiles/mod.rs",
+        "profiles/minimal.rs",
+        "profiles/lightweight.rs",
+        "profiles/standard.rs",
+        "profiles/workstation.rs",
+        "profiles/server.rs",
+        "profiles/distributed.rs",
+        "user.rs",
+        "project.rs",
+        "organization.rs",
+        "security.rs",
+        "inference.rs",
+        "resources.rs"
       ]
     },
     {
@@ -415,7 +462,24 @@
         "dead_letter.rs",
         "retention.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "event.rs",
+        "envelope.rs",
+        "topic.rs",
+        "publisher.rs",
+        "subscriber.rs",
+        "dispatcher.rs",
+        "queue.rs",
+        "journal.rs",
+        "ordering.rs",
+        "replay.rs",
+        "deduplication.rs",
+        "backpressure.rs",
+        "dead_letter.rs",
+        "retention.rs"
+      ]
     },
     {
       "id": "evolution",
@@ -557,7 +621,31 @@
         "exceptions.rs",
         "evaluation.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "constitution.rs",
+        "policy.rs",
+        "policy_engine.rs",
+        "decision.rs",
+        "rules.rs",
+        "constraints.rs",
+        "authorization/mod.rs",
+        "authorization/assignment.rs",
+        "authorization/operation.rs",
+        "authorization/approval.rs",
+        "authorization/delegation.rs",
+        "authorization/expiry.rs",
+        "authorization/revocation.rs",
+        "oversight/mod.rs",
+        "oversight/human.rs",
+        "oversight/escalation.rs",
+        "oversight/intervention.rs",
+        "oversight/emergency_stop.rs",
+        "compliance.rs",
+        "exceptions.rs",
+        "evaluation.rs"
+      ]
     },
     {
       "id": "identity",
@@ -1020,7 +1108,56 @@
         "analysis/placeholders.rs",
         "synchronization.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "repository.rs",
+        "discovery.rs",
+        "workspace.rs",
+        "manifest.rs",
+        "snapshot.rs",
+        "indexing.rs",
+        "instructions/mod.rs",
+        "instructions/discovery.rs",
+        "instructions/agents_md.rs",
+        "instructions/hierarchy.rs",
+        "instructions/precedence.rs",
+        "instructions/validation.rs",
+        "git/mod.rs",
+        "git/clone.rs",
+        "git/fetch.rs",
+        "git/branch.rs",
+        "git/worktree.rs",
+        "git/commit.rs",
+        "git/diff.rs",
+        "git/merge.rs",
+        "git/rebase.rs",
+        "git/history.rs",
+        "git/remote.rs",
+        "git/tag.rs",
+        "git/conflict.rs",
+        "providers/mod.rs",
+        "providers/github.rs",
+        "providers/gitlab.rs",
+        "providers/bitbucket.rs",
+        "providers/forgejo.rs",
+        "providers/gitea.rs",
+        "providers/local.rs",
+        "pull_requests/mod.rs",
+        "pull_requests/creation.rs",
+        "pull_requests/review.rs",
+        "pull_requests/checks.rs",
+        "pull_requests/status.rs",
+        "pull_requests/reconciliation.rs",
+        "analysis/mod.rs",
+        "analysis/structure.rs",
+        "analysis/dependencies.rs",
+        "analysis/architecture.rs",
+        "analysis/coverage.rs",
+        "analysis/technical_debt.rs",
+        "analysis/placeholders.rs",
+        "synchronization.rs"
+      ]
     },
     {
       "id": "research",
@@ -1085,7 +1222,35 @@
         "estimation.rs",
         "limits.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "discovery/mod.rs",
+        "discovery/cpu.rs",
+        "discovery/gpu.rs",
+        "discovery/npu.rs",
+        "discovery/memory.rs",
+        "discovery/storage.rs",
+        "discovery/network.rs",
+        "allocation/mod.rs",
+        "allocation/allocator.rs",
+        "allocation/reservation.rs",
+        "allocation/quota.rs",
+        "allocation/lease.rs",
+        "monitoring/mod.rs",
+        "monitoring/utilization.rs",
+        "monitoring/thermal.rs",
+        "monitoring/battery.rs",
+        "monitoring/pressure.rs",
+        "optimization/mod.rs",
+        "optimization/adaptive.rs",
+        "optimization/offloading.rs",
+        "optimization/eviction.rs",
+        "profiles.rs",
+        "admission.rs",
+        "estimation.rs",
+        "limits.rs"
+      ]
     },
     {
       "id": "runtime",
@@ -1122,7 +1287,37 @@
         "health.rs",
         "metrics.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "runtime.rs",
+        "builder.rs",
+        "lifecycle.rs",
+        "supervisor.rs",
+        "execution/mod.rs",
+        "execution/executor.rs",
+        "execution/worker.rs",
+        "execution/worker_pool.rs",
+        "execution/task.rs",
+        "execution/task_handle.rs",
+        "execution/execution_context.rs",
+        "control/mod.rs",
+        "control/cancellation.rs",
+        "control/timeout.rs",
+        "control/pause.rs",
+        "control/shutdown.rs",
+        "checkpoint/mod.rs",
+        "checkpoint/checkpoint.rs",
+        "checkpoint/store.rs",
+        "checkpoint/restore.rs",
+        "recovery/mod.rs",
+        "recovery/retry.rs",
+        "recovery/crash_recovery.rs",
+        "recovery/reconciliation.rs",
+        "isolation.rs",
+        "health.rs",
+        "metrics.rs"
+      ]
     },
     {
       "id": "sandbox",
@@ -1349,10 +1544,33 @@
         "recovery/reconciliation.rs"
       ],
       "candidate_files": [
+        "lib.rs",
+        "error.rs",
         "backend.rs",
         "transaction.rs",
+        "repository.rs",
         "schema.rs",
-        "migration.rs"
+        "migration.rs",
+        "integrity.rs",
+        "encryption.rs",
+        "retention.rs",
+        "backends/mod.rs",
+        "backends/memory.rs",
+        "backends/redb.rs",
+        "backends/sqlite.rs",
+        "backends/filesystem.rs",
+        "backends/remote.rs",
+        "objects/mod.rs",
+        "objects/content_addressed.rs",
+        "objects/blobs.rs",
+        "objects/metadata.rs",
+        "backup/mod.rs",
+        "backup/snapshot.rs",
+        "backup/restore.rs",
+        "backup/verification.rs",
+        "recovery/mod.rs",
+        "recovery/journal.rs",
+        "recovery/reconciliation.rs"
       ]
     },
     {
@@ -1556,7 +1774,22 @@
         "commands/server.rs",
         "commands/mesh.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "main.rs",
+        "arguments.rs",
+        "output.rs",
+        "commands/init.rs",
+        "commands/doctor.rs",
+        "commands/repository.rs",
+        "commands/assignment.rs",
+        "commands/agent.rs",
+        "commands/model.rs",
+        "commands/workflow.rs",
+        "commands/memory.rs",
+        "commands/security.rs",
+        "commands/server.rs",
+        "commands/mesh.rs"
+      ]
     },
     {
       "id": "mobile",
@@ -1565,7 +1798,9 @@
       "files": [
         "main.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "main.rs"
+      ]
     },
     {
       "id": "server",
@@ -1576,7 +1811,11 @@
         "server.rs",
         "authentication.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "main.rs",
+        "server.rs",
+        "authentication.rs"
+      ]
     },
     {
       "id": "studio",
@@ -1588,7 +1827,12 @@
         "state.rs",
         "navigation.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "main.rs",
+        "application.rs",
+        "state.rs",
+        "navigation.rs"
+      ]
     }
   ],
   "integration_scope": [

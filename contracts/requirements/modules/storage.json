@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-STORAGE-LIB-001",
+      "planned_source": "crates/storage/src/lib.rs",
+      "contract": "crates/storage/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-STORAGE-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-ERROR-001",
+      "planned_source": "crates/storage/src/error.rs",
+      "contract": "crates/storage/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-STORAGE-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-REPOSITORY-001",
+      "planned_source": "crates/storage/src/repository.rs",
+      "contract": "crates/storage/specifications/modules/repository.md",
+      "specified_tests": [
+        "ZIP-STORAGE-REPOSITORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-INTEGRITY-001",
+      "planned_source": "crates/storage/src/integrity.rs",
+      "contract": "crates/storage/specifications/modules/integrity.md",
+      "specified_tests": [
+        "ZIP-STORAGE-INTEGRITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-ENCRYPTION-001",
+      "planned_source": "crates/storage/src/encryption.rs",
+      "contract": "crates/storage/specifications/modules/encryption.md",
+      "specified_tests": [
+        "ZIP-STORAGE-ENCRYPTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-RETENTION-001",
+      "planned_source": "crates/storage/src/retention.rs",
+      "contract": "crates/storage/specifications/modules/retention.md",
+      "specified_tests": [
+        "ZIP-STORAGE-RETENTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKENDS-MOD-001",
+      "planned_source": "crates/storage/src/backends/mod.rs",
+      "contract": "crates/storage/specifications/modules/backends/mod.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKENDS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKENDS-MEMORY-001",
+      "planned_source": "crates/storage/src/backends/memory.rs",
+      "contract": "crates/storage/specifications/modules/backends/memory.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKENDS-MEMORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKENDS-REDB-001",
+      "planned_source": "crates/storage/src/backends/redb.rs",
+      "contract": "crates/storage/specifications/modules/backends/redb.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKENDS-REDB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKENDS-SQLITE-001",
+      "planned_source": "crates/storage/src/backends/sqlite.rs",
+      "contract": "crates/storage/specifications/modules/backends/sqlite.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKENDS-SQLITE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKENDS-FILESYSTEM-001",
+      "planned_source": "crates/storage/src/backends/filesystem.rs",
+      "contract": "crates/storage/specifications/modules/backends/filesystem.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKENDS-FILESYSTEM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKENDS-REMOTE-001",
+      "planned_source": "crates/storage/src/backends/remote.rs",
+      "contract": "crates/storage/specifications/modules/backends/remote.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKENDS-REMOTE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-OBJECTS-MOD-001",
+      "planned_source": "crates/storage/src/objects/mod.rs",
+      "contract": "crates/storage/specifications/modules/objects/mod.md",
+      "specified_tests": [
+        "ZIP-STORAGE-OBJECTS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-OBJECTS-CONTENT-ADDRESSED-001",
+      "planned_source": "crates/storage/src/objects/content_addressed.rs",
+      "contract": "crates/storage/specifications/modules/objects/content_addressed.md",
+      "specified_tests": [
+        "ZIP-STORAGE-OBJECTS-CONTENT-ADDRESSED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-OBJECTS-BLOBS-001",
+      "planned_source": "crates/storage/src/objects/blobs.rs",
+      "contract": "crates/storage/specifications/modules/objects/blobs.md",
+      "specified_tests": [
+        "ZIP-STORAGE-OBJECTS-BLOBS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-OBJECTS-METADATA-001",
+      "planned_source": "crates/storage/src/objects/metadata.rs",
+      "contract": "crates/storage/specifications/modules/objects/metadata.md",
+      "specified_tests": [
+        "ZIP-STORAGE-OBJECTS-METADATA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKUP-MOD-001",
+      "planned_source": "crates/storage/src/backup/mod.rs",
+      "contract": "crates/storage/specifications/modules/backup/mod.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKUP-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKUP-SNAPSHOT-001",
+      "planned_source": "crates/storage/src/backup/snapshot.rs",
+      "contract": "crates/storage/specifications/modules/backup/snapshot.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKUP-SNAPSHOT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKUP-RESTORE-001",
+      "planned_source": "crates/storage/src/backup/restore.rs",
+      "contract": "crates/storage/specifications/modules/backup/restore.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKUP-RESTORE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-BACKUP-VERIFICATION-001",
+      "planned_source": "crates/storage/src/backup/verification.rs",
+      "contract": "crates/storage/specifications/modules/backup/verification.md",
+      "specified_tests": [
+        "ZIP-STORAGE-BACKUP-VERIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-RECOVERY-MOD-001",
+      "planned_source": "crates/storage/src/recovery/mod.rs",
+      "contract": "crates/storage/specifications/modules/recovery/mod.md",
+      "specified_tests": [
+        "ZIP-STORAGE-RECOVERY-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-RECOVERY-JOURNAL-001",
+      "planned_source": "crates/storage/src/recovery/journal.rs",
+      "contract": "crates/storage/specifications/modules/recovery/journal.md",
+      "specified_tests": [
+        "ZIP-STORAGE-RECOVERY-JOURNAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STORAGE-RECOVERY-RECONCILIATION-001",
+      "planned_source": "crates/storage/src/recovery/reconciliation.rs",
+      "contract": "crates/storage/specifications/modules/recovery/reconciliation.md",
+      "specified_tests": [
+        "ZIP-STORAGE-RECOVERY-RECONCILIATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "requirements": [
+    {
+      "id": "ZIP-ASSIGNMENTS-LIB-001",
+      "planned_source": "crates/assignments/src/lib.rs",
+      "contract": "crates/assignments/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-ERROR-001",
+      "planned_source": "crates/assignments/src/error.rs",
+      "contract": "crates/assignments/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-ASSIGNMENT-001",
+      "planned_source": "crates/assignments/src/assignment.rs",
+      "contract": "crates/assignments/specifications/modules/assignment.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-ASSIGNMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-IDENTIFIER-001",
+      "planned_source": "crates/assignments/src/identifier.rs",
+      "contract": "crates/assignments/specifications/modules/identifier.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-IDENTIFIER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-SPECIFICATION-001",
+      "planned_source": "crates/assignments/src/specification.rs",
+      "contract": "crates/assignments/specifications/modules/specification.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-SPECIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-REQUIREMENTS-001",
+      "planned_source": "crates/assignments/src/requirements.rs",
+      "contract": "crates/assignments/specifications/modules/requirements.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-REQUIREMENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-SCOPE-001",
+      "planned_source": "crates/assignments/src/scope.rs",
+      "contract": "crates/assignments/specifications/modules/scope.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-SCOPE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-AUTHORIZATION-001",
+      "planned_source": "crates/assignments/src/authorization.rs",
+      "contract": "crates/assignments/specifications/modules/authorization.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-AUTHORIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-PLAN-001",
+      "planned_source": "crates/assignments/src/plan.rs",
+      "contract": "crates/assignments/specifications/modules/plan.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-PLAN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-TASK-001",
+      "planned_source": "crates/assignments/src/task.rs",
+      "contract": "crates/assignments/specifications/modules/task.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-TASK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-SUBTASK-001",
+      "planned_source": "crates/assignments/src/subtask.rs",
+      "contract": "crates/assignments/specifications/modules/subtask.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-SUBTASK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-DEPENDENCY-001",
+      "planned_source": "crates/assignments/src/dependency.rs",
+      "contract": "crates/assignments/specifications/modules/dependency.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-DEPENDENCY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-MILESTONE-001",
+      "planned_source": "crates/assignments/src/milestone.rs",
+      "contract": "crates/assignments/specifications/modules/milestone.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-MILESTONE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-PROGRESS-001",
+      "planned_source": "crates/assignments/src/progress.rs",
+      "contract": "crates/assignments/specifications/modules/progress.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-PROGRESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-STATE-001",
+      "planned_source": "crates/assignments/src/state.rs",
+      "contract": "crates/assignments/specifications/modules/state.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-STATE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-TRANSITIONS-001",
+      "planned_source": "crates/assignments/src/transitions.rs",
+      "contract": "crates/assignments/specifications/modules/transitions.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-TRANSITIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-PERSISTENCE-001",
+      "planned_source": "crates/assignments/src/persistence.rs",
+      "contract": "crates/assignments/specifications/modules/persistence.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-PERSISTENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-CANCELLATION-001",
+      "planned_source": "crates/assignments/src/cancellation.rs",
+      "contract": "crates/assignments/specifications/modules/cancellation.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-CANCELLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-PAUSE-001",
+      "planned_source": "crates/assignments/src/pause.rs",
+      "contract": "crates/assignments/specifications/modules/pause.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-PAUSE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-RESUME-001",
+      "planned_source": "crates/assignments/src/resume.rs",
+      "contract": "crates/assignments/specifications/modules/resume.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-RESUME-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-BATCHING-001",
+      "planned_source": "crates/assignments/src/batching.rs",
+      "contract": "crates/assignments/specifications/modules/batching.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-BATCHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-ACCEPTANCE-001",
+      "planned_source": "crates/assignments/src/acceptance.rs",
+      "contract": "crates/assignments/specifications/modules/acceptance.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-ACCEPTANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-EVIDENCE-001",
+      "planned_source": "crates/assignments/src/evidence.rs",
+      "contract": "crates/assignments/specifications/modules/evidence.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-EVIDENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-RESULT-001",
+      "planned_source": "crates/assignments/src/result.rs",
+      "contract": "crates/assignments/specifications/modules/result.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-RESULT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASSIGNMENTS-REPORTING-001",
+      "planned_source": "crates/assignments/src/reporting.rs",
+      "contract": "crates/assignments/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-ASSIGNMENTS-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
