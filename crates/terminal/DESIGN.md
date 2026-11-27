@@ -73,3 +73,26 @@ crates/terminal/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test shell metacharacters as literal argv, child processes and output flooding.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`command.rs`](specifications/modules/command.md)
+- [`arguments.rs`](specifications/modules/arguments.md)
+- [`environment.rs`](specifications/modules/environment.md)
+- [`process.rs`](specifications/modules/process.md)
+- [`execution.rs`](specifications/modules/execution.md)
+- [`stdin.rs`](specifications/modules/stdin.md)
+- [`stdout.rs`](specifications/modules/stdout.md)
+- [`stderr.rs`](specifications/modules/stderr.md)
+- [`output_limits.rs`](specifications/modules/output_limits.md)
+- [`timeout.rs`](specifications/modules/timeout.md)
+- [`cancellation.rs`](specifications/modules/cancellation.md)
+- [`process_tree.rs`](specifications/modules/process_tree.md)
+- [`working_directory.rs`](specifications/modules/working_directory.md)
+- [`allowlist.rs`](specifications/modules/allowlist.md)
+- [`policy.rs`](specifications/modules/policy.md)
+- [`audit.rs`](specifications/modules/audit.md)

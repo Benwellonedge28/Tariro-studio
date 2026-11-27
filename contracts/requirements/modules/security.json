@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-SECURITY-LIB-001",
+      "planned_source": "crates/security/src/lib.rs",
+      "contract": "crates/security/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-SECURITY-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-ERROR-001",
+      "planned_source": "crates/security/src/error.rs",
+      "contract": "crates/security/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-SECURITY-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-THREAT-MODEL-001",
+      "planned_source": "crates/security/src/threat_model.rs",
+      "contract": "crates/security/specifications/modules/threat_model.md",
+      "specified_tests": [
+        "ZIP-SECURITY-THREAT-MODEL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-AUTHENTICATION-001",
+      "planned_source": "crates/security/src/authentication.rs",
+      "contract": "crates/security/specifications/modules/authentication.md",
+      "specified_tests": [
+        "ZIP-SECURITY-AUTHENTICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-AUTHORIZATION-001",
+      "planned_source": "crates/security/src/authorization.rs",
+      "contract": "crates/security/specifications/modules/authorization.md",
+      "specified_tests": [
+        "ZIP-SECURITY-AUTHORIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SECRETS-MOD-001",
+      "planned_source": "crates/security/src/secrets/mod.rs",
+      "contract": "crates/security/specifications/modules/secrets/mod.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SECRETS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SECRETS-VAULT-001",
+      "planned_source": "crates/security/src/secrets/vault.rs",
+      "contract": "crates/security/specifications/modules/secrets/vault.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SECRETS-VAULT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SECRETS-KEYRING-001",
+      "planned_source": "crates/security/src/secrets/keyring.rs",
+      "contract": "crates/security/specifications/modules/secrets/keyring.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SECRETS-KEYRING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SECRETS-ROTATION-001",
+      "planned_source": "crates/security/src/secrets/rotation.rs",
+      "contract": "crates/security/specifications/modules/secrets/rotation.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SECRETS-ROTATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SECRETS-REDACTION-001",
+      "planned_source": "crates/security/src/secrets/redaction.rs",
+      "contract": "crates/security/specifications/modules/secrets/redaction.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SECRETS-REDACTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-CRYPTOGRAPHY-MOD-001",
+      "planned_source": "crates/security/src/cryptography/mod.rs",
+      "contract": "crates/security/specifications/modules/cryptography/mod.md",
+      "specified_tests": [
+        "ZIP-SECURITY-CRYPTOGRAPHY-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-CRYPTOGRAPHY-HASHING-001",
+      "planned_source": "crates/security/src/cryptography/hashing.rs",
+      "contract": "crates/security/specifications/modules/cryptography/hashing.md",
+      "specified_tests": [
+        "ZIP-SECURITY-CRYPTOGRAPHY-HASHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-CRYPTOGRAPHY-ENCRYPTION-001",
+      "planned_source": "crates/security/src/cryptography/encryption.rs",
+      "contract": "crates/security/specifications/modules/cryptography/encryption.md",
+      "specified_tests": [
+        "ZIP-SECURITY-CRYPTOGRAPHY-ENCRYPTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-CRYPTOGRAPHY-SIGNATURES-001",
+      "planned_source": "crates/security/src/cryptography/signatures.rs",
+      "contract": "crates/security/specifications/modules/cryptography/signatures.md",
+      "specified_tests": [
+        "ZIP-SECURITY-CRYPTOGRAPHY-SIGNATURES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-CRYPTOGRAPHY-KEY-MANAGEMENT-001",
+      "planned_source": "crates/security/src/cryptography/key_management.rs",
+      "contract": "crates/security/specifications/modules/cryptography/key_management.md",
+      "specified_tests": [
+        "ZIP-SECURITY-CRYPTOGRAPHY-KEY-MANAGEMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-CRYPTOGRAPHY-RANDOM-001",
+      "planned_source": "crates/security/src/cryptography/random.rs",
+      "contract": "crates/security/specifications/modules/cryptography/random.md",
+      "specified_tests": [
+        "ZIP-SECURITY-CRYPTOGRAPHY-RANDOM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-PERMISSIONS-MOD-001",
+      "planned_source": "crates/security/src/permissions/mod.rs",
+      "contract": "crates/security/specifications/modules/permissions/mod.md",
+      "specified_tests": [
+        "ZIP-SECURITY-PERMISSIONS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-PERMISSIONS-RBAC-001",
+      "planned_source": "crates/security/src/permissions/rbac.rs",
+      "contract": "crates/security/specifications/modules/permissions/rbac.md",
+      "specified_tests": [
+        "ZIP-SECURITY-PERMISSIONS-RBAC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-PERMISSIONS-ABAC-001",
+      "planned_source": "crates/security/src/permissions/abac.rs",
+      "contract": "crates/security/specifications/modules/permissions/abac.md",
+      "specified_tests": [
+        "ZIP-SECURITY-PERMISSIONS-ABAC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-PERMISSIONS-CAPABILITY-001",
+      "planned_source": "crates/security/src/permissions/capability.rs",
+      "contract": "crates/security/specifications/modules/permissions/capability.md",
+      "specified_tests": [
+        "ZIP-SECURITY-PERMISSIONS-CAPABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-PERMISSIONS-INHERITANCE-001",
+      "planned_source": "crates/security/src/permissions/inheritance.rs",
+      "contract": "crates/security/specifications/modules/permissions/inheritance.md",
+      "specified_tests": [
+        "ZIP-SECURITY-PERMISSIONS-INHERITANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-PERMISSIONS-REVOCATION-001",
+      "planned_source": "crates/security/src/permissions/revocation.rs",
+      "contract": "crates/security/specifications/modules/permissions/revocation.md",
+      "specified_tests": [
+        "ZIP-SECURITY-PERMISSIONS-REVOCATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-DEFENSES-MOD-001",
+      "planned_source": "crates/security/src/defenses/mod.rs",
+      "contract": "crates/security/specifications/modules/defenses/mod.md",
+      "specified_tests": [
+        "ZIP-SECURITY-DEFENSES-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-DEFENSES-PROMPT-INJECTION-001",
+      "planned_source": "crates/security/src/defenses/prompt_injection.rs",
+      "contract": "crates/security/specifications/modules/defenses/prompt_injection.md",
+      "specified_tests": [
+        "ZIP-SECURITY-DEFENSES-PROMPT-INJECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-DEFENSES-COMMAND-INJECTION-001",
+      "planned_source": "crates/security/src/defenses/command_injection.rs",
+      "contract": "crates/security/specifications/modules/defenses/command_injection.md",
+      "specified_tests": [
+        "ZIP-SECURITY-DEFENSES-COMMAND-INJECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-DEFENSES-DATA-EXFILTRATION-001",
+      "planned_source": "crates/security/src/defenses/data_exfiltration.rs",
+      "contract": "crates/security/specifications/modules/defenses/data_exfiltration.md",
+      "specified_tests": [
+        "ZIP-SECURITY-DEFENSES-DATA-EXFILTRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-DEFENSES-DEPENDENCY-RISK-001",
+      "planned_source": "crates/security/src/defenses/dependency_risk.rs",
+      "contract": "crates/security/specifications/modules/defenses/dependency_risk.md",
+      "specified_tests": [
+        "ZIP-SECURITY-DEFENSES-DEPENDENCY-RISK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-DEFENSES-SECRET-LEAKAGE-001",
+      "planned_source": "crates/security/src/defenses/secret_leakage.rs",
+      "contract": "crates/security/specifications/modules/defenses/secret_leakage.md",
+      "specified_tests": [
+        "ZIP-SECURITY-DEFENSES-SECRET-LEAKAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SUPPLY-CHAIN-MOD-001",
+      "planned_source": "crates/security/src/supply_chain/mod.rs",
+      "contract": "crates/security/specifications/modules/supply_chain/mod.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SUPPLY-CHAIN-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SUPPLY-CHAIN-SBOM-001",
+      "planned_source": "crates/security/src/supply_chain/sbom.rs",
+      "contract": "crates/security/specifications/modules/supply_chain/sbom.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SUPPLY-CHAIN-SBOM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SUPPLY-CHAIN-PROVENANCE-001",
+      "planned_source": "crates/security/src/supply_chain/provenance.rs",
+      "contract": "crates/security/specifications/modules/supply_chain/provenance.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SUPPLY-CHAIN-PROVENANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SUPPLY-CHAIN-SIGNATURES-001",
+      "planned_source": "crates/security/src/supply_chain/signatures.rs",
+      "contract": "crates/security/specifications/modules/supply_chain/signatures.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SUPPLY-CHAIN-SIGNATURES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-SUPPLY-CHAIN-VERIFICATION-001",
+      "planned_source": "crates/security/src/supply_chain/verification.rs",
+      "contract": "crates/security/specifications/modules/supply_chain/verification.md",
+      "specified_tests": [
+        "ZIP-SECURITY-SUPPLY-CHAIN-VERIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SECURITY-INCIDENT-RESPONSE-001",
+      "planned_source": "crates/security/src/incident_response.rs",
+      "contract": "crates/security/specifications/modules/incident_response.md",
+      "specified_tests": [
+        "ZIP-SECURITY-INCIDENT-RESPONSE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-DOCUMENTATION-LIB-001",
+      "planned_source": "crates/documentation/src/lib.rs",
+      "contract": "crates/documentation/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-ERROR-001",
+      "planned_source": "crates/documentation/src/error.rs",
+      "contract": "crates/documentation/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DISCOVERY-001",
+      "planned_source": "crates/documentation/src/discovery.rs",
+      "contract": "crates/documentation/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-INVENTORY-001",
+      "planned_source": "crates/documentation/src/inventory.rs",
+      "contract": "crates/documentation/specifications/modules/inventory.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-INVENTORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-CLASSIFICATION-001",
+      "planned_source": "crates/documentation/src/classification.rs",
+      "contract": "crates/documentation/specifications/modules/classification.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-CLASSIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-REQUIREMENTS-001",
+      "planned_source": "crates/documentation/src/requirements.rs",
+      "contract": "crates/documentation/specifications/modules/requirements.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-REQUIREMENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-TEMPLATES-001",
+      "planned_source": "crates/documentation/src/templates.rs",
+      "contract": "crates/documentation/specifications/modules/templates.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-TEMPLATES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-GENERATION-001",
+      "planned_source": "crates/documentation/src/generation.rs",
+      "contract": "crates/documentation/specifications/modules/generation.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-GENERATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-EDITING-001",
+      "planned_source": "crates/documentation/src/editing.rs",
+      "contract": "crates/documentation/specifications/modules/editing.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-EDITING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-VALIDATION-001",
+      "planned_source": "crates/documentation/src/validation.rs",
+      "contract": "crates/documentation/specifications/modules/validation.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-COVERAGE-001",
+      "planned_source": "crates/documentation/src/coverage.rs",
+      "contract": "crates/documentation/specifications/modules/coverage.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-COVERAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-CONSISTENCY-001",
+      "planned_source": "crates/documentation/src/consistency.rs",
+      "contract": "crates/documentation/specifications/modules/consistency.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-CONSISTENCY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-SOURCE-REFERENCES-001",
+      "planned_source": "crates/documentation/src/source_references.rs",
+      "contract": "crates/documentation/specifications/modules/source_references.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-SOURCE-REFERENCES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-TRACEABILITY-001",
+      "planned_source": "crates/documentation/src/traceability.rs",
+      "contract": "crates/documentation/specifications/modules/traceability.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-TRACEABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-MOD-001",
+      "planned_source": "crates/documentation/src/design/mod.rs",
+      "contract": "crates/documentation/specifications/modules/design/mod.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-ARCHITECTURE-001",
+      "planned_source": "crates/documentation/src/design/architecture.rs",
+      "contract": "crates/documentation/specifications/modules/design/architecture.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-ARCHITECTURE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-SUBSYSTEM-001",
+      "planned_source": "crates/documentation/src/design/subsystem.rs",
+      "contract": "crates/documentation/specifications/modules/design/subsystem.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-SUBSYSTEM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-COMPONENT-001",
+      "planned_source": "crates/documentation/src/design/component.rs",
+      "contract": "crates/documentation/specifications/modules/design/component.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-COMPONENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-INTERFACE-001",
+      "planned_source": "crates/documentation/src/design/interface.rs",
+      "contract": "crates/documentation/specifications/modules/design/interface.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-INTERFACE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-DATA-MODEL-001",
+      "planned_source": "crates/documentation/src/design/data_model.rs",
+      "contract": "crates/documentation/specifications/modules/design/data_model.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-DATA-MODEL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-ALGORITHMS-001",
+      "planned_source": "crates/documentation/src/design/algorithms.rs",
+      "contract": "crates/documentation/specifications/modules/design/algorithms.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-ALGORITHMS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-INTEGRATION-001",
+      "planned_source": "crates/documentation/src/design/integration.rs",
+      "contract": "crates/documentation/specifications/modules/design/integration.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-INTEGRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DESIGN-ACCEPTANCE-001",
+      "planned_source": "crates/documentation/src/design/acceptance.rs",
+      "contract": "crates/documentation/specifications/modules/design/acceptance.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DESIGN-ACCEPTANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-FORMATS-MOD-001",
+      "planned_source": "crates/documentation/src/formats/mod.rs",
+      "contract": "crates/documentation/specifications/modules/formats/mod.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-FORMATS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-FORMATS-MARKDOWN-001",
+      "planned_source": "crates/documentation/src/formats/markdown.rs",
+      "contract": "crates/documentation/specifications/modules/formats/markdown.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-FORMATS-MARKDOWN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-FORMATS-ASCIIDOC-001",
+      "planned_source": "crates/documentation/src/formats/asciidoc.rs",
+      "contract": "crates/documentation/specifications/modules/formats/asciidoc.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-FORMATS-ASCIIDOC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-FORMATS-HTML-001",
+      "planned_source": "crates/documentation/src/formats/html.rs",
+      "contract": "crates/documentation/specifications/modules/formats/html.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-FORMATS-HTML-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-FORMATS-PLAIN-TEXT-001",
+      "planned_source": "crates/documentation/src/formats/plain_text.rs",
+      "contract": "crates/documentation/specifications/modules/formats/plain_text.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-FORMATS-PLAIN-TEXT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-DIAGRAMS-001",
+      "planned_source": "crates/documentation/src/diagrams.rs",
+      "contract": "crates/documentation/specifications/modules/diagrams.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-DIAGRAMS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-PUBLISHING-001",
+      "planned_source": "crates/documentation/src/publishing.rs",
+      "contract": "crates/documentation/specifications/modules/publishing.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-PUBLISHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DOCUMENTATION-BATCHING-001",
+      "planned_source": "crates/documentation/src/batching.rs",
+      "contract": "crates/documentation/specifications/modules/batching.md",
+      "specified_tests": [
+        "ZIP-DOCUMENTATION-BATCHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

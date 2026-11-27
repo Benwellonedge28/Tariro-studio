@@ -89,3 +89,39 @@ crates/documentation/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test fixed 30-file Vimbai workflow, factual references and restart after document 17.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`inventory.rs`](specifications/modules/inventory.md)
+- [`classification.rs`](specifications/modules/classification.md)
+- [`requirements.rs`](specifications/modules/requirements.md)
+- [`templates.rs`](specifications/modules/templates.md)
+- [`generation.rs`](specifications/modules/generation.md)
+- [`editing.rs`](specifications/modules/editing.md)
+- [`validation.rs`](specifications/modules/validation.md)
+- [`coverage.rs`](specifications/modules/coverage.md)
+- [`consistency.rs`](specifications/modules/consistency.md)
+- [`source_references.rs`](specifications/modules/source_references.md)
+- [`traceability.rs`](specifications/modules/traceability.md)
+- [`design/mod.rs`](specifications/modules/design/mod.md)
+- [`design/architecture.rs`](specifications/modules/design/architecture.md)
+- [`design/subsystem.rs`](specifications/modules/design/subsystem.md)
+- [`design/component.rs`](specifications/modules/design/component.md)
+- [`design/interface.rs`](specifications/modules/design/interface.md)
+- [`design/data_model.rs`](specifications/modules/design/data_model.md)
+- [`design/algorithms.rs`](specifications/modules/design/algorithms.md)
+- [`design/integration.rs`](specifications/modules/design/integration.md)
+- [`design/acceptance.rs`](specifications/modules/design/acceptance.md)
+- [`formats/mod.rs`](specifications/modules/formats/mod.md)
+- [`formats/markdown.rs`](specifications/modules/formats/markdown.md)
+- [`formats/asciidoc.rs`](specifications/modules/formats/asciidoc.md)
+- [`formats/html.rs`](specifications/modules/formats/html.md)
+- [`formats/plain_text.rs`](specifications/modules/formats/plain_text.md)
+- [`diagrams.rs`](specifications/modules/diagrams.md)
+- [`publishing.rs`](specifications/modules/publishing.md)
+- [`batching.rs`](specifications/modules/batching.md)

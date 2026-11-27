@@ -73,3 +73,27 @@ crates/filesystem/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test link replacement race, root escapes, concurrent CAS and failed rename rollback.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`path.rs`](specifications/modules/path.md)
+- [`normalization.rs`](specifications/modules/normalization.md)
+- [`canonicalization.rs`](specifications/modules/canonicalization.md)
+- [`scope.rs`](specifications/modules/scope.md)
+- [`permissions.rs`](specifications/modules/permissions.md)
+- [`reader.rs`](specifications/modules/reader.md)
+- [`writer.rs`](specifications/modules/writer.md)
+- [`atomic_write.rs`](specifications/modules/atomic_write.md)
+- [`directory.rs`](specifications/modules/directory.md)
+- [`traversal.rs`](specifications/modules/traversal.md)
+- [`watcher.rs`](specifications/modules/watcher.md)
+- [`symlink.rs`](specifications/modules/symlink.md)
+- [`locking.rs`](specifications/modules/locking.md)
+- [`temporary.rs`](specifications/modules/temporary.md)
+- [`snapshot.rs`](specifications/modules/snapshot.md)
+- [`checksum.rs`](specifications/modules/checksum.md)
+- [`recovery.rs`](specifications/modules/recovery.md)

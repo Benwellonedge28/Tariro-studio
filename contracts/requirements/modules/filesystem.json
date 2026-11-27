@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-FILESYSTEM-LIB-001",
+      "planned_source": "crates/filesystem/src/lib.rs",
+      "contract": "crates/filesystem/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-ERROR-001",
+      "planned_source": "crates/filesystem/src/error.rs",
+      "contract": "crates/filesystem/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-PATH-001",
+      "planned_source": "crates/filesystem/src/path.rs",
+      "contract": "crates/filesystem/specifications/modules/path.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-PATH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-NORMALIZATION-001",
+      "planned_source": "crates/filesystem/src/normalization.rs",
+      "contract": "crates/filesystem/specifications/modules/normalization.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-NORMALIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-CANONICALIZATION-001",
+      "planned_source": "crates/filesystem/src/canonicalization.rs",
+      "contract": "crates/filesystem/specifications/modules/canonicalization.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-CANONICALIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-SCOPE-001",
+      "planned_source": "crates/filesystem/src/scope.rs",
+      "contract": "crates/filesystem/specifications/modules/scope.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-SCOPE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-PERMISSIONS-001",
+      "planned_source": "crates/filesystem/src/permissions.rs",
+      "contract": "crates/filesystem/specifications/modules/permissions.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-PERMISSIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-READER-001",
+      "planned_source": "crates/filesystem/src/reader.rs",
+      "contract": "crates/filesystem/specifications/modules/reader.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-READER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-WRITER-001",
+      "planned_source": "crates/filesystem/src/writer.rs",
+      "contract": "crates/filesystem/specifications/modules/writer.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-WRITER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-ATOMIC-WRITE-001",
+      "planned_source": "crates/filesystem/src/atomic_write.rs",
+      "contract": "crates/filesystem/specifications/modules/atomic_write.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-ATOMIC-WRITE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-DIRECTORY-001",
+      "planned_source": "crates/filesystem/src/directory.rs",
+      "contract": "crates/filesystem/specifications/modules/directory.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-DIRECTORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-TRAVERSAL-001",
+      "planned_source": "crates/filesystem/src/traversal.rs",
+      "contract": "crates/filesystem/specifications/modules/traversal.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-TRAVERSAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-WATCHER-001",
+      "planned_source": "crates/filesystem/src/watcher.rs",
+      "contract": "crates/filesystem/specifications/modules/watcher.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-WATCHER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-SYMLINK-001",
+      "planned_source": "crates/filesystem/src/symlink.rs",
+      "contract": "crates/filesystem/specifications/modules/symlink.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-SYMLINK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-LOCKING-001",
+      "planned_source": "crates/filesystem/src/locking.rs",
+      "contract": "crates/filesystem/specifications/modules/locking.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-LOCKING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-TEMPORARY-001",
+      "planned_source": "crates/filesystem/src/temporary.rs",
+      "contract": "crates/filesystem/specifications/modules/temporary.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-TEMPORARY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-SNAPSHOT-001",
+      "planned_source": "crates/filesystem/src/snapshot.rs",
+      "contract": "crates/filesystem/specifications/modules/snapshot.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-SNAPSHOT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-CHECKSUM-001",
+      "planned_source": "crates/filesystem/src/checksum.rs",
+      "contract": "crates/filesystem/specifications/modules/checksum.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-CHECKSUM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FILESYSTEM-RECOVERY-001",
+      "planned_source": "crates/filesystem/src/recovery.rs",
+      "contract": "crates/filesystem/specifications/modules/recovery.md",
+      "specified_tests": [
+        "ZIP-FILESYSTEM-RECOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

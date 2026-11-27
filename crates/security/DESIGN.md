@@ -93,3 +93,42 @@ crates/security/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test prompt injection boundaries, secret canaries and delegated capability attenuation.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`threat_model.rs`](specifications/modules/threat_model.md)
+- [`authentication.rs`](specifications/modules/authentication.md)
+- [`authorization.rs`](specifications/modules/authorization.md)
+- [`secrets/mod.rs`](specifications/modules/secrets/mod.md)
+- [`secrets/vault.rs`](specifications/modules/secrets/vault.md)
+- [`secrets/keyring.rs`](specifications/modules/secrets/keyring.md)
+- [`secrets/rotation.rs`](specifications/modules/secrets/rotation.md)
+- [`secrets/redaction.rs`](specifications/modules/secrets/redaction.md)
+- [`cryptography/mod.rs`](specifications/modules/cryptography/mod.md)
+- [`cryptography/hashing.rs`](specifications/modules/cryptography/hashing.md)
+- [`cryptography/encryption.rs`](specifications/modules/cryptography/encryption.md)
+- [`cryptography/signatures.rs`](specifications/modules/cryptography/signatures.md)
+- [`cryptography/key_management.rs`](specifications/modules/cryptography/key_management.md)
+- [`cryptography/random.rs`](specifications/modules/cryptography/random.md)
+- [`permissions/mod.rs`](specifications/modules/permissions/mod.md)
+- [`permissions/rbac.rs`](specifications/modules/permissions/rbac.md)
+- [`permissions/abac.rs`](specifications/modules/permissions/abac.md)
+- [`permissions/capability.rs`](specifications/modules/permissions/capability.md)
+- [`permissions/inheritance.rs`](specifications/modules/permissions/inheritance.md)
+- [`permissions/revocation.rs`](specifications/modules/permissions/revocation.md)
+- [`defenses/mod.rs`](specifications/modules/defenses/mod.md)
+- [`defenses/prompt_injection.rs`](specifications/modules/defenses/prompt_injection.md)
+- [`defenses/command_injection.rs`](specifications/modules/defenses/command_injection.md)
+- [`defenses/data_exfiltration.rs`](specifications/modules/defenses/data_exfiltration.md)
+- [`defenses/dependency_risk.rs`](specifications/modules/defenses/dependency_risk.md)
+- [`defenses/secret_leakage.rs`](specifications/modules/defenses/secret_leakage.md)
+- [`supply_chain/mod.rs`](specifications/modules/supply_chain/mod.md)
+- [`supply_chain/sbom.rs`](specifications/modules/supply_chain/sbom.md)
+- [`supply_chain/provenance.rs`](specifications/modules/supply_chain/provenance.md)
+- [`supply_chain/signatures.rs`](specifications/modules/supply_chain/signatures.md)
+- [`supply_chain/verification.rs`](specifications/modules/supply_chain/verification.md)
+- [`incident_response.rs`](specifications/modules/incident_response.md)

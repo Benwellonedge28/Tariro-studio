@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-SANDBOX-LIB-001",
+      "planned_source": "crates/sandbox/src/lib.rs",
+      "contract": "crates/sandbox/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-ERROR-001",
+      "planned_source": "crates/sandbox/src/error.rs",
+      "contract": "crates/sandbox/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-SANDBOX-001",
+      "planned_source": "crates/sandbox/src/sandbox.rs",
+      "contract": "crates/sandbox/specifications/modules/sandbox.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-SANDBOX-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-PROFILE-001",
+      "planned_source": "crates/sandbox/src/profile.rs",
+      "contract": "crates/sandbox/specifications/modules/profile.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-PROFILE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-CAPABILITY-001",
+      "planned_source": "crates/sandbox/src/capability.rs",
+      "contract": "crates/sandbox/specifications/modules/capability.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-CAPABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-FILESYSTEM-001",
+      "planned_source": "crates/sandbox/src/filesystem.rs",
+      "contract": "crates/sandbox/specifications/modules/filesystem.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-FILESYSTEM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-NETWORK-001",
+      "planned_source": "crates/sandbox/src/network.rs",
+      "contract": "crates/sandbox/specifications/modules/network.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-NETWORK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-PROCESS-001",
+      "planned_source": "crates/sandbox/src/process.rs",
+      "contract": "crates/sandbox/specifications/modules/process.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-PROCESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-RESOURCE-LIMITS-001",
+      "planned_source": "crates/sandbox/src/resource_limits.rs",
+      "contract": "crates/sandbox/specifications/modules/resource_limits.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-RESOURCE-LIMITS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-ISOLATION-001",
+      "planned_source": "crates/sandbox/src/isolation.rs",
+      "contract": "crates/sandbox/specifications/modules/isolation.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-ISOLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-LIFECYCLE-001",
+      "planned_source": "crates/sandbox/src/lifecycle.rs",
+      "contract": "crates/sandbox/specifications/modules/lifecycle.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-LIFECYCLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-CLEANUP-001",
+      "planned_source": "crates/sandbox/src/cleanup.rs",
+      "contract": "crates/sandbox/specifications/modules/cleanup.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-CLEANUP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-BACKENDS-MOD-001",
+      "planned_source": "crates/sandbox/src/backends/mod.rs",
+      "contract": "crates/sandbox/specifications/modules/backends/mod.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-BACKENDS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-BACKENDS-LINUX-001",
+      "planned_source": "crates/sandbox/src/backends/linux.rs",
+      "contract": "crates/sandbox/specifications/modules/backends/linux.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-BACKENDS-LINUX-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-BACKENDS-WINDOWS-001",
+      "planned_source": "crates/sandbox/src/backends/windows.rs",
+      "contract": "crates/sandbox/specifications/modules/backends/windows.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-BACKENDS-WINDOWS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-BACKENDS-MACOS-001",
+      "planned_source": "crates/sandbox/src/backends/macos.rs",
+      "contract": "crates/sandbox/specifications/modules/backends/macos.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-BACKENDS-MACOS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-BACKENDS-CONTAINER-001",
+      "planned_source": "crates/sandbox/src/backends/container.rs",
+      "contract": "crates/sandbox/specifications/modules/backends/container.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-BACKENDS-CONTAINER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-BACKENDS-WASM-001",
+      "planned_source": "crates/sandbox/src/backends/wasm.rs",
+      "contract": "crates/sandbox/specifications/modules/backends/wasm.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-BACKENDS-WASM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SANDBOX-VERIFICATION-001",
+      "planned_source": "crates/sandbox/src/verification.rs",
+      "contract": "crates/sandbox/specifications/modules/verification.md",
+      "specified_tests": [
+        "ZIP-SANDBOX-VERIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

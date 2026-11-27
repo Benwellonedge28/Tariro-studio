@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-SCHEDULER-LIB-001",
+      "planned_source": "crates/scheduler/src/lib.rs",
+      "contract": "crates/scheduler/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-ERROR-001",
+      "planned_source": "crates/scheduler/src/error.rs",
+      "contract": "crates/scheduler/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-SCHEDULER-001",
+      "planned_source": "crates/scheduler/src/scheduler.rs",
+      "contract": "crates/scheduler/specifications/modules/scheduler.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-SCHEDULER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-JOB-001",
+      "planned_source": "crates/scheduler/src/job.rs",
+      "contract": "crates/scheduler/specifications/modules/job.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-JOB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-QUEUE-001",
+      "planned_source": "crates/scheduler/src/queue.rs",
+      "contract": "crates/scheduler/specifications/modules/queue.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-QUEUE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-PRIORITY-001",
+      "planned_source": "crates/scheduler/src/priority.rs",
+      "contract": "crates/scheduler/specifications/modules/priority.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-PRIORITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-DEPENDENCY-001",
+      "planned_source": "crates/scheduler/src/dependency.rs",
+      "contract": "crates/scheduler/specifications/modules/dependency.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-DEPENDENCY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-DEADLINE-001",
+      "planned_source": "crates/scheduler/src/deadline.rs",
+      "contract": "crates/scheduler/specifications/modules/deadline.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-DEADLINE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-FAIRNESS-001",
+      "planned_source": "crates/scheduler/src/fairness.rs",
+      "contract": "crates/scheduler/specifications/modules/fairness.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-FAIRNESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-ADMISSION-001",
+      "planned_source": "crates/scheduler/src/admission.rs",
+      "contract": "crates/scheduler/specifications/modules/admission.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-ADMISSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-PLACEMENT-001",
+      "planned_source": "crates/scheduler/src/placement.rs",
+      "contract": "crates/scheduler/specifications/modules/placement.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-PLACEMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-PREEMPTION-001",
+      "planned_source": "crates/scheduler/src/preemption.rs",
+      "contract": "crates/scheduler/specifications/modules/preemption.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-PREEMPTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-RETRY-001",
+      "planned_source": "crates/scheduler/src/retry.rs",
+      "contract": "crates/scheduler/specifications/modules/retry.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-RETRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-BACKPRESSURE-001",
+      "planned_source": "crates/scheduler/src/backpressure.rs",
+      "contract": "crates/scheduler/specifications/modules/backpressure.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-BACKPRESSURE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-POLICIES-MOD-001",
+      "planned_source": "crates/scheduler/src/policies/mod.rs",
+      "contract": "crates/scheduler/specifications/modules/policies/mod.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-POLICIES-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-POLICIES-SEQUENTIAL-001",
+      "planned_source": "crates/scheduler/src/policies/sequential.rs",
+      "contract": "crates/scheduler/specifications/modules/policies/sequential.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-POLICIES-SEQUENTIAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-POLICIES-PARALLEL-001",
+      "planned_source": "crates/scheduler/src/policies/parallel.rs",
+      "contract": "crates/scheduler/specifications/modules/policies/parallel.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-POLICIES-PARALLEL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-POLICIES-PRIORITY-001",
+      "planned_source": "crates/scheduler/src/policies/priority.rs",
+      "contract": "crates/scheduler/specifications/modules/policies/priority.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-POLICIES-PRIORITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-POLICIES-RESOURCE-AWARE-001",
+      "planned_source": "crates/scheduler/src/policies/resource_aware.rs",
+      "contract": "crates/scheduler/specifications/modules/policies/resource_aware.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-POLICIES-RESOURCE-AWARE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-POLICIES-DISTRIBUTED-001",
+      "planned_source": "crates/scheduler/src/policies/distributed.rs",
+      "contract": "crates/scheduler/specifications/modules/policies/distributed.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-POLICIES-DISTRIBUTED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SCHEDULER-PERSISTENCE-001",
+      "planned_source": "crates/scheduler/src/persistence.rs",
+      "contract": "crates/scheduler/specifications/modules/persistence.md",
+      "specified_tests": [
+        "ZIP-SCHEDULER-PERSISTENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
