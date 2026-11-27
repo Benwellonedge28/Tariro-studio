@@ -77,3 +77,32 @@ crates/orchestration/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test two competing edits to one path, reviewer independence and deterministic replay.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`orchestrator.rs`](specifications/modules/orchestrator.md)
+- [`coordination.rs`](specifications/modules/coordination.md)
+- [`team.rs`](specifications/modules/team.md)
+- [`swarm.rs`](specifications/modules/swarm.md)
+- [`delegation.rs`](specifications/modules/delegation.md)
+- [`routing.rs`](specifications/modules/routing.md)
+- [`negotiation.rs`](specifications/modules/negotiation.md)
+- [`conflict_resolution.rs`](specifications/modules/conflict_resolution.md)
+- [`consensus.rs`](specifications/modules/consensus.md)
+- [`voting.rs`](specifications/modules/voting.md)
+- [`escalation.rs`](specifications/modules/escalation.md)
+- [`execution_graph.rs`](specifications/modules/execution_graph.md)
+- [`dependency_graph.rs`](specifications/modules/dependency_graph.md)
+- [`strategies/mod.rs`](specifications/modules/strategies/mod.md)
+- [`strategies/sequential.rs`](specifications/modules/strategies/sequential.md)
+- [`strategies/parallel.rs`](specifications/modules/strategies/parallel.md)
+- [`strategies/hierarchical.rs`](specifications/modules/strategies/hierarchical.md)
+- [`strategies/collaborative.rs`](specifications/modules/strategies/collaborative.md)
+- [`strategies/debate.rs`](specifications/modules/strategies/debate.md)
+- [`strategies/independent_review.rs`](specifications/modules/strategies/independent_review.md)
+- [`strategies/adaptive.rs`](specifications/modules/strategies/adaptive.md)
+- [`supervision.rs`](specifications/modules/supervision.md)
