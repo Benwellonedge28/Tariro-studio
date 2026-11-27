@@ -89,3 +89,36 @@ crates/verification/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Changing candidate after review must fail. Test failed and missing mandatory evidence.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`verifier.rs`](specifications/modules/verifier.md)
+- [`verification_plan.rs`](specifications/modules/verification_plan.md)
+- [`requirements.rs`](specifications/modules/requirements.md)
+- [`acceptance.rs`](specifications/modules/acceptance.md)
+- [`evidence.rs`](specifications/modules/evidence.md)
+- [`provenance.rs`](specifications/modules/provenance.md)
+- [`independent_review.rs`](specifications/modules/independent_review.md)
+- [`reproducibility.rs`](specifications/modules/reproducibility.md)
+- [`static_analysis.rs`](specifications/modules/static_analysis.md)
+- [`dynamic_analysis.rs`](specifications/modules/dynamic_analysis.md)
+- [`formal/mod.rs`](specifications/modules/formal/mod.md)
+- [`formal/specification.rs`](specifications/modules/formal/specification.md)
+- [`formal/invariants.rs`](specifications/modules/formal/invariants.md)
+- [`formal/model_checking.rs`](specifications/modules/formal/model_checking.md)
+- [`formal/proof_adapter.rs`](specifications/modules/formal/proof_adapter.md)
+- [`repository/mod.rs`](specifications/modules/repository/mod.md)
+- [`repository/diff.rs`](specifications/modules/repository/diff.md)
+- [`repository/scope.rs`](specifications/modules/repository/scope.md)
+- [`repository/batch.rs`](specifications/modules/repository/batch.md)
+- [`repository/integration.rs`](specifications/modules/repository/integration.md)
+- [`quality/mod.rs`](specifications/modules/quality/mod.md)
+- [`quality/correctness.rs`](specifications/modules/quality/correctness.md)
+- [`quality/completeness.rs`](specifications/modules/quality/completeness.md)
+- [`quality/consistency.rs`](specifications/modules/quality/consistency.md)
+- [`quality/maintainability.rs`](specifications/modules/quality/maintainability.md)
+- [`reporting.rs`](specifications/modules/reporting.md)
