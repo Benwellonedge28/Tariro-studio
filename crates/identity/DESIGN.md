@@ -70,3 +70,24 @@ crates/identity/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test cross-workspace access, logout races and revocation persistence.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`principal.rs`](specifications/modules/principal.md)
+- [`user.rs`](specifications/modules/user.md)
+- [`agent.rs`](specifications/modules/agent.md)
+- [`service.rs`](specifications/modules/service.md)
+- [`device.rs`](specifications/modules/device.md)
+- [`organization.rs`](specifications/modules/organization.md)
+- [`workspace.rs`](specifications/modules/workspace.md)
+- [`session.rs`](specifications/modules/session.md)
+- [`authentication.rs`](specifications/modules/authentication.md)
+- [`credentials.rs`](specifications/modules/credentials.md)
+- [`federation.rs`](specifications/modules/federation.md)
+- [`delegation.rs`](specifications/modules/delegation.md)
+- [`revocation.rs`](specifications/modules/revocation.md)
+- [`registry.rs`](specifications/modules/registry.md)

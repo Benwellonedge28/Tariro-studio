@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "requirements": [
+    {
+      "id": "ZIP-INFERENCE-LIB-001",
+      "planned_source": "crates/inference/src/lib.rs",
+      "contract": "crates/inference/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-ERROR-001",
+      "planned_source": "crates/inference/src/error.rs",
+      "contract": "crates/inference/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-ENGINE-001",
+      "planned_source": "crates/inference/src/engine.rs",
+      "contract": "crates/inference/specifications/modules/engine.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-ENGINE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-SESSION-001",
+      "planned_source": "crates/inference/src/session.rs",
+      "contract": "crates/inference/specifications/modules/session.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-SESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-REQUEST-001",
+      "planned_source": "crates/inference/src/request.rs",
+      "contract": "crates/inference/specifications/modules/request.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-REQUEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-RESPONSE-001",
+      "planned_source": "crates/inference/src/response.rs",
+      "contract": "crates/inference/specifications/modules/response.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-RESPONSE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-GENERATION-001",
+      "planned_source": "crates/inference/src/generation.rs",
+      "contract": "crates/inference/specifications/modules/generation.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-GENERATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-SAMPLING-001",
+      "planned_source": "crates/inference/src/sampling.rs",
+      "contract": "crates/inference/specifications/modules/sampling.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-SAMPLING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-STREAMING-001",
+      "planned_source": "crates/inference/src/streaming.rs",
+      "contract": "crates/inference/specifications/modules/streaming.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-STREAMING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BATCHING-001",
+      "planned_source": "crates/inference/src/batching.rs",
+      "contract": "crates/inference/specifications/modules/batching.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BATCHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-CANCELLATION-001",
+      "planned_source": "crates/inference/src/cancellation.rs",
+      "contract": "crates/inference/specifications/modules/cancellation.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-CANCELLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-CAPABILITIES-001",
+      "planned_source": "crates/inference/src/capabilities.rs",
+      "contract": "crates/inference/specifications/modules/capabilities.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-CAPABILITIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BACKENDS-MOD-001",
+      "planned_source": "crates/inference/src/backends/mod.rs",
+      "contract": "crates/inference/specifications/modules/backends/mod.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BACKENDS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BACKENDS-CANDLE-001",
+      "planned_source": "crates/inference/src/backends/candle.rs",
+      "contract": "crates/inference/specifications/modules/backends/candle.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BACKENDS-CANDLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BACKENDS-MISTRAL-001",
+      "planned_source": "crates/inference/src/backends/mistral.rs",
+      "contract": "crates/inference/specifications/modules/backends/mistral.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BACKENDS-MISTRAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BACKENDS-OLLAMA-001",
+      "planned_source": "crates/inference/src/backends/ollama.rs",
+      "contract": "crates/inference/specifications/modules/backends/ollama.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BACKENDS-OLLAMA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BACKENDS-LLAMA-CPP-001",
+      "planned_source": "crates/inference/src/backends/llama_cpp.rs",
+      "contract": "crates/inference/specifications/modules/backends/llama_cpp.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BACKENDS-LLAMA-CPP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BACKENDS-REMOTE-001",
+      "planned_source": "crates/inference/src/backends/remote.rs",
+      "contract": "crates/inference/specifications/modules/backends/remote.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BACKENDS-REMOTE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-BACKENDS-NATIVE-001",
+      "planned_source": "crates/inference/src/backends/native.rs",
+      "contract": "crates/inference/specifications/modules/backends/native.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-BACKENDS-NATIVE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-HARDWARE-MOD-001",
+      "planned_source": "crates/inference/src/hardware/mod.rs",
+      "contract": "crates/inference/specifications/modules/hardware/mod.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-HARDWARE-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-HARDWARE-CPU-001",
+      "planned_source": "crates/inference/src/hardware/cpu.rs",
+      "contract": "crates/inference/specifications/modules/hardware/cpu.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-HARDWARE-CPU-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-HARDWARE-GPU-001",
+      "planned_source": "crates/inference/src/hardware/gpu.rs",
+      "contract": "crates/inference/specifications/modules/hardware/gpu.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-HARDWARE-GPU-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-HARDWARE-NPU-001",
+      "planned_source": "crates/inference/src/hardware/npu.rs",
+      "contract": "crates/inference/specifications/modules/hardware/npu.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-HARDWARE-NPU-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-HARDWARE-DISTRIBUTED-001",
+      "planned_source": "crates/inference/src/hardware/distributed.rs",
+      "contract": "crates/inference/specifications/modules/hardware/distributed.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-HARDWARE-DISTRIBUTED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-MEMORY-MOD-001",
+      "planned_source": "crates/inference/src/memory/mod.rs",
+      "contract": "crates/inference/specifications/modules/memory/mod.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-MEMORY-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-MEMORY-ALLOCATION-001",
+      "planned_source": "crates/inference/src/memory/allocation.rs",
+      "contract": "crates/inference/specifications/modules/memory/allocation.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-MEMORY-ALLOCATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-MEMORY-KV-CACHE-001",
+      "planned_source": "crates/inference/src/memory/kv_cache.rs",
+      "contract": "crates/inference/specifications/modules/memory/kv_cache.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-MEMORY-KV-CACHE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-MEMORY-MODEL-CACHE-001",
+      "planned_source": "crates/inference/src/memory/model_cache.rs",
+      "contract": "crates/inference/specifications/modules/memory/model_cache.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-MEMORY-MODEL-CACHE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-MEMORY-EVICTION-001",
+      "planned_source": "crates/inference/src/memory/eviction.rs",
+      "contract": "crates/inference/specifications/modules/memory/eviction.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-MEMORY-EVICTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-QUANTIZATION-MOD-001",
+      "planned_source": "crates/inference/src/quantization/mod.rs",
+      "contract": "crates/inference/specifications/modules/quantization/mod.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-QUANTIZATION-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-QUANTIZATION-FORMATS-001",
+      "planned_source": "crates/inference/src/quantization/formats.rs",
+      "contract": "crates/inference/specifications/modules/quantization/formats.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-QUANTIZATION-FORMATS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-QUANTIZATION-COMPATIBILITY-001",
+      "planned_source": "crates/inference/src/quantization/compatibility.rs",
+      "contract": "crates/inference/specifications/modules/quantization/compatibility.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-QUANTIZATION-COMPATIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-QUANTIZATION-ESTIMATION-001",
+      "planned_source": "crates/inference/src/quantization/estimation.rs",
+      "contract": "crates/inference/specifications/modules/quantization/estimation.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-QUANTIZATION-ESTIMATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INFERENCE-METRICS-001",
+      "planned_source": "crates/inference/src/metrics.rs",
+      "contract": "crates/inference/specifications/modules/metrics.md",
+      "specified_tests": [
+        "ZIP-INFERENCE-METRICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

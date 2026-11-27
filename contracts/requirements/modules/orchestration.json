@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "requirements": [
+    {
+      "id": "ZIP-ORCHESTRATION-LIB-001",
+      "planned_source": "crates/orchestration/src/lib.rs",
+      "contract": "crates/orchestration/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-ERROR-001",
+      "planned_source": "crates/orchestration/src/error.rs",
+      "contract": "crates/orchestration/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-ORCHESTRATOR-001",
+      "planned_source": "crates/orchestration/src/orchestrator.rs",
+      "contract": "crates/orchestration/specifications/modules/orchestrator.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-ORCHESTRATOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-COORDINATION-001",
+      "planned_source": "crates/orchestration/src/coordination.rs",
+      "contract": "crates/orchestration/specifications/modules/coordination.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-COORDINATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-TEAM-001",
+      "planned_source": "crates/orchestration/src/team.rs",
+      "contract": "crates/orchestration/specifications/modules/team.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-TEAM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-SWARM-001",
+      "planned_source": "crates/orchestration/src/swarm.rs",
+      "contract": "crates/orchestration/specifications/modules/swarm.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-SWARM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-DELEGATION-001",
+      "planned_source": "crates/orchestration/src/delegation.rs",
+      "contract": "crates/orchestration/specifications/modules/delegation.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-DELEGATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-ROUTING-001",
+      "planned_source": "crates/orchestration/src/routing.rs",
+      "contract": "crates/orchestration/specifications/modules/routing.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-ROUTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-NEGOTIATION-001",
+      "planned_source": "crates/orchestration/src/negotiation.rs",
+      "contract": "crates/orchestration/specifications/modules/negotiation.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-NEGOTIATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-CONFLICT-RESOLUTION-001",
+      "planned_source": "crates/orchestration/src/conflict_resolution.rs",
+      "contract": "crates/orchestration/specifications/modules/conflict_resolution.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-CONFLICT-RESOLUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-CONSENSUS-001",
+      "planned_source": "crates/orchestration/src/consensus.rs",
+      "contract": "crates/orchestration/specifications/modules/consensus.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-CONSENSUS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-VOTING-001",
+      "planned_source": "crates/orchestration/src/voting.rs",
+      "contract": "crates/orchestration/specifications/modules/voting.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-VOTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-ESCALATION-001",
+      "planned_source": "crates/orchestration/src/escalation.rs",
+      "contract": "crates/orchestration/specifications/modules/escalation.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-ESCALATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-EXECUTION-GRAPH-001",
+      "planned_source": "crates/orchestration/src/execution_graph.rs",
+      "contract": "crates/orchestration/specifications/modules/execution_graph.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-EXECUTION-GRAPH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-DEPENDENCY-GRAPH-001",
+      "planned_source": "crates/orchestration/src/dependency_graph.rs",
+      "contract": "crates/orchestration/specifications/modules/dependency_graph.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-DEPENDENCY-GRAPH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-MOD-001",
+      "planned_source": "crates/orchestration/src/strategies/mod.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/mod.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-SEQUENTIAL-001",
+      "planned_source": "crates/orchestration/src/strategies/sequential.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/sequential.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-SEQUENTIAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-PARALLEL-001",
+      "planned_source": "crates/orchestration/src/strategies/parallel.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/parallel.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-PARALLEL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-HIERARCHICAL-001",
+      "planned_source": "crates/orchestration/src/strategies/hierarchical.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/hierarchical.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-HIERARCHICAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-COLLABORATIVE-001",
+      "planned_source": "crates/orchestration/src/strategies/collaborative.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/collaborative.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-COLLABORATIVE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-DEBATE-001",
+      "planned_source": "crates/orchestration/src/strategies/debate.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/debate.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-DEBATE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-INDEPENDENT-REVIEW-001",
+      "planned_source": "crates/orchestration/src/strategies/independent_review.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/independent_review.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-INDEPENDENT-REVIEW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-STRATEGIES-ADAPTIVE-001",
+      "planned_source": "crates/orchestration/src/strategies/adaptive.rs",
+      "contract": "crates/orchestration/specifications/modules/strategies/adaptive.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-STRATEGIES-ADAPTIVE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ORCHESTRATION-SUPERVISION-001",
+      "planned_source": "crates/orchestration/src/supervision.rs",
+      "contract": "crates/orchestration/specifications/modules/supervision.md",
+      "specified_tests": [
+        "ZIP-ORCHESTRATION-SUPERVISION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

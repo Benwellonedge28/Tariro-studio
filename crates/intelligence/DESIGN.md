@@ -78,3 +78,31 @@ crates/intelligence/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test offline routing, strict provider policies, chunk sequencing and partial stream interruption.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`intelligence.rs`](specifications/modules/intelligence.md)
+- [`request.rs`](specifications/modules/request.md)
+- [`response.rs`](specifications/modules/response.md)
+- [`capability.rs`](specifications/modules/capability.md)
+- [`modality.rs`](specifications/modules/modality.md)
+- [`router.rs`](specifications/modules/router.md)
+- [`selection.rs`](specifications/modules/selection.md)
+- [`fallback.rs`](specifications/modules/fallback.md)
+- [`evaluation.rs`](specifications/modules/evaluation.md)
+- [`confidence.rs`](specifications/modules/confidence.md)
+- [`structured_output.rs`](specifications/modules/structured_output.md)
+- [`tool_calling.rs`](specifications/modules/tool_calling.md)
+- [`streaming.rs`](specifications/modules/streaming.md)
+- [`usage.rs`](specifications/modules/usage.md)
+- [`budget.rs`](specifications/modules/budget.md)
+- [`caching.rs`](specifications/modules/caching.md)
+- [`providers/mod.rs`](specifications/modules/providers/mod.md)
+- [`providers/local.rs`](specifications/modules/providers/local.md)
+- [`providers/remote.rs`](specifications/modules/providers/remote.md)
+- [`providers/embedded.rs`](specifications/modules/providers/embedded.md)
+- [`providers/distributed.rs`](specifications/modules/providers/distributed.md)

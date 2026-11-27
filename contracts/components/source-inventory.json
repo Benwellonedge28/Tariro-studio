@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
   "mapping": "Replace the .rs suffix with .md and resolve relative to contract_root. A path listed in candidate_files has a draft; every other enumerated file is missing a file contract.",
   "crates": [
     {
@@ -49,7 +49,48 @@
         "roles/auditor.rs",
         "metrics.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "agent.rs",
+        "identity.rs",
+        "manifest.rs",
+        "capabilities.rs",
+        "lifecycle.rs",
+        "state.rs",
+        "context.rs",
+        "execution.rs",
+        "communication.rs",
+        "mailbox.rs",
+        "registry.rs",
+        "factory.rs",
+        "supervision.rs",
+        "delegation.rs",
+        "collaboration.rs",
+        "evaluation.rs",
+        "permissions.rs",
+        "limits.rs",
+        "roles/mod.rs",
+        "roles/coordinator.rs",
+        "roles/researcher.rs",
+        "roles/architect.rs",
+        "roles/planner.rs",
+        "roles/documentation.rs",
+        "roles/developer.rs",
+        "roles/reviewer.rs",
+        "roles/tester.rs",
+        "roles/debugger.rs",
+        "roles/security.rs",
+        "roles/database.rs",
+        "roles/performance.rs",
+        "roles/devops.rs",
+        "roles/release.rs",
+        "roles/compliance.rs",
+        "roles/maintenance.rs",
+        "roles/repository.rs",
+        "roles/auditor.rs",
+        "metrics.rs"
+      ]
     },
     {
       "id": "assignments",
@@ -264,7 +305,26 @@
         "isolation.rs",
         "cache.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "context.rs",
+        "builder.rs",
+        "window.rs",
+        "token_budget.rs",
+        "prioritization.rs",
+        "relevance.rs",
+        "compression.rs",
+        "summarization.rs",
+        "truncation.rs",
+        "retrieval.rs",
+        "deduplication.rs",
+        "provenance.rs",
+        "prompt.rs",
+        "template.rs",
+        "isolation.rs",
+        "cache.rs"
+      ]
     },
     {
       "id": "debugging",
@@ -737,7 +797,24 @@
         "revocation.rs",
         "registry.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "principal.rs",
+        "user.rs",
+        "agent.rs",
+        "service.rs",
+        "device.rs",
+        "organization.rs",
+        "workspace.rs",
+        "session.rs",
+        "authentication.rs",
+        "credentials.rs",
+        "federation.rs",
+        "delegation.rs",
+        "revocation.rs",
+        "registry.rs"
+      ]
     },
     {
       "id": "inference",
@@ -779,7 +856,42 @@
         "quantization/estimation.rs",
         "metrics.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "engine.rs",
+        "session.rs",
+        "request.rs",
+        "response.rs",
+        "generation.rs",
+        "sampling.rs",
+        "streaming.rs",
+        "batching.rs",
+        "cancellation.rs",
+        "capabilities.rs",
+        "backends/mod.rs",
+        "backends/candle.rs",
+        "backends/mistral.rs",
+        "backends/ollama.rs",
+        "backends/llama_cpp.rs",
+        "backends/remote.rs",
+        "backends/native.rs",
+        "hardware/mod.rs",
+        "hardware/cpu.rs",
+        "hardware/gpu.rs",
+        "hardware/npu.rs",
+        "hardware/distributed.rs",
+        "memory/mod.rs",
+        "memory/allocation.rs",
+        "memory/kv_cache.rs",
+        "memory/model_cache.rs",
+        "memory/eviction.rs",
+        "quantization/mod.rs",
+        "quantization/formats.rs",
+        "quantization/compatibility.rs",
+        "quantization/estimation.rs",
+        "metrics.rs"
+      ]
     },
     {
       "id": "intelligence",
@@ -810,7 +922,31 @@
         "providers/embedded.rs",
         "providers/distributed.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "intelligence.rs",
+        "request.rs",
+        "response.rs",
+        "capability.rs",
+        "modality.rs",
+        "router.rs",
+        "selection.rs",
+        "fallback.rs",
+        "evaluation.rs",
+        "confidence.rs",
+        "structured_output.rs",
+        "tool_calling.rs",
+        "streaming.rs",
+        "usage.rs",
+        "budget.rs",
+        "caching.rs",
+        "providers/mod.rs",
+        "providers/local.rs",
+        "providers/remote.rs",
+        "providers/embedded.rs",
+        "providers/distributed.rs"
+      ]
     },
     {
       "id": "interoperability",
@@ -957,7 +1093,40 @@
         "evaluation/quality.rs",
         "evaluation/performance.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "model.rs",
+        "identifier.rs",
+        "manifest.rs",
+        "registry.rs",
+        "discovery.rs",
+        "download.rs",
+        "import.rs",
+        "export.rs",
+        "integrity.rs",
+        "signature.rs",
+        "licensing.rs",
+        "compatibility.rs",
+        "capabilities.rs",
+        "loader.rs",
+        "unloading.rs",
+        "cache.rs",
+        "lifecycle.rs",
+        "formats/mod.rs",
+        "formats/gguf.rs",
+        "formats/safetensors.rs",
+        "formats/onnx.rs",
+        "formats/manifest.rs",
+        "tokenization/mod.rs",
+        "tokenization/tokenizer.rs",
+        "tokenization/vocabulary.rs",
+        "tokenization/chat_template.rs",
+        "evaluation/mod.rs",
+        "evaluation/benchmark.rs",
+        "evaluation/quality.rs",
+        "evaluation/performance.rs"
+      ]
     },
     {
       "id": "networking",
@@ -1036,7 +1205,32 @@
         "strategies/adaptive.rs",
         "supervision.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "orchestrator.rs",
+        "coordination.rs",
+        "team.rs",
+        "swarm.rs",
+        "delegation.rs",
+        "routing.rs",
+        "negotiation.rs",
+        "conflict_resolution.rs",
+        "consensus.rs",
+        "voting.rs",
+        "escalation.rs",
+        "execution_graph.rs",
+        "dependency_graph.rs",
+        "strategies/mod.rs",
+        "strategies/sequential.rs",
+        "strategies/parallel.rs",
+        "strategies/hierarchical.rs",
+        "strategies/collaborative.rs",
+        "strategies/debate.rs",
+        "strategies/independent_review.rs",
+        "strategies/adaptive.rs",
+        "supervision.rs"
+      ]
     },
     {
       "id": "plugins",
@@ -1967,7 +2161,33 @@
         "registry.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "workflow.rs",
+        "definition.rs",
+        "parser.rs",
+        "compiler.rs",
+        "validation.rs",
+        "stage.rs",
+        "step.rs",
+        "condition.rs",
+        "dependency.rs",
+        "execution.rs",
+        "branching.rs",
+        "looping.rs",
+        "parallelism.rs",
+        "variables.rs",
+        "artifacts.rs",
+        "approval.rs",
+        "checkpoint.rs",
+        "retry.rs",
+        "compensation.rs",
+        "rollback.rs",
+        "versioning.rs",
+        "registry.rs",
+        "reporting.rs"
+      ]
     }
   ],
   "applications": [
