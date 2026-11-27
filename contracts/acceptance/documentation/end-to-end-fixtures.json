@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-DOC-E2E-001",
+  "profiles": {
+    "smoke_one": {
+      "exact_file_count": 1,
+      "expected_author_concurrency": 1
+    },
+    "reference_thirty": {
+      "exact_file_count": 30,
+      "expected_author_concurrency": 1
+    }
+  },
+  "cases": [
+    {"id":"ZIP-DOC-E2E-T01","requirements":["ZR-005","ZR-006"],"profile":"smoke_one","fault":"offline_local","input":{"verified":1,"network":false},"expected":{"stage":"Sealed","prefix":1,"remote_calls":0}},
+    {"id":"ZIP-DOC-E2E-T02","requirements":["ZR-001"],"profile":"reference_thirty","fault":"restart_after_checkpoint","input":{"verified":17},"expected":{"stage":"Scheduled","prefix":17,"next_unit":18,"redispatched_prior_units":0}},
+    {"id":"ZIP-DOC-E2E-T03","requirements":["ZR-002"],"profile":"reference_thirty","fault":"out_of_scope_file","input":{"path":"src/lib.rs","verified":17},"expected":{"stage":"Denied","prefix":17,"unauthorized_writes":0,"new_publications":0}},
+    {"id":"ZIP-DOC-E2E-T04","requirements":["ZR-002"],"profile":"reference_thirty","fault":"proposed_file_over_limit","input":{"verified":30,"proposed_count":31},"expected":{"stage":"BatchOverLimit","prefix":30,"unauthorized_writes":0,"new_publications":0}},
+    {"id":"ZIP-DOC-E2E-T05","requirements":["ZR-002","ZR-005"],"profile":"reference_thirty","fault":"short_batch","input":{"verified":12,"eligible_count":12},"expected":{"stage":"AwaitingApproval","prefix":12,"new_publications":0}},
+    {"id":"ZIP-DOC-E2E-T06","requirements":["ZR-002"],"profile":"smoke_one","fault":"instructions_unavailable","input":{"verified":0,"instruction_path":"docs/AGENTS.md"},"expected":{"stage":"Blocked","prefix":0,"unauthorized_writes":0}},
+    {"id":"ZIP-DOC-E2E-T07","requirements":["ZR-003"],"profile":"reference_thirty","fault":"revoked_after_seal","input":{"verified":30},"expected":{"stage":"AwaitingApproval","prefix":30,"new_publications":0}},
+    {"id":"ZIP-DOC-E2E-T08","requirements":["ZR-007"],"profile":"reference_thirty","fault":"lost_push_reply","input":{"verified":30,"matching_effect":true},"expected":{"stage":"PublishedDraft","prefix":30,"push_dispatches":1,"pr_creates":1}},
+    {"id":"ZIP-DOC-E2E-T09","requirements":["ZR-007"],"profile":"reference_thirty","fault":"lost_pr_reply","input":{"verified":30,"matching_effect":true},"expected":{"stage":"PublishedDraft","prefix":30,"push_dispatches":1,"pr_creates":1}},
+    {"id":"ZIP-DOC-E2E-T10","requirements":["ZR-007"],"profile":"reference_thirty","fault":"pr_search_empty_unsettled","input":{"verified":30,"matching_effect":false},"expected":{"stage":"Recovering","prefix":30,"additional_pr_creates":0}},
+    {"id":"ZIP-DOC-E2E-T11","requirements":["ZR-005"],"profile":"smoke_one","fault":"final_anchor_missing","input":{"verified":1},"expected":{"stage":"Blocked","prefix":1,"new_publications":0}},
+    {"id":"ZIP-DOC-E2E-T12","requirements":["ZR-005","ZR-016"],"profile":"reference_thirty","fault":"required_ci_failed","input":{"verified":30,"published_draft":true},"expected":{"stage":"Verifying","prefix":30,"draft_preserved":true,"accepted":false}},
+    {"id":"ZIP-DOC-E2E-T13","requirements":["ZR-004","ZR-006"],"profile":"reference_thirty","fault":"resource_admission_denied","input":{"verified":17},"expected":{"stage":"Deferred","prefix":17,"remote_calls":0}},
+    {"id":"ZIP-DOC-E2E-T14","requirements":["ZR-005"],"profile":"smoke_one","fault":"fabricated_source_reference","input":{"verified":0,"claim_path":"src/nonexistent.rs"},"expected":{"stage":"Blocked","prefix":0,"new_publications":0}},
+    {"id":"ZIP-DOC-E2E-T15","requirements":["ZR-005","ZR-007","ZR-016"],"profile":"reference_thirty","fault":"none","input":{"verified":30,"matching_effect":true,"required_ci_passed":true},"expected":{"stage":"Completed","prefix":30,"push_dispatches":1,"pr_creates":1,"merge_dispatches":0}}
+  ]
+}

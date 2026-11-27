@@ -1,17 +1,11 @@
 # First documentation assignment
 
-This page defines the target workflow and the checks required before release.
+This procedure describes the target Zipporah workflow for a disposable repository. CLI syntax and result mappings belong to the [command reference](../cli/commands.md).
 
-## Prerequisites and behavior
+1. Choose a synthetic repository with a nested `AGENTS.md` and a source blob supporting one factual claim. Grant the exact Markdown target and one-file smoke profile. Capture the full base commit, tree and applicable instructions.
+2. Create a versioned plan. Bind the target's expected blob or verified absence, eligible operation, source reference and verification gates. Review the approved plan before starting.
+3. Stage and independently check the document. Inspect the exact verified checkpoint and its receipt. Verify the broader checkout and unrelated files were preserved.
+4. Review the complete staged diff and final links. If a remote run is authorized, confirm the branch push before draft creation. Record the expected and actual draft head and base. Required CI evidence must identify the published head before acceptance.
+5. Attach the [evidence manifest](../../contracts/acceptance/documentation/evidence-manifest.schema.json) with actual run, scope and fixture identities. Label logical checks separately from adapter observations.
 
-Use an authorized test repository and pin a reviewed revision. Discover repository instructions before proposing paths. Start with local-only planning and read immutable source evidence.
-
-## Procedure
-
-Run zipporah repo inspect and repo instructions for the intended target, then assignment create with a versioned plan file, assignment plan, and assignment run after scope approval. Watch assignment status and verify outputs and checkpoint count with assignment verify. Use pause and resume midway to validate persistence.
-
-## Verification and recovery
-
-For remote publication review the exact diff and authorize branch push and PR separately if required by policy. For the reference Vimbai workload an exact 30-file batch is required; fewer eligible files pause for owner review.
-
-[Architecture](../../ARCHITECTURE.md) · [Requirements](../../REQUIREMENTS.md)
+The [handover](../../specifications/3600-acceptance/documentation-handover.md) owns the release procedure. The [Vimbai example](../examples/vimbai-documentation.md) uses a separate exact-count profile.
