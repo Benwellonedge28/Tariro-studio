@@ -78,3 +78,31 @@ crates/tools/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test malformed tool calls, hallucinated tool output and unauthorized mutating calls.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`tool.rs`](specifications/modules/tool.md)
+- [`manifest.rs`](specifications/modules/manifest.md)
+- [`registry.rs`](specifications/modules/registry.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`invocation.rs`](specifications/modules/invocation.md)
+- [`arguments.rs`](specifications/modules/arguments.md)
+- [`schema.rs`](specifications/modules/schema.md)
+- [`validation.rs`](specifications/modules/validation.md)
+- [`permissions.rs`](specifications/modules/permissions.md)
+- [`execution.rs`](specifications/modules/execution.md)
+- [`result.rs`](specifications/modules/result.md)
+- [`cancellation.rs`](specifications/modules/cancellation.md)
+- [`timeout.rs`](specifications/modules/timeout.md)
+- [`rate_limit.rs`](specifications/modules/rate_limit.md)
+- [`auditing.rs`](specifications/modules/auditing.md)
+- [`adapters/mod.rs`](specifications/modules/adapters/mod.md)
+- [`adapters/native.rs`](specifications/modules/adapters/native.md)
+- [`adapters/process.rs`](specifications/modules/adapters/process.md)
+- [`adapters/http.rs`](specifications/modules/adapters/http.md)
+- [`adapters/mcp.rs`](specifications/modules/adapters/mcp.md)
+- [`adapters/plugin.rs`](specifications/modules/adapters/plugin.md)
