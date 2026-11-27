@@ -7,3 +7,11 @@
 Listener binds loopback or authenticated local IPC unless explicit remote scope and secure transport were approved. Deny startup when configured isolation or TLS guarantees are unavailable. Check request size and per-principal leases before allocating or decoding the body. Parse strictly, resolve workspace and permissions, dispatch the typed operation, then map errors using [REST v1](../../documentation/api/rest-v1.md). Return a durable request/effect receipt before advertising authoritative progress.
 
 On shutdown stop accepting, signal streams, drain only until a configured deadline, then cancel and reconcile without losing committed command state. Duplicate request IDs with unequal inputs conflict. Metrics exclude raw credentials and request bodies. Tests cover unauthorized paths, exact payload limits, stale approvals, lost acknowledgements, SSE reconnect and shutdown while requests remain pending.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`main.rs`](specifications/modules/main.md)
+- [`server.rs`](specifications/modules/server.md)
+- [`authentication.rs`](specifications/modules/authentication.md)

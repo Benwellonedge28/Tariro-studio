@@ -9,3 +9,12 @@ Apply gateway events in increasing sequence to the correct workspace. On a gap, 
 Render repository and model content as escaped data. Keep credentials out of process arguments and view state. UI components never receive privileged gateway handles. Use bounded/cancellable list and log streaming, virtualize long lists, and reflow the main interface without data loss. A disconnected status cannot imply completion or local effect execution. Persist navigation preferences under user configuration and treat domain state as read-only cached projection.
 
 Testing covers workspace switching during live events, stale review denial, reconnect and cursor gap handling, offline operation, long log backpressure and accessible keyboard approval flows. The [Studio review guide](../../documentation/studio/workspace-review.md) defines operator behavior.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`main.rs`](specifications/modules/main.md)
+- [`application.rs`](specifications/modules/application.md)
+- [`state.rs`](specifications/modules/state.md)
+- [`navigation.rs`](specifications/modules/navigation.md)
