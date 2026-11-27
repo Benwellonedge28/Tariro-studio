@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-SCHEDULER-SCHEDULER-001",
+  "cases": [
+    {
+      "id": "ZIP-SCH-FIX-001",
+      "requirement": "ZIP-SCHEDULER-SCHEDULER-T01",
+      "given": {"job": "ready-A", "revision": "7", "claimants": ["worker-a", "worker-b"]},
+      "action": "Race both claimants from the same revision and lose the winner's reply after its dispatch CAS.",
+      "expect": {"resource_invocations": 1, "dispatch_commits": 1, "lease_handoffs_max": 1, "replacement_while_unresolved": false}
+    },
+    {
+      "id": "ZIP-SCH-FIX-002",
+      "requirement": "ZIP-SCHEDULER-FAIRNESS-T01",
+      "given": {"job_order_one": ["A1","A2","B1","B2"], "job_order_two": ["B2","A2","B1","A1"], "priority": 3, "restart_after": 1},
+      "action": "Using numeric suffix as within-workspace enqueue order, dispatch four fitting jobs with initially empty cursors. Reload cursor after the first dispatch.",
+      "expect": {"both_orders": ["A1","B1","A2","B2"]}
+    },
+    {
+      "id": "ZIP-SCH-FIX-003",
+      "requirement": "ZIP-SCHEDULER-ADMISSION-T01",
+      "given": {"attempt": "1", "resource_commit": "unknown", "authority": "revoked"},
+      "action": "Lose the reserve acknowledgement and revoke before handoff. Reconcile using the original attempt and current cleanup proof.",
+      "expect": {"handoffs": 0, "state_before_reconciliation": "Recovering", "release_before_proof": false}
+    },
+    {
+      "id": "ZIP-SCH-FIX-004",
+      "requirement": "ZIP-SCHEDULER-JOB-T01",
+      "given": {"old_epoch": "3", "new_epoch": "5", "old_receipt": "Succeeded"},
+      "action": "Deliver the prior worker's receipt once a settled replacement attempt holds the current epoch.",
+      "expect": {"error": "LeaseLost", "current_epoch": "5", "terminal_events": 0}
+    },
+    {
+      "id": "ZIP-SCH-FIX-005",
+      "requirement": "ZIP-SCHEDULER-DEADLINE-T01",
+      "given": {"effective_lifetime_ms": "100", "elapsed_ms": "100", "wall_clock_adjustment_ms": "-250", "restart_clock_continuity": false},
+      "action": "Claim at equality under the old coordinator, then restart without trusted elapsed evidence and claim again.",
+      "expect": {"live_eligible": false, "restart_eligible": false, "prior_hold_reconciled": true}
+    },
+    {
+      "id": "ZIP-SCH-FIX-006",
+      "requirement": "ZIP-SCHEDULER-RETRY-T01",
+      "given": {"now_ms": 20, "deadline_ms": 60, "base_wait_ms": 15, "jitter_draw_ms": 3, "effect_before": "unknown", "effect_after": "verified_absent", "charged_dispatches": 1, "dispatch_cap": 2},
+      "action": "Attempt retry before and after reconciliation. Replay the accepted retry-wait decision.",
+      "expect": {"before_allowed": false, "wake_ms": 38, "replayed_wake_ms": 38, "jitter_draws": 1}
+    },
+    {
+      "id": "ZIP-SCH-FIX-007",
+      "requirement": "ZIP-SCHEDULER-QUEUE-T01",
+      "given": {"active_count": 1, "cap": 2, "new_job_keys": ["x","y"]},
+      "action": "Race both inserts and repeat the winning request.",
+      "expect": {"committed_new_jobs": 1, "final_count": 2, "original_retained": true}
+    },
+    {
+      "id": "ZIP-SCH-FIX-008",
+      "requirement": "ZIP-SCHEDULER-PERSISTENCE-T01",
+      "given": {"persisted_attempt": "1", "faults": ["after_intent", "after_reserve_reply_lost"]},
+      "action": "Use each fault separately and restart. Inspect original attempt before allowing replacement.",
+      "expect": {"reconciliation_attempt": "1", "simultaneous_live_epochs_max": 1, "new_attempts_before_verification": 0}
+    },
+    {
+      "id": "ZIP-SCH-FIX-009",
+      "requirement": "ZIP-SCHEDULER-ERROR-T01",
+      "given": {"denial": "verified_precommit", "provider": "ambiguous"},
+      "action": "Process both separately and inspect ledger and retry eligibility.",
+      "expect": {"denial_mutations": 0, "ambiguous_error": "OutcomeUnknown", "ambiguous_retry_allowed": false}
+    }
+  ]
+}
