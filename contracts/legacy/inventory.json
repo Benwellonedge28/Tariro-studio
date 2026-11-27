@@ -1,0 +1,1721 @@
+{
+  "schema_version": 1,
+  "source_commit": "f085e513c740416bd33d26758ead6d0ce89b3bbc",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "blob_sha": "686806d87cd4dcd5bd7893d554733320c5a2fa95",
+      "mode": "100644",
+      "bytes": 476,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": ".env.example",
+      "blob_sha": "03a19407023534659afc506092f6271c0bc21a58",
+      "mode": "100644",
+      "bytes": 1112,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": ".github/workflows/build.yml",
+      "blob_sha": "40c60fbd35ffdd76ebf7f2a054fd3f358333a4f7",
+      "mode": "100644",
+      "bytes": 1687,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "blob_sha": "4f81900056ecc2e024c72c82f0201c02446d88b7",
+      "mode": "100644",
+      "bytes": 4984,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": ".github/workflows/docker.yml",
+      "blob_sha": "ef6c6ecf398d6b6366d3ee24a5fd598c352b3273",
+      "mode": "100644",
+      "bytes": 2305,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "blob_sha": "a63d334bdacca1d98ce69ab278a87638e29e2b07",
+      "mode": "100644",
+      "bytes": 2596,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": ".github/workflows/security.yml",
+      "blob_sha": "c8a9795a63cc9025e020fef8ea1d8b349778e51d",
+      "mode": "100644",
+      "bytes": 3092,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "Dockerfile",
+      "blob_sha": "f63a8f867d357ceb0579821f3b869162e7d1e018",
+      "mode": "100644",
+      "bytes": 6566,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "ENTRYPOINT.sh",
+      "blob_sha": "85994d26b8fdefbb5b6f18e19f5a373f5e0ce4f2",
+      "mode": "100644",
+      "bytes": 461,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "LICENSE",
+      "blob_sha": "e47100631291ddbfa003ffe957c21cc5ce68cdab",
+      "mode": "100644",
+      "bytes": 3509,
+      "category": "license"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "e8628458c490dc59b468486f3d7400be83c3b932",
+      "mode": "100644",
+      "bytes": 1434,
+      "category": "documentation"
+    },
+    {
+      "path": "ZIPPORAH-STUDIO-DESIGN.md",
+      "blob_sha": "18217379eb2688e8a06afc486b1f226756d8580a",
+      "mode": "100644",
+      "bytes": 95715,
+      "category": "documentation"
+    },
+    {
+      "path": "additional-design-document.md",
+      "blob_sha": "7f73233f73a5124eb3c39ded314ce99570e35462",
+      "mode": "100644",
+      "bytes": 40866,
+      "category": "documentation"
+    },
+    {
+      "path": "allowed_hashes.json",
+      "blob_sha": "633091e236be977c95fba7bc090b14da32edac08",
+      "mode": "100644",
+      "bytes": 6097,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "app.py",
+      "blob_sha": "adc5ef2d9d08c9eb18e1d2757fa06341cdfcf351",
+      "mode": "100644",
+      "bytes": 9587,
+      "category": "source"
+    },
+    {
+      "path": "docker-compose.yml",
+      "blob_sha": "e8085b567495c1f4a11c147d0edb813765427261",
+      "mode": "100644",
+      "bytes": 4959,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "features/.gitkeep",
+      "blob_sha": "236818eafaa69612d6d32e8c5632a5bd56a637dd",
+      "mode": "100644",
+      "bytes": 26,
+      "category": "directory-marker"
+    },
+    {
+      "path": "features/__init__.py",
+      "blob_sha": "4751ea8ebd7aab75c6418eb487c07130e48d80a6",
+      "mode": "100644",
+      "bytes": 40,
+      "category": "source"
+    },
+    {
+      "path": "features/adaptive_ui.py",
+      "blob_sha": "e1e381deafcec89f75fc7d4e17b3c5ac3f195796",
+      "mode": "100644",
+      "bytes": 6913,
+      "category": "source"
+    },
+    {
+      "path": "features/advanced_multimodal_generation.py",
+      "blob_sha": "9081180e5ea2b0366dab0300c09c6ba521becc78",
+      "mode": "100644",
+      "bytes": 20198,
+      "category": "source"
+    },
+    {
+      "path": "features/advanced_optimizer.py",
+      "blob_sha": "5a8918410e1ee8a76a669ec8935aa5e7078c0a76",
+      "mode": "100644",
+      "bytes": 7689,
+      "category": "source"
+    },
+    {
+      "path": "features/adversarial_ai_defense.py",
+      "blob_sha": "0a18f75d6164833533db8ba09432847b6d57c3cb",
+      "mode": "100644",
+      "bytes": 3979,
+      "category": "source"
+    },
+    {
+      "path": "features/adversarial_self_test.py",
+      "blob_sha": "5c7d4a0d9b54125dcdf734e7ffbe8deca2a49a7c",
+      "mode": "100644",
+      "bytes": 3547,
+      "category": "source"
+    },
+    {
+      "path": "features/agi_sandbox.py",
+      "blob_sha": "24d3b6f2dcdb69c84c35e3ce0390c14cad448f92",
+      "mode": "100644",
+      "bytes": 6667,
+      "category": "source"
+    },
+    {
+      "path": "features/anomaly_detection.py",
+      "blob_sha": "c578509ff8e8a4ea2ef5a97a6dcf9f6a991c5a4e",
+      "mode": "100644",
+      "bytes": 4099,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_architecture_design.py",
+      "blob_sha": "6f785b12cc16811b8b0b7626331cf851760629e3",
+      "mode": "100644",
+      "bytes": 2684,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_code_review_static_analysis.py",
+      "blob_sha": "3e797ab0821bd3d9f04349505544a3d626924980",
+      "mode": "100644",
+      "bytes": 1963,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_concept_ideation.py",
+      "blob_sha": "d1d76165ac3e659281d4c140c47bec1ab8d05dab",
+      "mode": "100644",
+      "bytes": 2027,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_decommissioning.py",
+      "blob_sha": "aca1f0e3924e138d80b9c912bb29bb408c564672",
+      "mode": "100644",
+      "bytes": 2784,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_deployment.py",
+      "blob_sha": "01798d2603236bd5b6f2994e015afdb6927031df",
+      "mode": "100644",
+      "bytes": 3192,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_documentation.py",
+      "blob_sha": "0f95b79b43b34090ea90651c982c501f46d06c31",
+      "mode": "100644",
+      "bytes": 2031,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_feasibility_study.py",
+      "blob_sha": "ee60a253897cf65f5157735e8c6b306f1526a428",
+      "mode": "100644",
+      "bytes": 2401,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_implementation.py",
+      "blob_sha": "27caefc2f8292ccae5c83a450cd74927b8d6232e",
+      "mode": "100644",
+      "bytes": 2256,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_maintenance_support.py",
+      "blob_sha": "37ab909d8d916d58fb0c34dfc9104d27ac869844",
+      "mode": "100644",
+      "bytes": 1966,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_operations_monitoring.py",
+      "blob_sha": "d104054fab5fe57978cf97c05a9049aad0c1c03e",
+      "mode": "100644",
+      "bytes": 1974,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_planning_estimation.py",
+      "blob_sha": "dbd5e48de1c2796ad1e00fa2232467ec478d2237",
+      "mode": "100644",
+      "bytes": 2301,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_requirements_analysis.py",
+      "blob_sha": "18c817269f14c274bb2259a081393981d2068a50",
+      "mode": "100644",
+      "bytes": 2575,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_testing.py",
+      "blob_sha": "c5dc51b0ba84c6f61d4125787536c57ae40192da",
+      "mode": "100644",
+      "bytes": 2167,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_ui_ux_design.py",
+      "blob_sha": "02fdbf4bed229e91ccae612fc520bff6faf05ed4",
+      "mode": "100644",
+      "bytes": 2170,
+      "category": "source"
+    },
+    {
+      "path": "features/app_dev_updates_iteration.py",
+      "blob_sha": "d1bece7743ad50d0cdd5fd6d9af8e056d25daa74",
+      "mode": "100644",
+      "bytes": 2189,
+      "category": "source"
+    },
+    {
+      "path": "features/async_notification_system.py",
+      "blob_sha": "6dd6734fce704a1d617aedb121728006c6b10b49",
+      "mode": "100644",
+      "bytes": 6265,
+      "category": "source"
+    },
+    {
+      "path": "features/automated_deployment.py",
+      "blob_sha": "20ea01d4cb33926aef5253ff80307479b8944145",
+      "mode": "100644",
+      "bytes": 11488,
+      "category": "source"
+    },
+    {
+      "path": "features/autonomous_csr_management.py",
+      "blob_sha": "0a7d97191433eeb94cd6f6dd860718f6fc068e12",
+      "mode": "100644",
+      "bytes": 5052,
+      "category": "source"
+    },
+    {
+      "path": "features/autonomous_ip_management.py",
+      "blob_sha": "48adab6ab6e32e97c342132446789373cc80ee27",
+      "mode": "100644",
+      "bytes": 5373,
+      "category": "source"
+    },
+    {
+      "path": "features/autonomous_knowledge_graph_genesis.py",
+      "blob_sha": "f08ef2488eeba09329e797aaa10c688fd6de3060",
+      "mode": "100644",
+      "bytes": 28856,
+      "category": "source"
+    },
+    {
+      "path": "features/autonomous_legal_entity_management.py",
+      "blob_sha": "bc7ecd397f4457052968d000a3e694de97bca631",
+      "mode": "100644",
+      "bytes": 6203,
+      "category": "source"
+    },
+    {
+      "path": "features/autonomous_product_lifecycle.py",
+      "blob_sha": "3bc5adde48ec1b65c4d3e132a119b3e8809aa5b1",
+      "mode": "100644",
+      "bytes": 4408,
+      "category": "source"
+    },
+    {
+      "path": "features/autonomy_governance.py",
+      "blob_sha": "178e310b2786be04a28c912e55e02d911a2e7c78",
+      "mode": "100644",
+      "bytes": 27433,
+      "category": "source"
+    },
+    {
+      "path": "features/background_worker_framework.py",
+      "blob_sha": "1f486b626ed00e776f73ae4734d3c46c5d264e98",
+      "mode": "100644",
+      "bytes": 12594,
+      "category": "source"
+    },
+    {
+      "path": "features/backlog_manager.py",
+      "blob_sha": "c1eda9a3cb1879d1d701f9f78e636970cad8f8a8",
+      "mode": "100644",
+      "bytes": 7574,
+      "category": "source"
+    },
+    {
+      "path": "features/behavior_dashboard.py",
+      "blob_sha": "9aeb1659132f36d3deeccb5a16414ba4103d2805",
+      "mode": "100644",
+      "bytes": 1373,
+      "category": "source"
+    },
+    {
+      "path": "features/causal_inference.py",
+      "blob_sha": "3f9df03ba6ecdb18d10cb898dbd097227becd39c",
+      "mode": "100644",
+      "bytes": 8532,
+      "category": "source"
+    },
+    {
+      "path": "features/chaos_agi.py",
+      "blob_sha": "9b6af91dabbc2eb3ace78a8f00ce50bf0b4a7a3c",
+      "mode": "100644",
+      "bytes": 18687,
+      "category": "source"
+    },
+    {
+      "path": "features/cognitive_allocator.py",
+      "blob_sha": "aca42070178493644345a0d8851490d14f7cf20f",
+      "mode": "100644",
+      "bytes": 10032,
+      "category": "source"
+    },
+    {
+      "path": "features/cognitive_architecture_optimizer.py",
+      "blob_sha": "dd1458ed6dd4fb2190a7f3869d36dd0f09b3a25e",
+      "mode": "100644",
+      "bytes": 18155,
+      "category": "source"
+    },
+    {
+      "path": "features/cognitive_planning.py",
+      "blob_sha": "05150b4a11076b7c278a300c10fe067f326cb177",
+      "mode": "100644",
+      "bytes": 17163,
+      "category": "source"
+    },
+    {
+      "path": "features/contextual_memory.py",
+      "blob_sha": "7e53cdc69cf2a2e3eb1cedfdea071739d977fd37",
+      "mode": "100644",
+      "bytes": 9725,
+      "category": "source"
+    },
+    {
+      "path": "features/cross_repo_refactor.py",
+      "blob_sha": "8721be12e407f97b656ef06579e87a6532e70982",
+      "mode": "100644",
+      "bytes": 2764,
+      "category": "source"
+    },
+    {
+      "path": "features/crud_manager.py",
+      "blob_sha": "bf3afef735ff6ec909cfd5ea752afebdeb2c395a",
+      "mode": "100644",
+      "bytes": 5782,
+      "category": "source"
+    },
+    {
+      "path": "features/data_integrity_guardian.py",
+      "blob_sha": "d1fcab2f1cec23f580a70e2ecadbde46509e2637",
+      "mode": "100644",
+      "bytes": 11926,
+      "category": "source"
+    },
+    {
+      "path": "features/decision_path_mapper.py",
+      "blob_sha": "18b26e891637550db92c7554bd88b2b0640415a2",
+      "mode": "100644",
+      "bytes": 8095,
+      "category": "source"
+    },
+    {
+      "path": "features/dependency_sentinel.py",
+      "blob_sha": "cc5c78f4ba5bf470cd7bba6d63fcd5fbbd984ec7",
+      "mode": "100644",
+      "bytes": 20168,
+      "category": "source"
+    },
+    {
+      "path": "features/direct_reality_interface.py",
+      "blob_sha": "9c2003974216f3bada33d5f2024271bdd9ec7dd2",
+      "mode": "100644",
+      "bytes": 37315,
+      "category": "source"
+    },
+    {
+      "path": "features/dynamic_agents.py",
+      "blob_sha": "f4ce54d6b43be2e67f87b37cc338c975dc1807fd",
+      "mode": "100644",
+      "bytes": 7438,
+      "category": "source"
+    },
+    {
+      "path": "features/dynamic_policy_enforcement.py",
+      "blob_sha": "f91291b05d5736c9272253a9100599ff6baf916c",
+      "mode": "100644",
+      "bytes": 12895,
+      "category": "source"
+    },
+    {
+      "path": "features/dynamic_policy_synthesis.py",
+      "blob_sha": "b92bb4332e7500964a4109538a3ba115c024feae",
+      "mode": "100644",
+      "bytes": 19613,
+      "category": "source"
+    },
+    {
+      "path": "features/dynamic_pricing_optimization.py",
+      "blob_sha": "32ee72cea915878c1f464255c61b108edcb6bdfc",
+      "mode": "100644",
+      "bytes": 839,
+      "category": "source"
+    },
+    {
+      "path": "features/dynamic_resource_allocator.py",
+      "blob_sha": "542b615352238fbe2f96476e1ad2ad16ec59abaa",
+      "mode": "100644",
+      "bytes": 20105,
+      "category": "source"
+    },
+    {
+      "path": "features/dynamic_swarm_orchestration.py",
+      "blob_sha": "8e5ac16508c0e565814bd3d11f6174d037bef5df",
+      "mode": "100644",
+      "bytes": 23902,
+      "category": "source"
+    },
+    {
+      "path": "features/emergent_behavior.py",
+      "blob_sha": "8373c0ff6db9497c222ebc0d63dc6d21a6bbddb7",
+      "mode": "100644",
+      "bytes": 10768,
+      "category": "source"
+    },
+    {
+      "path": "features/ethical_conflict_resolver.py",
+      "blob_sha": "f54321649e7764fef91f4086a5fe9f1ba1b6bda4",
+      "mode": "100644",
+      "bytes": 10107,
+      "category": "source"
+    },
+    {
+      "path": "features/evas_ethical_alignment.py",
+      "blob_sha": "012ec246890df5ca3c99afc3abc807cf326e9ef9",
+      "mode": "100644",
+      "bytes": 16076,
+      "category": "source"
+    },
+    {
+      "path": "features/external_agency.py",
+      "blob_sha": "efe9793da0df70759349b9bca8bd29099777940e",
+      "mode": "100644",
+      "bytes": 18172,
+      "category": "source"
+    },
+    {
+      "path": "features/formal_verification.py",
+      "blob_sha": "37ff1cb21585d8496f46766af5c1140a38a0a25f",
+      "mode": "100644",
+      "bytes": 27392,
+      "category": "source"
+    },
+    {
+      "path": "features/global_environmental_model.py",
+      "blob_sha": "4e69cb2b07f83f2054044b3aaa64540d9e5b43c6",
+      "mode": "100644",
+      "bytes": 17536,
+      "category": "source"
+    },
+    {
+      "path": "features/global_market_sentiment.py",
+      "blob_sha": "45b818ee9fd101d034873c4b097807f0f3bc9901",
+      "mode": "100644",
+      "bytes": 917,
+      "category": "source"
+    },
+    {
+      "path": "features/global_regulatory_change_monitoring.py",
+      "blob_sha": "5eaa4971eae0d571d0965da6896fc240186f1c18",
+      "mode": "100644",
+      "bytes": 4857,
+      "category": "source"
+    },
+    {
+      "path": "features/global_state_manager.py",
+      "blob_sha": "abbe53d3f59b25ed8f37caae20a811baed403c8e",
+      "mode": "100644",
+      "bytes": 5964,
+      "category": "source"
+    },
+    {
+      "path": "features/goal_recalibrator.py",
+      "blob_sha": "e52a14763a4cca06a100fe5d1c0120308d3daf78",
+      "mode": "100644",
+      "bytes": 9600,
+      "category": "source"
+    },
+    {
+      "path": "features/hil_deployer.py",
+      "blob_sha": "d2e4566dc8605caf015f9a2165c77e1714c9081d",
+      "mode": "100644",
+      "bytes": 25045,
+      "category": "source"
+    },
+    {
+      "path": "features/human_agi_alignment.py",
+      "blob_sha": "82492384648c6d9353af627f31e8a043502e8aba",
+      "mode": "100644",
+      "bytes": 7716,
+      "category": "source"
+    },
+    {
+      "path": "features/human_intent_guard.py",
+      "blob_sha": "b4e3f8ec769ba9ebf277be958ca27fc072b06d9d",
+      "mode": "100644",
+      "bytes": 2964,
+      "category": "source"
+    },
+    {
+      "path": "features/hyper_dimensional_data_fusion.py",
+      "blob_sha": "68f2af2df10414937a7a9029aa0ae01c6e204def",
+      "mode": "100644",
+      "bytes": 27203,
+      "category": "source"
+    },
+    {
+      "path": "features/integrity_verification.py",
+      "blob_sha": "fb01b63ec0a4f19245817a67f6d2878886340010",
+      "mode": "100644",
+      "bytes": 7203,
+      "category": "source"
+    },
+    {
+      "path": "features/intelligent_resource_allocation.py",
+      "blob_sha": "191687df8639bf7ac0fdce9eb19538b39da910c2",
+      "mode": "100644",
+      "bytes": 6695,
+      "category": "source"
+    },
+    {
+      "path": "features/intelligent_sales_forecasting.py",
+      "blob_sha": "f0204a8fa76c42be4b059bd6a2b6ab1fc3b86960",
+      "mode": "100644",
+      "bytes": 3589,
+      "category": "source"
+    },
+    {
+      "path": "features/intelligent_stakeholder_engagement.py",
+      "blob_sha": "3550fc0baf7680944267df09042ab8b9fd599686",
+      "mode": "100644",
+      "bytes": 6691,
+      "category": "source"
+    },
+    {
+      "path": "features/intent_extrapolator.py",
+      "blob_sha": "ce86fe0ab1127a86375725c3443b2971e0586895",
+      "mode": "100644",
+      "bytes": 17874,
+      "category": "source"
+    },
+    {
+      "path": "features/intent_synthesizer.py",
+      "blob_sha": "70e0d94d750066da173690ee518961f969c440b3",
+      "mode": "100644",
+      "bytes": 14485,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_backend.py",
+      "blob_sha": "a4a930f59cdb75b8abe71abd32b1f049cd27e548",
+      "mode": "100644",
+      "bytes": 2440,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_docs_ecosystem.py",
+      "blob_sha": "f3fe08e5226e99192cd5032c5f07881a91ba28ff",
+      "mode": "100644",
+      "bytes": 2306,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_goals_requirements.py",
+      "blob_sha": "f10fbefdd0a963c97a8c9f25163148a6856af8b6",
+      "mode": "100644",
+      "bytes": 2154,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_ir_generation.py",
+      "blob_sha": "c07b134e1f9e0804c77b865344cf1dda89b2d634",
+      "mode": "100644",
+      "bytes": 2186,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_lexer.py",
+      "blob_sha": "b251fea9d4e993d2797f8a9a3c3f72930bb28811",
+      "mode": "100644",
+      "bytes": 2023,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_parser.py",
+      "blob_sha": "84b652e1cdfe06ab1d9e04ef7949eea897e40992",
+      "mode": "100644",
+      "bytes": 2166,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_release_maintenance.py",
+      "blob_sha": "d6a311706d9ef3b57ec4f28f29e2f60420269bd7",
+      "mode": "100644",
+      "bytes": 2214,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_runtime.py",
+      "blob_sha": "dd6c4dbd0279b406bfe2b8649c58335962567efc",
+      "mode": "100644",
+      "bytes": 2057,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_semantic_analyzer.py",
+      "blob_sha": "d0bbb68d221270548c62cfbe5a4c5836d1738bcb",
+      "mode": "100644",
+      "bytes": 2219,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_spec_design.py",
+      "blob_sha": "6677cff2941301d085562343005e0b370249e1c9",
+      "mode": "100644",
+      "bytes": 2216,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_stdlib.py",
+      "blob_sha": "0af04140082516317ae19843177ff47c228ebad6",
+      "mode": "100644",
+      "bytes": 2304,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_testing_verification.py",
+      "blob_sha": "44003be33eb11e918ffc03bc2627ca51f0f7f355",
+      "mode": "100644",
+      "bytes": 2448,
+      "category": "source"
+    },
+    {
+      "path": "features/lang_dev_tooling.py",
+      "blob_sha": "1862d46e30e73711bc627accf1adc3acee953f24",
+      "mode": "100644",
+      "bytes": 2462,
+      "category": "source"
+    },
+    {
+      "path": "features/llm_compiler.py",
+      "blob_sha": "98b6d9ba468db15ce2d05e412653504754783f64",
+      "mode": "100644",
+      "bytes": 18721,
+      "category": "source"
+    },
+    {
+      "path": "features/market_entry_exit_strategy.py",
+      "blob_sha": "020c5bdc084df12f7195e790e7634acfe829761b",
+      "mode": "100644",
+      "bytes": 910,
+      "category": "source"
+    },
+    {
+      "path": "features/marketing_campaign_generation.py",
+      "blob_sha": "976b090840e1b1befcb6e891e60ea0b5a7408ded",
+      "mode": "100644",
+      "bytes": 901,
+      "category": "source"
+    },
+    {
+      "path": "features/meta_cognitive_reflection.py",
+      "blob_sha": "e89e3ae94268b21ef52265a9cb210365176e3111",
+      "mode": "100644",
+      "bytes": 21805,
+      "category": "source"
+    },
+    {
+      "path": "features/meta_evolution.py",
+      "blob_sha": "c7176c663778b77aafca803140c195b7706a0648",
+      "mode": "100644",
+      "bytes": 20483,
+      "category": "source"
+    },
+    {
+      "path": "features/meta_learner.py",
+      "blob_sha": "447fa31c4cd393a57c25288f95b012de2453d319",
+      "mode": "100644",
+      "bytes": 13153,
+      "category": "source"
+    },
+    {
+      "path": "features/meta_orchestrator.py",
+      "blob_sha": "e92f9e4f75be13a5da879e5716d49300837b114a",
+      "mode": "100644",
+      "bytes": 21714,
+      "category": "source"
+    },
+    {
+      "path": "features/multi_variate_business_process_optimization.py",
+      "blob_sha": "46c3ebb505e7eecf567f0e9422be62bf23d77e0d",
+      "mode": "100644",
+      "bytes": 6398,
+      "category": "source"
+    },
+    {
+      "path": "features/multimodal_collaboration.py",
+      "blob_sha": "648c1c6548d7d220aad4466182f9f46fc0ce669c",
+      "mode": "100644",
+      "bytes": 9039,
+      "category": "source"
+    },
+    {
+      "path": "features/network_healer.py",
+      "blob_sha": "ff8aec3e6576f726e49287a3d01e506561c113e3",
+      "mode": "100644",
+      "bytes": 11690,
+      "category": "source"
+    },
+    {
+      "path": "features/omni_channel_cxo.py",
+      "blob_sha": "3284260742442f68876b8cbd6b0b20b0194039b8",
+      "mode": "100644",
+      "bytes": 916,
+      "category": "source"
+    },
+    {
+      "path": "features/omni_perceptual_fusion.py",
+      "blob_sha": "9c890f59c869a4cd51fff6941b358a55b723b0b2",
+      "mode": "100644",
+      "bytes": 19740,
+      "category": "source"
+    },
+    {
+      "path": "features/omniversal_quantum_nano_simulation.py",
+      "blob_sha": "f458aa2600aa892e57d037506583e41542641567",
+      "mode": "100644",
+      "bytes": 32343,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_architecture_design.py",
+      "blob_sha": "a62e99cd94a3464e2953b489556de3f845e159ea",
+      "mode": "100644",
+      "bytes": 2371,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_boot_process_design.py",
+      "blob_sha": "7396af204c702f7fa86ead87ce15d9641e7351db",
+      "mode": "100644",
+      "bytes": 2419,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_debugging_profiling.py",
+      "blob_sha": "66a2ca2946336ada2da8cf9adf33eb6c8237abb6",
+      "mode": "100644",
+      "bytes": 2470,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_decommissioning.py",
+      "blob_sha": "2ab5d749a150fa5a979d9761cb93bf67eb6362ca",
+      "mode": "100644",
+      "bytes": 2755,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_device_driver_framework.py",
+      "blob_sha": "7a3dc850a919fa7d7dc78ba610cc78138e7a3a3d",
+      "mode": "100644",
+      "bytes": 2492,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_documentation.py",
+      "blob_sha": "f7f187b770e95be238927c1034ac11bf7abd9a8f",
+      "mode": "100644",
+      "bytes": 2598,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_goals_requirements.py",
+      "blob_sha": "07ac723a1e0cabe4c3df265ec5f218a9221956aa",
+      "mode": "100644",
+      "bytes": 2105,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_ipc_syscalls.py",
+      "blob_sha": "1a18c5055bd7dd344bf93f10a41ca481d2f1cb46",
+      "mode": "100644",
+      "bytes": 2265,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_kernel_core_implementation.py",
+      "blob_sha": "05933ce06c6f22d12ec5d8bb9490f2e8c4e5047f",
+      "mode": "100644",
+      "bytes": 2403,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_maintenance_updates.py",
+      "blob_sha": "ecbb93bf9533b6308a970c836be49b97de201043",
+      "mode": "100644",
+      "bytes": 2541,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_memory_management.py",
+      "blob_sha": "ce1b0b04c6ed41f82b1d37223630e41189a2fa26",
+      "mode": "100644",
+      "bytes": 2525,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_networking_stack.py",
+      "blob_sha": "98cde81dd0e1a3ae68e5a3a905bb9197b5b72d1b",
+      "mode": "100644",
+      "bytes": 2453,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_optimization.py",
+      "blob_sha": "31e5dff5e060886e31fe1ac15a60d7dd1ddf2a53",
+      "mode": "100644",
+      "bytes": 2606,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_packaging_build_system.py",
+      "blob_sha": "af0c6c23f7e693b83bb9bc52d9af809bb79151eb",
+      "mode": "100644",
+      "bytes": 2418,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_porting_hardware_abstraction.py",
+      "blob_sha": "46c3e5f3ddfcbfd9191f37e1adcacf630b390c5b",
+      "mode": "100644",
+      "bytes": 2472,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_process_thread_management.py",
+      "blob_sha": "c95cd1a92c2a54a1954d7d1dcecb55ec3f62f0af",
+      "mode": "100644",
+      "bytes": 2728,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_security_subsystem.py",
+      "blob_sha": "6bdfdee70a48e5fc95b26a82d99dce067bf95c39",
+      "mode": "100644",
+      "bytes": 2780,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_testing_emulation.py",
+      "blob_sha": "73afc64efff9324d9d1e03d4d78d2d725e8f6045",
+      "mode": "100644",
+      "bytes": 2802,
+      "category": "source"
+    },
+    {
+      "path": "features/os_dev_user_space_stdlib.py",
+      "blob_sha": "83629baa87910f50de81938716c1a594967f891a",
+      "mode": "100644",
+      "bytes": 2400,
+      "category": "source"
+    },
+    {
+      "path": "features/patent_ip_management.py",
+      "blob_sha": "89b38e7f89563504a8c339b168061b36a4f1ae42",
+      "mode": "100644",
+      "bytes": 859,
+      "category": "source"
+    },
+    {
+      "path": "features/persistent_task_manager.py",
+      "blob_sha": "bee00da8a6622fa6209ff91cb430b08d4d8b9191",
+      "mode": "100644",
+      "bytes": 8770,
+      "category": "source"
+    },
+    {
+      "path": "features/policy_audit_trail.py",
+      "blob_sha": "a2fe3fda2277e07e0e6483603ebead4b9116bcb7",
+      "mode": "100644",
+      "bytes": 5785,
+      "category": "source"
+    },
+    {
+      "path": "features/polyrepo_orchestrator.py",
+      "blob_sha": "ac2068318ee006cd42bad42a8b049b03db7b948f",
+      "mode": "100644",
+      "bytes": 18480,
+      "category": "source"
+    },
+    {
+      "path": "features/predictive_cltv_optimization.py",
+      "blob_sha": "2be4b978c5545862b60742a9fea68085573fcbef",
+      "mode": "100644",
+      "bytes": 4969,
+      "category": "source"
+    },
+    {
+      "path": "features/predictive_customer_churn.py",
+      "blob_sha": "061531895105ca170a5969c9955bad9ec682dcd0",
+      "mode": "100644",
+      "bytes": 888,
+      "category": "source"
+    },
+    {
+      "path": "features/predictive_fraud_detection.py",
+      "blob_sha": "9fc85407270e2696dc00ac5a0e65cc27857e854f",
+      "mode": "100644",
+      "bytes": 777,
+      "category": "source"
+    },
+    {
+      "path": "features/predictive_geopolitical_risk.py",
+      "blob_sha": "744a5a260100b88d37fa280cab02b2a90fd24436",
+      "mode": "100644",
+      "bytes": 4957,
+      "category": "source"
+    },
+    {
+      "path": "features/predictive_self_scaling.py",
+      "blob_sha": "88a4073e30366989e72e50520d55d8f84dad6a2a",
+      "mode": "100644",
+      "bytes": 3962,
+      "category": "source"
+    },
+    {
+      "path": "features/predictive_tax_compliance.py",
+      "blob_sha": "a16b72268f241d325e2b6a813366725fedfda5ac",
+      "mode": "100644",
+      "bytes": 5887,
+      "category": "source"
+    },
+    {
+      "path": "features/proactive_human_ai_teaming.py",
+      "blob_sha": "5a05af661b1f2c1ee6a466650b9b2194c13481e3",
+      "mode": "100644",
+      "bytes": 19174,
+      "category": "source"
+    },
+    {
+      "path": "features/quantum_crypto_manager.py",
+      "blob_sha": "de526cf5b55126902152f2afc54e2accf5c43a87",
+      "mode": "100644",
+      "bytes": 14323,
+      "category": "source"
+    },
+    {
+      "path": "features/quantum_readiness_daemon.py",
+      "blob_sha": "99aa32c3a0e54fdcc73516acc35d8e90e48c282f",
+      "mode": "100644",
+      "bytes": 3349,
+      "category": "source"
+    },
+    {
+      "path": "features/rbac_manager.py",
+      "blob_sha": "2c0e14561f1e392fa5d4ae0e10c949c87e321746",
+      "mode": "100644",
+      "bytes": 6835,
+      "category": "source"
+    },
+    {
+      "path": "features/real_time_model_adaptation.py",
+      "blob_sha": "8d7143df83000aea96a02b9b012cd8fa0db16fe1",
+      "mode": "100644",
+      "bytes": 17790,
+      "category": "source"
+    },
+    {
+      "path": "features/redis_task_queue.py",
+      "blob_sha": "464bc5242071688807fbf2d512c71e2e225b138c",
+      "mode": "100644",
+      "bytes": 12202,
+      "category": "source"
+    },
+    {
+      "path": "features/resource_optimizer.py",
+      "blob_sha": "4c4f9936a9aa22f9cc0da4cc5570e8853202e540",
+      "mode": "100644",
+      "bytes": 9152,
+      "category": "source"
+    },
+    {
+      "path": "features/resource_provisioner.py",
+      "blob_sha": "7be9fe1e5b53558c93b6305caa44bd41d8d11259",
+      "mode": "100644",
+      "bytes": 1989,
+      "category": "source"
+    },
+    {
+      "path": "features/risk_adjusted_portfolio.py",
+      "blob_sha": "8bfd745f56dfb019fbd8a4c175f21b662f56811f",
+      "mode": "100644",
+      "bytes": 910,
+      "category": "source"
+    },
+    {
+      "path": "features/sdk_manager.py",
+      "blob_sha": "d70f3b8f4621df0f5ff82bb06ad615788301172e",
+      "mode": "100644",
+      "bytes": 8741,
+      "category": "source"
+    },
+    {
+      "path": "features/secure_cognitive_defense_grid.py",
+      "blob_sha": "559177ccb33af84e05446799c21c50400545d91c",
+      "mode": "100644",
+      "bytes": 7413,
+      "category": "source"
+    },
+    {
+      "path": "features/security_auditor.py",
+      "blob_sha": "9db55fec7c4700ba5acf86f1da708fe16c2c2395",
+      "mode": "100644",
+      "bytes": 10056,
+      "category": "source"
+    },
+    {
+      "path": "features/self_architecting_engine.py",
+      "blob_sha": "259456c6daf47e8e5ea20556d6d8c368112694bc",
+      "mode": "100644",
+      "bytes": 24111,
+      "category": "source"
+    },
+    {
+      "path": "features/self_evolution.py",
+      "blob_sha": "02764d8462a0d0753a7b9769425fa6785826fff1",
+      "mode": "100644",
+      "bytes": 26589,
+      "category": "source"
+    },
+    {
+      "path": "features/self_repairing_auto_healing.py",
+      "blob_sha": "99a9540856e52c008654f392ca21e72b184ed29a",
+      "mode": "100644",
+      "bytes": 23929,
+      "category": "source"
+    },
+    {
+      "path": "features/self_replicating_expansion.py",
+      "blob_sha": "53eba33540ade23e5365b0760f33ea12edf36621",
+      "mode": "100644",
+      "bytes": 22695,
+      "category": "source"
+    },
+    {
+      "path": "features/sensory_fusion.py",
+      "blob_sha": "563c4663971286dfd14d56910f96897e5287d26a",
+      "mode": "100644",
+      "bytes": 5387,
+      "category": "source"
+    },
+    {
+      "path": "features/spatial_intelligence.py",
+      "blob_sha": "270c0e84915fcfd989c42c751332745bdcae8b9f",
+      "mode": "100644",
+      "bytes": 8470,
+      "category": "source"
+    },
+    {
+      "path": "features/strategic_foresight.py",
+      "blob_sha": "6a8b4f00c0f76ed8338ab5347705430b141ee4c5",
+      "mode": "100644",
+      "bytes": 17848,
+      "category": "source"
+    },
+    {
+      "path": "features/supply_chain_optimization.py",
+      "blob_sha": "4811c75d9b5f8713da6a6f98514001ad8f25a20c",
+      "mode": "100644",
+      "bytes": 859,
+      "category": "source"
+    },
+    {
+      "path": "features/swarm_visualizer.py",
+      "blob_sha": "d6479574db7ff3e63c868779ed64fb9aabcad8b5",
+      "mode": "100644",
+      "bytes": 4384,
+      "category": "source"
+    },
+    {
+      "path": "features/tariro_chatbot.py",
+      "blob_sha": "691e282ee0e86393c5982c48f38177ad30980ac8",
+      "mode": "100644",
+      "bytes": 2133,
+      "category": "source"
+    },
+    {
+      "path": "features/task_automation.py",
+      "blob_sha": "f4ef74f0d193eea9f08da3039f6530dabbf00bbd",
+      "mode": "100644",
+      "bytes": 16275,
+      "category": "source"
+    },
+    {
+      "path": "features/threat_modeler.py",
+      "blob_sha": "e29352ba0e4fdb893d74cb3986fbe4f6d7826a7b",
+      "mode": "100644",
+      "bytes": 19505,
+      "category": "source"
+    },
+    {
+      "path": "features/tool_forge.py",
+      "blob_sha": "d26ee1cbfd290fa99fe01f1b63a4d99ee9435898",
+      "mode": "100644",
+      "bytes": 22231,
+      "category": "source"
+    },
+    {
+      "path": "features/universal_deployment_manager.py",
+      "blob_sha": "468e3c3dab3a508946295a4e5885c38a396bf951",
+      "mode": "100644",
+      "bytes": 33834,
+      "category": "source"
+    },
+    {
+      "path": "features/vulnerability_remediation.py",
+      "blob_sha": "eb3b23eee8ead82217de3fe15780afced03bbd85",
+      "mode": "100644",
+      "bytes": 16192,
+      "category": "source"
+    },
+    {
+      "path": "features/workflow_optimizer.py",
+      "blob_sha": "fabf80e167a293b08c93b3ad897eb85107b6cf1a",
+      "mode": "100644",
+      "bytes": 1770,
+      "category": "source"
+    },
+    {
+      "path": "features/zero_trust_segmentation.py",
+      "blob_sha": "29084096b71794637bf30359b00d6757a7d16ab5",
+      "mode": "100644",
+      "bytes": 14731,
+      "category": "source"
+    },
+    {
+      "path": "litellm_config.yaml",
+      "blob_sha": "94591e4a6e1ac328ba44c7951da7b0569272a6cd",
+      "mode": "100644",
+      "bytes": 963,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "requirements.txt",
+      "blob_sha": "d3c710b5bfd23e985914ab7307c04ef7d62575f7",
+      "mode": "100644",
+      "bytes": 310,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "scripts/setup_workspace.sh",
+      "blob_sha": "0066a6147ce00862e3411104aaac3490316745c6",
+      "mode": "100644",
+      "bytes": 1135,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "scripts/verify_no_network.py",
+      "blob_sha": "e97d96ffd05fe7aa4ddfcb33eb282ef172776fe6",
+      "mode": "100644",
+      "bytes": 564,
+      "category": "source"
+    },
+    {
+      "path": "seccomp.json",
+      "blob_sha": "d2f7540ad5a8ffb3f84b92bab4addde4d3673148",
+      "mode": "100644",
+      "bytes": 2957,
+      "category": "configuration-or-tooling"
+    },
+    {
+      "path": "tariro/__init__.py",
+      "blob_sha": "4ac91ef104aedf5c71a0343f3c79cd57c2e080fd",
+      "mode": "100644",
+      "bytes": 22,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/__init__.py",
+      "blob_sha": "8aae580377d2a35841364823d05d8cb544fed911",
+      "mode": "100644",
+      "bytes": 25,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/adaptive_model_router.py",
+      "blob_sha": "b834fad43bd1140cd0deddacd0f65e3080d85b29",
+      "mode": "100644",
+      "bytes": 1775,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/agent_registry.py",
+      "blob_sha": "befe8d7081417b8e01408927b7dbbba2a3107fe6",
+      "mode": "100644",
+      "bytes": 999,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/checkpointing.py",
+      "blob_sha": "b2335ead702cbae27948723180f2ade34d8312c2",
+      "mode": "100644",
+      "bytes": 1364,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/distributed_task_queue.py",
+      "blob_sha": "c504acef15ce5fa823f8e9cd67493e7ac99f91a3",
+      "mode": "100644",
+      "bytes": 3042,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/event_bus.py",
+      "blob_sha": "e2365c81e9067f82c91fc6f9511563a6dddf3d7e",
+      "mode": "100644",
+      "bytes": 1558,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/execution_budget.py",
+      "blob_sha": "072dc903d0385c29147b218c96ad2276d7270b52",
+      "mode": "100644",
+      "bytes": 301,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/isolated_worker.py",
+      "blob_sha": "d93f04fbda3b8be04711a1430d81032ecdb0c80c",
+      "mode": "100644",
+      "bytes": 1545,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/model_registry.py",
+      "blob_sha": "2f414c2df3d368355f8125e0d9c7662e77d52e60",
+      "mode": "100644",
+      "bytes": 1022,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/models.py",
+      "blob_sha": "0e5b24e933d87d20153fbf7d6e65a364e5a09663",
+      "mode": "100644",
+      "bytes": 706,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/open_telemetry.py",
+      "blob_sha": "709c51c60706ed18aaaee1c38008cf724958acf2",
+      "mode": "100644",
+      "bytes": 1062,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/persistence.py",
+      "blob_sha": "d50403818d5067b6bc76ebc8ad0f73dad19572a0",
+      "mode": "100644",
+      "bytes": 2884,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/pipeline_manager.py",
+      "blob_sha": "1279195a4cc62e360f5d34816e7eff7e49cd23a6",
+      "mode": "100644",
+      "bytes": 4792,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/registry.py",
+      "blob_sha": "278aaa6b0db4ad2d289001719767360c8dee3904",
+      "mode": "100644",
+      "bytes": 2459,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/security.py",
+      "blob_sha": "d5e4b361fc9d300f762ce788846fc0fcb2c27637",
+      "mode": "100644",
+      "bytes": 1291,
+      "category": "source"
+    },
+    {
+      "path": "tariro/core/telemetry.py",
+      "blob_sha": "15844a8e655b4910d367fb629c15291ba77c3446",
+      "mode": "100644",
+      "bytes": 754,
+      "category": "source"
+    },
+    {
+      "path": "tariro/runtime/__init__.py",
+      "blob_sha": "b9231cbaf057711e5f4de1ffa763a294f40aac4e",
+      "mode": "100644",
+      "bytes": 28,
+      "category": "source"
+    },
+    {
+      "path": "tariro/runtime/autonomy_runtime.py",
+      "blob_sha": "c9a399704e394f312bf8d7784537e7b0caa30960",
+      "mode": "100644",
+      "bytes": 7122,
+      "category": "source"
+    },
+    {
+      "path": "tariro_features.py",
+      "blob_sha": "78c6fe7d6a6ee70fcd87d8aee9d99c05fc1ede57",
+      "mode": "100644",
+      "bytes": 4577,
+      "category": "source"
+    },
+    {
+      "path": "tool_forge.py",
+      "blob_sha": "e0ccacf2e8193baf5f5b3374913735fb54257023",
+      "mode": "100644",
+      "bytes": 13700,
+      "category": "source"
+    },
+    {
+      "path": "visualization_server.js",
+      "blob_sha": "697a17d2a27a453794f67bf65e94377cededcc35",
+      "mode": "100644",
+      "bytes": 1722,
+      "category": "source"
+    },
+    {
+      "path": "workspace/__init__.py",
+      "blob_sha": "b40eb0703ccf6bc6b01d44f724d3f8fc197a9474",
+      "mode": "100644",
+      "bytes": 2636,
+      "category": "source"
+    },
+    {
+      "path": "workspace/advanced_multimodal_outputs/.gitkeep",
+      "blob_sha": "4d3305178bfaa6e0fce70ff7091ecb8af02d69bc",
+      "mode": "100644",
+      "bytes": 46,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/adversarial_ai_logs/.gitkeep",
+      "blob_sha": "cf4c62b817f7eca7b572f2f6a521d93143cb3459",
+      "mode": "100644",
+      "bytes": 37,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/agent_configs/.gitkeep",
+      "blob_sha": "0f35da4d63ec31260d355d6ef937fc66fcb41b18",
+      "mode": "100644",
+      "bytes": 38,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/agi_sandbox/.gitkeep",
+      "blob_sha": "11c492524e060d677c6ad0ec6105ca42ad79989e",
+      "mode": "100644",
+      "bytes": 34,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/agi_sandbox/execution_logs/.gitkeep",
+      "blob_sha": "a5674943726d4ac1be98eece63586b176063e21a",
+      "mode": "100644",
+      "bytes": 4,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/agi_sandbox/risk_reports/.gitkeep",
+      "blob_sha": "02f71e1ac0820cc4cd516df8e5e6bc1fcb3fe37b",
+      "mode": "100644",
+      "bytes": 16,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/alignment_logs/.gitkeep",
+      "blob_sha": "b0205b540f1fc92180c7c39f9a894aef884fb166",
+      "mode": "100644",
+      "bytes": 42,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/anomaly_detection_logs/.gitkeep",
+      "blob_sha": "359e83beab8c88a5621a618eb0ee41075700d3e2",
+      "mode": "100644",
+      "bytes": 40,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/automation_scripts/.gitkeep",
+      "blob_sha": "153cd4a962fad5fbace38be7e6dd5899858b01fe",
+      "mode": "100644",
+      "bytes": 36,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/autonomy_policies/ .gitkeep",
+      "blob_sha": "868f869ed5d01eb596c1c9dac8c0b7fa78eb0e1b",
+      "mode": "100644",
+      "bytes": 25,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/backlog_proposals/.gitkeep",
+      "blob_sha": "18223a7738e06bd0d4e5546f35e107a2c0f23a4c",
+      "mode": "100644",
+      "bytes": 46,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/causal_inference_logs/.gitkeep",
+      "blob_sha": "1782a888a21b542139f2b1dfc82cd42990ba3e5f",
+      "mode": "100644",
+      "bytes": 39,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/cognitive_allocation_logs/.gitkeep",
+      "blob_sha": "435f56ea1b4a54f05631e58c3feae3a775006b8a",
+      "mode": "100644",
+      "bytes": 43,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/contextual_memory_data/.gitkeep",
+      "blob_sha": "9522829b2acc140f0a638374acd3e645c9e733cc",
+      "mode": "100644",
+      "bytes": 40,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/data_integrity_logs/.gitkeep",
+      "blob_sha": "1aa4b3993b318e55998a5537e725f817ded3cca4",
+      "mode": "100644",
+      "bytes": 37,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/decision_path_logs/.gitkeep",
+      "blob_sha": "79e04b04779d430273bbc283a820fd0dc666d6e3",
+      "mode": "100644",
+      "bytes": 36,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/deployment_logs/.gitkeep",
+      "blob_sha": "924a2ba640a2eca862fab9f8b0bd141e819d0367",
+      "mode": "100644",
+      "bytes": 33,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/emergent_behavior_logs/.gitkeep",
+      "blob_sha": "9165b15d7123956e213f64516bf65a9b562dd409",
+      "mode": "100644",
+      "bytes": 40,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/entity_data/.gitkeep",
+      "blob_sha": "969b27e4bd1d709833852d6eb485a029f9ff777a",
+      "mode": "100644",
+      "bytes": 29,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/ethical_conflict_logs/.gitkeep",
+      "blob_sha": "f44d4a82dc1fa8cbd02bed8ec8718656514a74c0",
+      "mode": "100644",
+      "bytes": 39,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/goal_recalibration_logs/.gitkeep",
+      "blob_sha": "341cfc40c9f76f7f386420f894a1aebd07353074",
+      "mode": "100644",
+      "bytes": 41,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/meta_learning_logs/.gitkeep",
+      "blob_sha": "7254e177e3597db6b5176ec02ccde6ca9c8e277a",
+      "mode": "100644",
+      "bytes": 36,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/multimodal_outputs/.gitkeep",
+      "blob_sha": "bca9fcedbf2715caf64261377ec13dbc1efa87f5",
+      "mode": "100644",
+      "bytes": 37,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/network_healer_logs/.gitkeep",
+      "blob_sha": "ab61b765082f15686ab8918f6452e183c60ac851",
+      "mode": "100644",
+      "bytes": 37,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/optimization_logs/.gitkeep",
+      "blob_sha": "9ac3ab5db3347c0c05cf1e4d1c4405436f12dd18",
+      "mode": "100644",
+      "bytes": 35,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/policy_audit_logs/.gitkeep",
+      "blob_sha": "c4d08e5d1e4d3b2057b3cc9dd41defca253442d9",
+      "mode": "100644",
+      "bytes": 35,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/policy_enforcement_logs/.gitkeep",
+      "blob_sha": "43af53814e745c09f6fdff55f9f5a153b5d667a8",
+      "mode": "100644",
+      "bytes": 41,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/quantum_crypto_manager/ .gitkeep",
+      "blob_sha": "95b9115d5c4e77d46018cc300a0bf68a4254565b",
+      "mode": "100644",
+      "bytes": 45,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/resource_optimization_logs/.gitkeep",
+      "blob_sha": "0577a02362ceee8666241d80c419b3f80c1c74a7",
+      "mode": "100644",
+      "bytes": 44,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/sdk_outputs/.gitkeep",
+      "blob_sha": "bd167c7045f0f5606ed17c8115fd6a15e92633c7",
+      "mode": "100644",
+      "bytes": 32,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/security_audits/.gitkeep",
+      "blob_sha": "52d74c1360e9a23709132d9f962e8b7b075e0845",
+      "mode": "100644",
+      "bytes": 37,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/self_evolution/.gitkeep",
+      "blob_sha": "3bcb6354933de2eb41e69a8b33873ff2e5102c45",
+      "mode": "100644",
+      "bytes": 37,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/sensory_fusion_logs/.gitkeep",
+      "blob_sha": "fe9845b7cfb1187d5d6a726b04c88adf998bafbb",
+      "mode": "100644",
+      "bytes": 37,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/simulated_codebase/.gitkeep",
+      "blob_sha": "303dd34e5e21cbf1eccb9d009b2bd5c664602ec1",
+      "mode": "100644",
+      "bytes": 42,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/spatial_data/.gitkeep",
+      "blob_sha": "7264aa8fd451adf464d4ff30e1ee2b3c4ad65a8a",
+      "mode": "100644",
+      "bytes": 42,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/swarm_events/.gitkeep",
+      "blob_sha": "3476276a28f628e5388ba47d4ff76cbf2b3af22d",
+      "mode": "100644",
+      "bytes": 34,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/task_automation_logs/.gitkeep",
+      "blob_sha": "f485b8b3889b446e7b734a1d34c639263cefb2ac",
+      "mode": "100644",
+      "bytes": 38,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/threat_model_logs/.gitkeep",
+      "blob_sha": "42407a359a2c5ec2bd166cd0e36c43465449df31",
+      "mode": "100644",
+      "bytes": 35,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/tools/bin/.gitkeep",
+      "blob_sha": "8fcd67d5e92c8a031c2c6af40c0c517dece89678",
+      "mode": "100644",
+      "bytes": 30,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/tools/specs/.gitkeep",
+      "blob_sha": "6cfb862a0294f444c672fdf3cb6448a10642957a",
+      "mode": "100644",
+      "bytes": 36,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/ui_adaptation_logs/.gitkeep",
+      "blob_sha": "83e0278e50dd9e252e4ccaf67a304dd3ebfdc569",
+      "mode": "100644",
+      "bytes": 36,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/vulnerability_remediation_logs/.gitkeep",
+      "blob_sha": "fe4dbb39856fcde5308022d017c7ea7be44fd4ed",
+      "mode": "100644",
+      "bytes": 48,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/workflows/ .gitkeep",
+      "blob_sha": "680e3613f06389cf28f67d25054548159ce1b46b",
+      "mode": "100644",
+      "bytes": 20,
+      "category": "directory-marker"
+    },
+    {
+      "path": "workspace/zero_trust_logs/.gitkeep",
+      "blob_sha": "ecc8144ff6be18f2e90de35470db2890a2ed94ab",
+      "mode": "100644",
+      "bytes": 33,
+      "category": "directory-marker"
+    }
+  ]
+}

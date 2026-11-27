@@ -1,6 +1,6 @@
 # Production specification standard
 
-**ZIP-SPEC-001 · v1.0 · Owner:** Zipporah architecture maintainers. **Maturity:** D4 candidate. Approve in a reviewed commit before applying as repository policy.
+**ZIP-SPEC-001 · v1.1 · Owner:** Zipporah architecture maintainers. **Maturity:** D4 candidate. Approve in a reviewed commit before applying as repository policy.
 
 ## Applicability
 
@@ -29,6 +29,7 @@ A component is a planned crate, application or integration with a public, persis
 | Cancellation | Safe points, irreversible boundaries and lost-response behavior |
 | Error handling | Typed errors, precedence, retry and recovery |
 | Security | Threats, trusted sources, privileges and denials |
+| Authorization | Principal, required capability and effect scope, decision point and revocation behavior |
 | Persistence | Storage schema, transaction boundaries and durability |
 | Serialization | Exact shape, version, canonicalization and invalid-input handling |
 | Integration | Caller/provider contracts and compatibility |
@@ -36,9 +37,11 @@ A component is a planned crate, application or integration with a public, persis
 | Performance | Measured criteria, fixture, benchmark method and approval owner |
 | Portability | Supported targets, enforcement parity and unsupported behavior |
 | Testing | Stable test IDs, fixtures, commands, outcomes and expected failures |
+| Failure scenarios | Trigger, durable outcome, cleanup, retry eligibility and recovery evidence |
 | Acceptance | Exact gate and evidence required |
 | Migration | Read/write compatibility, upgrade steps and rollback |
 | Implementation order | Prerequisites and construction sequence |
+| Traceability | Stable requirement IDs linked to source-file contracts, fixtures and acceptance evidence |
 | Completion criteria | Evidence, independent reviewer and remaining blockers |
 
 An inapplicable section names the boundary that owns the behavior or explains why it cannot arise. A Rust signature must name all types, their modules and lifetime/ownership behavior. A pseudocode sample must be marked as such. A proposed threshold does not qualify as a measured performance requirement.

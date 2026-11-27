@@ -1,6 +1,6 @@
 # Design completion and independent review
 
-**ZIP-DES-001 · v1.0 · Owner:** Architecture and verification maintainers. **Maturity:** D4 candidate.
+**ZIP-DES-001 · v1.1 · Owner:** Architecture and verification maintainers. **Maturity:** D4 candidate.
 
 Apply this checklist separately to each component revision and its file-level contracts.
 
@@ -11,6 +11,8 @@ Apply this checklist separately to each component revision and its file-level co
 | Integration | Qualified or explicitly unresolved ports, dependency and compatibility review |
 | Resource policy | Registered limits, finite fallback, enforcement site, accounting and cleanup |
 | Testability | Positive, denial, interruption and recovery cases mapped to each normative requirement where applicable |
+| Developer handover | Independent reviewer traces a source path to its API and dependencies, walks success and failure fixtures, and identifies required integration and validation commands without selecting an unspecified rule |
+| Legacy evidence | When a capability replaces legacy behavior, record its reviewed disposition, pinned provenance and target acceptance evidence in the [feature register](LEGACY_FEATURE_REGISTER.md) |
 | Review | Named independent reviewer, reviewed commit, findings closed or explicit blockers |
 
 D4 requires complete contracts for the advertised scope. D5 requires reproducible structural validation and a separate reviewer to verify semantics and close findings. An available file path, a passing link check or an authored candidate proves only what the evidence actually covers. Inventory status `missing` denotes a missing file contract; `candidate` denotes an existing draft awaiting review. An unresolved cross-component decision blocks D5.

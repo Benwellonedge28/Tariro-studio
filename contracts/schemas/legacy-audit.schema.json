@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Zipporah legacy audit records",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "source_commit",
+        "files"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "blob_sha",
+              "mode",
+              "bytes",
+              "category"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\r\\n]+$"
+              },
+              "blob_sha": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "mode": {
+                "enum": [
+                  "100644",
+                  "100755",
+                  "120000"
+                ]
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "category": {
+                "enum": [
+                  "source",
+                  "documentation",
+                  "configuration-or-tooling",
+                  "license",
+                  "directory-marker"
+                ]
+              }
+            }
+          },
+          "minItems": 1
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "source_commit",
+        "findings"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "feature_id",
+              "source_path",
+              "source_blob_sha",
+              "source_lines",
+              "evidence_kind",
+              "observed_behavior",
+              "classification",
+              "review_status",
+              "target_spec",
+              "acceptance_id",
+              "successor_acceptance"
+            ],
+            "properties": {
+              "feature_id": {
+                "type": "string",
+                "pattern": "^ZIP-LEG-[A-Z0-9-]+$"
+              },
+              "source_path": {
+                "type": "string",
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\r\\n]+$"
+              },
+              "source_blob_sha": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "source_lines": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "evidence_kind": {
+                "enum": [
+                  "static",
+                  "executed"
+                ]
+              },
+              "observed_behavior": {
+                "type": "string",
+                "minLength": 1
+              },
+              "classification": {
+                "enum": [
+                  "Preserve",
+                  "Rewrite",
+                  "Consolidate",
+                  "Redesign",
+                  "Experimental",
+                  "Simulated",
+                  "Retire",
+                  "Blocked"
+                ]
+              },
+              "review_status": {
+                "enum": [
+                  "candidate",
+                  "reviewed"
+                ]
+              },
+              "target_spec": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\r\\n]+$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "acceptance_id": {
+                "type": "string",
+                "pattern": "^ZIP-LEG-[A-Z0-9-]+-T[0-9]+$"
+              },
+              "successor_acceptance": {
+                "type": "string",
+                "minLength": 1
+              },
+              "exclusion": {
+                "enum": [
+                  "external-application",
+                  "external-integration",
+                  "human-governed-extension",
+                  "optional-business-extension",
+                  "research-extension"
+                ]
+              },
+              "execution_evidence": {
+                "type": "string",
+                "minLength": 1
+              },
+              "review_evidence": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "target_spec": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "exclusion"
+                  ],
+                  "properties": {
+                    "classification": {
+                      "const": "Retire"
+                    }
+                  }
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "exclusion"
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "evidence_kind": {
+                      "const": "executed"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "execution_evidence"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "review_status": {
+                      "const": "reviewed"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "review_evidence"
+                  ]
+                }
+              }
+            ]
+          },
+          "minItems": 1
+        }
+      }
+    }
+  ]
+}
