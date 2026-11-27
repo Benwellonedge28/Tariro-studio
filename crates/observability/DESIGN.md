@@ -66,3 +66,21 @@ crates/observability/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test disabled external export sends no network traffic and redaction canary stays absent.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`logging.rs`](specifications/modules/logging.md)
+- [`tracing.rs`](specifications/modules/tracing.md)
+- [`metrics.rs`](specifications/modules/metrics.md)
+- [`health.rs`](specifications/modules/health.md)
+- [`diagnostics.rs`](specifications/modules/diagnostics.md)
+- [`profiling.rs`](specifications/modules/profiling.md)
+- [`alerts.rs`](specifications/modules/alerts.md)
+- [`dashboards.rs`](specifications/modules/dashboards.md)
+- [`redaction.rs`](specifications/modules/redaction.md)
+- [`exporters.rs`](specifications/modules/exporters.md)
+- [`retention.rs`](specifications/modules/retention.md)

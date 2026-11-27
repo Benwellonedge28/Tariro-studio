@@ -70,3 +70,22 @@ crates/economics/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Concurrent requests cannot overspend. Test rounding and interrupted provider receipt.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`budget.rs`](specifications/modules/budget.md)
+- [`usage.rs`](specifications/modules/usage.md)
+- [`pricing.rs`](specifications/modules/pricing.md)
+- [`estimation.rs`](specifications/modules/estimation.md)
+- [`accounting.rs`](specifications/modules/accounting.md)
+- [`token_usage.rs`](specifications/modules/token_usage.md)
+- [`compute_usage.rs`](specifications/modules/compute_usage.md)
+- [`storage_usage.rs`](specifications/modules/storage_usage.md)
+- [`optimization.rs`](specifications/modules/optimization.md)
+- [`provider_comparison.rs`](specifications/modules/provider_comparison.md)
+- [`spending_limits.rs`](specifications/modules/spending_limits.md)
+- [`reporting.rs`](specifications/modules/reporting.md)
