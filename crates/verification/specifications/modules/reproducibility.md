@@ -1,15 +1,11 @@
 # Repeatability qualification
 
-**ZIP-VERIFICATION-REPRODUCIBILITY-001 · v1.0 · Owner:** Verification maintainers. **Maturity:** D3 file contract draft.
+**ZIP-VERIFICATION-REPRODUCIBILITY-001 · v1.1 candidate · Owner** Verification maintainers
 
-**Planned source:** `crates/verification/src/reproducibility.rs`
+**Planned source** `crates/verification/src/reproducibility.rs`
 
-## Required implementation behavior
+Pin candidate, fixture inputs, commands, seed, toolchain, adapter versions, target platform and relevant environment variables using scoped identities. Record intentional nondeterminism up front. The gate declares exact digest equality or a reviewed comparison algorithm, units and finite tolerance. A comparator consumes validated bounded observations and records its own version. For exact comparison preserve both digests; for tolerance preserve the measured quantities and method. Reject unsupported platform claims or differing input conditions when they invalidate the comparison.
 
-Pin toolchain, inputs, fixture/seed and environment, run within qualified scope and compare declared artifact/results. Report supported platform and tolerance.
+Separate reproduction of a result from reusing a receipt. Each rerun has a distinct attempt identity and independently attributable observation. Timeout, missing input or unavailable tooling blocks. A verified difference beyond the approved tolerance fails. Never choose a favorable result from multiple reruns without the approved attempt policy.
 
-## Acceptance
-
-**ZIP-VERIFICATION-REPRODUCIBILITY-T01.** Mismatch beyond reviewed tolerance fails and preserves both digests.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-VERIFICATION-REPRODUCIBILITY-T01.** An observed mismatch beyond the reviewed tolerance fails and preserves both input and output identities.

@@ -1,15 +1,11 @@
 # Independent reviewer gate
 
-**ZIP-VERIFICATION-INDEPENDENT-REVIEW-001 · v1.0 · Owner:** Verification maintainers. **Maturity:** D3 file contract draft.
+**ZIP-VERIFICATION-INDEPENDENT-REVIEW-001 · v1.1 candidate · Owner** Verification maintainers
 
-**Planned source:** `crates/verification/src/independent_review.rs`
+**Planned source** `crates/verification/src/independent_review.rs`
 
-## Required implementation behavior
+A manual-only gate requires an authenticated human reviewer from the approved reviewer domain. Compare principal identity and registered conflicts against candidate authors, contributing agents and approval policy before accepting review. Record reviewer, candidate and plan digest, review evidence, applicable findings and disposition. Different role names, sessions or instances of the same model do not establish independence. A claim of independent execution qualifies only under the declared gate policy and verified runner provenance.
 
-Compare author and reviewer identity and role/conflict policy. Bind review to candidate digest, actual findings and closed status. Agent role labels do not establish independence.
+Require each blocking finding to be resolved with scoped immutable evidence and a verified decision. An approval cannot erase an observed failure. Reject stale review when the candidate or applicable constraints change. Evidence from the original review remains historical. Treat unknown affiliation or unavailable reviewer evidence as Blocked.
 
-## Acceptance
-
-**ZIP-VERIFICATION-INDEPENDENT-REVIEW-T01.** Author reviewing own restricted change cannot satisfy an independent gate.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-VERIFICATION-INDEPENDENT-REVIEW-T01.** Deny self-review under an independent gate and repeated model output masquerading as independent manual review.

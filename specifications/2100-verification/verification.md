@@ -1,24 +1,18 @@
 # Verification and evidence
 
-**Contract version** 1.0. Master design §71.
+**Contract version** 1.1 candidate. Master design §§44 and 71.
 
-## Contract
+Seal an immutable candidate and plan before collecting evidence. Bind each observation to the pinned requirement, gate, candidate, input, tool version, policy, verifier and output. Resolve claims through scoped authoritative sources. Source citations name the exact revision and blob. Provider checks name the stable repository and exact reviewed commit. A manual-only gate requires an authenticated reviewer who meets the defined independence rule.
 
-Every evidence record binds requirement, candidate tree, inputs, runner and version, observed output digest, verdict and assessor. Accept only if all required current evidence passes and unresolved findings are absent.
+## Acceptance
 
-## Execution and integration
+Evaluate current qualified mandatory failures first. Otherwise block on missing, stale, conflicting or incomplete mandatory evidence or unresolved blocking findings. Pass only after all applicable mandatory checks pass, with explicit reviewed treatment for inapplicable requirements. Report optional and historical observations separately. Recheck candidate, authority and policy before acting on an acceptance receipt.
 
-A verifier reads a bounded immutable artifact or independently re-executes a deterministic check. A manual check records reviewer and reviewed digest. CI status is bound to the actual PR head.
+The verifier uses bounded immutable reads, independently executed qualified checks and scoped reviewer inputs. No runner or assessor claim can replace actual observed evidence. A response loss preserves the original attempt identity for reconciliation. Verified repository scope requires the full staged tree and both endpoints for moves.
 
-## Verification
-
-Change one byte after verification or omit a required gate. Verify both block completion.
-
-Capture exact inputs, configured limits, actual result, policy revision and the evidence reference. Map applicable release requirements from [REQUIREMENTS.md](../../REQUIREMENTS.md).
-
-
+Use the [evidence fixtures](../../contracts/acceptance/verification/evidence-fixtures.json) to test candidate edits after review, stale CI, fabricated citations, self-review, missing evidence and exact scope. Bind release observations to [requirements](../../REQUIREMENTS.md). Logical checks, runner qualification and independent review remain distinct gates.
 
 ## Implementing components
 
-- [verification crate design](../../crates/verification/DESIGN.md)
-- [audit crate design](../../crates/audit/DESIGN.md)
+- [Verification](../../crates/verification/DESIGN.md)
+- [Audit](../../crates/audit/DESIGN.md)

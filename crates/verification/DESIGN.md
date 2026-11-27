@@ -1,6 +1,6 @@
 # Verification crate design
 
-**Contract version** 1.0. Master design §44. Planned implementation.
+**Contract version** 1.1 candidate. Master design §44. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -17,33 +17,11 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [repository](..
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
-
-- `compile_plan(requirements)`
-- `verify(candidate)`
-- `accept(evidence_bundle)`
-
-Record families: RequirementGate, EvidenceRecord, verifier identity, observation and verdict. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `EvidenceRecord { requirement_id, candidate_digest, policy_digest, input_digest, runner_version, actor, observed_ref, verdict }`
-- `VerificationPlan { required_gates, expected_inputs }`
-
-- `accept(plan: &VerificationPlan, evidence: &[EvidenceRecord]) -> Result<AcceptanceVerdict>`
+[Verification plan](specifications/modules/verification_plan.md) owns normalized gates and binding. [Verifier](specifications/modules/verifier.md) requests bounded observations from injected runners. [Evidence](specifications/modules/evidence.md) and [provenance](specifications/modules/provenance.md) validate actual candidate, origin and result. [Acceptance](specifications/modules/acceptance.md) evaluates qualified mandatory gates without introducing extra dependencies.
 
 ## Failure, safety and resource limits
 
-Evidence size and verification duration bounded. Manual-only gates require approver identity. Different agent roles do not imply independence.
-
-- `EvidenceMissing`
-- `EvidenceStale`
-- `FactUnverified`
-- `GateFailed`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Limit observed bytes and check duration to authorized and admitted budgets. Evidence explicitly distinguishes executed failure, missing observations and stale observations. Verify human authority and independence at manual-only gates. Reconcile ambiguous attempts before interpreting a result. Preserve historical results and scoped evidence without synthesizing success.
 
 ## Source layout
 
@@ -88,11 +66,11 @@ crates/verification/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Changing candidate after review must fail. Test failed and missing mandatory evidence.
+Apply the [evidence fixtures](../../contracts/acceptance/verification/evidence-fixtures.json) to candidate change, failed and missing gates, scope, reducer precedence and reviewer independence.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. The evidence and acceptance slice is a candidate for independent review. Other modules retain their recorded maturity.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

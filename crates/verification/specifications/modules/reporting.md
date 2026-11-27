@@ -1,15 +1,11 @@
 # Bounded verification report
 
-**ZIP-VERIFICATION-REPORTING-001 · v1.0 · Owner:** Verification maintainers. **Maturity:** D3 file contract draft.
+**ZIP-VERIFICATION-REPORTING-001 · v1.1 candidate · Owner** Verification maintainers
 
-**Planned source:** `crates/verification/src/reporting.rs`
+**Planned source** `crates/verification/src/reporting.rs`
 
-## Required implementation behavior
+Generate a report from one authorized bounded snapshot of the plan, candidate and acceptance result. Place the exact candidate and plan digest, effective policy, final verdict and checked outcome counts in the summary. Emit mandatory and optional gates with stable ID, resolved attempt, status and scoped evidence link. Preserve failed, missing, skipped, cancelled, unavailable and historical observations as distinct conditions. Report secure redaction or truncation of display explicitly. An incomplete evaluation cannot inherit a passing cached report.
 
-Emit candidate/plan identity, mandatory and optional verdicts, missing gates and safe evidence references. Distinguish not run, skipped and executed.
+Use stable gate and finding order and bounded pages with snapshot identity. Preserve actual execution and approved reviewer identity where in scope. Plain-language explanations refer to observed evidence and cannot create checks or change verdict. A provider delivery acknowledgement and a verification pass are independent observations.
 
-## Acceptance
-
-**ZIP-VERIFICATION-REPORTING-T01.** Report generation cannot synthesize tests or redact a failure into success.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-VERIFICATION-REPORTING-T01.** Remove an inaccessible evidence body from display without replacing a failed status. A report generated without executing any required test identifies it as not run.

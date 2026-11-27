@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-VERIFICATION-ACCEPTANCE-001",
+  "cases": [
+    {"id":"ZIP-VER-FIX-001","requirement":"ZIP-VERIFICATION-VERIFIER-T01","scenario":"Candidate changed after evidence","input":{"current":"tree-b","reviewed":"tree-a"},"expected":{"gate":"Blocked","evidence_status":"EvidenceStale"}},
+    {"id":"ZIP-VER-FIX-002","requirement":"ZIP-VERIFICATION-ACCEPTANCE-T01","scenario":"Mandatory verdict reduction","input":{"mandatory":[["Failed","Missing"],["Passed","Missing"],["Passed","Passed"],["StaleFailure","Passed"],["Passed","Cancelled"]],"optional":["Failed"]},"expected":{"verdicts":["Failed","Blocked","Passed","Blocked","Blocked"]}},
+    {"id":"ZIP-VER-FIX-003","requirement":"ZIP-VERIFICATION-PROVENANCE-T01","scenario":"Exact CI and citation evidence","input":{"expected_commit":"sha-b","check_commits":["sha-a","sha-b"],"citation_resolvable":false},"expected":{"ci_qualified":[false,true],"citation_qualified":false}},
+    {"id":"ZIP-VER-FIX-004","requirement":"ZIP-VERIFICATION-INDEPENDENT-REVIEW-T01","scenario":"Reviewer provenance","input":{"author":"user-a","reviewers":[["user-a","human",true],["agent-b","model",true],["user-b","human",true],["user-c","human",false]]},"expected":{"qualified":[false,false,true,false]}},
+    {"id":"ZIP-VER-FIX-005","requirement":"ZIP-VERIFICATION-EVIDENCE-T01","scenario":"Receipt duplicate and collision","input":{"observations":[["id-a","hash-a"],["id-a","hash-a"],["id-a","hash-b"]]},"expected":{"outcomes":["Committed","Replay","EvidenceConflict"],"unique_records":1}},
+    {"id":"ZIP-VER-FIX-006","requirement":"ZIP-VERIFICATION-REQUIREMENTS-T01","scenario":"No vacuous pass","input":{"applicable":["req-1"],"gate_map":{},"optional_successes":["check-opt"]},"expected":{"verdict":"Blocked","missing":["req-1"]}},
+    {"id":"ZIP-VER-FIX-007","requirement":"ZIP-VERIFICATION-REPOSITORY-DIFF-T01","scenario":"Truncated manifest","input":{"visible_paths":["docs/a.md"],"truncated":true},"expected":{"certified":false}},
+    {"id":"ZIP-VER-FIX-008","requirement":"ZIP-VERIFICATION-REPOSITORY-BATCH-T01","scenario":"Repeated path cannot pad count","input":{"authorized_count":3,"observed_paths":["docs/a.md","docs/b.md","docs/b.md"]},"expected":{"unique_count":2,"verdict":"Blocked"}},
+    {"id":"ZIP-VER-FIX-009","requirement":"ZIP-VERIFICATION-REPOSITORY-SCOPE-T01","scenario":"Both rename endpoints matter","input":{"allowed_root":"docs","old_path":"docs/a.md","new_path":"restricted/a.md"},"expected":{"scope_passed":false}},
+    {"id":"ZIP-VER-FIX-010","requirement":"ZIP-VERIFICATION-VERIFICATION-PLAN-T01","scenario":"Duplicate gate identity","input":{"gate_ids":["g-1","g-1"],"known_runner":true},"expected":{"error":"InvalidPlan","dispatches":0}},
+    {"id":"ZIP-VER-FIX-011","requirement":"ZIP-VERIFICATION-REPRODUCIBILITY-T01","scenario":"Compare measured tolerance","input":{"baseline":100,"measurements":[102,103],"tolerance":2,"unit":"milliseconds"},"expected":{"verdicts":["Passed","Failed"]}},
+    {"id":"ZIP-VER-FIX-012","requirement":"ZIP-VERIFICATION-ERROR-T01","scenario":"Missing outcome is not an executed failure","input":{"observations":["missing","timeout_unobserved","verified_failure"]},"expected":{"gate_results":["Blocked","Blocked","Failed"]}}
+  ]
+}

@@ -1,15 +1,27 @@
 # Verification failure classes
 
-**ZIP-VERIFICATION-ERROR-001 · v1.0 · Owner:** Verification maintainers. **Maturity:** D3 file contract draft.
+**ZIP-VERIFICATION-ERROR-001 · v1.1 candidate · Owner** Verification maintainers
 
-**Planned source:** `crates/verification/src/error.rs`
+**Planned source** `crates/verification/src/error.rs`
 
-## Required implementation behavior
+```rust
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum VerificationError {
+    InvalidPlan,
+    ScopeDenied,
+    BudgetExceeded,
+    EvidenceMissing,
+    EvidenceStale,
+    FactUnverified,
+    EvidenceConflict,
+    RunnerUnavailable,
+    DeadlineExceeded,
+    Cancelled,
+    OutcomeUnknown,
+}
+```
 
-Differentiate missing evidence, stale candidate, bad provenance, timeout, runner unavailable, failed check and blocked policy. Preserve authorized requirement reference.
+Validate request and scope before revealing gate or evidence existence. A missing or stale observation blocks its gate. FactUnverified identifies invalid origin or unresolved provenance. OutcomeUnknown preserves an original attempt whose storage or runner response was lost and requires reconciliation. An executed mandatory failed check is a typed evidence result and may determine Failed. A timeout, cancellation or transport error alone does not prove execution or failure. Redact scope-sensitive evidence and endpoints.
 
-## Acceptance
-
-**ZIP-VERIFICATION-ERROR-T01.** Missing check does not coerce into pass or executed failure.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-VERIFICATION-ERROR-T01.** A missing result, expired check and executed failing check have distinct evidence status and cannot be interchanged by an adapter.
