@@ -1,15 +1,9 @@
 # Change authorization proof
 
-**ZIP-VERIFICATION-REPOSITORY-SCOPE-001 · v1.0 · Owner:** Verification maintainers. **Maturity:** D3 file contract draft.
+**ZIP-VERIFICATION-REPOSITORY-SCOPE-001 · v1.1 candidate · Owner** Verification maintainers
 
-**Planned source:** `crates/verification/src/repository/scope.rs`
+**Planned source** `crates/verification/src/repository/scope.rs`
 
-## Required implementation behavior
+Independently compare complete sealed diff against the effective signed or trusted scope and reviewed instruction interpretation. Check allowed root via component containment, operation, mode, reviewed file type and each old and new pathname. Verify both sides of a move. Documentation-only mode admits regular Markdown creates and modifications within scope, subject to the repository's control-path rules. Missing grant or inaccessible instructions blocks verification. A passing verification receipt attests its checked scope and cannot authorize later effects by itself.
 
-Match effective allowed root and path, operation and reviewed grant against exact diff. Check both paths of rename and special-file restrictions.
-
-## Acceptance
-
-**ZIP-VERIFICATION-REPOSITORY-SCOPE-T01.** Allowed source renamed to disallowed target fails immediately.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-VERIFICATION-REPOSITORY-SCOPE-T01.** A move from an allowed source to a disallowed target fails. A generic grant cannot approve privileged configuration paths.

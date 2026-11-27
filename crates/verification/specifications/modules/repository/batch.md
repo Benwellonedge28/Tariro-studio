@@ -1,15 +1,9 @@
-# Exact batch gate
+# Exact batch verification
 
-**ZIP-VERIFICATION-REPOSITORY-BATCH-001 · v1.0 · Owner:** Verification maintainers. **Maturity:** D3 file contract draft.
+**ZIP-VERIFICATION-REPOSITORY-BATCH-001 · v1.1 candidate · Owner** Verification maintainers
 
-**Planned source:** `crates/verification/src/repository/batch.rs`
+**Planned source** `crates/verification/src/repository/batch.rs`
 
-## Required implementation behavior
+Derive distinct normalized changed outputs from the verified manifest, applying operation and both-endpoint scope before counting. Unchanged files and repeated paths cannot increase the count. Match the exact batch agreement on the grant whenever present. A larger batch fails and a short final batch stays blocked for explicit revision. The reference 30-file workflow supplies its own runtime policy. Require a qualifying independent observation for every touched path as required by the plan. Bind actual count, ordered manifest digest, evidence and gate verdict. The Assignments crate owns approvals and publication state.
 
-Count unique allowed final paths against the assignment's approved count; require verification for each touched file. Record manifest digest.
-
-## Acceptance
-
-**ZIP-VERIFICATION-REPOSITORY-BATCH-T01.** Duplicate path cannot inflate count, short exact batch remains blocked.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-VERIFICATION-REPOSITORY-BATCH-T01.** Duplicate paths count once. An authorized 30 with 29 distinct covered entries remains blocked.
