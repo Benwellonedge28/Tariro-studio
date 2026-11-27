@@ -1,0 +1,336 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-LIB-001",
+      "planned_source": "crates/source-analysis/src/lib.rs",
+      "contract": "crates/source-analysis/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ERROR-001",
+      "planned_source": "crates/source-analysis/src/error.rs",
+      "contract": "crates/source-analysis/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-LANGUAGE-001",
+      "planned_source": "crates/source-analysis/src/language.rs",
+      "contract": "crates/source-analysis/specifications/modules/language.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-LANGUAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-DETECTION-001",
+      "planned_source": "crates/source-analysis/src/detection.rs",
+      "contract": "crates/source-analysis/specifications/modules/detection.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-DETECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-PARSER-001",
+      "planned_source": "crates/source-analysis/src/parser.rs",
+      "contract": "crates/source-analysis/specifications/modules/parser.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-PARSER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-SYNTAX-TREE-001",
+      "planned_source": "crates/source-analysis/src/syntax_tree.rs",
+      "contract": "crates/source-analysis/specifications/modules/syntax_tree.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-SYNTAX-TREE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-SYMBOL-001",
+      "planned_source": "crates/source-analysis/src/symbol.rs",
+      "contract": "crates/source-analysis/specifications/modules/symbol.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-SYMBOL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-SYMBOL-TABLE-001",
+      "planned_source": "crates/source-analysis/src/symbol_table.rs",
+      "contract": "crates/source-analysis/specifications/modules/symbol_table.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-SYMBOL-TABLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-REFERENCE-001",
+      "planned_source": "crates/source-analysis/src/reference.rs",
+      "contract": "crates/source-analysis/specifications/modules/reference.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-REFERENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-CALL-GRAPH-001",
+      "planned_source": "crates/source-analysis/src/call_graph.rs",
+      "contract": "crates/source-analysis/specifications/modules/call_graph.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-CALL-GRAPH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-DEPENDENCY-GRAPH-001",
+      "planned_source": "crates/source-analysis/src/dependency_graph.rs",
+      "contract": "crates/source-analysis/specifications/modules/dependency_graph.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-DEPENDENCY-GRAPH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-CONTROL-FLOW-001",
+      "planned_source": "crates/source-analysis/src/control_flow.rs",
+      "contract": "crates/source-analysis/specifications/modules/control_flow.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-CONTROL-FLOW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-DATA-FLOW-001",
+      "planned_source": "crates/source-analysis/src/data_flow.rs",
+      "contract": "crates/source-analysis/specifications/modules/data_flow.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-DATA-FLOW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-TYPE-INFORMATION-001",
+      "planned_source": "crates/source-analysis/src/type_information.rs",
+      "contract": "crates/source-analysis/specifications/modules/type_information.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-TYPE-INFORMATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-SEMANTIC-001",
+      "planned_source": "crates/source-analysis/src/semantic.rs",
+      "contract": "crates/source-analysis/specifications/modules/semantic.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-SEMANTIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-DIAGNOSTICS-001",
+      "planned_source": "crates/source-analysis/src/diagnostics.rs",
+      "contract": "crates/source-analysis/specifications/modules/diagnostics.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-DIAGNOSTICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-INDEXING-001",
+      "planned_source": "crates/source-analysis/src/indexing.rs",
+      "contract": "crates/source-analysis/specifications/modules/indexing.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-INDEXING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-IMPACT-ANALYSIS-001",
+      "planned_source": "crates/source-analysis/src/impact_analysis.rs",
+      "contract": "crates/source-analysis/specifications/modules/impact_analysis.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-IMPACT-ANALYSIS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-COMPLEXITY-001",
+      "planned_source": "crates/source-analysis/src/complexity.rs",
+      "contract": "crates/source-analysis/specifications/modules/complexity.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-COMPLEXITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-MOD-001",
+      "planned_source": "crates/source-analysis/src/adapters/mod.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/mod.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-TREE-SITTER-001",
+      "planned_source": "crates/source-analysis/src/adapters/tree_sitter.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/tree_sitter.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-TREE-SITTER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-LSP-001",
+      "planned_source": "crates/source-analysis/src/adapters/lsp.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/lsp.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-LSP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-RUST-001",
+      "planned_source": "crates/source-analysis/src/adapters/rust.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/rust.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-RUST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-PYTHON-001",
+      "planned_source": "crates/source-analysis/src/adapters/python.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/python.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-PYTHON-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-JAVASCRIPT-001",
+      "planned_source": "crates/source-analysis/src/adapters/javascript.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/javascript.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-JAVASCRIPT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-TYPESCRIPT-001",
+      "planned_source": "crates/source-analysis/src/adapters/typescript.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/typescript.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-TYPESCRIPT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-JAVA-001",
+      "planned_source": "crates/source-analysis/src/adapters/java.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/java.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-JAVA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-C-001",
+      "planned_source": "crates/source-analysis/src/adapters/c.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/c.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-C-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-CPP-001",
+      "planned_source": "crates/source-analysis/src/adapters/cpp.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/cpp.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-CPP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-GO-001",
+      "planned_source": "crates/source-analysis/src/adapters/go.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/go.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-GO-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-ZAMANI-001",
+      "planned_source": "crates/source-analysis/src/adapters/zamani.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/zamani.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-ZAMANI-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-ADAPTERS-GENERIC-001",
+      "planned_source": "crates/source-analysis/src/adapters/generic.rs",
+      "contract": "crates/source-analysis/specifications/modules/adapters/generic.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-ADAPTERS-GENERIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SOURCE-ANALYSIS-INCREMENTAL-001",
+      "planned_source": "crates/source-analysis/src/incremental.rs",
+      "contract": "crates/source-analysis/specifications/modules/incremental.md",
+      "specified_tests": [
+        "ZIP-SOURCE-ANALYSIS-INCREMENTAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

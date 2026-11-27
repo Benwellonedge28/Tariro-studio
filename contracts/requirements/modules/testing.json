@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-TESTING-LIB-001",
+      "planned_source": "crates/testing/src/lib.rs",
+      "contract": "crates/testing/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-TESTING-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-ERROR-001",
+      "planned_source": "crates/testing/src/error.rs",
+      "contract": "crates/testing/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-TESTING-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-DISCOVERY-001",
+      "planned_source": "crates/testing/src/discovery.rs",
+      "contract": "crates/testing/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-TESTING-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-TEST-CASE-001",
+      "planned_source": "crates/testing/src/test_case.rs",
+      "contract": "crates/testing/specifications/modules/test_case.md",
+      "specified_tests": [
+        "ZIP-TESTING-TEST-CASE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-TEST-SUITE-001",
+      "planned_source": "crates/testing/src/test_suite.rs",
+      "contract": "crates/testing/specifications/modules/test_suite.md",
+      "specified_tests": [
+        "ZIP-TESTING-TEST-SUITE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-GENERATION-001",
+      "planned_source": "crates/testing/src/generation.rs",
+      "contract": "crates/testing/specifications/modules/generation.md",
+      "specified_tests": [
+        "ZIP-TESTING-GENERATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-EXECUTION-001",
+      "planned_source": "crates/testing/src/execution.rs",
+      "contract": "crates/testing/specifications/modules/execution.md",
+      "specified_tests": [
+        "ZIP-TESTING-EXECUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-FIXTURES-001",
+      "planned_source": "crates/testing/src/fixtures.rs",
+      "contract": "crates/testing/specifications/modules/fixtures.md",
+      "specified_tests": [
+        "ZIP-TESTING-FIXTURES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-ISOLATION-001",
+      "planned_source": "crates/testing/src/isolation.rs",
+      "contract": "crates/testing/specifications/modules/isolation.md",
+      "specified_tests": [
+        "ZIP-TESTING-ISOLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-ASSERTIONS-001",
+      "planned_source": "crates/testing/src/assertions.rs",
+      "contract": "crates/testing/specifications/modules/assertions.md",
+      "specified_tests": [
+        "ZIP-TESTING-ASSERTIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-COVERAGE-001",
+      "planned_source": "crates/testing/src/coverage.rs",
+      "contract": "crates/testing/specifications/modules/coverage.md",
+      "specified_tests": [
+        "ZIP-TESTING-COVERAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-RESULTS-001",
+      "planned_source": "crates/testing/src/results.rs",
+      "contract": "crates/testing/specifications/modules/results.md",
+      "specified_tests": [
+        "ZIP-TESTING-RESULTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-REGRESSION-001",
+      "planned_source": "crates/testing/src/regression.rs",
+      "contract": "crates/testing/specifications/modules/regression.md",
+      "specified_tests": [
+        "ZIP-TESTING-REGRESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-PROPERTY-BASED-001",
+      "planned_source": "crates/testing/src/property_based.rs",
+      "contract": "crates/testing/specifications/modules/property_based.md",
+      "specified_tests": [
+        "ZIP-TESTING-PROPERTY-BASED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-MUTATION-001",
+      "planned_source": "crates/testing/src/mutation.rs",
+      "contract": "crates/testing/specifications/modules/mutation.md",
+      "specified_tests": [
+        "ZIP-TESTING-MUTATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-FUZZING-001",
+      "planned_source": "crates/testing/src/fuzzing.rs",
+      "contract": "crates/testing/specifications/modules/fuzzing.md",
+      "specified_tests": [
+        "ZIP-TESTING-FUZZING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-INTEGRATION-001",
+      "planned_source": "crates/testing/src/integration.rs",
+      "contract": "crates/testing/specifications/modules/integration.md",
+      "specified_tests": [
+        "ZIP-TESTING-INTEGRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-END-TO-END-001",
+      "planned_source": "crates/testing/src/end_to_end.rs",
+      "contract": "crates/testing/specifications/modules/end_to_end.md",
+      "specified_tests": [
+        "ZIP-TESTING-END-TO-END-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-PERFORMANCE-001",
+      "planned_source": "crates/testing/src/performance.rs",
+      "contract": "crates/testing/specifications/modules/performance.md",
+      "specified_tests": [
+        "ZIP-TESTING-PERFORMANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-SECURITY-001",
+      "planned_source": "crates/testing/src/security.rs",
+      "contract": "crates/testing/specifications/modules/security.md",
+      "specified_tests": [
+        "ZIP-TESTING-SECURITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-FLAKY-DETECTION-001",
+      "planned_source": "crates/testing/src/flaky_detection.rs",
+      "contract": "crates/testing/specifications/modules/flaky_detection.md",
+      "specified_tests": [
+        "ZIP-TESTING-FLAKY-DETECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TESTING-REPORTING-001",
+      "planned_source": "crates/testing/src/reporting.rs",
+      "contract": "crates/testing/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-TESTING-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

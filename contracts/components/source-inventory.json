@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_revision": "02e695025bfd20cc80f9c28af88813744d2bd780",
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
   "mapping": "Replace the .rs suffix with .md and resolve relative to contract_root. A path listed in candidate_files has a draft; every other enumerated file is missing a file contract.",
   "crates": [
     {
@@ -224,7 +224,32 @@
         "adapters/generic.rs",
         "verification.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "compiler.rs",
+        "toolchain.rs",
+        "build.rs",
+        "target.rs",
+        "environment.rs",
+        "diagnostics.rs",
+        "artifacts.rs",
+        "reproducibility.rs",
+        "cache.rs",
+        "dependency_resolution.rs",
+        "adapters/mod.rs",
+        "adapters/cargo.rs",
+        "adapters/cmake.rs",
+        "adapters/make.rs",
+        "adapters/gradle.rs",
+        "adapters/maven.rs",
+        "adapters/npm.rs",
+        "adapters/python.rs",
+        "adapters/go.rs",
+        "adapters/danga.rs",
+        "adapters/generic.rs",
+        "verification.rs"
+      ]
     },
     {
       "id": "configuration",
@@ -351,7 +376,27 @@
         "adapters/lldb.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "session.rs",
+        "diagnostic.rs",
+        "reproduction.rs",
+        "breakpoint.rs",
+        "stack_trace.rs",
+        "variable.rs",
+        "execution_trace.rs",
+        "root_cause.rs",
+        "hypothesis.rs",
+        "repair.rs",
+        "validation.rs",
+        "replay.rs",
+        "adapters/mod.rs",
+        "adapters/dap.rs",
+        "adapters/gdb.rs",
+        "adapters/lldb.rs",
+        "reporting.rs"
+      ]
     },
     {
       "id": "deployment",
@@ -546,7 +591,44 @@
         "review/compatibility.rs",
         "traceability.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "requirements/mod.rs",
+        "requirements/extraction.rs",
+        "requirements/specification.rs",
+        "requirements/traceability.rs",
+        "requirements/validation.rs",
+        "architecture/mod.rs",
+        "architecture/system.rs",
+        "architecture/component.rs",
+        "architecture/interfaces.rs",
+        "architecture/dependencies.rs",
+        "architecture/decisions.rs",
+        "architecture/validation.rs",
+        "implementation/mod.rs",
+        "implementation/generation.rs",
+        "implementation/editing.rs",
+        "implementation/patching.rs",
+        "implementation/integration.rs",
+        "implementation/validation.rs",
+        "refactoring/mod.rs",
+        "refactoring/rename.rs",
+        "refactoring/extraction.rs",
+        "refactoring/restructuring.rs",
+        "refactoring/equivalence.rs",
+        "optimization/mod.rs",
+        "optimization/performance.rs",
+        "optimization/memory.rs",
+        "optimization/concurrency.rs",
+        "optimization/algorithms.rs",
+        "review/mod.rs",
+        "review/correctness.rs",
+        "review/maintainability.rs",
+        "review/security.rs",
+        "review/compatibility.rs",
+        "traceability.rs"
+      ]
     },
     {
       "id": "events",
@@ -998,7 +1080,31 @@
         "domains/organizational.rs",
         "persistence.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "entity.rs",
+        "relationship.rs",
+        "graph.rs",
+        "ontology.rs",
+        "schema.rs",
+        "extraction.rs",
+        "ingestion.rs",
+        "validation.rs",
+        "inference.rs",
+        "query.rs",
+        "traversal.rs",
+        "provenance.rs",
+        "versioning.rs",
+        "conflict.rs",
+        "domains/mod.rs",
+        "domains/software.rs",
+        "domains/architecture.rs",
+        "domains/dependencies.rs",
+        "domains/documentation.rs",
+        "domains/organizational.rs",
+        "persistence.rs"
+      ]
     },
     {
       "id": "maintenance",
@@ -1053,7 +1159,34 @@
         "layers/archival.rs",
         "synchronization.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "memory.rs",
+        "record.rs",
+        "scope.rs",
+        "store.rs",
+        "retrieval.rs",
+        "consolidation.rs",
+        "compression.rs",
+        "deduplication.rs",
+        "expiration.rs",
+        "forgetting.rs",
+        "encryption.rs",
+        "provenance.rs",
+        "isolation.rs",
+        "layers/mod.rs",
+        "layers/working.rs",
+        "layers/session.rs",
+        "layers/episodic.rs",
+        "layers/semantic.rs",
+        "layers/procedural.rs",
+        "layers/project.rs",
+        "layers/repository.rs",
+        "layers/organization.rs",
+        "layers/archival.rs",
+        "synchronization.rs"
+      ]
     },
     {
       "id": "models",
@@ -1314,7 +1447,28 @@
         "hybrid/model_assisted.rs",
         "evidence.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "problem.rs",
+        "decomposition.rs",
+        "planning.rs",
+        "constraints.rs",
+        "decision.rs",
+        "alternatives.rs",
+        "evaluation.rs",
+        "uncertainty.rs",
+        "reflection.rs",
+        "critique.rs",
+        "symbolic/mod.rs",
+        "symbolic/rules.rs",
+        "symbolic/logic.rs",
+        "symbolic/solver.rs",
+        "hybrid/mod.rs",
+        "hybrid/deterministic.rs",
+        "hybrid/model_assisted.rs",
+        "evidence.rs"
+      ]
     },
     {
       "id": "repository",
@@ -1729,7 +1883,30 @@
         "incremental.rs",
         "persistence.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "query.rs",
+        "index.rs",
+        "document.rs",
+        "ingestion.rs",
+        "lexical/mod.rs",
+        "lexical/tokenizer.rs",
+        "lexical/inverted_index.rs",
+        "lexical/ranking.rs",
+        "semantic/mod.rs",
+        "semantic/embeddings.rs",
+        "semantic/vector.rs",
+        "semantic/similarity.rs",
+        "semantic/index.rs",
+        "hybrid/mod.rs",
+        "hybrid/fusion.rs",
+        "hybrid/reranking.rs",
+        "code_search.rs",
+        "filters.rs",
+        "incremental.rs",
+        "persistence.rs"
+      ]
     },
     {
       "id": "security",
@@ -1847,7 +2024,41 @@
         "adapters/generic.rs",
         "incremental.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "language.rs",
+        "detection.rs",
+        "parser.rs",
+        "syntax_tree.rs",
+        "symbol.rs",
+        "symbol_table.rs",
+        "reference.rs",
+        "call_graph.rs",
+        "dependency_graph.rs",
+        "control_flow.rs",
+        "data_flow.rs",
+        "type_information.rs",
+        "semantic.rs",
+        "diagnostics.rs",
+        "indexing.rs",
+        "impact_analysis.rs",
+        "complexity.rs",
+        "adapters/mod.rs",
+        "adapters/tree_sitter.rs",
+        "adapters/lsp.rs",
+        "adapters/rust.rs",
+        "adapters/python.rs",
+        "adapters/javascript.rs",
+        "adapters/typescript.rs",
+        "adapters/java.rs",
+        "adapters/c.rs",
+        "adapters/cpp.rs",
+        "adapters/go.rs",
+        "adapters/zamani.rs",
+        "adapters/generic.rs",
+        "incremental.rs"
+      ]
     },
     {
       "id": "storage",
@@ -2008,7 +2219,30 @@
         "flaky_detection.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "discovery.rs",
+        "test_case.rs",
+        "test_suite.rs",
+        "generation.rs",
+        "execution.rs",
+        "fixtures.rs",
+        "isolation.rs",
+        "assertions.rs",
+        "coverage.rs",
+        "results.rs",
+        "regression.rs",
+        "property_based.rs",
+        "mutation.rs",
+        "fuzzing.rs",
+        "integration.rs",
+        "end_to_end.rs",
+        "performance.rs",
+        "security.rs",
+        "flaky_detection.rs",
+        "reporting.rs"
+      ]
     },
     {
       "id": "tools",

@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-KNOWLEDGE-LIB-001",
+      "planned_source": "crates/knowledge/src/lib.rs",
+      "contract": "crates/knowledge/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-ERROR-001",
+      "planned_source": "crates/knowledge/src/error.rs",
+      "contract": "crates/knowledge/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-ENTITY-001",
+      "planned_source": "crates/knowledge/src/entity.rs",
+      "contract": "crates/knowledge/specifications/modules/entity.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-ENTITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-RELATIONSHIP-001",
+      "planned_source": "crates/knowledge/src/relationship.rs",
+      "contract": "crates/knowledge/specifications/modules/relationship.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-RELATIONSHIP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-GRAPH-001",
+      "planned_source": "crates/knowledge/src/graph.rs",
+      "contract": "crates/knowledge/specifications/modules/graph.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-GRAPH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-ONTOLOGY-001",
+      "planned_source": "crates/knowledge/src/ontology.rs",
+      "contract": "crates/knowledge/specifications/modules/ontology.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-ONTOLOGY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-SCHEMA-001",
+      "planned_source": "crates/knowledge/src/schema.rs",
+      "contract": "crates/knowledge/specifications/modules/schema.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-SCHEMA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-EXTRACTION-001",
+      "planned_source": "crates/knowledge/src/extraction.rs",
+      "contract": "crates/knowledge/specifications/modules/extraction.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-EXTRACTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-INGESTION-001",
+      "planned_source": "crates/knowledge/src/ingestion.rs",
+      "contract": "crates/knowledge/specifications/modules/ingestion.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-INGESTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-VALIDATION-001",
+      "planned_source": "crates/knowledge/src/validation.rs",
+      "contract": "crates/knowledge/specifications/modules/validation.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-INFERENCE-001",
+      "planned_source": "crates/knowledge/src/inference.rs",
+      "contract": "crates/knowledge/specifications/modules/inference.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-INFERENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-QUERY-001",
+      "planned_source": "crates/knowledge/src/query.rs",
+      "contract": "crates/knowledge/specifications/modules/query.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-QUERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-TRAVERSAL-001",
+      "planned_source": "crates/knowledge/src/traversal.rs",
+      "contract": "crates/knowledge/specifications/modules/traversal.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-TRAVERSAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-PROVENANCE-001",
+      "planned_source": "crates/knowledge/src/provenance.rs",
+      "contract": "crates/knowledge/specifications/modules/provenance.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-PROVENANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-VERSIONING-001",
+      "planned_source": "crates/knowledge/src/versioning.rs",
+      "contract": "crates/knowledge/specifications/modules/versioning.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-VERSIONING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-CONFLICT-001",
+      "planned_source": "crates/knowledge/src/conflict.rs",
+      "contract": "crates/knowledge/specifications/modules/conflict.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-CONFLICT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-DOMAINS-MOD-001",
+      "planned_source": "crates/knowledge/src/domains/mod.rs",
+      "contract": "crates/knowledge/specifications/modules/domains/mod.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-DOMAINS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-DOMAINS-SOFTWARE-001",
+      "planned_source": "crates/knowledge/src/domains/software.rs",
+      "contract": "crates/knowledge/specifications/modules/domains/software.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-DOMAINS-SOFTWARE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-DOMAINS-ARCHITECTURE-001",
+      "planned_source": "crates/knowledge/src/domains/architecture.rs",
+      "contract": "crates/knowledge/specifications/modules/domains/architecture.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-DOMAINS-ARCHITECTURE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-DOMAINS-DEPENDENCIES-001",
+      "planned_source": "crates/knowledge/src/domains/dependencies.rs",
+      "contract": "crates/knowledge/specifications/modules/domains/dependencies.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-DOMAINS-DEPENDENCIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-DOMAINS-DOCUMENTATION-001",
+      "planned_source": "crates/knowledge/src/domains/documentation.rs",
+      "contract": "crates/knowledge/specifications/modules/domains/documentation.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-DOMAINS-DOCUMENTATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-DOMAINS-ORGANIZATIONAL-001",
+      "planned_source": "crates/knowledge/src/domains/organizational.rs",
+      "contract": "crates/knowledge/specifications/modules/domains/organizational.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-DOMAINS-ORGANIZATIONAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-KNOWLEDGE-PERSISTENCE-001",
+      "planned_source": "crates/knowledge/src/persistence.rs",
+      "contract": "crates/knowledge/specifications/modules/persistence.md",
+      "specified_tests": [
+        "ZIP-KNOWLEDGE-PERSISTENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

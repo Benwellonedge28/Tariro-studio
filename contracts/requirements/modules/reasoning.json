@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-REASONING-LIB-001",
+      "planned_source": "crates/reasoning/src/lib.rs",
+      "contract": "crates/reasoning/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-REASONING-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-ERROR-001",
+      "planned_source": "crates/reasoning/src/error.rs",
+      "contract": "crates/reasoning/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-REASONING-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-PROBLEM-001",
+      "planned_source": "crates/reasoning/src/problem.rs",
+      "contract": "crates/reasoning/specifications/modules/problem.md",
+      "specified_tests": [
+        "ZIP-REASONING-PROBLEM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-DECOMPOSITION-001",
+      "planned_source": "crates/reasoning/src/decomposition.rs",
+      "contract": "crates/reasoning/specifications/modules/decomposition.md",
+      "specified_tests": [
+        "ZIP-REASONING-DECOMPOSITION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-PLANNING-001",
+      "planned_source": "crates/reasoning/src/planning.rs",
+      "contract": "crates/reasoning/specifications/modules/planning.md",
+      "specified_tests": [
+        "ZIP-REASONING-PLANNING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-CONSTRAINTS-001",
+      "planned_source": "crates/reasoning/src/constraints.rs",
+      "contract": "crates/reasoning/specifications/modules/constraints.md",
+      "specified_tests": [
+        "ZIP-REASONING-CONSTRAINTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-DECISION-001",
+      "planned_source": "crates/reasoning/src/decision.rs",
+      "contract": "crates/reasoning/specifications/modules/decision.md",
+      "specified_tests": [
+        "ZIP-REASONING-DECISION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-ALTERNATIVES-001",
+      "planned_source": "crates/reasoning/src/alternatives.rs",
+      "contract": "crates/reasoning/specifications/modules/alternatives.md",
+      "specified_tests": [
+        "ZIP-REASONING-ALTERNATIVES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-EVALUATION-001",
+      "planned_source": "crates/reasoning/src/evaluation.rs",
+      "contract": "crates/reasoning/specifications/modules/evaluation.md",
+      "specified_tests": [
+        "ZIP-REASONING-EVALUATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-UNCERTAINTY-001",
+      "planned_source": "crates/reasoning/src/uncertainty.rs",
+      "contract": "crates/reasoning/specifications/modules/uncertainty.md",
+      "specified_tests": [
+        "ZIP-REASONING-UNCERTAINTY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-REFLECTION-001",
+      "planned_source": "crates/reasoning/src/reflection.rs",
+      "contract": "crates/reasoning/specifications/modules/reflection.md",
+      "specified_tests": [
+        "ZIP-REASONING-REFLECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-CRITIQUE-001",
+      "planned_source": "crates/reasoning/src/critique.rs",
+      "contract": "crates/reasoning/specifications/modules/critique.md",
+      "specified_tests": [
+        "ZIP-REASONING-CRITIQUE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-SYMBOLIC-MOD-001",
+      "planned_source": "crates/reasoning/src/symbolic/mod.rs",
+      "contract": "crates/reasoning/specifications/modules/symbolic/mod.md",
+      "specified_tests": [
+        "ZIP-REASONING-SYMBOLIC-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-SYMBOLIC-RULES-001",
+      "planned_source": "crates/reasoning/src/symbolic/rules.rs",
+      "contract": "crates/reasoning/specifications/modules/symbolic/rules.md",
+      "specified_tests": [
+        "ZIP-REASONING-SYMBOLIC-RULES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-SYMBOLIC-LOGIC-001",
+      "planned_source": "crates/reasoning/src/symbolic/logic.rs",
+      "contract": "crates/reasoning/specifications/modules/symbolic/logic.md",
+      "specified_tests": [
+        "ZIP-REASONING-SYMBOLIC-LOGIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-SYMBOLIC-SOLVER-001",
+      "planned_source": "crates/reasoning/src/symbolic/solver.rs",
+      "contract": "crates/reasoning/specifications/modules/symbolic/solver.md",
+      "specified_tests": [
+        "ZIP-REASONING-SYMBOLIC-SOLVER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-HYBRID-MOD-001",
+      "planned_source": "crates/reasoning/src/hybrid/mod.rs",
+      "contract": "crates/reasoning/specifications/modules/hybrid/mod.md",
+      "specified_tests": [
+        "ZIP-REASONING-HYBRID-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-HYBRID-DETERMINISTIC-001",
+      "planned_source": "crates/reasoning/src/hybrid/deterministic.rs",
+      "contract": "crates/reasoning/specifications/modules/hybrid/deterministic.md",
+      "specified_tests": [
+        "ZIP-REASONING-HYBRID-DETERMINISTIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-HYBRID-MODEL-ASSISTED-001",
+      "planned_source": "crates/reasoning/src/hybrid/model_assisted.rs",
+      "contract": "crates/reasoning/specifications/modules/hybrid/model_assisted.md",
+      "specified_tests": [
+        "ZIP-REASONING-HYBRID-MODEL-ASSISTED-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-REASONING-EVIDENCE-001",
+      "planned_source": "crates/reasoning/src/evidence.rs",
+      "contract": "crates/reasoning/specifications/modules/evidence.md",
+      "specified_tests": [
+        "ZIP-REASONING-EVIDENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
