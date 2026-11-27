@@ -70,3 +70,23 @@ crates/synchronization/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Drop connection mid-transfer, resume, preserve divergent histories.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`synchronization.rs`](specifications/modules/synchronization.md)
+- [`manifest.rs`](specifications/modules/manifest.md)
+- [`change_set.rs`](specifications/modules/change_set.md)
+- [`version.rs`](specifications/modules/version.md)
+- [`conflict.rs`](specifications/modules/conflict.md)
+- [`reconciliation.rs`](specifications/modules/reconciliation.md)
+- [`replication.rs`](specifications/modules/replication.md)
+- [`compression.rs`](specifications/modules/compression.md)
+- [`encryption.rs`](specifications/modules/encryption.md)
+- [`integrity.rs`](specifications/modules/integrity.md)
+- [`checkpoint.rs`](specifications/modules/checkpoint.md)
+- [`offline_queue.rs`](specifications/modules/offline_queue.md)
+- [`transport.rs`](specifications/modules/transport.md)
