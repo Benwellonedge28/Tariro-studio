@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "scope": "crates/foundation",
+  "basis": "9551b0fde3d792be82bcdf419b5fa45c43559c7e",
+  "status": "specified-not-executed",
+  "cases": [
+    {
+      "id": "FND-ROOT-T01",
+      "kind": "compile",
+      "procedure": "Import every declared Foundation module from a downstream crate; add a separate negative consumer with an unsafe block in a member inheriting workspace lints.",
+      "expected": "All declared imports resolve; negative member is rejected by unsafe_code before execution."
+    },
+    {
+      "id": "FND-RESULT-T01",
+      "kind": "runtime",
+      "procedure": "Pass Ok(7) and each enumerated FoundationError through a function returning the Result alias.",
+      "expected": "Ok remains 7; every error variant and stable code is preserved."
+    },
+    {
+      "id": "FND-PRE-T01",
+      "kind": "compile",
+      "procedure": "Import every documented prelude export individually; in separate negative fixtures import prelude::CancellationSource and prelude::Uuid.",
+      "expected": "Named exports compile; each negative import fails to resolve its intended symbol."
+    },
+    {
+      "id": "FND-IDENT-T01",
+      "kind": "compile",
+      "procedure": "Import generation, identifier and namespace from a downstream crate; try a struct literal for Identifier containing valid typed fields.",
+      "expected": "All modules import; downstream construction fails specifically because fields are private."
+    },
+    {
+      "id": "FND-NS-T01",
+      "kind": "runtime",
+      "procedure": "Parse api.v1 at 6 bytes, api.v1 at 5 bytes, api. at 4 bytes, A at 1 byte and empty input at zero bytes.",
+      "expected": "Return api.v1, LimitExceeded, InvalidIdentifier, InvalidIdentifier and InvalidIdentifier respectively."
+    },
+    {
+      "id": "FND-GEN-T01",
+      "kind": "runtime",
+      "procedure": "Inject counting UUID sources returning one nonnil UUID, one nil UUID and a typed source error. Request IdKind::Device each time.",
+      "expected": "Exactly one source call; valid output is Device with original bytes, nil returns NilIdentifier, error is unchanged."
+    },
+    {
+      "id": "FND-TYP-T01",
+      "kind": "compile",
+      "procedure": "In a downstream fixture import each published types module with no daemon or provider configured.",
+      "expected": "All imports resolve without using any daemon, provider or background process."
+    },
+    {
+      "id": "FND-TIME-T01",
+      "kind": "runtime",
+      "procedure": "Construct (-1,999999999), (-62135596800,0), (253402300799,999999999), and test seconds outside both endpoints and 1000000000 fractional ns. Encode and read each valid UTC form.",
+      "expected": "Exact round trips for valid values, LimitExceeded for each invalid input, and valid forms include nine fractional digits and Z."
+    },
+    {
+      "id": "FND-DUR-T01",
+      "kind": "runtime",
+      "procedure": "Construct 0, 9007199254740993 and u64::MAX milliseconds; add 1 to max and encode at JSON boundary.",
+      "expected": "Zero duration is accepted, decimal strings preserve full precision, and max + 1 returns QuantityOverflow."
+    },
+    {
+      "id": "FND-VER-T01",
+      "kind": "runtime",
+      "procedure": "Parse 0.0.0, 65535.0.1, 65536.0.1, 01.1.1, 1.1.1-beta and 65536.1.bad. Compare 1.9.9 against 2.0.0.",
+      "expected": "First two succeed, third overflows, last three fail grammar, and 1.9.9 orders before 2.0.0."
+    },
+    {
+      "id": "FND-QTY-T01",
+      "kind": "compile",
+      "procedure": "Build distinct Bytes and Tokens quantity markers and attempt mixed addition. In a positive fixture add Bytes(3) and Bytes(4) and overflow Bytes(u64::MAX) plus 1.",
+      "expected": "Mixed units fail type checking; pure same-unit results are 7 and QuantityOverflow respectively."
+    },
+    {
+      "id": "FND-BND-T01",
+      "kind": "runtime",
+      "procedure": "Copy [0,255] with limit 2, then repeat with limit 1; copy empty input with limit 0 and observe a scoped allocation probe.",
+      "expected": "First/last produce exact copies, denial makes no allocation attempt, and borrowed/consumed bytes agree."
+    },
+    {
+      "id": "FND-PORTS-T01",
+      "kind": "compile",
+      "procedure": "Import capability, compatibility, component and lifecycle under the minimal Foundation profile.",
+      "expected": "All four paths resolve without daemon features."
+    },
+    {
+      "id": "FND-CMP-T01",
+      "kind": "compile",
+      "procedure": "Construct descriptor using a live namespace and capability slice; in a negative fixture return descriptor borrowing a local namespace.",
+      "expected": "Positive construction succeeds; return of the local borrow is rejected."
+    },
+    {
+      "id": "FND-CAP-T01",
+      "kind": "runtime",
+      "procedure": "Offer artifact.read 1.2.1; request same ID at 1.1.99, 1.2.9, 1.3.0 and 2.0.0, plus artifact.write 1.1.0.",
+      "expected": "Results are true, true, false, false, false in that order. No approval is issued."
+    },
+    {
+      "id": "FND-LIF-T01",
+      "kind": "runtime",
+      "procedure": "Evaluate is_terminal on Created, Ready, Running, Draining, Stopped and Failed.",
+      "expected": "Only Stopped and Failed return true; the fixture does not assert cleanup from phase alone."
+    },
+    {
+      "id": "FND-COMP-T01",
+      "kind": "runtime",
+      "procedure": "Negotiate 1.4.9 with 1.2.0 in both orders, then 1.4.9 with 2.4.9. Request a minor-3-only feature using agreed minor 2 in adapter fixture.",
+      "expected": "Both compatible orders yield (1,2); major mismatch yields None and required feature is denied."
+    },
+    {
+      "id": "FND-VAL-T01",
+      "kind": "compile",
+      "procedure": "Import constraints and invariant; attempt a downstream U64Range literal with inverted bounds in isolated negative fixture.",
+      "expected": "Both module imports resolve and a direct literal is rejected as private."
+    },
+    {
+      "id": "FND-RNG-T01",
+      "kind": "runtime",
+      "procedure": "Try range 8..=7, check range 7..=7 against 6,7,8, and check u64::MAX..=u64::MAX with the maximum.",
+      "expected": "Inverted bounds fail; singleton rejects 6 and 8, accepts 7; max singleton passes."
+    },
+    {
+      "id": "FND-INV-T01",
+      "kind": "runtime",
+      "procedure": "Call require(true,e) and require(false,e) for each FoundationError variant.",
+      "expected": "True returns Ok(()); false returns exactly e with no I/O or retry."
+    },
+    {
+      "id": "FND-PROV-T01",
+      "kind": "runtime",
+      "procedure": "Encode two records for same source/digest observed at seconds 0 and 1; in receiving adapter verify against a different digest.",
+      "expected": "Both timestamps and typed source round-trip; different candidate digest fails verification."
+    },
+    {
+      "id": "FND-ERR-T01",
+      "kind": "runtime",
+      "procedure": "Enumerate FoundationError variants in documented order and capture code and Display for each.",
+      "expected": "Each code equals documented lower-snake-case spelling and Display contains that code only."
+    },
+    {
+      "id": "FND-ERR-T02",
+      "kind": "compile",
+      "procedure": "Check Send + Sync using a generic trait-bound helper, and compare identical and different FoundationError variants in a positive test.",
+      "expected": "All traits resolve and equality matches variant identity."
+    },
+    {
+      "id": "FND-ERR-T03",
+      "kind": "runtime",
+      "procedure": "Send malformed identifier and digest strings including synthetic value CANDIDATE_CANARY; capture returned Display values.",
+      "expected": "Stable error strings contain neither rejected payload nor the canary."
+    },
+    {
+      "id": "FND-ID-T01",
+      "kind": "runtime",
+      "procedure": "Parse f085e513-c740-416b-d33d-26758ead6d0c as Repository, compare UUID bytes, format canonical spelling and parse again.",
+      "expected": "Kind, bytes and exact spelling match across both parses."
+    },
+    {
+      "id": "FND-ID-T02",
+      "kind": "runtime",
+      "procedure": "Give uppercase, missing hyphen, trailing text and canonical all-zero UUID.",
+      "expected": "First three return InvalidIdentifier; all-zero returns NilIdentifier."
+    },
+    {
+      "id": "FND-ID-T03",
+      "kind": "runtime",
+      "procedure": "Construct Repository and Workspace using the same UUID; put them in equality-keyed set.",
+      "expected": "Values unequal; set has two entries regardless of whether hash values collide."
+    },
+    {
+      "id": "FND-ID-T04",
+      "kind": "property",
+      "procedure": "Run approved seeded byte mutation over canonical UUID corpus including arbitrary UTF-8 and invalid raw UTF-8 at adapter boundary.",
+      "expected": "No panic; accepted value is canonical and nonnil. Invalid raw UTF-8 does not reach the str parser."
+    },
+    {
+      "id": "FND-DIG-T01",
+      "kind": "runtime",
+      "procedure": "Parse sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 and write tagged bytes.",
+      "expected": "Exactly 71 canonical bytes and correct 32-byte digest."
+    },
+    {
+      "id": "FND-DIG-T02",
+      "kind": "runtime",
+      "procedure": "For canonical sha256 tag, supply uppercase payload, short payload, long payload and extra colon.",
+      "expected": "All return InvalidDigestEncoding."
+    },
+    {
+      "id": "FND-DIG-T03",
+      "kind": "runtime",
+      "procedure": "Give sha999 tag with canonical hex and separately an empty payload, whitespace and multi-colon framing.",
+      "expected": "Valid unknown tag is UnsupportedDigestAlgorithm; malformed framing is InvalidDigestEncoding."
+    },
+    {
+      "id": "FND-DIG-T04",
+      "kind": "property",
+      "procedure": "Generate arbitrary 32-byte values from pinned seed, write into fixed output and read back; inject malformed strings.",
+      "expected": "Round trips equal, no panic, parser and writer do not allocate."
+    },
+    {
+      "id": "FND-LIM-T01",
+      "kind": "runtime",
+      "procedure": "Check zero demand against Limit(0), charge 3 against bound 3, then charge 1; compare same run with configured bound 4.",
+      "expected": "Initial equality succeeds, extra charge against 3 fails atomically, and the same additional charge against 4 succeeds."
+    },
+    {
+      "id": "FND-LIM-T02",
+      "kind": "runtime",
+      "procedure": "Start usage at u64::MAX under bound u64::MAX and charge 1; repeat at 3 under bound 3.",
+      "expected": "First fails QuantityOverflow, second LimitExceeded, and prior usage is retained."
+    },
+    {
+      "id": "FND-LIM-T03",
+      "kind": "property",
+      "procedure": "Generate lease bound and monotonic charges with a pinned seed; compare accepted cumulative total and typed rejection against checked integer reference.",
+      "expected": "Success agrees with inclusive checked sum and each error leaves state unchanged."
+    },
+    {
+      "id": "FND-CAN-T01",
+      "kind": "concurrency",
+      "procedure": "Schedule cancel before first poll and first poll before cancel using directed barriers and separate active wakers. Repoll after each schedule.",
+      "expected": "Both end Ready(Ok); only already registered waiter receives a wake, with no lost notification."
+    },
+    {
+      "id": "FND-CAN-T02",
+      "kind": "concurrency",
+      "procedure": "Reserve two waiters, drop first while Pending, register replacement, then cancel.",
+      "expected": "Only remaining waiter and replacement wake, each once. Capacity recovered before cancel."
+    },
+    {
+      "id": "FND-CAN-T03",
+      "kind": "concurrency",
+      "procedure": "Race two calls to cancel with synchronized starting barrier, then invoke a third time.",
+      "expected": "Exactly one true and two false; registered waiters each wake once."
+    },
+    {
+      "id": "FND-CAN-T04",
+      "kind": "concurrency",
+      "procedure": "At zero capacity poll an uncancelled token, cancel and create a new wait. At finite capacity repoll with a new waker and cancel. In a separate run drop the last waiter before cancellation.",
+      "expected": "First result ObserverLimit stays fused, new wait is ready successful, only the replacement waker fires after repoll, and dropping the last waiter leaves no wake."
+    },
+    {
+      "id": "FND-CAN-T05",
+      "kind": "concurrency",
+      "procedure": "Use Waker implementing safe std::task::Wake whose callback re-enters is_cancelled, and a displaced waker whose drop re-enters observation.",
+      "expected": "Test completes under harness deadline and observes sticky cancellation without waiting on held mutex."
+    }
+  ]
+}

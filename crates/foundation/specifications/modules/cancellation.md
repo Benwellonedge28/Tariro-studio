@@ -41,6 +41,12 @@ Use an `Arc` to a mutex-protected state with sticky flag, configured waiter limi
 
 Validate capacity before registration; return `ObserverLimit` if full and `AllocationFailed` if fallible map reservation fails. Use `QuantityOverflow` on registration ID exhaustion and `SynchronizationFailed` if the mutex is poisoned. Pending future Drop cannot return an error; a poisoned handle already fails closed for every following explicit operation. Calling `cancelled` allocates one boxed future under the caller's already-admitted memory envelope. Rust's process-level allocator failure behavior for infallible allocations applies to that box and the initial Arc; registration growth is fallible. Use no wall clock. Commit uncertainty, grace periods and process teardown belong to [the cancellation standard](../../../../CANCELLATION_STANDARD.md) and runtime.
 
+## Race and terminal-result rules
+
+A wait caches its terminal result and returns that result on later polls without locking, cloning a waker or allocating. While Pending, exactly one registered ID refers to that future. An attempt to replace or drop its registration may encounter an empty map after cancellation; that is expected. A future with a cached error is complete and is not resurrected by a subsequent cancel.
+
+The first successful flag change is the cancellation linearization point. Under the mutex, check the flag before quota or sequence logic. Check the waiter limit before a fallible map reservation. A failure must leave the existing registrations and sequence unchanged. For an already-cancelled token, return ready success even with zero waiter capacity. The cancellation-side map drain must be detached before invoking any waker. Waker callbacks are expected to return normally; a panic originating from an executor callback is outside the wake-delivery guarantee. No callback panic while outside the lock may poison the cancellation state.
+
 The module has no persistence, serialization or network effects. The state machine is process-local; reconstruction creates an independent scope after the runtime reconciles the persisted operation. Waker behavior is subject to Rust's executor contract. Require tests on declared targets, and report waiter operations and cancellation latency from callers without exposing the identity of registered wakers.
 
 ## Acceptance

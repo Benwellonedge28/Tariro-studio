@@ -12,7 +12,7 @@ pub struct Namespace(String); pub fn parse(input: &str, budget: crate::limits::L
 
 ## Implementation and invariants
 
-Check byte budget before allocation. Accept lowercase ASCII labels beginning with a letter, continuing with lowercase letters or digits, with a dot between labels. Reject empty input or empty label as InvalidIdentifier. Preserve original canonical bytes; fallible reserve reports AllocationFailed. Namespace conveys organization of keys, never permissions.
+Check byte budget first, then validate syntax, then reserve and copy. An invalid over-limit input returns LimitExceeded before examining its grammar. Accept lowercase ASCII labels beginning with a letter, continuing with lowercase letters or digits, with a dot between labels. Reject empty input or empty label as InvalidIdentifier. Preserve original canonical bytes; fallible reserve reports AllocationFailed. Namespace conveys organization of keys, never permissions.
 
 ## Acceptance
 

@@ -7,6 +7,7 @@
 Rust interface declarations (implementation bodies omitted).
 
 ```rust
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 pub struct DurationMillis(u64); impl DurationMillis { pub const fn new(value: u64) -> Self; pub const fn get(self) -> u64; pub fn checked_add(self, other: Self) -> crate::result::Result<Self>; pub fn as_std(self) -> std::time::Duration; }
 ```
 
