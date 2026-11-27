@@ -79,3 +79,29 @@ crates/scheduler/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test stable ordering, starvation resistance, stale completion rejection and restart.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`scheduler.rs`](specifications/modules/scheduler.md)
+- [`job.rs`](specifications/modules/job.md)
+- [`queue.rs`](specifications/modules/queue.md)
+- [`priority.rs`](specifications/modules/priority.md)
+- [`dependency.rs`](specifications/modules/dependency.md)
+- [`deadline.rs`](specifications/modules/deadline.md)
+- [`fairness.rs`](specifications/modules/fairness.md)
+- [`admission.rs`](specifications/modules/admission.md)
+- [`placement.rs`](specifications/modules/placement.md)
+- [`preemption.rs`](specifications/modules/preemption.md)
+- [`retry.rs`](specifications/modules/retry.md)
+- [`backpressure.rs`](specifications/modules/backpressure.md)
+- [`policies/mod.rs`](specifications/modules/policies/mod.md)
+- [`policies/sequential.rs`](specifications/modules/policies/sequential.md)
+- [`policies/parallel.rs`](specifications/modules/policies/parallel.md)
+- [`policies/priority.rs`](specifications/modules/policies/priority.md)
+- [`policies/resource_aware.rs`](specifications/modules/policies/resource_aware.md)
+- [`policies/distributed.rs`](specifications/modules/policies/distributed.md)
+- [`persistence.rs`](specifications/modules/persistence.md)
