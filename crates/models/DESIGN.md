@@ -91,3 +91,40 @@ crates/models/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Corrupt resume file, change ETag, verify only intact payload becomes Ready.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`model.rs`](specifications/modules/model.md)
+- [`identifier.rs`](specifications/modules/identifier.md)
+- [`manifest.rs`](specifications/modules/manifest.md)
+- [`registry.rs`](specifications/modules/registry.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`download.rs`](specifications/modules/download.md)
+- [`import.rs`](specifications/modules/import.md)
+- [`export.rs`](specifications/modules/export.md)
+- [`integrity.rs`](specifications/modules/integrity.md)
+- [`signature.rs`](specifications/modules/signature.md)
+- [`licensing.rs`](specifications/modules/licensing.md)
+- [`compatibility.rs`](specifications/modules/compatibility.md)
+- [`capabilities.rs`](specifications/modules/capabilities.md)
+- [`loader.rs`](specifications/modules/loader.md)
+- [`unloading.rs`](specifications/modules/unloading.md)
+- [`cache.rs`](specifications/modules/cache.md)
+- [`lifecycle.rs`](specifications/modules/lifecycle.md)
+- [`formats/mod.rs`](specifications/modules/formats/mod.md)
+- [`formats/gguf.rs`](specifications/modules/formats/gguf.md)
+- [`formats/safetensors.rs`](specifications/modules/formats/safetensors.md)
+- [`formats/onnx.rs`](specifications/modules/formats/onnx.md)
+- [`formats/manifest.rs`](specifications/modules/formats/manifest.md)
+- [`tokenization/mod.rs`](specifications/modules/tokenization/mod.md)
+- [`tokenization/tokenizer.rs`](specifications/modules/tokenization/tokenizer.md)
+- [`tokenization/vocabulary.rs`](specifications/modules/tokenization/vocabulary.md)
+- [`tokenization/chat_template.rs`](specifications/modules/tokenization/chat_template.md)
+- [`evaluation/mod.rs`](specifications/modules/evaluation/mod.md)
+- [`evaluation/benchmark.rs`](specifications/modules/evaluation/benchmark.md)
+- [`evaluation/quality.rs`](specifications/modules/evaluation/quality.md)
+- [`evaluation/performance.rs`](specifications/modules/evaluation/performance.md)
