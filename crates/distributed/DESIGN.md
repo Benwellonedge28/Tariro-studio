@@ -77,3 +77,31 @@ crates/distributed/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test stale worker receipt, unexpected node capability and network partitions.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`node.rs`](specifications/modules/node.md)
+- [`identity.rs`](specifications/modules/identity.md)
+- [`membership.rs`](specifications/modules/membership.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`registry.rs`](specifications/modules/registry.md)
+- [`heartbeat.rs`](specifications/modules/heartbeat.md)
+- [`capabilities.rs`](specifications/modules/capabilities.md)
+- [`resources.rs`](specifications/modules/resources.md)
+- [`placement.rs`](specifications/modules/placement.md)
+- [`scheduler.rs`](specifications/modules/scheduler.md)
+- [`worker.rs`](specifications/modules/worker.md)
+- [`coordinator.rs`](specifications/modules/coordinator.md)
+- [`execution.rs`](specifications/modules/execution.md)
+- [`task_lease.rs`](specifications/modules/task_lease.md)
+- [`artifact_transfer.rs`](specifications/modules/artifact_transfer.md)
+- [`checkpoint.rs`](specifications/modules/checkpoint.md)
+- [`recovery.rs`](specifications/modules/recovery.md)
+- [`partition.rs`](specifications/modules/partition.md)
+- [`reconciliation.rs`](specifications/modules/reconciliation.md)
+- [`security.rs`](specifications/modules/security.md)
+- [`metrics.rs`](specifications/modules/metrics.md)
