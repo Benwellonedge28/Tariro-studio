@@ -69,3 +69,26 @@ crates/context/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test prompt-like repository text, stable rank ties, token hard ceiling and no cross-scope retrieval.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`context.rs`](specifications/modules/context.md)
+- [`builder.rs`](specifications/modules/builder.md)
+- [`window.rs`](specifications/modules/window.md)
+- [`token_budget.rs`](specifications/modules/token_budget.md)
+- [`prioritization.rs`](specifications/modules/prioritization.md)
+- [`relevance.rs`](specifications/modules/relevance.md)
+- [`compression.rs`](specifications/modules/compression.md)
+- [`summarization.rs`](specifications/modules/summarization.md)
+- [`truncation.rs`](specifications/modules/truncation.md)
+- [`retrieval.rs`](specifications/modules/retrieval.md)
+- [`deduplication.rs`](specifications/modules/deduplication.md)
+- [`provenance.rs`](specifications/modules/provenance.md)
+- [`prompt.rs`](specifications/modules/prompt.md)
+- [`template.rs`](specifications/modules/template.md)
+- [`isolation.rs`](specifications/modules/isolation.md)
+- [`cache.rs`](specifications/modules/cache.md)
