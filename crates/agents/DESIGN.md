@@ -95,3 +95,48 @@ crates/agents/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test shared model isolated context and agent blocked from self-elevation.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`agent.rs`](specifications/modules/agent.md)
+- [`identity.rs`](specifications/modules/identity.md)
+- [`manifest.rs`](specifications/modules/manifest.md)
+- [`capabilities.rs`](specifications/modules/capabilities.md)
+- [`lifecycle.rs`](specifications/modules/lifecycle.md)
+- [`state.rs`](specifications/modules/state.md)
+- [`context.rs`](specifications/modules/context.md)
+- [`execution.rs`](specifications/modules/execution.md)
+- [`communication.rs`](specifications/modules/communication.md)
+- [`mailbox.rs`](specifications/modules/mailbox.md)
+- [`registry.rs`](specifications/modules/registry.md)
+- [`factory.rs`](specifications/modules/factory.md)
+- [`supervision.rs`](specifications/modules/supervision.md)
+- [`delegation.rs`](specifications/modules/delegation.md)
+- [`collaboration.rs`](specifications/modules/collaboration.md)
+- [`evaluation.rs`](specifications/modules/evaluation.md)
+- [`permissions.rs`](specifications/modules/permissions.md)
+- [`limits.rs`](specifications/modules/limits.md)
+- [`roles/mod.rs`](specifications/modules/roles/mod.md)
+- [`roles/coordinator.rs`](specifications/modules/roles/coordinator.md)
+- [`roles/researcher.rs`](specifications/modules/roles/researcher.md)
+- [`roles/architect.rs`](specifications/modules/roles/architect.md)
+- [`roles/planner.rs`](specifications/modules/roles/planner.md)
+- [`roles/documentation.rs`](specifications/modules/roles/documentation.md)
+- [`roles/developer.rs`](specifications/modules/roles/developer.md)
+- [`roles/reviewer.rs`](specifications/modules/roles/reviewer.md)
+- [`roles/tester.rs`](specifications/modules/roles/tester.md)
+- [`roles/debugger.rs`](specifications/modules/roles/debugger.md)
+- [`roles/security.rs`](specifications/modules/roles/security.md)
+- [`roles/database.rs`](specifications/modules/roles/database.md)
+- [`roles/performance.rs`](specifications/modules/roles/performance.md)
+- [`roles/devops.rs`](specifications/modules/roles/devops.md)
+- [`roles/release.rs`](specifications/modules/roles/release.md)
+- [`roles/compliance.rs`](specifications/modules/roles/compliance.md)
+- [`roles/maintenance.rs`](specifications/modules/roles/maintenance.md)
+- [`roles/repository.rs`](specifications/modules/roles/repository.md)
+- [`roles/auditor.rs`](specifications/modules/roles/auditor.md)
+- [`metrics.rs`](specifications/modules/metrics.md)
