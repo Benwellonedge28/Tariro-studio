@@ -71,3 +71,23 @@ crates/audit/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Mutate one record and detect chain failure. Verify ordering under concurrent writers.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`record.rs`](specifications/modules/record.md)
+- [`journal.rs`](specifications/modules/journal.md)
+- [`actor.rs`](specifications/modules/actor.md)
+- [`operation.rs`](specifications/modules/operation.md)
+- [`authorization.rs`](specifications/modules/authorization.md)
+- [`evidence.rs`](specifications/modules/evidence.md)
+- [`hash_chain.rs`](specifications/modules/hash_chain.md)
+- [`integrity.rs`](specifications/modules/integrity.md)
+- [`redaction.rs`](specifications/modules/redaction.md)
+- [`query.rs`](specifications/modules/query.md)
+- [`retention.rs`](specifications/modules/retention.md)
+- [`export.rs`](specifications/modules/export.md)
+- [`verification.rs`](specifications/modules/verification.md)
