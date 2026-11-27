@@ -1,0 +1,1266 @@
+{
+  "schema": "../schemas/dependency-graph.schema.json",
+  "contract_version": 1,
+  "source_revision": "abccb12b546bb4cdaca6d08624fb61458ef0d382",
+  "components": [
+    {
+      "id": "agents",
+      "design": "crates/agents/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "intelligence",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "runtime",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "assignments",
+      "design": "crates/assignments/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "events",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "audit",
+      "design": "crates/audit/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "compilation",
+      "design": "crates/compilation/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "repository",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "terminal",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "configuration",
+      "design": "crates/configuration/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "context",
+      "design": "crates/context/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "repository",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "search",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "debugging",
+      "design": "crates/debugging/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "source-analysis",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "terminal",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "deployment",
+      "design": "crates/deployment/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "networking",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "distributed",
+      "design": "crates/distributed/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "networking",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "scheduler",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "synchronization",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "documentation",
+      "design": "crates/documentation/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "assignments",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "context",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "repository",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "economics",
+      "design": "crates/economics/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "design": "crates/engineering/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "assignments",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "repository",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "events",
+      "design": "crates/events/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "evolution",
+      "design": "crates/evolution/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "repository",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "filesystem",
+      "design": "crates/filesystem/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "foundation",
+      "design": "crates/foundation/DESIGN.md",
+      "dependencies": []
+    },
+    {
+      "id": "governance",
+      "design": "crates/governance/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "events",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "identity",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "identity",
+      "design": "crates/identity/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "inference",
+      "design": "crates/inference/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "models",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "intelligence",
+      "design": "crates/intelligence/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "models",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "providers",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "interoperability",
+      "design": "crates/interoperability/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "networking",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "providers",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "knowledge",
+      "design": "crates/knowledge/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "source-analysis",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "maintenance",
+      "design": "crates/maintenance/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "audit",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "design": "crates/memory/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "models",
+      "design": "crates/models/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "networking",
+      "design": "crates/networking/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "observability",
+      "design": "crates/observability/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "events",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "orchestration",
+      "design": "crates/orchestration/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "agents",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "assignments",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "scheduler",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "plugins",
+      "design": "crates/plugins/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "sandbox",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "providers",
+      "design": "crates/providers/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "configuration",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "networking",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "reasoning",
+      "design": "crates/reasoning/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "context",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "intelligence",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "repository",
+      "design": "crates/repository/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "filesystem",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "terminal",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "research",
+      "design": "crates/research/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "networking",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "resources",
+      "design": "crates/resources/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "configuration",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "runtime",
+      "design": "crates/runtime/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "events",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "sandbox",
+      "design": "crates/sandbox/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "security",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "scheduler",
+      "design": "crates/scheduler/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "sdk",
+      "design": "crates/sdk/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "interoperability",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "search",
+      "design": "crates/search/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "design": "crates/security/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "identity",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "source-analysis",
+      "design": "crates/source-analysis/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "repository",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "design": "crates/storage/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "synchronization",
+      "design": "crates/synchronization/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "audit",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "networking",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "terminal",
+      "design": "crates/terminal/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "sandbox",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "design": "crates/testing/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "compilation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "terminal",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "verification",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "design": "crates/tools/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "resources",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "sandbox",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "verification",
+      "design": "crates/verification/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "repository",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "storage",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    },
+    {
+      "id": "workflows",
+      "design": "crates/workflows/DESIGN.md",
+      "dependencies": [
+        {
+          "component": "assignments",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "foundation",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "governance",
+          "optional": false,
+          "feature": null,
+          "target": null
+        },
+        {
+          "component": "scheduler",
+          "optional": false,
+          "feature": null,
+          "target": null
+        }
+      ]
+    }
+  ]
+}

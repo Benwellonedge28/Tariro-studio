@@ -1,6 +1,6 @@
 # Foundation crate design
 
-**Contract version** 1.0. Master design §9. Planned implementation.
+**Contract version** 1.1. Master design §9. Planned implementation. **Maturity:** D3.
 
 ## Responsibility and dependencies
 
@@ -25,8 +25,7 @@ Record families: Typed UUID IDs, SemVer, tagged SHA-256 digests and bounded byte
 The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
 
 - `Identifier { kind: IdKind, uuid: Uuid }`
-- `Digest { algorithm: DigestAlgorithm, bytes: [u8`
-- `32] }`
+- `Digest { algorithm: DigestAlgorithm, bytes: [u8; 32] }`
 - `MonotonicDeadline(Duration)`
 - `Version { major: u16, minor: u16, patch: u16 }`
 
@@ -81,6 +80,16 @@ crates/foundation/src/
 ├── provenance.rs
 └── prelude.rs
 ```
+
+## File contracts
+
+The following source files have dedicated contract drafts. The remaining files in the layout still require file-level review before this crate can reach D5.
+
+- [error.rs](specifications/modules/error.md)
+- [cancellation.rs](specifications/modules/cancellation.md)
+- [limits.rs](specifications/modules/limits.md)
+- [identity/identifier.rs](specifications/modules/identity/identifier.md)
+- [types/digest.rs](specifications/modules/types/digest.md)
 
 ## Implementation and acceptance
 

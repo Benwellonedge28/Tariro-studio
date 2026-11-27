@@ -1,7 +1,11 @@
-# Resource management
+# Adaptive resource management
 
-On the 16 GiB personal profile reserve 4 GiB for host/editor, up to 6 GiB for model weights, 2 GiB for context/buffers, 1 GiB for runtime/indexes and 3 GiB for compilation/headroom. Treat these as startup estimates. Enforce discovered usable capacity, measure actual allocation, and never load a second generation model on this profile. The 900 GB storage planning split is 100 OS, 150 models, 200 repositories, 100 build caches, 50 indexes, 100 snapshots and 200 free/expansion.
+**ZIP-RES-002 · v1.0 · Owner:** Resource and runtime maintainers. **Maturity:** D3.
 
-Reserve each task's RAM, device memory, processes, disk, time, concurrency and spending before dispatch. Admission acquires the whole vector atomically across host, workspace and assignment budgets. Unit counters use checked arithmetic. Keep the lease during shutdown until the supervisor verifies cleanup. Refuse operations requiring a dimension that cannot be measured or enforced.
+Use the [shared admission contract](RESOURCE_CONTRACT.md) and [limit classification](LIMITS_POLICY.md). The personal deployment example in the master design refers to a 16 GiB laptop and approximately 900 GB storage. Its example allocations are planning inputs. The active profile can prefer sequential execution and lightweight inference; actual concurrency and model fit are admitted against measured capacity and configured policy.
 
-Under pressure stop admissions; trim caches, shrink a new model request within its permitted quality floor, unload unpinned models and pause work with a checkpoint. Never evict referenced evidence or resume on a remote machine without authorization. Report estimated versus observed resource use and the specific constraint preventing admission.
+Discover allocatable capacity for host RAM, CPU availability, accelerator memory per device, storage per volume, process/sandbox limits, and supported network controls. A discovery record states source, units, observation age and whether each bound can be enforced. A profile is an input to admission, with effective bounds derived from the capacity snapshot, active reservations, pressure, mandatory policy and assignment constraints. Unknown required metrics deny admission unless an independently enforceable fallback is defined.
+
+Reserve RAM, device memory, processes, disk, time, concurrency and spending before dispatch. Acquire the whole vector atomically across host, workspace and assignment budgets. Use checked arithmetic. Keep the reservation through shutdown until the supervisor verifies cleanup. Bound streaming discovery, indexing, repository processing, workflow expansion and model requests under the same resource contract.
+
+Under pressure stop new admissions, trim eligible caches or reduce context and parallelism within policy. Protect pinned evidence and avoid changing locality without authorization. Report estimated versus observed use, policy and capacity revisions, limiting coordinate and cleanup status. Test two different effective budgets using the same binary and measure the actual workload before publishing a hardware guarantee.
