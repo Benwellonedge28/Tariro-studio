@@ -1,15 +1,11 @@
-# DAG dependency resolution
+# Stable dependency order and readiness
 
-**ZIP-WORKFLOWS-DEPENDENCY-001 · v1.0 · Owner:** Workflows maintainers. **Maturity:** D3 file contract draft.
+**ZIP-WORKFLOWS-DEPENDENCY-001 · v1.1 candidate · Owner** Workflows maintainers
 
-**Planned source:** `crates/workflows/src/dependency.rs`
+**Planned source** `crates/workflows/src/dependency.rs`
 
-## Required implementation behavior
+Resolve exact scoped identities and reject duplicate nodes, duplicate edges and self edges. Compute in-degrees from validated edges. Run Kahn's algorithm with zero-degree nodes in canonical identity order. If processing stops before all nodes are emitted, return Cycle without a runnable graph. Deterministic order chooses an inspection and submission order. It does not impose an execution order on independent ready nodes.
 
-Order stable dependencies, identify cycles, mark dependent ready only after required predecessor success. Unresolved or failed predecessor blocks.
+A required predecessor must have a durable Succeeded checkpoint. A required predecessor's Failed, Cancelled, Blocked, Compensated or Skipped outcome blocks the dependent. A declared allow-skipped edge can also accept Skipped, but every binding from that predecessor must accept a typed absence. Such an edge cannot accept failure or unresolved effects. Pending prerequisites wait. Guard evaluation occurs only after eligibility from dependencies. Each executor sees exactly the artifact bindings accepted by the plan.
 
-## Acceptance
-
-**ZIP-WORKFLOWS-DEPENDENCY-T01.** Failed stage cannot start downstream step.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-WORKFLOWS-DEPENDENCY-T01.** Reject a cycle regardless of input order. A failed prerequisite never makes a dependent ready. A skipped prerequisite only permits a declared allow-skipped edge with no mandatory bound value.

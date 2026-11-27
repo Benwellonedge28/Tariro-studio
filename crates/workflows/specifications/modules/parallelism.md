@@ -1,15 +1,11 @@
-# Admitted parallel stages
+# Admitted independent execution
 
-**ZIP-WORKFLOWS-PARALLELISM-001 · v1.0 · Owner:** Workflows maintainers. **Maturity:** D3 file contract draft.
+**ZIP-WORKFLOWS-PARALLELISM-001 · v1.1 candidate · Owner** Workflows maintainers
 
-**Planned source:** `crates/workflows/src/parallelism.rs`
+**Planned source** `crates/workflows/src/parallelism.rs`
 
-## Required implementation behavior
+Intersect execution plan preferences, assignment and scheduler limits, and live resource admission. Independent ready nodes may run concurrently when every compatibility and conflict condition holds. Canonicalize declared conflict keys by authority domain and normalized path or provider effect target. Take required exclusive keys in canonical order before handoff, with an atomic all-or-none claim. Unknown write sets cannot use parallel mutation. A parallelism preference cannot bypass an exclusive key or a tighter current limit.
 
-Run independent scoped steps only under resource reservations and conflict checks. Serial or limited profiles constrain concurrent claims.
+Hold conflict ownership through verified settlement. An expired worker cannot use a key, yet the key stays unavailable to replacement writers until fencing and cleanup prove it safe. Never release the conflict key solely because a local wait or timer ended. Within each run, use deterministic ready order subject to current eligibility and scheduler fairness. Resource denial defers rather than fabricating success.
 
-## Acceptance
-
-**ZIP-WORKFLOWS-PARALLELISM-T01.** Shared write conflict serializes even if both steps are Ready.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-WORKFLOWS-PARALLELISM-T01.** Two otherwise eligible steps writing the same normalized path cannot both dispatch. After a lost receipt, the second waits for reconciliation.

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-WORKFLOWS-COMPILER-001",
+  "cases": [
+    {"id":"ZIP-WF-FIX-001","requirement":"ZIP-WORKFLOWS-COMPILER-T01","scenario":"Stable dependency order","input":{"nodes":["C","B","A"],"edges":[["A","C"],["B","C"]]},"expected":{"order":["A","B","C"]}},
+    {"id":"ZIP-WF-FIX-002","requirement":"ZIP-WORKFLOWS-DEPENDENCY-T01","scenario":"Cycle","input":{"nodes":["A","B"],"edges":[["A","B"],["B","A"]]},"expected":{"error":"Cycle","dispatches":0}},
+    {"id":"ZIP-WF-FIX-003","requirement":"ZIP-WORKFLOWS-LOOPING-T01","scenario":"Static expansion and bound","input":{"repeats":2,"leaves":3,"caps":[5,6]},"expected":{"expanded_count":6,"results":["ExpansionLimit","Compiled"]}},
+    {"id":"ZIP-WF-FIX-004","requirement":"ZIP-WORKFLOWS-CONDITION-T01","scenario":"Missing reference before Boolean short circuit","input":{"guard":"true || missing_flag","binding_names":[]},"expected":{"decision":"MissingInput","dispatches":0}},
+    {"id":"ZIP-WF-FIX-005","requirement":"ZIP-WORKFLOWS-BRANCHING-T01","scenario":"Decision replay keyed to input","input":{"saved_input":"seed-1","new_inputs":["seed-1","seed-2"],"saved_decision":false},"expected":{"decisions":["Skipped","StaleCheckpoint"]}},
+    {"id":"ZIP-WF-FIX-006","requirement":"ZIP-WORKFLOWS-CHECKPOINT-T01","scenario":"Recover independent nodes out of order","input":{"nodes":["A","B","Join"],"edges":[["A","Join"],["B","Join"]],"durable_before_restart":["B"]},"expected":{"eligible_after_restart":["A"],"never_rerun":["B"],"eligible_after_a":["Join"]}},
+    {"id":"ZIP-WF-FIX-007","requirement":"ZIP-WORKFLOWS-ARTIFACTS-T01","scenario":"Verify artifact identity","input":{"current_run":"run-a","digest":"digest-a","candidates":[["run-b","digest-a"],["run-a","digest-b"],["run-a","digest-a"]]},"expected":{"accepted":[false,false,true]}},
+    {"id":"ZIP-WF-FIX-008","requirement":"ZIP-WORKFLOWS-PARALLELISM-T01","scenario":"Shared write key under uncertainty","input":{"keys":["repo-a/docs/a.md","repo-a/docs/a.md"],"first_result":"unknown"},"expected":{"initial_dispatches":1,"second_dispatch_before_settlement":false}},
+    {"id":"ZIP-WF-FIX-009","requirement":"ZIP-WORKFLOWS-RETRY-T01","scenario":"Unknown submission and original job identity","input":{"job":"node-a","states":["unknown","settled_transient"],"live_grant":true},"expected":{"retry_allowed":[false,true],"retry_job":"node-a"}},
+    {"id":"ZIP-WF-FIX-010","requirement":"ZIP-WORKFLOWS-COMPENSATION-T01","scenario":"Revocation before compensation claim","input":{"original_receipt":"receipt-a","compensation_scope_valid_at_plan":true,"compensation_scope_valid_at_claim":false},"expected":{"compensation_calls":0,"retained_receipt":"receipt-a"}},
+    {"id":"ZIP-WF-FIX-011","requirement":"ZIP-WORKFLOWS-ROLLBACK-T01","scenario":"Restore local state with an external receipt","input":{"previous_local_generation":4,"active_local_generation":5,"external_receipt":"external-a"},"expected":{"restored_local_generation":4,"retained_external_receipt":"external-a","duplicate_external_calls":0}},
+    {"id":"ZIP-WF-FIX-012","requirement":"ZIP-WORKFLOWS-ERROR-T01","scenario":"Checked expansion overflow","input":{"repeats":"18446744073709551615","leaves":"2"},"expected":{"error":"Overflow","dispatches":0}}
+  ]
+}

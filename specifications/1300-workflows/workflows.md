@@ -1,26 +1,19 @@
 # Workflow compilation and replay
 
-**Contract version** 1.0. Master design §71.
+**Contract version** 1.1 candidate. Master design §§29 and 71.
 
-## Contract
+Parse a strict versioned definition into a bounded immutable graph. Validate typed inputs, adapter capability versions, effects, approved ceiling references and edges. Check expansion before constructing executable nodes. Compile deterministic graph order and seal semantic plan, source provenance and bound capability revisions. Live governance and scheduler admission govern execution.
 
-A definition contains schema_version, workflow_id, inputs, typed steps, dependencies, guards, limits and output bindings. Each step declares an adapter capability/version and effect class. Normalize and hash the plan before start.
+## Definition and execution
 
-## Execution and integration
+A strict TOML definition uses `schema_version=1`, `workflow_id`, `limits` and `[[steps]]` entries. Leaves declare unique ID, `uses` capability/version, `needs` IDs, typed `inputs` and `outputs`, effect class and optional `when` guard. Hierarchical scopes normalize to the same typed step model, with explicit entry/exit bindings. Static repeat counts are positive and reviewed. Unknown attributes, unbounded iterations, cycles, unresolved names and unsupported effects deny compilation. Wire encoding of nested scopes, fully typed bindings and capability fields must be qualified against golden definitions before independent approval.
 
-Use a stable topological order, bounded iteration, side-effect-free guards and typed artifact references. On replay use stored inputs and compiler version. Changed plan requires a new plan revision and authorization if its scope expands.
+All dependencies are required by default. An explicit allow-skipped edge requires optional bindings. Evaluate pure guards over stored immutable inputs and persist the decision before dispatch. Enforce independent ready nodes' exclusive conflict keys and resource scope. Maintain per-node checkpoints even when execution completes out of order. The runtime and scheduler provide attempt ownership and journals. Workflows verifies semantic results and the assignment layer separately owns ordered verified units and publication.
 
-## Verification
-
-Validate a malformed graph, unbounded loop and missing artifact reference. Prove replay never silently invokes compensated or expired operations.
-
-Capture exact inputs, configured limits, actual result, policy revision and the evidence reference. Map applicable release requirements from [REQUIREMENTS.md](../../REQUIREMENTS.md).
-
-## Workflow schema v1
-
-A strict TOML definition uses `schema_version=1`, `workflow_id`, `limits` and ordered `[[steps]]` entries. A step has a unique ID, `uses` capability/version, `needs` IDs, `inputs`, `outputs`, optional `when`, resource limits and effect class. The condition subset permits literals, named inputs, comparisons and Boolean operators. Reject cyclic graphs, unknown functions, forward references not in dependencies and unbounded loops. A failed required prerequisite makes dependents Blocked. Parallel steps touching the same normalized file have an exclusive conflict key.
+A restart reuses the immutable plan and validated checkpoints. Unknown operations block their affected successors until reconciliation. Retry uses the existing scheduler job identity and live bounds. A rollback or compensation requires its own authority and preserves the original effects. Apply the [execution fixtures](../../contracts/acceptance/workflows/execution-fixtures.json), including cycles, branching, checkpoints and revoked compensation. Bind evidence to [release requirements](../../REQUIREMENTS.md).
 
 ## Implementing components
 
-- [workflows crate design](../../crates/workflows/DESIGN.md)
-- [assignments crate design](../../crates/assignments/DESIGN.md)
+- [Workflows](../../crates/workflows/DESIGN.md)
+- [Assignments](../../crates/assignments/DESIGN.md)
+- [Scheduler](../../crates/scheduler/DESIGN.md)
