@@ -32,7 +32,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Bound mailbox to 128 and delegation depth to 4. Stop dispatch on revoke or exhaustion. Model identity never conveys a role.
+Use `agents.max_mailbox_items` and `agents.max_delegation_depth`, tightened by scope and admitted memory. Stop dispatch on revoke or exhaustion. Model identity never conveys a role.
 
 - `CapabilityDenied`
 - `MailboxFull`

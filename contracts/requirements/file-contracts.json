@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "source_revision": "7adf3d5d0f481eee3072d9c541d55c5f58cfc378",
+  "requirements": [
+    {
+      "id": "ZIP-CFG-VAL-001",
+      "contract": "crates/configuration/specifications/modules/validation.md",
+      "planned_source": "crates/configuration/src/validation.rs",
+      "specified_tests": [
+        "CFG-VAL-T01",
+        "CFG-VAL-T02",
+        "CFG-VAL-T03",
+        "CFG-VAL-T04"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASG-CHK-001",
+      "contract": "crates/assignments/specifications/modules/checkpoint.md",
+      "planned_source": "crates/assignments/src/checkpoint.rs",
+      "specified_tests": [
+        "ASG-CHK-T01",
+        "ASG-CHK-T02"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ASG-RCV-001",
+      "contract": "crates/assignments/specifications/modules/recovery.md",
+      "planned_source": "crates/assignments/src/recovery.rs",
+      "specified_tests": [
+        "ASG-RCV-T01",
+        "ASG-RCV-T02",
+        "ASG-RCV-T03",
+        "ASG-RCV-T04"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-CAN-001",
+      "contract": "crates/foundation/specifications/modules/cancellation.md",
+      "planned_source": "crates/foundation/src/cancellation.rs",
+      "specified_tests": [
+        "FND-CAN-T01",
+        "FND-CAN-T02",
+        "FND-CAN-T03",
+        "FND-CAN-T04",
+        "FND-CAN-T05"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-CAP-001",
+      "contract": "crates/foundation/specifications/modules/contracts/capability.md",
+      "planned_source": "crates/foundation/src/contracts/capability.rs",
+      "specified_tests": [
+        "FND-CAP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-COMP-001",
+      "contract": "crates/foundation/specifications/modules/contracts/compatibility.md",
+      "planned_source": "crates/foundation/src/contracts/compatibility.rs",
+      "specified_tests": [
+        "FND-COMP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-CMP-001",
+      "contract": "crates/foundation/specifications/modules/contracts/component.md",
+      "planned_source": "crates/foundation/src/contracts/component.rs",
+      "specified_tests": [
+        "FND-CMP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-LIF-001",
+      "contract": "crates/foundation/specifications/modules/contracts/lifecycle.md",
+      "planned_source": "crates/foundation/src/contracts/lifecycle.rs",
+      "specified_tests": [
+        "FND-LIF-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-PORTS-001",
+      "contract": "crates/foundation/specifications/modules/contracts/mod.md",
+      "planned_source": "crates/foundation/src/contracts/mod.rs",
+      "specified_tests": [
+        "FND-PORTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-ERR-001",
+      "contract": "crates/foundation/specifications/modules/error.md",
+      "planned_source": "crates/foundation/src/error.rs",
+      "specified_tests": [
+        "FND-ERR-T01",
+        "FND-ERR-T02",
+        "FND-ERR-T03"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-GEN-001",
+      "contract": "crates/foundation/specifications/modules/identity/generation.md",
+      "planned_source": "crates/foundation/src/identity/generation.rs",
+      "specified_tests": [
+        "FND-GEN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-ID-001",
+      "contract": "crates/foundation/specifications/modules/identity/identifier.md",
+      "planned_source": "crates/foundation/src/identity/identifier.rs",
+      "specified_tests": [
+        "FND-ID-T01",
+        "FND-ID-T02",
+        "FND-ID-T03",
+        "FND-ID-T04"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-IDENT-001",
+      "contract": "crates/foundation/specifications/modules/identity/mod.md",
+      "planned_source": "crates/foundation/src/identity/mod.rs",
+      "specified_tests": [
+        "FND-IDENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-NS-001",
+      "contract": "crates/foundation/specifications/modules/identity/namespace.md",
+      "planned_source": "crates/foundation/src/identity/namespace.rs",
+      "specified_tests": [
+        "FND-NS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-ROOT-001",
+      "contract": "crates/foundation/specifications/modules/lib.md",
+      "planned_source": "crates/foundation/src/lib.rs",
+      "specified_tests": [
+        "FND-ROOT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-LIM-001",
+      "contract": "crates/foundation/specifications/modules/limits.md",
+      "planned_source": "crates/foundation/src/limits.rs",
+      "specified_tests": [
+        "FND-LIM-T01",
+        "FND-LIM-T02",
+        "FND-LIM-T03"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-PRE-001",
+      "contract": "crates/foundation/specifications/modules/prelude.md",
+      "planned_source": "crates/foundation/src/prelude.rs",
+      "specified_tests": [
+        "FND-PRE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-PROV-001",
+      "contract": "crates/foundation/specifications/modules/provenance.md",
+      "planned_source": "crates/foundation/src/provenance.rs",
+      "specified_tests": [
+        "FND-PROV-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-RESULT-001",
+      "contract": "crates/foundation/specifications/modules/result.md",
+      "planned_source": "crates/foundation/src/result.rs",
+      "specified_tests": [
+        "FND-RESULT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-BND-001",
+      "contract": "crates/foundation/specifications/modules/types/bounded.md",
+      "planned_source": "crates/foundation/src/types/bounded.rs",
+      "specified_tests": [
+        "FND-BND-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-DIG-001",
+      "contract": "crates/foundation/specifications/modules/types/digest.md",
+      "planned_source": "crates/foundation/src/types/digest.rs",
+      "specified_tests": [
+        "FND-DIG-T01",
+        "FND-DIG-T02",
+        "FND-DIG-T03",
+        "FND-DIG-T04"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-DUR-001",
+      "contract": "crates/foundation/specifications/modules/types/duration.md",
+      "planned_source": "crates/foundation/src/types/duration.rs",
+      "specified_tests": [
+        "FND-DUR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-TYP-001",
+      "contract": "crates/foundation/specifications/modules/types/mod.md",
+      "planned_source": "crates/foundation/src/types/mod.rs",
+      "specified_tests": [
+        "FND-TYP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-QTY-001",
+      "contract": "crates/foundation/specifications/modules/types/quantity.md",
+      "planned_source": "crates/foundation/src/types/quantity.rs",
+      "specified_tests": [
+        "FND-QTY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-TIME-001",
+      "contract": "crates/foundation/specifications/modules/types/timestamp.md",
+      "planned_source": "crates/foundation/src/types/timestamp.rs",
+      "specified_tests": [
+        "FND-TIME-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-VER-001",
+      "contract": "crates/foundation/specifications/modules/types/version.md",
+      "planned_source": "crates/foundation/src/types/version.rs",
+      "specified_tests": [
+        "FND-VER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-RNG-001",
+      "contract": "crates/foundation/specifications/modules/validation/constraints.md",
+      "planned_source": "crates/foundation/src/validation/constraints.rs",
+      "specified_tests": [
+        "FND-RNG-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-INV-001",
+      "contract": "crates/foundation/specifications/modules/validation/invariant.md",
+      "planned_source": "crates/foundation/src/validation/invariant.rs",
+      "specified_tests": [
+        "FND-INV-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-FND-VAL-001",
+      "contract": "crates/foundation/specifications/modules/validation/mod.md",
+      "planned_source": "crates/foundation/src/validation/mod.rs",
+      "specified_tests": [
+        "FND-VAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STO-BACK-001",
+      "contract": "crates/storage/specifications/modules/backend.md",
+      "planned_source": "crates/storage/src/backend.rs",
+      "specified_tests": [
+        "STO-BACK-T01",
+        "STO-BACK-T02",
+        "STO-BACK-T03",
+        "STO-BACK-T04"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STO-MIG-001",
+      "contract": "crates/storage/specifications/modules/migration.md",
+      "planned_source": "crates/storage/src/migration.rs",
+      "specified_tests": [
+        "STO-MIG-T01",
+        "STO-MIG-T02",
+        "STO-MIG-T03",
+        "STO-MIG-T04"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STO-SCH-001",
+      "contract": "crates/storage/specifications/modules/schema.md",
+      "planned_source": "crates/storage/src/schema.rs",
+      "specified_tests": [
+        "STO-SCH-T01",
+        "STO-SCH-T02",
+        "STO-SCH-T03"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-STO-TXN-001",
+      "contract": "crates/storage/specifications/modules/transaction.md",
+      "planned_source": "crates/storage/src/transaction.rs",
+      "specified_tests": [
+        "STO-TXN-T01",
+        "STO-TXN-T02",
+        "STO-TXN-T03",
+        "STO-TXN-T04"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

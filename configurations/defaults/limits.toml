@@ -1,0 +1,62 @@
+schema_version = 1
+
+[configuration]
+max_layer_bytes = 1048576
+
+[storage]
+max_record_bytes = 1048576
+max_transaction_operations = 512
+
+[events]
+max_subscriber_queue_items = 256
+
+[runtime]
+stop_grace_ms = 2000
+
+[inference]
+max_loaded_generation_models = 1
+
+[scheduler]
+max_workspace_queue_items = 256
+max_attempts = 3
+job_deadline_ms = 1200000
+retry_jitter_ms = 250
+
+[knowledge]
+max_traversal_depth = 8
+max_results = 1000
+
+[search]
+max_results = 100
+
+[agents]
+max_mailbox_items = 128
+max_delegation_depth = 4
+
+[orchestration]
+max_concurrent_agents = 1
+
+[workflows]
+max_expanded_steps = 256
+max_nesting_depth = 16
+
+[source_analysis]
+max_source_bytes = 2097152
+max_parse_ms = 10000
+
+[debugging]
+max_attempts = 5
+deadline_ms = 1200000
+
+[terminal]
+max_output_bytes = 1048576
+deadline_ms = 60000
+
+[networking]
+request_deadline_ms = 15000
+
+[api]
+max_request_bytes = 1048576
+max_principal_concurrency = 16
+default_page_items = 50
+max_page_items = 100

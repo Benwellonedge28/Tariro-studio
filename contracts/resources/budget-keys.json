@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "defaults": "configurations/defaults/limits.toml",
+  "keys": [
+    {
+      "key": "configuration.max_layer_bytes",
+      "unit": "bytes",
+      "owner": "configuration",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Validate each subsequent configuration layer before allocation"
+    },
+    {
+      "key": "storage.max_record_bytes",
+      "unit": "bytes",
+      "owner": "storage",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Validate encoded record before transaction staging"
+    },
+    {
+      "key": "storage.max_transaction_operations",
+      "unit": "count",
+      "owner": "storage",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Charge each transaction operation before enqueueing it"
+    },
+    {
+      "key": "events.max_subscriber_queue_items",
+      "unit": "count",
+      "owner": "events",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Acquire a bounded queue reservation when subscribing"
+    },
+    {
+      "key": "runtime.stop_grace_ms",
+      "unit": "milliseconds",
+      "owner": "runtime",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Clip cooperative shutdown window to the task deadline"
+    },
+    {
+      "key": "inference.max_loaded_generation_models",
+      "unit": "count",
+      "owner": "resources",
+      "kind": "profile_default",
+      "minimum": 0,
+      "enforcement": "Compare admitted model slots within profile and current capacity"
+    },
+    {
+      "key": "scheduler.max_workspace_queue_items",
+      "unit": "count",
+      "owner": "scheduler",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Reject enqueue before inserting a job if the queue is full"
+    },
+    {
+      "key": "scheduler.max_attempts",
+      "unit": "count",
+      "owner": "scheduler",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Charge an attempt under current lease before dispatch"
+    },
+    {
+      "key": "scheduler.job_deadline_ms",
+      "unit": "milliseconds",
+      "owner": "scheduler",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Check remaining deadline before dispatch or retry"
+    },
+    {
+      "key": "scheduler.retry_jitter_ms",
+      "unit": "milliseconds",
+      "owner": "scheduler",
+      "kind": "profile_default",
+      "minimum": 0,
+      "enforcement": "Clip jitter to the rescheduling deadline; zero disables jitter"
+    },
+    {
+      "key": "knowledge.max_traversal_depth",
+      "unit": "count",
+      "owner": "knowledge",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Bound edge depth at expansion"
+    },
+    {
+      "key": "knowledge.max_results",
+      "unit": "count",
+      "owner": "knowledge",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Bound query result materialization"
+    },
+    {
+      "key": "search.max_results",
+      "unit": "count",
+      "owner": "search",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Cap emitted results and return a cursor"
+    },
+    {
+      "key": "agents.max_mailbox_items",
+      "unit": "count",
+      "owner": "agents",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Admit mailbox capacity before push"
+    },
+    {
+      "key": "agents.max_delegation_depth",
+      "unit": "count",
+      "owner": "agents",
+      "kind": "profile_default",
+      "minimum": 0,
+      "enforcement": "Reject a delegation beyond approved depth"
+    },
+    {
+      "key": "orchestration.max_concurrent_agents",
+      "unit": "count",
+      "owner": "orchestration",
+      "kind": "profile_default",
+      "minimum": 0,
+      "enforcement": "Reserve agent slots before activation"
+    },
+    {
+      "key": "workflows.max_expanded_steps",
+      "unit": "count",
+      "owner": "workflows",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Stop expansion before appending an excess step"
+    },
+    {
+      "key": "workflows.max_nesting_depth",
+      "unit": "count",
+      "owner": "workflows",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Check depth before following a nested step"
+    },
+    {
+      "key": "source_analysis.max_source_bytes",
+      "unit": "bytes",
+      "owner": "source-analysis",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Bound streamed source input before parser construction"
+    },
+    {
+      "key": "source_analysis.max_parse_ms",
+      "unit": "milliseconds",
+      "owner": "source-analysis",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Clip parse deadline to lease time"
+    },
+    {
+      "key": "debugging.max_attempts",
+      "unit": "count",
+      "owner": "debugging",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Charge attempts before running reproduction"
+    },
+    {
+      "key": "debugging.deadline_ms",
+      "unit": "milliseconds",
+      "owner": "debugging",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Clip debug session deadline to assignment"
+    },
+    {
+      "key": "terminal.max_output_bytes",
+      "unit": "bytes",
+      "owner": "terminal",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Charge combined stdout and stderr before storing"
+    },
+    {
+      "key": "terminal.deadline_ms",
+      "unit": "milliseconds",
+      "owner": "terminal",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Enforce task deadline across the contained process tree"
+    },
+    {
+      "key": "networking.request_deadline_ms",
+      "unit": "milliseconds",
+      "owner": "networking",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Apply timeout before connect and to remaining response work"
+    },
+    {
+      "key": "api.max_request_bytes",
+      "unit": "bytes",
+      "owner": "server",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Bound streamed request before decoding"
+    },
+    {
+      "key": "api.max_principal_concurrency",
+      "unit": "count",
+      "owner": "server",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Enforce per-principal admission before dispatch"
+    },
+    {
+      "key": "api.default_page_items",
+      "unit": "count",
+      "owner": "server",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Apply if client does not supply a page size"
+    },
+    {
+      "key": "api.max_page_items",
+      "unit": "count",
+      "owner": "server",
+      "kind": "profile_default",
+      "minimum": 1,
+      "enforcement": "Reject oversized page request before scanning records"
+    }
+  ]
+}

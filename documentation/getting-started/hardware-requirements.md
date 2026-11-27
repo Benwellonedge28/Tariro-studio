@@ -4,7 +4,7 @@ This page defines the target workflow and the checks required before release.
 
 ## Prerequisites and behavior
 
-The initial reference machine has 16 GiB RAM and around 900 GB storage. Target one active generation model, one authoring agent and bounded test processes. Use the 4 GiB profile for deterministic tasks or approved remote inference and the 8 GiB profile for compatible small models.
+The initial reference machine has 16 GiB RAM and around 900 GB storage. The personal profile starts with a preference for sequential work and small-model inference. Use the minimal profile for deterministic workloads. Select local or separately authorized remote inference by measured capability and policy. Hardware labels describe candidate workloads, not admission thresholds.
 
 ## Procedure
 
@@ -15,3 +15,5 @@ Run doctor to probe capacity, instruction set, disk, sandbox and model backend s
 Treat hardware budgets as design targets. Record measured idle RSS, peak RAM/VRAM, temporary disk, model/context parameters, cancellation latency and any capability unavailable on the platform.
 
 [Architecture](../../ARCHITECTURE.md) · [Requirements](../../REQUIREMENTS.md)
+
+[Configuration profiles and effective limits](../../configurations/README.md).

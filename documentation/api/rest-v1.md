@@ -12,13 +12,13 @@ Use JSON UTF-8 and route prefix /api/v1. Mutation requests carry Idempotency-Key
 
 ## Verification and recovery
 
-Return 400 invalid input, 401 invalid session, 403 deny, 404 absent or concealed resource, 409 stale revision, 413 body limit, 429 bounded admission and 503 unavailable side effect. Use SSE sequence IDs for progress; an expired cursor returns 410 and a snapshot URI. Default request body 1 MiB and per principal concurrent requests 16. Set lower operation-specific limits as needed.
+Return 400 invalid input, 401 invalid session, 403 deny, 404 absent or concealed resource, 409 stale revision, 413 body limit, 429 bounded admission and 503 unavailable side effect. Use SSE sequence IDs for progress; an expired cursor returns 410 and a snapshot URI. Resolve `api.max_request_bytes` and `api.max_principal_concurrency` from validated configuration and tighten using operation-specific policy and availability.
 
 [Architecture](../../ARCHITECTURE.md) · [Requirements](../../REQUIREMENTS.md)
 
 ## Route ownership and methods
 
-Paths are relative to `/api/v1`. Collection reads use `limit` and opaque `cursor`. Default page size is 50 and maximum is 100. Mutations reference the repository or assignment by immutable ID. Routes for unreleased subsystems return a structured `unsupported_capability` response.
+Paths are relative to `/api/v1`. Collection reads use `limit` and opaque `cursor`. Resolve `api.default_page_items` and `api.max_page_items` at request admission; reject out-of-range requests before fetching or allocating results. Mutations reference the repository or assignment by immutable ID. Routes for unreleased subsystems return a structured `unsupported_capability` response.
 
 | Path | Method and contract |
 | --- | --- |

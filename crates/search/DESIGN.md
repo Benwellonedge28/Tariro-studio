@@ -33,7 +33,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Default 100 results, opaque generation-bound cursor; separate incompatible embedding dimensions. Private indexes inherit source retention.
+Apply `search.max_results` and use an opaque generation-bound cursor; keep incompatible embedding dimensions in separate indexes. Private indexes inherit source retention.
 
 - `StaleIndex`
 - `UnsupportedQuery`

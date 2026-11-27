@@ -35,7 +35,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-One generation model on 16 GiB. Keep host reserve and active work headroom. Unknown GPU capacity is unavailable for hard guarantees.
+Reserve measured per-model memory and obey the resolved `inference.max_loaded_generation_models` cap when one applies. Keep host reserve and active work headroom. Unknown GPU capacity is unavailable for hard guarantees.
 
 - `InsufficientCapacity`
 - `UnknownCapacity`

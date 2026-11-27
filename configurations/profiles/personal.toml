@@ -1,0 +1,13 @@
+schema_version = 1
+profile = "personal"
+
+[preferences]
+concurrency = "serial"
+inference = "small_model_first"
+locality = "local_only"
+
+[limits.inference]
+max_loaded_generation_models = 1
+
+[limits.orchestration]
+max_concurrent_agents = 1

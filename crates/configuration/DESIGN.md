@@ -30,7 +30,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Limit input to 1 MiB per layer. Reject unknown keys for version 1, duplicate keys, unavailable credential references and unsafe override attempts.
+Apply the resolved `configuration.max_layer_bytes` to each layer after bounded bootstrap. Reject unknown keys for version 1, duplicate keys, unavailable credential references and unsafe override attempts.
 
 - `InvalidConfig`
 - `UnsupportedSchema`

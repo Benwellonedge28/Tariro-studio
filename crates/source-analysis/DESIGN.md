@@ -34,7 +34,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Default 2 MiB per source file and 10 seconds per parse. Fallback is explicitly text-only. Treat grammar and repository input as untrusted.
+Charge input bytes and elapsed time against the admitted `source_analysis.max_source_bytes` and `source_analysis.max_parse_ms`. Fallback is explicitly text-only. Treat grammar and repository input as untrusted.
 
 - `UnsupportedLanguage`
 - `ParseBudget`

@@ -31,7 +31,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-One concurrent agent in personal documentation profile. Policy denies any approval by vote. Bound graph and replanning retries.
+Admit concurrent agents under `orchestration.max_concurrent_agents` and the resolved profile preference; an explicitly sequential assignment runs serially. Policy denies any approval by vote. Bound graph and replanning retries.
 
 - `InvalidGraph`
 - `NoEligibleAgent`

@@ -31,7 +31,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Default deny in offline profiles. No implicit proxy or credential forwarding across origins. Timeout after 15 seconds by default.
+Default deny in offline profiles. No implicit proxy or credential forwarding across origins. Set the effective deadline using `networking.request_deadline_ms` and the remaining operation deadline.
 
 - `NetworkDenied`
 - `EndpointChanged`

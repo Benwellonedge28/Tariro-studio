@@ -14,11 +14,11 @@ First-party dependencies: No first-party crate dependency.
 
 The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
 
-- `parse_identity(raw)`
-- `checked_quantity(unit,value)`
-- `compatibility(local,peer)`
+- `identity::identifier::Identifier::parse(expected_kind, input)`
+- `types::quantity::Quantity<U>::checked_add(self, other)`
+- `contracts::compatibility::negotiate(local, peer)`
 
-Record families: Typed UUID IDs, SemVer, tagged SHA-256 digests and bounded byte/count/time newtypes. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
+Record families: Typed UUID IDs, numeric protocol-version triplets, tagged SHA-256 digests and bounded byte/count/time newtypes. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
 
 ### Primary typed interface
 
@@ -26,11 +26,10 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 - `Identifier { kind: IdKind, uuid: Uuid }`
 - `Digest { algorithm: DigestAlgorithm, bytes: [u8; 32] }`
-- `MonotonicDeadline(Duration)`
+- `types::duration::DurationMillis` is an elapsed duration; the runtime owns monotonic deadline anchors.
 - `Version { major: u16, minor: u16, patch: u16 }`
 
-- `parse_identity(expected_kind: IdKind, value: &str) -> Result<Identifier>`
-- `compatibility(local: Version, peer: Version) -> Result<NegotiatedVersion>`
+Exact signatures, ownership and result behavior are defined by the file contracts below.
 
 ## Failure, safety and resource limits
 
@@ -83,13 +82,39 @@ crates/foundation/src/
 
 ## File contracts
 
-The following source files have dedicated contract drafts. The remaining files in the layout still require file-level review before this crate can reach D5.
+The file-level drafts below cover the planned Foundation source layout. Independent review and signature validation remain gates before D5.
 
-- [error.rs](specifications/modules/error.md)
 - [cancellation.rs](specifications/modules/cancellation.md)
-- [limits.rs](specifications/modules/limits.md)
+- [contracts/capability.rs](specifications/modules/contracts/capability.md)
+- [contracts/compatibility.rs](specifications/modules/contracts/compatibility.md)
+- [contracts/component.rs](specifications/modules/contracts/component.md)
+- [contracts/lifecycle.rs](specifications/modules/contracts/lifecycle.md)
+- [contracts/mod.rs](specifications/modules/contracts/mod.md)
+- [error.rs](specifications/modules/error.md)
+- [identity/generation.rs](specifications/modules/identity/generation.md)
 - [identity/identifier.rs](specifications/modules/identity/identifier.md)
+- [identity/mod.rs](specifications/modules/identity/mod.md)
+- [identity/namespace.rs](specifications/modules/identity/namespace.md)
+- [lib.rs](specifications/modules/lib.md)
+- [limits.rs](specifications/modules/limits.md)
+- [prelude.rs](specifications/modules/prelude.md)
+- [provenance.rs](specifications/modules/provenance.md)
+- [result.rs](specifications/modules/result.md)
+- [types/bounded.rs](specifications/modules/types/bounded.md)
 - [types/digest.rs](specifications/modules/types/digest.md)
+- [types/duration.rs](specifications/modules/types/duration.md)
+- [types/mod.rs](specifications/modules/types/mod.md)
+- [types/quantity.rs](specifications/modules/types/quantity.md)
+- [types/timestamp.rs](specifications/modules/types/timestamp.md)
+- [types/version.rs](specifications/modules/types/version.md)
+- [validation/constraints.rs](specifications/modules/validation/constraints.md)
+- [validation/invariant.rs](specifications/modules/validation/invariant.md)
+- [validation/mod.rs](specifications/modules/validation/mod.md)
+
+- [Implementation order](specifications/implementation-order.md)
+- [Dependency contract](specifications/dependency-contract.md)
+- [Error contract](specifications/error-contract.md)
+- [Testing contract](specifications/testing-contract.md)
 
 ## Implementation and acceptance
 

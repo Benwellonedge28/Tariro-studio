@@ -32,7 +32,7 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 ## Failure, safety and resource limits
 
-Default 5 attempts and 20 minutes. Redact logs before model input. Preserve partial failure evidence and confidence.
+Apply resolved `debugging.max_attempts` and `debugging.deadline_ms`; stop before the next attempt if either budget is exhausted. Redact logs before model input. Preserve partial failure evidence and confidence.
 
 - `NotReproducible`
 - `ReproductionBudget`
