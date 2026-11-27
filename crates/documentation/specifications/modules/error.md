@@ -1,15 +1,30 @@
-# Documentation failure taxonomy
+# Documentation failure outcomes
 
-**ZIP-DOCUMENTATION-ERROR-001 · v1.0 · Owner:** Documentation maintainers. **Maturity:** D3 file contract draft.
+**ZIP-DOCUMENTATION-ERROR-001 · v1.1 candidate · Owner** Documentation maintainers
 
-**Planned source:** `crates/documentation/src/error.rs`
+**Planned source** `crates/documentation/src/error.rs`
 
-## Required implementation behavior
+```rust
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum DocumentationError {
+    ScopeDenied,
+    InvalidPlan,
+    MissingSource,
+    SourceUnavailable,
+    InvalidSection,
+    BrokenLink,
+    UnsupportedClaim,
+    EvidenceUnverified,
+    Conflict,
+    BatchOverLimit,
+    StaleCandidate,
+    BudgetExceeded,
+    Cancelled,
+    OutcomeUnknown,
+}
+```
 
-Distinguish missing source, denied scope, invalid section, broken link, unsupported claim, unverifiable evidence and batch mismatch. Record safe path and requirement refs.
+Validate authority before returning source existence or evidence. Use safe path, gate and requirement references scoped to the caller. Missing source requires checked absence; unavailable evidence must not be classified as missing. UnsupportedClaim blocks document verification. A short exact batch maps to the assignment's AwaitingApproval state. An over-limit attempted change returns BatchOverLimit without making that change. OutcomeUnknown retains the original transaction or provider identity. A typed failure does not retract confirmed prior effects or checkpoints.
 
-## Acceptance
-
-**ZIP-DOCUMENTATION-ERROR-T01.** A blocked factual claim does not become successful prose generation.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-DOCUMENTATION-ERROR-T01.** A readable draft with a blocked factual claim remains unverified. Do not let an unavailable source be reported as empty content.

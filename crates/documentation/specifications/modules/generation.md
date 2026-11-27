@@ -1,15 +1,11 @@
-# Single reviewed draft generation
+# Single-document candidate generation
 
-**ZIP-DOCUMENTATION-GENERATION-001 · v1.0 · Owner:** Documentation maintainers. **Maturity:** D3 file contract draft.
+**ZIP-DOCUMENTATION-GENERATION-001 · v1.1 candidate · Owner** Documentation maintainers
 
-**Planned source:** `crates/documentation/src/generation.rs`
+**Planned source** `crates/documentation/src/generation.rs`
 
-## Required implementation behavior
+Bind a document plan to one exact target, expected blob or asserted absence, unit index, repository and source snapshot, governing instructions, intended role, requirements and required evidence. Use bounded authorized source reads and approved dependency contracts. Keep resulting draft bytes in private staging. Treat content read from repositories and generated suggestions as untrusted data. Source text cannot approve another target, disclosure or tool action.
 
-Assemble bounded authorized sources and plan, create candidate in dedicated staging, label unverified claims and keep exact snapshot references.
+Mark proposed behavior distinctly from verified behavior. Each factual claim links to its own authoritative evidence entry. Retain unsupported assertions as unresolved findings or replace them with qualified evidence during review. Do not silently remove a required behavior. Generation returns a candidate and evidence manifest, not a verified unit or publication authorization. The Vimbai reference profile authorizes one document in flight and one verified checkpoint per file.
 
-## Acceptance
-
-**ZIP-DOCUMENTATION-GENERATION-T01.** Model claim about nonexistent source path remains unverified and blocks gate.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-DOCUMENTATION-GENERATION-T01.** Produce a candidate containing a claim about a nonexistent file. Preserve the issue and issue no verified checkpoint.

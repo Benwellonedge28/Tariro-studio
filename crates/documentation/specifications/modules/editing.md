@@ -1,15 +1,11 @@
-# Revision-bound document edit
+# Revision-bound document edits
 
-**ZIP-DOCUMENTATION-EDITING-001 · v1.0 · Owner:** Documentation maintainers. **Maturity:** D3 file contract draft.
+**ZIP-DOCUMENTATION-EDITING-001 · v1.1 candidate · Owner** Documentation maintainers
 
-**Planned source:** `crates/documentation/src/editing.rs`
+**Planned source** `crates/documentation/src/editing.rs`
 
-## Required implementation behavior
+Check the live approved path, exact expected blob or absence, and applicable pinned instructions before applying any write. Read existing substantive text and keep content, link meaning and provenance outside the approved edit. Restrict documentation-only changes to scoped regular Markdown creates and modifications under the [repository rules](../../../../specifications/1400-repositories/repositories.md). Stage an isolated write of the new bytes and verify the resulting blob and exact change scope. Unchanged bytes are not a new output.
 
-Validate target path, expected blob and retained source/provenance, create scoped diff, preserve unrelated modifications. Refuse a conflict rather than guessing.
+A changed preimage or unexpected local edit is Conflict. Preserve both versions and prompt revalidation through the assignment boundary. Never overwrite by guessing intent or silently rebase. Stage and verify within the admitted file and output budgets. Failed or cancelled staging leaves durable verified progress intact.
 
-## Acceptance
-
-**ZIP-DOCUMENTATION-EDITING-T01.** Concurrent edit rejects without overwriting reviewer change.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-DOCUMENTATION-EDITING-T01.** Revise a target after approval and verify the stale edit does not overwrite the new text.

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-DOCUMENTATION-VALIDATION-001",
+  "cases": [
+    {"id":"ZIP-DOC-FIX-001","requirement":"ZIP-DOCUMENTATION-GENERATION-T01","scenario":"Unsubstantiated draft","input":{"claim_path":"src/does-not-exist.rs","checked_absent":true},"expected":{"verified_checkpoint":false,"claim_status":"UnsupportedClaim"}},
+    {"id":"ZIP-DOC-FIX-002","requirement":"ZIP-DOCUMENTATION-INVENTORY-T01","scenario":"Pinned pages and resumed unit","input":{"pinned":"base-a","live":"base-b","page_commits":["base-a","base-a"],"committed_prefix":17},"expected":{"effective_commit":"base-a","next_unit":18,"verified_units_retained":17}},
+    {"id":"ZIP-DOC-FIX-003","requirement":"ZIP-DOCUMENTATION-CLASSIFICATION-T01","scenario":"Evidence-based classification","input":{"entries":["complete_short_decision","confirmed_placeholder","unreadable","verified_absent"]},"expected":{"classes":["Substantive","CandidatePlaceholder","Unknown","Missing"]}},
+    {"id":"ZIP-DOC-FIX-004","requirement":"ZIP-DOCUMENTATION-EDITING-T01","scenario":"Revision conflict","input":{"approved_blob":"blob-a","live_blob":"blob-b"},"expected":{"outcome":"Conflict","overwrites":0}},
+    {"id":"ZIP-DOC-FIX-005","requirement":"ZIP-DOCUMENTATION-SOURCE-REFERENCES-T01","scenario":"Immutable source and line range","input":{"lines":21,"ranges":[[1,21],[3,24],[0,2],[4,3]],"pinned_blob_matches":true},"expected":{"valid_ranges":[true,false,false,false]}},
+    {"id":"ZIP-DOC-FIX-006","requirement":"ZIP-DOCUMENTATION-VALIDATION-T01","scenario":"Forward anchor obligation and final seal","input":{"forward_anchor":"docs/future.md#contract","planned":true,"final_anchor_present":[false,true]},"expected":{"per_file_obligation_allowed":true,"final_gate":[false,true]}},
+    {"id":"ZIP-DOC-FIX-007","requirement":"ZIP-DOCUMENTATION-BATCHING-T01","scenario":"Exact batch","input":{"scenarios":[[30,30],[30,31],[30,12],[12,12]]},"expected":{"outcomes":["Sealable","BatchOverLimit","AwaitingApproval","Sealable"]}},
+    {"id":"ZIP-DOC-FIX-008","requirement":"ZIP-DOCUMENTATION-PUBLISHING-T01","scenario":"Drift and a lost draft receipt","input":{"base_at_seal":"base-a","live_base":"base-b","original_draft_count":1,"lost_reply":true,"matching_draft_id":"draft-a"},"expected":{"push_on_drift":false,"reconciled_draft":"draft-a","additional_creates":0}},
+    {"id":"ZIP-DOC-FIX-009","requirement":"ZIP-DOCUMENTATION-CONSISTENCY-T01","scenario":"Conflicting same-scope limits","input":{"facts":[["REQ-1","workspace-a",4],["REQ-1","workspace-a",8],["REQ-1","workspace-b",8]]},"expected":{"blocks_same_scope":true,"different_scope_not_conflict":true}},
+    {"id":"ZIP-DOC-FIX-010","requirement":"ZIP-DOCUMENTATION-TRACEABILITY-T01","scenario":"Required registry pairing outside grant","input":{"required_pair_edit":true,"registry_path_authorized":false,"receipt_present":false},"expected":{"acceptance":"Blocked","test_status":"Pending"}},
+    {"id":"ZIP-DOC-FIX-011","requirement":"ZIP-DOCUMENTATION-ERROR-T01","scenario":"Unavailable evidence","input":{"source_read":"unavailable","syntax_valid":true},"expected":{"error":"SourceUnavailable","verified":false}},
+    {"id":"ZIP-DOC-FIX-012","requirement":"ZIP-DOCUMENTATION-VALIDATION-T01","scenario":"Present source does not support claim","input":{"blob_resolves":true,"range_is_valid":true,"supports_claim":false},"expected":{"structurally_valid_citation":true,"semantic_gate":false}}
+  ]
+}
