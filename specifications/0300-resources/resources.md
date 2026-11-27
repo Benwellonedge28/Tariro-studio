@@ -1,25 +1,21 @@
 # Resource admission and accounting
 
-**Contract version** 1.0. Master design §71.
+**Contract version** 1.1 candidate. Master design §§15 and 71.
 
 ## Contract
 
-All externally supplied quantities are nonnegative bounded integers: bytes, millisecond duration, count, tokens and currency minor units paired with ISO currency. A request reserves the entire vector across host, workspace and assignment pools. Reservations contain an attempt ID, expiration and an observed-usage record.
+Use the [shared admission contract](../../RESOURCE_CONTRACT.md) for all resource-consuming operations. Each coordinate binds a scope, unit and relevant physical or service ID. Use nonnegative integers for charges and reservations. Express spend in currency minor units. Normalize discovery before budgeting. Represent operation deadlines with a monotonic instant and account for them independently of pooled capacity.
 
 ## Execution and integration
 
-The personal profile follows RESOURCE_MANAGEMENT.md. Permit a smaller request only when policy names a quality floor and the plan records the downgrade. Unknown capacities reject hard-guarantee requests. A reservation may be freed after confirmed teardown or fenced recovery.
+The personal profile follows [resource management](../../RESOURCE_MANAGEMENT.md). Profiles guide initial settings while validated policy and measured availability determine admission. Permit a smaller estimate only when it meets the approved quality floor. Return a lease only after capacity is committed. Unknown mandatory capacity blocks execution. After expiry or uncertain dispatch, fence the worker and keep the hold until reconciliation proves teardown and settles metered use.
 
 ## Verification
 
-Run concurrent reservations at exact remaining capacity. Force memory pressure and verify no second generation model and no eviction of pinned evidence.
-
-Capture exact inputs, configured limits, actual result, policy revision and the evidence reference. Map applicable release requirements from [REQUIREMENTS.md](../../REQUIREMENTS.md).
-
-
+Apply the [acceptance fixtures](../../contracts/acceptance/resources/admission-fixtures.json) to known-zero and unknown capacity, competing requests, deadline independence, revocation, and restart. Test actual memory pressure with the configured model cap and verify that fallback protects pinned models. Record inputs, resolved policy, measurements, outcome and the evidence reference. Map release evidence to [requirements](../../REQUIREMENTS.md).
 
 ## Implementing components
 
-- [resources crate design](../../crates/resources/DESIGN.md)
-- [configuration crate design](../../crates/configuration/DESIGN.md)
-- [economics crate design](../../crates/economics/DESIGN.md)
+- [Resources](../../crates/resources/DESIGN.md)
+- [Configuration](../../crates/configuration/DESIGN.md)
+- [Economics](../../crates/economics/DESIGN.md)

@@ -1,32 +1,23 @@
 # Shared resource admission contract
 
-**ZIP-RES-001 · v1.0 · Owner:** Resource and runtime maintainers. **Maturity:** D4 candidate.
+**ZIP-RES-001 · v1.1 candidate · Owner** Resource and runtime maintainers
 
-Each expensive operation has a nonempty demand vector and known execution boundary. Coordinates identify a metric and pool, for example RAM bytes, logical CPU shares, GPU bytes keyed by device, disk bytes keyed by volume, process or worker count, monotonic wall duration, tokens, bandwidth, and spend by currency. Capabilities and discovered capacity are separate from current usage. Absence denotes unsupported or unknown; a declared zero denotes known zero.
+Every operation requiring managed capacity obtains an authorized lease before it allocates, spawns, opens a stream, attaches a device or invokes an adapter. [Admission](crates/resources/specifications/modules/admission.md) owns the public Rust interface. It returns an opaque `ResourceLease`; the manager keeps the corresponding durable reservation private. Runtime, compilation, inference, tools and adapters consume this interface through existing dependencies. Bind each lease to one authorized attempt, one coordinator epoch and its complete admitted vector.
 
-Rust integration contract for the resources crate. `AdmissionRequest` owns the principal scope, assignment/attempt ID, requested demand, deadline and compatible device constraints. `CapacityRevision` identifies the capability snapshot. `ResourceLease` is an opaque, epoch-fenced handle with admitted ceilings and policy revision.
+## Capacity and accounting
 
-```rust
-pub trait ResourceAdmission: Send + Sync {
-    fn reserve(&self, request: AdmissionRequest, revision: CapacityRevision)
-        -> Result<ResourceLease, AdmissionError>;
-    fn charge(&self, lease: &ResourceLease, usage: UsageDelta)
-        -> Result<(), ChargeError>;
-    fn release(&self, lease: ResourceLease, cleanup: CleanupReceipt)
-        -> Result<(), ReleaseError>;
-}
-```
+Define every pool by scope, physical identity where relevant, metric and unit. Account concurrent occupancy such as RAM, device memory and reserved bandwidth separately from metered allowance such as tokens and minor currency units. Separate currencies, devices and volume identities. A monotonic deadline constrains each operation independently. Never add deadlines or subtract them from shared capacity.
 
-Discovery snapshots include provenance, units, observed capacity, enforcement capability and age. Treat host-reported totals as upper bounds; intersect with containment, workspace, assignment and policy budgets. For each coordinate subtract infrastructure reserve, unreclaimed reservations and accounted external pressure. Use checked arithmetic and fail if a required coordinate cannot be enforced. Atomically reserve the vector across all applicable pools; partial success is forbidden.
+Admission checks the same demand against the host or service pool and every applicable workspace and assignment quota. Resolve the complete set of pools from trusted bindings. Unknown or stale required measurements fail admission. An observed zero is a known capacity. Convert observations to a common accounting basis before applying headroom and policy, and never debit the same occupancy twice. [Allocator rules](crates/resources/specifications/modules/allocation/allocator.md) specify the checked arithmetic.
 
-| Input/state | Next state | Guard |
-| --- | --- | --- |
-| Valid demand | Reserved | Capacity and policy revisions current, full vector fits |
-| Start receipt | Active | Current lease epoch, controls installed |
-| Pressure or revoke | Draining | Close admission, cancel or rebalance within policy |
-| Verified cleanup | Released | Release only after owner verifies all resources are reaped |
-| Lease expired or owner lost | Recovering | Fence output and reconcile physical resource occupancy |
+Resource estimates distinguish minimum and preferred demand. A consumer may request a smaller profile only within its authorized quality floor. A change of locality, provider, or data exposure requires the corresponding authority. Record the selected demand, measurements, configuration, grant revision and reason. Policies and adapters supply finite capacities. Advisory hardware profiles supply starting preferences.
 
-Admission precedes allocate, spawn, stream, attach device or invoke plugin. Account metered costs continuously; deny further work at upper bounds. Backpressure uses bounded queues and policy-specified scheduling fairness. Authorized degradations can reduce context, parallelism or cache demand; changing locality or widening egress requires separate scope. Distributed capacity is relative to a specific authenticated node and lease and never treated as local availability.
+## Lease lifecycle
 
-Evidence covers admission/denial code, policy revision, capacity age, planned/actual usage, cleanup and lease epoch. Negative tests simulate stale reports, double release, concurrent oversubscription and uncooperative children; reserved capacity remains unavailable until cleanup or fenced reconciliation.
+[Reservation](crates/resources/specifications/modules/allocation/reservation.md) defines durable transitions and replay. Expiry or revocation fences new work and output, including retries of an already accepted command. Occupancy remains held until verified teardown or reconciliation proves it absent. When a metered provider result is uncertain, hold unspent reservation until the applicable receipts reconcile. Release never refunds verified consumption.
+
+Pressure closes admission for affected pools and may request cancellation or approved degradation. Degrade only after releasing the superseded demand safely or reserving its permitted overlap. The model owner may evict only unpinned eligible models. If containment cannot install hard controls, do not dispatch an operation that requires them. A resource lease does not confer permission for an external effect.
+
+## Acceptance
+
+Use the [admission fixtures](contracts/acceptance/resources/admission-fixtures.json) to check atomic admission, deadline independence, accounting normalization, revocation, expiry, fenced cleanup and metered replay. Keep a separate adapter integration test for real containment and host pressure. Independent design review and operational qualification are separate gates.
