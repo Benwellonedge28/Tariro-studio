@@ -1,0 +1,1324 @@
+{
+  "schema_version": 1,
+  "source_commit": "f085e513c740416bd33d26758ead6d0ce89b3bbc",
+  "findings": [
+    {
+      "feature_id": "ZIP-LEG-ADDITIONAL-DESIGN-DOCUMENT",
+      "source_path": "additional-design-document.md",
+      "source_blob_sha": "7f73233f73a5124eb3c39ded314ce99570e35462",
+      "source_lines": [
+        1,
+        3514
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Describes collaborating agents and the design-to-publication pipeline as proposed capabilities.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "specifications/1300-workflows/workflows.md",
+      "acceptance_id": "ZIP-LEG-ADDITIONAL-DESIGN-DOCUMENT-T01",
+      "successor_acceptance": "An end-to-end fixture attributes each stage output and binds publication to the reviewed candidate."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP",
+      "source_path": "app.py",
+      "source_blob_sha": "adc5ef2d9d08c9eb18e1d2757fa06341cdfcf351",
+      "source_lines": [
+        29,
+        236
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Exposes a feature registry and a dynamic call route for imported modules.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2200-tools/tools.md",
+      "acceptance_id": "ZIP-LEG-APP-T01",
+      "successor_acceptance": "A requested function missing from the typed capability registry is rejected before loading or dispatch."
+    },
+    {
+      "feature_id": "ZIP-LEG-ADAPTIVE-UI",
+      "source_path": "features/adaptive_ui.py",
+      "source_blob_sha": "e1e381deafcec89f75fc7d4e17b3c5ac3f195796",
+      "source_lines": [
+        79,
+        140
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Requests model-generated UI adaptation suggestions from context and simulated user data.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "applications/studio/DESIGN.md",
+      "acceptance_id": "ZIP-LEG-ADAPTIVE-UI-T01",
+      "successor_acceptance": "A rejected preference suggestion leaves stored and visible settings unchanged."
+    },
+    {
+      "feature_id": "ZIP-LEG-ADVANCED-MULTIMODAL-GENERATION",
+      "source_path": "features/advanced_multimodal_generation.py",
+      "source_blob_sha": "9081180e5ea2b0366dab0300c09c6ba521becc78",
+      "source_lines": [
+        95,
+        321
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines generation, refinement and synthetic-dataset operations.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/0400-intelligence/intelligence.md",
+      "acceptance_id": "ZIP-LEG-ADVANCED-MULTIMODAL-GENERATION-T01",
+      "successor_acceptance": "A provider missing a requested modality returns unsupported and publishes no generated artifact."
+    },
+    {
+      "feature_id": "ZIP-LEG-ADVANCED-OPTIMIZER",
+      "source_path": "features/advanced_optimizer.py",
+      "source_blob_sha": "5a8918410e1ee8a76a669ec8935aa5e7078c0a76",
+      "source_lines": [
+        77,
+        164
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The quantum and neuromorphic paths request optimization recommendations from a model.",
+      "classification": "Experimental",
+      "review_status": "candidate",
+      "target_spec": "crates/engineering/specifications/modules/optimization/algorithms.md",
+      "acceptance_id": "ZIP-LEG-ADVANCED-OPTIMIZER-T01",
+      "successor_acceptance": "A candidate needs an equivalence check and an actual supported-target benchmark before promotion."
+    },
+    {
+      "feature_id": "ZIP-LEG-ADVERSARIAL-AI-DEFENSE",
+      "source_path": "features/adversarial_ai_defense.py",
+      "source_blob_sha": "0a18f75d6164833533db8ba09432847b6d57c3cb",
+      "source_lines": [
+        24,
+        86
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Stores and retrieves personality settings in a module named as a defense.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2300-security/security.md",
+      "acceptance_id": "ZIP-LEG-ADVERSARIAL-AI-DEFENSE-T01",
+      "successor_acceptance": "Changing personality settings cannot alter an authorization outcome for the same principal and effect."
+    },
+    {
+      "feature_id": "ZIP-LEG-ADVERSARIAL-SELF-TEST",
+      "source_path": "features/adversarial_self_test.py",
+      "source_blob_sha": "5c7d4a0d9b54125dcdf734e7ffbe8deca2a49a7c",
+      "source_lines": [
+        10,
+        78
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Generates malformed examples and contains a self-patching path.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2100-verification/verification.md",
+      "acceptance_id": "ZIP-LEG-ADVERSARIAL-SELF-TEST-T01",
+      "successor_acceptance": "A synthetic negative fixture yields reproducible findings while the baseline digest stays unchanged."
+    },
+    {
+      "feature_id": "ZIP-LEG-AGI-SANDBOX",
+      "source_path": "features/agi_sandbox.py",
+      "source_blob_sha": "24d3b6f2dcdb69c84c35e3ce0390c14cad448f92",
+      "source_lines": [
+        64,
+        122
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Exposes a sandbox-test entry point that accepts a proposed test.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "crates/sandbox/DESIGN.md",
+      "acceptance_id": "ZIP-LEG-AGI-SANDBOX-T01",
+      "successor_acceptance": "An isolated validation workload has a denial receipt when requesting resources beyond its grant."
+    },
+    {
+      "feature_id": "ZIP-LEG-ANOMALY-DETECTION",
+      "source_path": "features/anomaly_detection.py",
+      "source_blob_sha": "c578509ff8e8a4ea2ef5a97a6dcf9f6a991c5a4e",
+      "source_lines": [
+        25,
+        88
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Exposes log analysis as a distinct operation.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "specifications/3100-observability/observability.md",
+      "acceptance_id": "ZIP-LEG-ANOMALY-DETECTION-T01",
+      "successor_acceptance": "An injected synthetic outlier produces an attributed finding while the baseline control stays clean."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-ARCHITECTURE-DESIGN",
+      "source_path": "features/app_dev_architecture_design.py",
+      "source_blob_sha": "6f785b12cc16811b8b0b7626331cf851760629e3",
+      "source_lines": [
+        7,
+        54
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The design_system_architecture stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-ARCHITECTURE-DESIGN-T01",
+      "successor_acceptance": "A design review fails when a public dependency is absent from the approved architecture record."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-CODE-REVIEW-STATIC-ANALYSIS",
+      "source_path": "features/app_dev_code_review_static_analysis.py",
+      "source_blob_sha": "3e797ab0821bd3d9f04349505544a3d626924980",
+      "source_lines": [
+        7,
+        46
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The conduct_code_review_static_analysis stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-CODE-REVIEW-STATIC-ANALYSIS-T01",
+      "successor_acceptance": "A fake analyzer success summary without a tool receipt cannot satisfy the review gate."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-CONCEPT-IDEATION",
+      "source_path": "features/app_dev_concept_ideation.py",
+      "source_blob_sha": "d1d76165ac3e659281d4c140c47bec1ab8d05dab",
+      "source_lines": [
+        7,
+        45
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The concept_ideation stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-CONCEPT-IDEATION-T01",
+      "successor_acceptance": "A reviewed problem brief links intended users to a measurable outcome."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-DECOMMISSIONING",
+      "source_path": "features/app_dev_decommissioning.py",
+      "source_blob_sha": "aca1f0e3924e138d80b9c912bb29bb408c564672",
+      "source_lines": [
+        8,
+        60
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The manage_decommissioning stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-DECOMMISSIONING-T01",
+      "successor_acceptance": "A missing required export blocks retirement. A confirmed retirement produces an auditable receipt."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-DEPLOYMENT",
+      "source_path": "features/app_dev_deployment.py",
+      "source_blob_sha": "01798d2603236bd5b6f2994e015afdb6927031df",
+      "source_lines": [
+        8,
+        67
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The deploy_application stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-DEPLOYMENT-T01",
+      "successor_acceptance": "A missing effect grant blocks provider dispatch. A generated rollout description cannot serve as a receipt."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-DOCUMENTATION",
+      "source_path": "features/app_dev_documentation.py",
+      "source_blob_sha": "0f95b79b43b34090ea90651c982c501f46d06c31",
+      "source_lines": [
+        7,
+        49
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The manage_documentation stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-DOCUMENTATION-T01",
+      "successor_acceptance": "A source claim tied to the wrong revision blocks documentation acceptance."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-FEASIBILITY-STUDY",
+      "source_path": "features/app_dev_feasibility_study.py",
+      "source_blob_sha": "ee60a253897cf65f5157735e8c6b306f1526a428",
+      "source_lines": [
+        7,
+        48
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The conduct_feasibility_study stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-FEASIBILITY-STUDY-T01",
+      "successor_acceptance": "An unsupported delivery assumption is recorded as an open gate with evidence."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-IMPLEMENTATION",
+      "source_path": "features/app_dev_implementation.py",
+      "source_blob_sha": "27caefc2f8292ccae5c83a450cd74927b8d6232e",
+      "source_lines": [
+        7,
+        50
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The implement_codebase stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-IMPLEMENTATION-T01",
+      "successor_acceptance": "A changed preimage stops the patch and retains the baseline tree."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-MAINTENANCE-SUPPORT",
+      "source_path": "features/app_dev_maintenance_support.py",
+      "source_blob_sha": "37ab909d8d916d58fb0c34dfc9104d27ac869844",
+      "source_lines": [
+        7,
+        48
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The manage_maintenance_and_support stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-MAINTENANCE-SUPPORT-T01",
+      "successor_acceptance": "A linked maintenance issue keeps its original evidence through triage and checkpoint recovery."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-OPERATIONS-MONITORING",
+      "source_path": "features/app_dev_operations_monitoring.py",
+      "source_blob_sha": "d104054fab5fe57978cf97c05a9049aad0c1c03e",
+      "source_lines": [
+        7,
+        48
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The monitor_operations stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-OPERATIONS-MONITORING-T01",
+      "successor_acceptance": "A synthetic observation records its measurement window and attributed release."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-PLANNING-ESTIMATION",
+      "source_path": "features/app_dev_planning_estimation.py",
+      "source_blob_sha": "dbd5e48de1c2796ad1e00fa2232467ec478d2237",
+      "source_lines": [
+        7,
+        54
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The plan_and_estimate_project stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-PLANNING-ESTIMATION-T01",
+      "successor_acceptance": "A plan with a required dependency cycle is rejected before scheduling."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-REQUIREMENTS-ANALYSIS",
+      "source_path": "features/app_dev_requirements_analysis.py",
+      "source_blob_sha": "18c817269f14c274bb2259a081393981d2068a50",
+      "source_lines": [
+        7,
+        58
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The gather_and_analyze_requirements stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-REQUIREMENTS-ANALYSIS-T01",
+      "successor_acceptance": "An ambiguous requirement remains unresolved until clarified and receives no passing acceptance status."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-TESTING",
+      "source_path": "features/app_dev_testing.py",
+      "source_blob_sha": "c5dc51b0ba84c6f61d4125787536c57ae40192da",
+      "source_lines": [
+        7,
+        50
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The conduct_comprehensive_testing stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-TESTING-T01",
+      "successor_acceptance": "An actual fixture failure prevents stage completion and records its case ID."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-UI-UX-DESIGN",
+      "source_path": "features/app_dev_ui_ux_design.py",
+      "source_blob_sha": "02fdbf4bed229e91ccae612fc520bff6faf05ed4",
+      "source_lines": [
+        7,
+        50
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The design_ui_ux stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-UI-UX-DESIGN-T01",
+      "successor_acceptance": "A missing accessibility acceptance case blocks approval of the prototype."
+    },
+    {
+      "feature_id": "ZIP-LEG-APP-DEV-UPDATES-ITERATION",
+      "source_path": "features/app_dev_updates_iteration.py",
+      "source_blob_sha": "d1bece7743ad50d0cdd5fd6d9af8e056d25daa74",
+      "source_lines": [
+        7,
+        47
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The manage_updates_and_iteration stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/lifecycle.md",
+      "acceptance_id": "ZIP-LEG-APP-DEV-UPDATES-ITERATION-T01",
+      "successor_acceptance": "A changed requirement creates a new plan revision and invalidates dependent evidence."
+    },
+    {
+      "feature_id": "ZIP-LEG-ASYNC-NOTIFICATION-SYSTEM",
+      "source_path": "features/async_notification_system.py",
+      "source_blob_sha": "6dd6734fce704a1d617aedb121728006c6b10b49",
+      "source_lines": [
+        33,
+        142
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Provides notification delivery, per-user retrieval and read-state operations.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "crates/events/DESIGN.md",
+      "acceptance_id": "ZIP-LEG-ASYNC-NOTIFICATION-SYSTEM-T01",
+      "successor_acceptance": "Repeated delivery of one event ID creates a single scoped notification and preserves read state."
+    },
+    {
+      "feature_id": "ZIP-LEG-AUTOMATED-DEPLOYMENT",
+      "source_path": "features/automated_deployment.py",
+      "source_blob_sha": "20ea01d4cb33926aef5253ff80307479b8944145",
+      "source_lines": [
+        76,
+        238
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Deployment, health monitoring and rollback entry points explicitly implement simulations.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/3300-deployment/deployment.md",
+      "acceptance_id": "ZIP-LEG-AUTOMATED-DEPLOYMENT-T01",
+      "successor_acceptance": "A generated rollout plan leaves the deployment incomplete until a provider receipt and health result are verified."
+    },
+    {
+      "feature_id": "ZIP-LEG-AUTONOMOUS-CSR-MANAGEMENT",
+      "source_path": "features/autonomous_csr_management.py",
+      "source_blob_sha": "0a7d97191433eeb94cd6f6dd860718f6fc068e12",
+      "source_lines": [
+        1,
+        1
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The pinned blob contains malformed Python and fails static parsing.",
+      "classification": "Retire",
+      "review_status": "candidate",
+      "target_spec": null,
+      "acceptance_id": "ZIP-LEG-AUTONOMOUS-CSR-MANAGEMENT-T01",
+      "successor_acceptance": "Core does not expose corporate responsibility automation. Any successor belongs to a separately reviewed external integration.",
+      "exclusion": "external-integration"
+    },
+    {
+      "feature_id": "ZIP-LEG-AUTONOMOUS-IP-MANAGEMENT",
+      "source_path": "features/autonomous_ip_management.py",
+      "source_blob_sha": "48adab6ab6e32e97c342132446789373cc80ee27",
+      "source_lines": [
+        8,
+        96
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines an intellectual property management cycle.",
+      "classification": "Retire",
+      "review_status": "candidate",
+      "target_spec": null,
+      "acceptance_id": "ZIP-LEG-AUTONOMOUS-IP-MANAGEMENT-T01",
+      "successor_acceptance": "Core cannot dispatch filings or rights transfers. An optional external integration must bind a human-approved action.",
+      "exclusion": "human-governed-extension"
+    },
+    {
+      "feature_id": "ZIP-LEG-AUTONOMOUS-KNOWLEDGE-GRAPH-GENESIS",
+      "source_path": "features/autonomous_knowledge_graph_genesis.py",
+      "source_blob_sha": "f08ef2488eeba09329e797aaa10c688fd6de3060",
+      "source_lines": [
+        115,
+        421
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines gap detection, evidence acquisition, synthesis, contradiction and ontology operations.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/0900-knowledge/knowledge.md",
+      "acceptance_id": "ZIP-LEG-AUTONOMOUS-KNOWLEDGE-GRAPH-GENESIS-T01",
+      "successor_acceptance": "Conflicting items retain separate provenance and cannot overwrite approved ontology without review."
+    },
+    {
+      "feature_id": "ZIP-LEG-AUTONOMOUS-LEGAL-ENTITY-MANAGEMENT",
+      "source_path": "features/autonomous_legal_entity_management.py",
+      "source_blob_sha": "bc7ecd397f4457052968d000a3e694de97bca631",
+      "source_lines": [
+        8,
+        87
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines a legal entity management cycle.",
+      "classification": "Retire",
+      "review_status": "candidate",
+      "target_spec": null,
+      "acceptance_id": "ZIP-LEG-AUTONOMOUS-LEGAL-ENTITY-MANAGEMENT-T01",
+      "successor_acceptance": "Core does not expose this effect. Any future external integration requires its own review and grant.",
+      "exclusion": "external-integration"
+    },
+    {
+      "feature_id": "ZIP-LEG-AUTONOMY-GOVERNANCE",
+      "source_path": "features/autonomy_governance.py",
+      "source_blob_sha": "178e310b2786be04a28c912e55e02d911a2e7c78",
+      "source_lines": [
+        124,
+        420
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Uses an in-memory policy mock and includes policy checking, review and emergency stop operations.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-AUTONOMY-GOVERNANCE-T01",
+      "successor_acceptance": "An emergency stop survives restart and blocks new effects for the revoked scope."
+    },
+    {
+      "feature_id": "ZIP-LEG-BACKGROUND-WORKER-FRAMEWORK",
+      "source_path": "features/background_worker_framework.py",
+      "source_blob_sha": "1f486b626ed00e776f73ae4734d3c46c5d264e98",
+      "source_lines": [
+        215,
+        246
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Provides explicit worker-pool start and stop operations.",
+      "classification": "Consolidate",
+      "review_status": "candidate",
+      "target_spec": "specifications/0200-runtime/runtime.md",
+      "acceptance_id": "ZIP-LEG-BACKGROUND-WORKER-FRAMEWORK-T01",
+      "successor_acceptance": "Shutdown cancels or drains according to policy and releases leases for all workers before completion."
+    },
+    {
+      "feature_id": "ZIP-LEG-BACKLOG-MANAGER",
+      "source_path": "features/backlog_manager.py",
+      "source_blob_sha": "c1eda9a3cb1879d1d701f9f78e636970cad8f8a8",
+      "source_lines": [
+        79,
+        149
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Uses logs and insights to propose items and stores drafts through simulated CRUD.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "specifications/1200-assignments/assignments.md",
+      "acceptance_id": "ZIP-LEG-BACKLOG-MANAGER-T01",
+      "successor_acceptance": "A proposed backlog item is attributable and remains unapproved until an authorized decision is recorded."
+    },
+    {
+      "feature_id": "ZIP-LEG-BEHAVIOR-DASHBOARD",
+      "source_path": "features/behavior_dashboard.py",
+      "source_blob_sha": "9aeb1659132f36d3deeccb5a16414ba4103d2805",
+      "source_lines": [
+        18,
+        32
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Reads adaptation history through a dedicated dashboard service.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "specifications/3100-observability/observability.md",
+      "acceptance_id": "ZIP-LEG-BEHAVIOR-DASHBOARD-T01",
+      "successor_acceptance": "A query scoped to one workspace cannot return another workspace's adaptation history."
+    },
+    {
+      "feature_id": "ZIP-LEG-CAUSAL-INFERENCE",
+      "source_path": "features/causal_inference.py",
+      "source_blob_sha": "3f9df03ba6ecdb18d10cb898dbd097227becd39c",
+      "source_lines": [
+        80,
+        162
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Exposes a causal-analysis operation.",
+      "classification": "Experimental",
+      "review_status": "candidate",
+      "target_spec": "crates/reasoning/DESIGN.md",
+      "acceptance_id": "ZIP-LEG-CAUSAL-INFERENCE-T01",
+      "successor_acceptance": "A synthetic confounded dataset records assumptions and abstains when the proposed causal effect is unidentified."
+    },
+    {
+      "feature_id": "ZIP-LEG-CHAOS-AGI",
+      "source_path": "features/chaos_agi.py",
+      "source_blob_sha": "9b6af91dabbc2eb3ace78a8f00ce50bf0b4a7a3c",
+      "source_lines": [
+        99,
+        293
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines self-test, continuous testing and pattern-analysis entry points.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2100-verification/verification.md",
+      "acceptance_id": "ZIP-LEG-CHAOS-AGI-T01",
+      "successor_acceptance": "Inject an authorized synthetic worker termination and verify checkpoint recovery and baseline isolation."
+    },
+    {
+      "feature_id": "ZIP-LEG-COGNITIVE-ALLOCATOR",
+      "source_path": "features/cognitive_allocator.py",
+      "source_blob_sha": "aca42070178493644345a0d8851490d14f7cf20f",
+      "source_lines": [
+        80,
+        182
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Labels cognitive load assessment and allocation as simulations.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/0400-intelligence/intelligence.md",
+      "acceptance_id": "ZIP-LEG-COGNITIVE-ALLOCATOR-T01",
+      "successor_acceptance": "A deterministic check uses its declared tool and leaves the paid inference ledger untouched."
+    },
+    {
+      "feature_id": "ZIP-LEG-COGNITIVE-ARCHITECTURE-OPTIMIZER",
+      "source_path": "features/cognitive_architecture_optimizer.py",
+      "source_blob_sha": "dd1458ed6dd4fb2190a7f3869d36dd0f09b3a25e",
+      "source_lines": [
+        97,
+        267
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Separates bottleneck analysis, improvement proposal and candidate evaluation.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/3500-evolution/evolution.md",
+      "acceptance_id": "ZIP-LEG-COGNITIVE-ARCHITECTURE-OPTIMIZER-T01",
+      "successor_acceptance": "A candidate with missing baseline measurements cannot be promoted."
+    },
+    {
+      "feature_id": "ZIP-LEG-COGNITIVE-PLANNING",
+      "source_path": "features/cognitive_planning.py",
+      "source_blob_sha": "05150b4a11076b7c278a300c10fe067f326cb177",
+      "source_lines": [
+        95,
+        265
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Separates goal decomposition, plan optimization and obstacle prediction.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "crates/reasoning/DESIGN.md",
+      "acceptance_id": "ZIP-LEG-COGNITIVE-PLANNING-T01",
+      "successor_acceptance": "A proposed plan that requires a missing capability remains blocked and retains the original goal."
+    },
+    {
+      "feature_id": "ZIP-LEG-CONTEXTUAL-MEMORY",
+      "source_path": "features/contextual_memory.py",
+      "source_blob_sha": "7e53cdc69cf2a2e3eb1cedfdea071739d977fd37",
+      "source_lines": [
+        49,
+        235
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Comments out the Qdrant client and uses mock vectors and search results.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/0800-memory/memory.md",
+      "acceptance_id": "ZIP-LEG-CONTEXTUAL-MEMORY-T01",
+      "successor_acceptance": "Offline write, restart and recall return the persisted scoped record with real source provenance."
+    },
+    {
+      "feature_id": "ZIP-LEG-CROSS-REPO-REFACTOR",
+      "source_path": "features/cross_repo_refactor.py",
+      "source_blob_sha": "8721be12e407f97b656ef06579e87a6532e70982",
+      "source_lines": [
+        9,
+        63
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Returns mocked drift findings and linked refactoring results.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1400-repositories/repositories.md",
+      "acceptance_id": "ZIP-LEG-CROSS-REPO-REFACTOR-T01",
+      "successor_acceptance": "When one repository lacks a grant, no part of the coordinated write is dispatched."
+    },
+    {
+      "feature_id": "ZIP-LEG-DATA-INTEGRITY-GUARDIAN",
+      "source_path": "features/data_integrity_guardian.py",
+      "source_blob_sha": "d1fcab2f1cec23f580a70e2ecadbde46509e2637",
+      "source_lines": [
+        80,
+        234
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Exposes a simulated scan and a separate correction operation.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2500-storage/storage.md",
+      "acceptance_id": "ZIP-LEG-DATA-INTEGRITY-GUARDIAN-T01",
+      "successor_acceptance": "A damaged synthetic record yields a corruption report and keeps the original bytes recoverable."
+    },
+    {
+      "feature_id": "ZIP-LEG-DECISION-PATH-MAPPER",
+      "source_path": "features/decision_path_mapper.py",
+      "source_blob_sha": "18b26e891637550db92c7554bd88b2b0640415a2",
+      "source_lines": [
+        80,
+        151
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Predicts consequences with a model and distinguishes simulated evidence retrieval in its source.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "crates/engineering/specifications/modules/architecture/decisions.md",
+      "acceptance_id": "ZIP-LEG-DECISION-PATH-MAPPER-T01",
+      "successor_acceptance": "A decision record binds alternatives, evidence, actor and authorized outcome to one reviewed revision."
+    },
+    {
+      "feature_id": "ZIP-LEG-DEPENDENCY-SENTINEL",
+      "source_path": "features/dependency_sentinel.py",
+      "source_blob_sha": "cc5c78f4ba5bf470cd7bba6d63fcd5fbbd984ec7",
+      "source_lines": [
+        98,
+        313
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Models missing-dependency resolution and reproducibility, with mocked external command dispatch.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/3400-maintenance/maintenance.md",
+      "acceptance_id": "ZIP-LEG-DEPENDENCY-SENTINEL-T01",
+      "successor_acceptance": "A mixed dependency fixture produces license, integrity and compatibility findings and leaves the lockfile unchanged without approval."
+    },
+    {
+      "feature_id": "ZIP-LEG-DYNAMIC-AGENTS",
+      "source_path": "features/dynamic_agents.py",
+      "source_blob_sha": "f4ce54d6b43be2e67f87b37cc338c975dc1807fd",
+      "source_lines": [
+        101,
+        152
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Uses a model-proposed configuration and saves it after checking the returned shape.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/1000-agents/agents.md",
+      "acceptance_id": "ZIP-LEG-DYNAMIC-AGENTS-T01",
+      "successor_acceptance": "A proposed role with a capability absent from its parent grant cannot activate."
+    },
+    {
+      "feature_id": "ZIP-LEG-DYNAMIC-POLICY-ENFORCEMENT",
+      "source_path": "features/dynamic_policy_enforcement.py",
+      "source_blob_sha": "f91291b05d5736c9272253a9100599ff6baf916c",
+      "source_lines": [
+        78,
+        244
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Separates behavioral evaluation from corrective action.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-DYNAMIC-POLICY-ENFORCEMENT-T01",
+      "successor_acceptance": "A denied corrective action has a denial record and leaves protected state unchanged."
+    },
+    {
+      "feature_id": "ZIP-LEG-DYNAMIC-POLICY-SYNTHESIS",
+      "source_path": "features/dynamic_policy_synthesis.py",
+      "source_blob_sha": "b92bb4332e7500964a4109538a3ba115c024feae",
+      "source_lines": [
+        133,
+        133
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The pinned blob fails static Python parsing.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-DYNAMIC-POLICY-SYNTHESIS-T01",
+      "successor_acceptance": "A proposed rule remains inert after submission and cannot change the active policy revision."
+    },
+    {
+      "feature_id": "ZIP-LEG-DYNAMIC-PRICING-OPTIMIZATION",
+      "source_path": "features/dynamic_pricing_optimization.py",
+      "source_blob_sha": "32ee72cea915878c1f464255c61b108edcb6bdfc",
+      "source_lines": [
+        2,
+        14
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines pricing and offer optimization functions.",
+      "classification": "Retire",
+      "review_status": "candidate",
+      "target_spec": null,
+      "acceptance_id": "ZIP-LEG-DYNAMIC-PRICING-OPTIMIZATION-T01",
+      "successor_acceptance": "The core capability registry excludes commercial pricing. Any extension has an independent grant.",
+      "exclusion": "optional-business-extension"
+    },
+    {
+      "feature_id": "ZIP-LEG-DYNAMIC-RESOURCE-ALLOCATOR",
+      "source_path": "features/dynamic_resource_allocator.py",
+      "source_blob_sha": "542b615352238fbe2f96476e1ad2ad16ec59abaa",
+      "source_lines": [
+        76,
+        351
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Seeds a mocked inventory and allocation policies before monitoring and adjustment.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/0300-resources/resources.md",
+      "acceptance_id": "ZIP-LEG-DYNAMIC-RESOURCE-ALLOCATOR-T01",
+      "successor_acceptance": "Competing requests cannot exceed measured capacity when checked against the same inventory revision."
+    },
+    {
+      "feature_id": "ZIP-LEG-DYNAMIC-SWARM-ORCHESTRATION",
+      "source_path": "features/dynamic_swarm_orchestration.py",
+      "source_blob_sha": "8e5ac16508c0e565814bd3d11f6174d037bef5df",
+      "source_lines": [
+        115,
+        366
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines dispatch, topology reconfiguration and swarm health operations.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/1100-orchestration/orchestration.md",
+      "acceptance_id": "ZIP-LEG-DYNAMIC-SWARM-ORCHESTRATION-T01",
+      "successor_acceptance": "Reassigning a worker preserves task identity and cannot expand the active grant."
+    },
+    {
+      "feature_id": "ZIP-LEG-EMERGENT-BEHAVIOR",
+      "source_path": "features/emergent_behavior.py",
+      "source_blob_sha": "8373c0ff6db9497c222ebc0d63dc6d21a6bbddb7",
+      "source_lines": [
+        81,
+        200
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Exposes behavior analysis and correction proposals as separate operations.",
+      "classification": "Experimental",
+      "review_status": "candidate",
+      "target_spec": "specifications/2100-verification/verification.md",
+      "acceptance_id": "ZIP-LEG-EMERGENT-BEHAVIOR-T01",
+      "successor_acceptance": "A synthetic unexpected behavior is reproduced under recorded inputs and produces a proposal awaiting review."
+    },
+    {
+      "feature_id": "ZIP-LEG-ETHICAL-CONFLICT-RESOLVER",
+      "source_path": "features/ethical_conflict_resolver.py",
+      "source_blob_sha": "f54321649e7764fef91f4086a5fe9f1ba1b6bda4",
+      "source_lines": [
+        78,
+        194
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Separates conflict analysis from proposed resolution.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-ETHICAL-CONFLICT-RESOLVER-T01",
+      "successor_acceptance": "A proposal that contradicts constitutional policy is rejected regardless of model confidence."
+    },
+    {
+      "feature_id": "ZIP-LEG-FORMAL-VERIFICATION",
+      "source_path": "features/formal_verification.py",
+      "source_blob_sha": "37ff1cb21585d8496f46766af5c1140a38a0a25f",
+      "source_lines": [
+        99,
+        403
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Reports verification status from model-generated results for designs, policies and invariants.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/2100-verification/verification.md",
+      "acceptance_id": "ZIP-LEG-FORMAL-VERIFICATION-T01",
+      "successor_acceptance": "A missing checker receipt leaves proof status unverified even when model text claims success."
+    },
+    {
+      "feature_id": "ZIP-LEG-GLOBAL-ENVIRONMENTAL-MODEL",
+      "source_path": "features/global_environmental_model.py",
+      "source_blob_sha": "4e69cb2b07f83f2054044b3aaa64540d9e5b43c6",
+      "source_lines": [
+        118,
+        272
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Separates data-stream intake, prediction and environment queries.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/0700-context/context.md",
+      "acceptance_id": "ZIP-LEG-GLOBAL-ENVIRONMENTAL-MODEL-T01",
+      "successor_acceptance": "An expired observation is labeled stale and cannot be presented as current measured state."
+    },
+    {
+      "feature_id": "ZIP-LEG-GLOBAL-MARKET-SENTIMENT",
+      "source_path": "features/global_market_sentiment.py",
+      "source_blob_sha": "45b818ee9fd101d034873c4b097807f0f3bc9901",
+      "source_lines": [
+        2,
+        14
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines market sentiment and trading-signal operations.",
+      "classification": "Retire",
+      "review_status": "candidate",
+      "target_spec": null,
+      "acceptance_id": "ZIP-LEG-GLOBAL-MARKET-SENTIMENT-T01",
+      "successor_acceptance": "The core capability registry excludes trading operations. Any proposal belongs to a scoped research extension.",
+      "exclusion": "research-extension"
+    },
+    {
+      "feature_id": "ZIP-LEG-GLOBAL-STATE-MANAGER",
+      "source_path": "features/global_state_manager.py",
+      "source_blob_sha": "abbe53d3f59b25ed8f37caae20a811baed403c8e",
+      "source_lines": [
+        45,
+        127
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Provides shared state reads, writes and deletion.",
+      "classification": "Consolidate",
+      "review_status": "candidate",
+      "target_spec": "specifications/0200-runtime/runtime.md",
+      "acceptance_id": "ZIP-LEG-GLOBAL-STATE-MANAGER-T01",
+      "successor_acceptance": "A stale revision cannot overwrite a newer state and the conflict preserves both revision references."
+    },
+    {
+      "feature_id": "ZIP-LEG-GOAL-RECALIBRATOR",
+      "source_path": "features/goal_recalibrator.py",
+      "source_blob_sha": "e52a14763a4cca06a100fe5d1c0120308d3daf78",
+      "source_lines": [
+        80,
+        178
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Simulates re-evaluating objectives and applying proposed changes.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/3500-evolution/evolution.md",
+      "acceptance_id": "ZIP-LEG-GOAL-RECALIBRATOR-T01",
+      "successor_acceptance": "A goal-change proposal leaves the original assignment scope active until separate authorization."
+    },
+    {
+      "feature_id": "ZIP-LEG-HIL-DEPLOYER",
+      "source_path": "features/hil_deployer.py",
+      "source_blob_sha": "d2e4566dc8605caf015f9a2165c77e1714c9081d",
+      "source_lines": [
+        103,
+        387
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Contains explicit policy and approval branches alongside mock verification and device feedback.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/3300-deployment/deployment.md",
+      "acceptance_id": "ZIP-LEG-HIL-DEPLOYER-T01",
+      "successor_acceptance": "A missing device receipt or approval prevents promotion. Test with a simulated adapter before any real deployment."
+    },
+    {
+      "feature_id": "ZIP-LEG-HUMAN-AGI-ALIGNMENT",
+      "source_path": "features/human_agi_alignment.py",
+      "source_blob_sha": "82492384648c6d9353af627f31e8a043502e8aba",
+      "source_lines": [
+        79,
+        162
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Provides intent clarification and task-specification refinement operations.",
+      "classification": "Consolidate",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-HUMAN-AGI-ALIGNMENT-T01",
+      "successor_acceptance": "A refined proposal preserves literal constraints and remains proposed pending user approval."
+    },
+    {
+      "feature_id": "ZIP-LEG-HUMAN-INTENT-GUARD",
+      "source_path": "features/human_intent_guard.py",
+      "source_blob_sha": "b4e3f8ec769ba9ebf277be958ca27fc072b06d9d",
+      "source_lines": [
+        9,
+        67
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Uses mock risk analysis and a demo approval response.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-HUMAN-INTENT-GUARD-T01",
+      "successor_acceptance": "A high-risk effect stays blocked until a trusted grant binds the exact request digest."
+    },
+    {
+      "feature_id": "ZIP-LEG-INTEGRITY-VERIFICATION",
+      "source_path": "features/integrity_verification.py",
+      "source_blob_sha": "fb01b63ec0a4f19245817a67f6d2878886340010",
+      "source_lines": [
+        78,
+        151
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Includes a manual override for a consistent simulated integrity result.",
+      "classification": "Consolidate",
+      "review_status": "candidate",
+      "target_spec": "specifications/2100-verification/verification.md",
+      "acceptance_id": "ZIP-LEG-INTEGRITY-VERIFICATION-T01",
+      "successor_acceptance": "A changed input digest fails independently of any textual integrity assertion."
+    },
+    {
+      "feature_id": "ZIP-LEG-INTELLIGENT-RESOURCE-ALLOCATION",
+      "source_path": "features/intelligent_resource_allocation.py",
+      "source_blob_sha": "191687df8639bf7ac0fdce9eb19538b39da910c2",
+      "source_lines": [
+        9,
+        94
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Calculates available capacity, task demand and updated allocations.",
+      "classification": "Consolidate",
+      "review_status": "candidate",
+      "target_spec": "specifications/0300-resources/resources.md",
+      "acceptance_id": "ZIP-LEG-INTELLIGENT-RESOURCE-ALLOCATION-T01",
+      "successor_acceptance": "Measured capacity and authorized budget both bound admission under concurrent requests."
+    },
+    {
+      "feature_id": "ZIP-LEG-INTELLIGENT-SALES-FORECASTING",
+      "source_path": "features/intelligent_sales_forecasting.py",
+      "source_blob_sha": "f0204a8fa76c42be4b059bd6a2b6ab1fc3b86960",
+      "source_lines": [
+        5,
+        64
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines forecast generation and quota optimization methods.",
+      "classification": "Retire",
+      "review_status": "candidate",
+      "target_spec": null,
+      "acceptance_id": "ZIP-LEG-INTELLIGENT-SALES-FORECASTING-T01",
+      "successor_acceptance": "The core capability registry excludes sales automation. An external application owns any successor.",
+      "exclusion": "external-application"
+    },
+    {
+      "feature_id": "ZIP-LEG-INTENT-EXTRAPOLATOR",
+      "source_path": "features/intent_extrapolator.py",
+      "source_blob_sha": "ce86fe0ab1127a86375725c3443b2971e0586895",
+      "source_lines": [
+        101,
+        264
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Separates extrapolating implicit intent from identifying optimization opportunities.",
+      "classification": "Redesign",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-INTENT-EXTRAPOLATOR-T01",
+      "successor_acceptance": "An inferred intent is recorded as a proposal and cannot extend authorized effects."
+    },
+    {
+      "feature_id": "ZIP-LEG-INTENT-SYNTHESIZER",
+      "source_path": "features/intent_synthesizer.py",
+      "source_blob_sha": "70e0d94d750066da173690ee518961f969c440b3",
+      "source_lines": [
+        95,
+        229
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Provides intent synthesis and conflict identification operations.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "specifications/2400-governance/governance.md",
+      "acceptance_id": "ZIP-LEG-INTENT-SYNTHESIZER-T01",
+      "successor_acceptance": "Conflicting explicit constraints block the affected action until resolved by an authorized principal."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-BACKEND",
+      "source_path": "features/lang_dev_backend.py",
+      "source_blob_sha": "a4a930f59cdb75b8abe71abd32b1f049cd27e548",
+      "source_lines": [
+        7,
+        52
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The implement_backend stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-BACKEND-T01",
+      "successor_acceptance": "A missing target adapter returns unsupported instead of a compiled artifact."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-DOCS-ECOSYSTEM",
+      "source_path": "features/lang_dev_docs_ecosystem.py",
+      "source_blob_sha": "f3fe08e5226e99192cd5032c5f07881a91ba28ff",
+      "source_lines": [
+        7,
+        53
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The generate_docs_and_bootstrap_ecosystem stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-DOCS-ECOSYSTEM-T01",
+      "successor_acceptance": "A documented example that fails compilation prevents publication qualification."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-GOALS-REQUIREMENTS",
+      "source_path": "features/lang_dev_goals_requirements.py",
+      "source_blob_sha": "f10fbefdd0a963c97a8c9f25163148a6856af8b6",
+      "source_lines": [
+        7,
+        47
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The define_language_goals_and_requirements stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-GOALS-REQUIREMENTS-T01",
+      "successor_acceptance": "A language feature without an acceptance test remains unqualified."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-IR-GENERATION",
+      "source_path": "features/lang_dev_ir_generation.py",
+      "source_blob_sha": "c07b134e1f9e0804c77b865344cf1dda89b2d634",
+      "source_lines": [
+        7,
+        49
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The generate_ir_and_optimize stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-IR-GENERATION-T01",
+      "successor_acceptance": "A fixture whose pre- and post-optimization behavior differs blocks artifact promotion."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-LEXER",
+      "source_path": "features/lang_dev_lexer.py",
+      "source_blob_sha": "b251fea9d4e993d2797f8a9a3c3f72930bb28811",
+      "source_lines": [
+        7,
+        47
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The build_lexer stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-LEXER-T01",
+      "successor_acceptance": "A valid token sequence and an invalid source span are checked against a pinned corpus."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-PARSER",
+      "source_path": "features/lang_dev_parser.py",
+      "source_blob_sha": "84b652e1cdfe06ab1d9e04ef7949eea897e40992",
+      "source_lines": [
+        7,
+        48
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The build_parser stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-PARSER-T01",
+      "successor_acceptance": "An invalid grammar fixture is accepted only when the expected diagnostic appears."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-RELEASE-MAINTENANCE",
+      "source_path": "features/lang_dev_release_maintenance.py",
+      "source_blob_sha": "d6a311706d9ef3b57ec4f28f29e2f60420269bd7",
+      "source_lines": [
+        7,
+        48
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The manage_release_and_maintenance stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-RELEASE-MAINTENANCE-T01",
+      "successor_acceptance": "A bootstrap digest mismatch blocks the release and preserves both stage outputs."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-RUNTIME",
+      "source_path": "features/lang_dev_runtime.py",
+      "source_blob_sha": "dd6c4dbd0279b406bfe2b8649c58335962567efc",
+      "source_lines": [
+        7,
+        48
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The build_runtime stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-RUNTIME-T01",
+      "successor_acceptance": "A runtime fixture compares observable exit status and output against the declared expectation."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-SEMANTIC-ANALYZER",
+      "source_path": "features/lang_dev_semantic_analyzer.py",
+      "source_blob_sha": "d0bbb68d221270548c62cfbe5a4c5836d1738bcb",
+      "source_lines": [
+        7,
+        49
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The build_semantic_analyzer stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-SEMANTIC-ANALYZER-T01",
+      "successor_acceptance": "A known type mismatch yields the expected diagnostic code and source span."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-SPEC-DESIGN",
+      "source_path": "features/lang_dev_spec_design.py",
+      "source_blob_sha": "6677cff2941301d085562343005e0b370249e1c9",
+      "source_lines": [
+        7,
+        51
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The design_language_specification stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-SPEC-DESIGN-T01",
+      "successor_acceptance": "Changing the grammar snapshot invalidates conformance evidence for the old snapshot."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-STDLIB",
+      "source_path": "features/lang_dev_stdlib.py",
+      "source_blob_sha": "0af04140082516317ae19843177ff47c228ebad6",
+      "source_lines": [
+        7,
+        51
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The develop_standard_library stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-STDLIB-T01",
+      "successor_acceptance": "An incompatible public API change is reported against the selected standard library baseline."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-TESTING-VERIFICATION",
+      "source_path": "features/lang_dev_testing_verification.py",
+      "source_blob_sha": "44003be33eb11e918ffc03bc2627ca51f0f7f355",
+      "source_lines": [
+        7,
+        54
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The setup_testing_verification stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-TESTING-VERIFICATION-T01",
+      "successor_acceptance": "A timed-out verifier is recorded as failed or blocked even when a negative fixture expects compilation failure."
+    },
+    {
+      "feature_id": "ZIP-LEG-LANG-DEV-TOOLING",
+      "source_path": "features/lang_dev_tooling.py",
+      "source_blob_sha": "1862d46e30e73711bc627accf1adc3acee953f24",
+      "source_lines": [
+        7,
+        55
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The develop_tooling stage includes a timed simulation and predefined report fields.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1600-engineering/language-development.md",
+      "acceptance_id": "ZIP-LEG-LANG-DEV-TOOLING-T01",
+      "successor_acceptance": "An unavailable formatter or language server remains explicitly unsupported."
+    },
+    {
+      "feature_id": "ZIP-LEG-PERSISTENT-TASK-MANAGER",
+      "source_path": "features/persistent_task_manager.py",
+      "source_blob_sha": "bee00da8a6622fa6209ff91cb430b08d4d8b9191",
+      "source_lines": [
+        37,
+        185
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Separates submission, status lookup, updates and per-user queries.",
+      "classification": "Preserve",
+      "review_status": "candidate",
+      "target_spec": "specifications/1200-assignments/assignments.md",
+      "acceptance_id": "ZIP-LEG-PERSISTENT-TASK-MANAGER-T01",
+      "successor_acceptance": "Restart after a durable checkpoint preserves the task ID and resumes at the next unverified step."
+    },
+    {
+      "feature_id": "ZIP-LEG-CHECKPOINTING",
+      "source_path": "tariro/core/checkpointing.py",
+      "source_blob_sha": "b2335ead702cbae27948723180f2ade34d8312c2",
+      "source_lines": [
+        9,
+        63
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Computes a checkpoint checksum when saving, while restore returns persisted state through the storage port.",
+      "classification": "Rewrite",
+      "review_status": "candidate",
+      "target_spec": "crates/assignments/specifications/modules/checkpoint.md",
+      "acceptance_id": "ZIP-LEG-CHECKPOINTING-T01",
+      "successor_acceptance": "Changing a stored checkpoint's covered bytes causes restore to fail and dispatch no subsequent step."
+    },
+    {
+      "feature_id": "ZIP-LEG-EXECUTION-BUDGET",
+      "source_path": "tariro/core/execution_budget.py",
+      "source_blob_sha": "072dc903d0385c29147b218c96ad2276d7270b52",
+      "source_lines": [
+        5,
+        14
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "Defines runtime budget fields as a dedicated value record.",
+      "classification": "Rewrite",
+      "review_status": "candidate",
+      "target_spec": "specifications/0300-resources/resources.md",
+      "acceptance_id": "ZIP-LEG-EXECUTION-BUDGET-T01",
+      "successor_acceptance": "An effective budget from policy bounds the operation and rejects expired dispatch."
+    },
+    {
+      "feature_id": "ZIP-LEG-PIPELINE-MANAGER",
+      "source_path": "tariro/core/pipeline_manager.py",
+      "source_blob_sha": "1279195a4cc62e360f5d34816e7eff7e49cd23a6",
+      "source_lines": [
+        7,
+        96
+      ],
+      "evidence_kind": "static",
+      "observed_behavior": "The agent execution path explicitly simulates dispatch and returns a dummy result.",
+      "classification": "Simulated",
+      "review_status": "candidate",
+      "target_spec": "specifications/1300-workflows/workflows.md",
+      "acceptance_id": "ZIP-LEG-PIPELINE-MANAGER-T01",
+      "successor_acceptance": "An attempt without an executor receipt cannot commit a completed stage."
+    }
+  ]
+}

@@ -22,3 +22,8 @@ Capture exact inputs, configured limits, actual result, policy revision and the 
 
 - [engineering crate design](../../crates/engineering/DESIGN.md)
 - [verification crate design](../../crates/verification/DESIGN.md)
+
+## Workflow profiles
+
+- [Software lifecycle workflow](lifecycle.md) assigns durable artifacts and evidence gates to each engineering stage.
+- [Language development workflow](language-development.md) applies those gates to project-owned compilers and language tooling.
