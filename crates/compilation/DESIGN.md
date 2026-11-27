@@ -79,3 +79,32 @@ crates/compilation/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Change target or compiler and verify cache miss. Failed compiler exit cannot produce success.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`compiler.rs`](specifications/modules/compiler.md)
+- [`toolchain.rs`](specifications/modules/toolchain.md)
+- [`build.rs`](specifications/modules/build.md)
+- [`target.rs`](specifications/modules/target.md)
+- [`environment.rs`](specifications/modules/environment.md)
+- [`diagnostics.rs`](specifications/modules/diagnostics.md)
+- [`artifacts.rs`](specifications/modules/artifacts.md)
+- [`reproducibility.rs`](specifications/modules/reproducibility.md)
+- [`cache.rs`](specifications/modules/cache.md)
+- [`dependency_resolution.rs`](specifications/modules/dependency_resolution.md)
+- [`adapters/mod.rs`](specifications/modules/adapters/mod.md)
+- [`adapters/cargo.rs`](specifications/modules/adapters/cargo.md)
+- [`adapters/cmake.rs`](specifications/modules/adapters/cmake.md)
+- [`adapters/make.rs`](specifications/modules/adapters/make.md)
+- [`adapters/gradle.rs`](specifications/modules/adapters/gradle.md)
+- [`adapters/maven.rs`](specifications/modules/adapters/maven.md)
+- [`adapters/npm.rs`](specifications/modules/adapters/npm.md)
+- [`adapters/python.rs`](specifications/modules/adapters/python.md)
+- [`adapters/go.rs`](specifications/modules/adapters/go.md)
+- [`adapters/danga.rs`](specifications/modules/adapters/danga.md)
+- [`adapters/generic.rs`](specifications/modules/adapters/generic.md)
+- [`verification.rs`](specifications/modules/verification.md)
