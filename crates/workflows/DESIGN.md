@@ -78,3 +78,33 @@ crates/workflows/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test cyclic graph, deterministic branching, checkpoint replay and compensation denied after revoke.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`workflow.rs`](specifications/modules/workflow.md)
+- [`definition.rs`](specifications/modules/definition.md)
+- [`parser.rs`](specifications/modules/parser.md)
+- [`compiler.rs`](specifications/modules/compiler.md)
+- [`validation.rs`](specifications/modules/validation.md)
+- [`stage.rs`](specifications/modules/stage.md)
+- [`step.rs`](specifications/modules/step.md)
+- [`condition.rs`](specifications/modules/condition.md)
+- [`dependency.rs`](specifications/modules/dependency.md)
+- [`execution.rs`](specifications/modules/execution.md)
+- [`branching.rs`](specifications/modules/branching.md)
+- [`looping.rs`](specifications/modules/looping.md)
+- [`parallelism.rs`](specifications/modules/parallelism.md)
+- [`variables.rs`](specifications/modules/variables.md)
+- [`artifacts.rs`](specifications/modules/artifacts.md)
+- [`approval.rs`](specifications/modules/approval.md)
+- [`checkpoint.rs`](specifications/modules/checkpoint.md)
+- [`retry.rs`](specifications/modules/retry.md)
+- [`compensation.rs`](specifications/modules/compensation.md)
+- [`rollback.rs`](specifications/modules/rollback.md)
+- [`versioning.rs`](specifications/modules/versioning.md)
+- [`registry.rs`](specifications/modules/registry.md)
+- [`reporting.rs`](specifications/modules/reporting.md)
