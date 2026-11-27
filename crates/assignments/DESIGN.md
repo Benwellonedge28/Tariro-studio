@@ -1,6 +1,6 @@
 # Assignments crate design
 
-**Contract version** 1.0. Master design §28. Planned implementation.
+**Contract version** 1.1 candidate. Master design §28. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -15,35 +15,11 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../st
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
-
-- `submit(spec)`
-- `transition(id, revision, command)`
-- `record_unit()`
-- `reconcile()`
-
-Record families: AssignmentV1, Task, Checkpoint, Evidence, ExternalOperation and batch record. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `AssignmentRecord { id, workspace_id, repository_id, base_revision, grant_ref, plan_ref, state, state_revision, checkpoint_refs, evidence_refs, effects }`
-- `TransitionCommand { command_id, expected_revision, action }`
-
-- `transition(id: AssignmentId, command: TransitionCommand) -> Result<TransitionReceipt>`
+[Transition commands](specifications/modules/transitions.md) bind assignment identity, expected revision and stable command ID. The [assignment lifecycle](../../specifications/1200-assignments/assignments.md) owns valid transitions. [Checkpoint](specifications/modules/checkpoint.md) commits a verified plan unit and evidence in the same Storage transaction as revision and Events outbox. [Recovery](specifications/modules/recovery.md) inspects exact prior effects before rescheduling or publication. Composition injects runtime, scheduler and repository boundaries behind scoped ports.
 
 ## Failure, safety and resource limits
 
-Exact 30 for Vimbai fixture; short batches await owner revision. Resume revalidates authorization, policy, snapshot and artifacts. Never finish with missing evidence.
-
-- `StaleRevision`
-- `InvalidTransition`
-- `AwaitingApproval`
-- `EvidenceIncomplete`
-- `UnknownRemoteOutcome`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Derive exact file count and operational bounds from the current grant and validated policy. Enforce the 30-file reference Vimbai agreement where applicable. Short batches await explicit owner revision. Resume revalidates authority, pinned sources, plan and evidence. Cancellation and pause fence the worker and settle existing operations before an outcome. Never report completion without matching receipts and verified evidence. See [typed errors](specifications/modules/error.md).
 
 ## Source layout
 
@@ -84,11 +60,11 @@ crates/assignments/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Crash after unit 17 and resume at 18. Deny file 31. Reconcile push and PR ambiguity without duplicate mutation.
+Apply the [lifecycle fixtures](../../contracts/acceptance/assignments/lifecycle-fixtures.json) to the 17/18 restart boundary, exact batch rules and provider request reconciliation. Qualify real adapter fault behavior and independent review separately.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. The lifecycle slice is a candidate for independent review. Other modules retain their recorded maturity.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

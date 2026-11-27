@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-ASG-CHK-001",
+  "cases": [
+    {"id":"ZIP-ASG-FIX-001","requirement":"ASG-CHK-T01","scenario":"Crash after unit 17","input":{"committed_prefix":17,"requested_units":30,"staged_uncommitted":[18],"recovered_epoch":5},"expected":{"next_unit":18,"verified_units":17,"rework_units_1_through_17":false}},
+    {"id":"ZIP-ASG-FIX-002","requirement":"ASG-CHK-T02","scenario":"Replay and checkpoint fencing","input":{"verified_prefix":17,"current_epoch":5,"commands":[[5,17,"matching"],[4,18,"new"],[5,17,"different"]]},"expected":{"decisions":["Replay","LeaseLost","Conflict"],"verified_prefix":17}},
+    {"id":"ZIP-ASG-FIX-003","requirement":"ZIP-ASSIGNMENTS-BATCHING-T01","scenario":"Grant exact count and short final batch","input":{"authorized_counts":[30,30,12],"observed_counts":[31,12,12]},"expected":{"decisions":["BatchOverLimit","AwaitingApproval","Sealable"]}},
+    {"id":"ZIP-ASG-FIX-004","requirement":"ASG-RCV-T02","scenario":"Lost push and PR replies","input":{"effects":[["push","branch-a","sha-a"],["draft_pr","marker-a","sha-a"]],"matching_provider_results":[true,true]},"expected":{"recovery":["Confirmed","Confirmed"],"additional_dispatches":0}},
+    {"id":"ZIP-ASG-FIX-005","requirement":"ZIP-ASSIGNMENTS-ERROR-T01","scenario":"Stale or inconclusive provider reads","input":{"effect":"draft_pr","reply":"lost","candidate_search":"empty","provider_can_prove_prior_request_finished":false},"expected":{"recovery":"UnknownEffect","retry_allowed":false,"new_effect_key":false}},
+    {"id":"ZIP-ASG-FIX-006","requirement":"ZIP-ASSIGNMENTS-RESUME-T01","scenario":"Expired grant","input":{"verified_prefix":17,"saved_plan":"p1","live_grant":false},"expected":{"state":"AwaitingApproval","dispatches":0,"retained_prefix":17}},
+    {"id":"ZIP-ASG-FIX-007","requirement":"ZIP-ASSIGNMENTS-TRANSITIONS-T01","scenario":"Contending compare-and-swap commands","input":{"revision":7,"commands":[["a",7],["b",7]],"replay_winner":true},"expected":{"final_revision":8,"committed_changes":1,"events":1}},
+    {"id":"ZIP-ASG-FIX-008","requirement":"ZIP-ASSIGNMENTS-ACCEPTANCE-T01","scenario":"Candidate or target mismatch","input":{"sealed_candidate":"tree-a","reviewed_candidate":"tree-a","new_candidate":"tree-b","check_commit":"old-sha","published_commit":"new-sha"},"expected":{"mutated_candidate_accepted":false,"wrong_commit_check_accepted":false}},
+    {"id":"ZIP-ASG-FIX-009","requirement":"ZIP-ASSIGNMENTS-CANCELLATION-T01","scenario":"Cancel races dispatch","input":{"orders":["cancel_first","claim_first"],"claim_first_outcome":"confirmed","cleanup_initially_settled":false},"expected":{"dispatches":[0,1],"state_while_unsettled":"Recovering","terminal_state":"Cancelled","committed_effects_preserved":1}},
+    {"id":"ZIP-ASG-FIX-010","requirement":"ZIP-ASSIGNMENTS-PAUSE-T01","scenario":"Pause with uncertain PR creation","input":{"live_worker":true,"remote":"unknown","resolution":"confirmed"},"expected":{"before_resolution":"Recovering","after_resolution_and_cleanup":"Paused","effects_preserved":1}},
+    {"id":"ZIP-ASG-FIX-011","requirement":"ZIP-ASSIGNMENTS-PERSISTENCE-T01","scenario":"Checkpoint commit visibility","input":{"phases":["before_commit","after_commit_before_reply"],"before_prefix":17},"expected":{"prefixes":[17,18],"new_events":[0,1],"new_receipts":[0,1]}},
+    {"id":"ZIP-ASG-FIX-012","requirement":"ZIP-ASSIGNMENTS-EVIDENCE-T01","scenario":"Unbound evidence","input":{"candidate":"tree-b","evidence_candidates":["tree-a","tree-b","tree-b"],"observations":["verified","prose_only","verified"]},"expected":{"gate":[false,false,true]}}
+  ]
+}
