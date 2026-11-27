@@ -77,3 +77,30 @@ crates/research/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test dead source, conflicting citations and forbidden destination.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`question.rs`](specifications/modules/question.md)
+- [`plan.rs`](specifications/modules/plan.md)
+- [`source.rs`](specifications/modules/source.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`retrieval.rs`](specifications/modules/retrieval.md)
+- [`extraction.rs`](specifications/modules/extraction.md)
+- [`credibility.rs`](specifications/modules/credibility.md)
+- [`comparison.rs`](specifications/modules/comparison.md)
+- [`synthesis.rs`](specifications/modules/synthesis.md)
+- [`citation.rs`](specifications/modules/citation.md)
+- [`provenance.rs`](specifications/modules/provenance.md)
+- [`cache.rs`](specifications/modules/cache.md)
+- [`offline_library.rs`](specifications/modules/offline_library.md)
+- [`providers/mod.rs`](specifications/modules/providers/mod.md)
+- [`providers/web.rs`](specifications/modules/providers/web.md)
+- [`providers/documentation.rs`](specifications/modules/providers/documentation.md)
+- [`providers/repository.rs`](specifications/modules/providers/repository.md)
+- [`providers/academic.rs`](specifications/modules/providers/academic.md)
+- [`providers/local.rs`](specifications/modules/providers/local.md)
+- [`reporting.rs`](specifications/modules/reporting.md)
