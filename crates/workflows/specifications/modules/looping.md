@@ -1,15 +1,11 @@
-# Statically bounded iteration
+# Static iteration expansion
 
-**ZIP-WORKFLOWS-LOOPING-001 · v1.0 · Owner:** Workflows maintainers. **Maturity:** D3 file contract draft.
+**ZIP-WORKFLOWS-LOOPING-001 · v1.1 candidate · Owner** Workflows maintainers
 
-**Planned source:** `crates/workflows/src/looping.rs`
+**Planned source** `crates/workflows/src/looping.rs`
 
-## Required implementation behavior
+Edition 1 supports static repeats. The positive finite repeat count is part of the reviewed immutable definition, with an implicit count of one where a repeat is absent. A runtime value, live cursor or provider response cannot create iterations. A scope carries exact normalized ID components. Expanded leaves identify each repeated ancestor and leaf with a zero-based ordinal for every repetition. Use the sequence of scoped components and ordinals rather than a display string as the canonical node ID.
 
-Require declared finite bound and tighten by configured budget. Give iterations stable identity and checkpoint before next effect; overflow rejects before expansion.
+Compute per-scope effective count as the checked sum of child counts times the scope repeat, or the repeat count for a leaf. Start root depth at one for the first declared step. Check nested depth as scopes are entered and count before allocating expanded nodes. The first repeated instance inherits the declared entry prerequisites. Later instances also wait for terminal successful exits of the prior instance. Require typed entry and exit bindings that resolve to stable nodes under expansion. Missing exits or references across ambiguous repeated scopes fail validation.
 
-## Acceptance
-
-**ZIP-WORKFLOWS-LOOPING-T01.** Oversized loop never creates a partial executable graph.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-WORKFLOWS-LOOPING-T01.** Expand a two-iteration group with three leaves to six stable leaves. A cap of five or arithmetic overflow rejects the entire executable graph without scheduling.

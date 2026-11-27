@@ -1,15 +1,31 @@
-# Workflow failure vocabulary
+# Workflow failure and block codes
 
-**ZIP-WORKFLOWS-ERROR-001 · v1.0 · Owner:** Workflows maintainers. **Maturity:** D3 file contract draft.
+**ZIP-WORKFLOWS-ERROR-001 · v1.1 candidate · Owner** Workflows maintainers
 
-**Planned source:** `crates/workflows/src/error.rs`
+**Planned source** `crates/workflows/src/error.rs`
 
-## Required implementation behavior
+```rust
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum WorkflowError {
+    InvalidDefinition,
+    UnsupportedVersion,
+    UnsupportedCapability,
+    MissingInput,
+    Cycle,
+    ExpansionLimit,
+    Overflow,
+    Denied,
+    DeadlineExceeded,
+    StaleCheckpoint,
+    Conflict,
+    InvalidArtifact,
+    OutcomeUnknown,
+    Unavailable,
+    Cancelled,
+}
+```
 
-Classify invalid syntax, unknown version, cycle, expansion limit, denied step, timeout, stale checkpoint, missing artifact and unresolved effect.
+Reject invalid shape, unknown schema, scope denials and compile failures before dispatch. A missing or invalid bound yields ExpansionLimit if its policy value cannot admit expansion. Checked integer failure yields Overflow. Verify current access before exposing workflow or artifact identity. Keep raw secrets, artifact text and unrelated scope outside diagnostics. At runtime distinguish a definitive no-effect failure from OutcomeUnknown. Unknown outcomes require original-ID reconciliation. A timeout or denied follow-on permission does not retract an already committed result.
 
-## Acceptance
-
-**ZIP-WORKFLOWS-ERROR-T01.** Loop limit rejection occurs before any task dispatch.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-WORKFLOWS-ERROR-T01.** Exceed expanded-node limits or integer representation bounds and verify typed error before scheduling any node.

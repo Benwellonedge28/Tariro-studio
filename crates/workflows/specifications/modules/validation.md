@@ -1,15 +1,11 @@
-# Workflow structural and policy checks
+# Workflow structural and policy validation
 
-**ZIP-WORKFLOWS-VALIDATION-001 · v1.0 · Owner:** Workflows maintainers. **Maturity:** D3 file contract draft.
+**ZIP-WORKFLOWS-VALIDATION-001 · v1.1 candidate · Owner** Workflows maintainers
 
-**Planned source:** `crates/workflows/src/validation.rs`
+**Planned source** `crates/workflows/src/validation.rs`
 
-## Required implementation behavior
+Validate schema and identity, scoped node and output uniqueness, supported capability/effect combinations, complete typed bindings and declared dependencies, then cycle and checked expansion bounds. Reject unknown required fields and forward artifact references without a declared edge. Leaf adapters declare typed inputs and outputs, effect class, approval and resource requirements, and normalized shared-write keys. A registry entry supplies a capability description, never permission to invoke it. Unresolved effect or write capability prevents compilation. Revalidate current authority before execution regardless of compile results.
 
-Reject missing nodes, cycles, invalid variables, excess depth/steps, unsupported capabilities and impossible mandatory requirements before schedule.
+Use `workflows.max_expanded_steps` and `workflows.max_nesting_depth` from effective policy and any tighter definition or assignment ceilings. Reject invalid or absent effective limits and all arithmetic overflow. Check count and depth before constructing or allocating the expanded graph. A rejected graph cannot enqueue a task or create an execution effect.
 
-## Acceptance
-
-**ZIP-WORKFLOWS-VALIDATION-T01.** Static bounds reject excess step expansion without starting a child.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-WORKFLOWS-VALIDATION-T01.** With a bound below the projected expansion, reject before allocating executable nodes and enqueue zero children.

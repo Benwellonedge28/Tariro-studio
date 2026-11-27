@@ -1,15 +1,11 @@
-# Stage artifact ownership
+# Immutable artifact bindings
 
-**ZIP-WORKFLOWS-ARTIFACTS-001 · v1.0 · Owner:** Workflows maintainers. **Maturity:** D3 file contract draft.
+**ZIP-WORKFLOWS-ARTIFACTS-001 · v1.1 candidate · Owner** Workflows maintainers
 
-**Planned source:** `crates/workflows/src/artifacts.rs`
+**Planned source** `crates/workflows/src/artifacts.rs`
 
-## Required implementation behavior
+An artifact binds workflow run and plan, producing node and accepted attempt, output name and schema, data class, byte length and immutable digest, evidence reference and scope. The producer stages bytes under admitted storage and the verifier checks them before a checkpoint exposes the binding. Consumers resolve immutable names through a successful producer checkpoint. Match type, version, run, plan, output name and live access scope before reading. A plan-authorized import has its own verified provenance and identity as an immutable workflow input.
 
-Record digest, producer, scope and verification status. Consumers verify exact artifact identity and data class before read.
+A skipped optional producer contributes explicit typed absence. It cannot supply a required output. Never substitute an old run's output by matching filename or descriptive name. Corrupt or missing bytes block the dependent. Pin evidence and objects under assigned storage retention until an authorized lifecycle operation releases them.
 
-## Acceptance
-
-**ZIP-WORKFLOWS-ARTIFACTS-T01.** Artifact from different execution cannot satisfy current step.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-WORKFLOWS-ARTIFACTS-T01.** An artifact in the wrong run, from a stale attempt or with a different digest cannot satisfy a required input.
