@@ -1,15 +1,9 @@
-# Ancestor applicability
+# Component-wise ancestor applicability
 
-**ZIP-REPOSITORY-INSTRUCTIONS-HIERARCHY-001 · v1.0 · Owner:** Repository maintainers. **Maturity:** D3 file contract draft.
+**ZIP-REPOSITORY-INSTRUCTIONS-HIERARCHY-001 · v1.1 candidate · Owner** Repository maintainers
 
-**Planned source:** `crates/repository/src/instructions/hierarchy.rs`
+**Planned source** `crates/repository/src/instructions/hierarchy.rs`
 
-## Required implementation behavior
+An instruction file applies when its directory components form an exact prefix of the affected file's parent directory components. The root applies to every path. Do not use text prefix, case-folded matching or default-path coercion to calculate authority. Reject paths the host cannot represent without aliases. Applicable rules for each affected endpoint are ordered shallowest to deepest, with evidence tying each rule to the endpoint. Scope restrictions compose across both endpoints. If a deletion or rename removes a rule, the base rule continues governing that candidate. A newly staged rule never widens current authorization and needs dedicated review before becoming an approved base rule.
 
-Associate a candidate path with applicable ancestor scopes using normalized components. File path, not string prefix, defines containment. More specific content is reviewed alongside all higher scopes.
-
-## Acceptance
-
-**ZIP-REPOSITORY-INSTRUCTIONS-HIERARCHY-T01.** docs-private does not inherit docs instruction by textual similarity.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-REPOSITORY-INSTRUCTIONS-HIERARCHY-T01.** A docs-private path inherits the root rule but not the docs directory rule. A moved path is checked under both old and new directories.

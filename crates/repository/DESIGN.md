@@ -1,6 +1,6 @@
 # Repository crate design
 
-**Contract version** 1.0. Master design §30. Planned implementation.
+**Contract version** 1.1 candidate. Master design §30. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -14,37 +14,11 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../st
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
-
-- `pin(ref)`
-- `instructions(snapshot, paths)`
-- `worktree(snapshot)`
-- `validate_diff()`
-- `publish(request)`
-- `reconcile(operation)`
-
-Record families: RepositoryId, pinned Git object ID, worktree lease, instruction bundle, diff and provider operation record. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
-
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `RepositorySnapshot { provider_repository_id, base_commit, tree_digest, instructions_digest }`
-- `PublishRequest { snapshot, expected_remote_ref, target_ref, new_commit, diff_digest, grant_id }`
-
-- `publish(request: PublishRequest, cancel: Cancellation) -> Result<EffectOutcome<PublishReceipt>>`
+[Snapshot](specifications/modules/snapshot.md) owns immutable provider and Git object identity. [Instructions](specifications/modules/instructions/discovery.md) owns pinned base traversal and authority provenance. [Diff](specifications/modules/git/diff.md) and [commit](specifications/modules/git/commit.md) verify the exact staged tree. [Remote](specifications/modules/git/remote.md), [PR creation](specifications/modules/pull_requests/creation.md) and [reconciliation](specifications/modules/pull_requests/reconciliation.md) own guarded effects and verified observations. Assignments retains durable effect intents and receipts through the composition boundary.
 
 ## Failure, safety and resource limits
 
-No inherited or unscoped credentials. No force push or merge under generic write grants. Bound Git command output and disable hooks and shared mutable configuration.
-
-- `StaleRef`
-- `InstructionsIncomplete`
-- `ScopeDenied`
-- `Conflict`
-- `UnknownRemoteOutcome`
-
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+No inherited or unscoped credentials. No general grant allows force push, merge or default-branch mutation. Use an isolated, bounded Git adapter. Stop after stale pin, incomplete instructions, conflicting provider state, or uncertain outcomes. Compare provider capabilities with grant requirements, including whether the required comparison is atomic. Preserve observed effects under [typed failures](specifications/modules/error.md).
 
 ## Source layout
 
@@ -111,11 +85,11 @@ crates/repository/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Test nested instructions, deleted or renamed paths, concurrent base change and duplicate PR reconciliation.
+Apply the [publication fixtures](../../contracts/acceptance/repository/publication-fixtures.json) to instruction paths, staged scope, ref movement and response loss. Independently qualify actual Git and provider capabilities.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership, required behavior and test cases. The publication slice is a candidate for independent review. Other modules retain their recorded maturity.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

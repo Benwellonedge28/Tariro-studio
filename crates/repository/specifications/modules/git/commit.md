@@ -1,15 +1,11 @@
-# Reviewed commit
+# Commit an approved tree
 
-**ZIP-REPOSITORY-GIT-COMMIT-001 · v1.0 · Owner:** Repository maintainers. **Maturity:** D3 file contract draft.
+**ZIP-REPOSITORY-GIT-COMMIT-001 · v1.1 candidate · Owner** Repository maintainers
 
-**Planned source:** `crates/repository/src/git/commit.rs`
+**Planned source** `crates/repository/src/git/commit.rs`
 
-## Required implementation behavior
+Under current worktree ownership, verify expected parent, immutable tree, staged manifest, instruction bundle, live grant and reviewed evidence. Hold the single-writer worktree gate across the final staged check and publication of the local commit reference. Preserve approved author, committer and message. Build only from the exact approved immutable tree. Do not execute repository hooks or permit subprocess configuration to alter the tree.
 
-Verify staged diff digest and expected parent, preserve author provenance, create commit and confirm tree/parent. Repository content cannot enable hooks.
+Read the local commit back and verify parent, tree and the recorded author/message policy. Persist observed object identity before allowing the remote adapter to act. Failure before ref update does not create a publishable receipt. A lost local response requires reference and object inspection. Cancellation does not erase a committed local object. Do not widen the branch lease or perform a remote mutation here.
 
-## Acceptance
-
-**ZIP-REPOSITORY-GIT-COMMIT-T01.** Modify staged file after review and decline commit without consuming authorization.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-REPOSITORY-GIT-COMMIT-T01.** Change the index after review. Commit creation is denied. A valid retried observation retains the original pinned parent and reviewed tree.

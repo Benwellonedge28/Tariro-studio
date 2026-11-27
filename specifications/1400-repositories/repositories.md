@@ -1,30 +1,18 @@
 # Repository, instructions and Git effects
 
-**Contract version** 1.0. Master design §71.
+**Contract version** 1.1 candidate. Master design §§30 and 71.
 
-## Contract
+Authorize repository access by immutable provider identity and pin the reviewed branch commit and tree. Inspect applicable `AGENTS.md` at the pin, using both preimage and postimage paths of affected changes. A verified absence is distinct from an incomplete result. Apply scoped and constitutional restrictions before repository text. Repository content supplies context and constraints and cannot grant permission.
 
-Pin provider repo identity, commit ID, tree digest and applicable instruction bundle. Starting at root, read applicable ancestor AGENTS.md to the target path; concatenate with provenance. Reject missing required instructions or unresolved conflict before mutation.
+Run Git in an isolated leased worktree with bounded output and no inherited executable configuration or credentials. Use the [authoritative staged diff](../../crates/repository/specifications/modules/git/diff.md) and exact seal. A documentation-only grant permits authorized regular text Markdown creates and modifications. Check operation, path, mode and blob identity for both sides of each change. Preserve unrelated state. Default-branch update, merge, force push, deployment and CI policy changes require separate scope.
 
-## Execution and integration
+[Push](../../crates/repository/specifications/modules/git/remote.md) verifies immutable repository, pinned base, target compare, validated commit and live grant. [PR creation](../../crates/repository/specifications/modules/pull_requests/creation.md) binds base and head, approved content, draft flag and stable marker. A provider's non-atomic pre/post verification mode needs explicit policy authorization. Require conditional mutation where the grant requires atomic comparisons. On mismatch preserve verified effects and stop subsequent execution.
 
-Run Git in isolated worktree. Compare staged old/new paths, modes and blobs to grant. Commit reviewed diff only; reconcile remote branch identity and PR marker before retry. Merge and force push are distinct operations.
+Reconcile the original operation identity before retry. A completed matching effect is recorded once, a conflict or uncertainty blocks, and only authoritative absence can authorize reconsidering the exact frozen intent under live scope. The [assignment contract](../1200-assignments/assignments.md) owns progress and effect claim history.
 
-## Verification
-
-Fixture contains ignored, renamed, binary and unusual filenames. Validate exact batch and preserve unfamiliar content. Simulate base advance and lost network acknowledgment.
-
-Capture exact inputs, configured limits, actual result, policy revision and the evidence reference. Map applicable release requirements from [REQUIREMENTS.md](../../REQUIREMENTS.md).
-
-## Provider request and outcome
-
-A publish request carries stable provider repository ID, pinned base SHA, target ref, expected old ref or absent sentinel, intended new commit SHA, verified diff digest and grant reference. For PR creation also bind exact base and head refs and a deterministic effect marker. A provider adapter returns confirmed receipt, definitive failure, or unknown outcome. Never interpret an HTTP timeout as rejection.
-
-Reconciliation reads branch head and candidate PRs by immutable repository ID, exact base/head and marker. An exact match records receipt. A different head or multiple matching PRs blocks. A confirmed absent operation is retryable only if the original compare conditions and grant still hold. Worktree creation and cleanup use an owner-scoped lease and may touch only the generated worktree root.
-
-A diff entry is `{operation,old_path?,new_path?,before_blob?,after_blob?,before_mode?,after_mode?}`. Both paths of a rename must be authorized. Detect binary, symlink, submodule and mode changes before applying assignment policy. A documentation-only grant blocks every category except allowed text Markdown creates or modifications.
+Use the [publication fixtures](../../contracts/acceptance/repository/publication-fixtures.json) for nested instructions, deleted and renamed paths, concurrent base and target changes and duplicate PR reconciliation. Record exact inputs, provider policy, runtime limits and evidence. Map applicable release gates in [requirements](../../REQUIREMENTS.md).
 
 ## Implementing components
 
-- [repository crate design](../../crates/repository/DESIGN.md)
-- [source-analysis crate design](../../crates/source-analysis/DESIGN.md)
+- [Repository](../../crates/repository/DESIGN.md)
+- [Source analysis](../../crates/source-analysis/DESIGN.md)
