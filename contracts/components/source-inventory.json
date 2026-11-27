@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
   "mapping": "Replace the .rs suffix with .md and resolve relative to contract_root. A path listed in candidate_files has a draft; every other enumerated file is missing a file contract.",
   "crates": [
     {
@@ -423,7 +423,27 @@
         "providers/cloud.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "environment.rs",
+        "artifact.rs",
+        "package.rs",
+        "release.rs",
+        "signing.rs",
+        "verification.rs",
+        "strategy.rs",
+        "approval.rs",
+        "rollout.rs",
+        "rollback.rs",
+        "health_check.rs",
+        "providers/mod.rs",
+        "providers/local.rs",
+        "providers/container.rs",
+        "providers/server.rs",
+        "providers/cloud.rs",
+        "reporting.rs"
+      ]
     },
     {
       "id": "distributed",
@@ -454,7 +474,31 @@
         "security.rs",
         "metrics.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "node.rs",
+        "identity.rs",
+        "membership.rs",
+        "discovery.rs",
+        "registry.rs",
+        "heartbeat.rs",
+        "capabilities.rs",
+        "resources.rs",
+        "placement.rs",
+        "scheduler.rs",
+        "worker.rs",
+        "coordinator.rs",
+        "execution.rs",
+        "task_lease.rs",
+        "artifact_transfer.rs",
+        "checkpoint.rs",
+        "recovery.rs",
+        "partition.rs",
+        "reconciliation.rs",
+        "security.rs",
+        "metrics.rs"
+      ]
     },
     {
       "id": "documentation",
@@ -547,7 +591,22 @@
         "spending_limits.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "budget.rs",
+        "usage.rs",
+        "pricing.rs",
+        "estimation.rs",
+        "accounting.rs",
+        "token_usage.rs",
+        "compute_usage.rs",
+        "storage_usage.rs",
+        "optimization.rs",
+        "provider_comparison.rs",
+        "spending_limits.rs",
+        "reporting.rs"
+      ]
     },
     {
       "id": "engineering",
@@ -692,7 +751,23 @@
         "rollback.rs",
         "history.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "proposal.rs",
+        "experiment.rs",
+        "baseline.rs",
+        "evaluation.rs",
+        "benchmarking.rs",
+        "regression.rs",
+        "candidate.rs",
+        "policy.rs",
+        "review.rs",
+        "approval.rs",
+        "migration.rs",
+        "rollback.rs",
+        "history.rs"
+      ]
     },
     {
       "id": "filesystem",
@@ -1049,7 +1124,21 @@
         "mcp/resources.rs",
         "mcp/security.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "protocol.rs",
+        "negotiation.rs",
+        "compatibility.rs",
+        "serialization.rs",
+        "mcp/mod.rs",
+        "mcp/client.rs",
+        "mcp/server.rs",
+        "mcp/transport.rs",
+        "mcp/tools.rs",
+        "mcp/resources.rs",
+        "mcp/security.rs"
+      ]
     },
     {
       "id": "knowledge",
@@ -1125,7 +1214,21 @@
         "lifecycle.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "monitoring.rs",
+        "dependency_updates.rs",
+        "vulnerability_management.rs",
+        "technical_debt.rs",
+        "regression_detection.rs",
+        "compatibility.rs",
+        "backup.rs",
+        "recovery.rs",
+        "cleanup.rs",
+        "lifecycle.rs",
+        "reporting.rs"
+      ]
     },
     {
       "id": "memory",
@@ -1285,7 +1388,26 @@
         "offline.rs",
         "policy.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "transport.rs",
+        "connection.rs",
+        "endpoint.rs",
+        "discovery.rs",
+        "authentication.rs",
+        "tls.rs",
+        "http.rs",
+        "websocket.rs",
+        "quic.rs",
+        "retry.rs",
+        "timeout.rs",
+        "rate_limit.rs",
+        "bandwidth.rs",
+        "proxy.rs",
+        "offline.rs",
+        "policy.rs"
+      ]
     },
     {
       "id": "observability",
@@ -1306,7 +1428,21 @@
         "exporters.rs",
         "retention.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "logging.rs",
+        "tracing.rs",
+        "metrics.rs",
+        "health.rs",
+        "diagnostics.rs",
+        "profiling.rs",
+        "alerts.rs",
+        "dashboards.rs",
+        "redaction.rs",
+        "exporters.rs",
+        "retention.rs"
+      ]
     },
     {
       "id": "orchestration",
@@ -1388,7 +1524,25 @@
         "marketplace.rs",
         "updates.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "plugin.rs",
+        "manifest.rs",
+        "registry.rs",
+        "loader.rs",
+        "installer.rs",
+        "lifecycle.rs",
+        "compatibility.rs",
+        "permissions.rs",
+        "signatures.rs",
+        "sandbox.rs",
+        "host.rs",
+        "wasm.rs",
+        "process.rs",
+        "marketplace.rs",
+        "updates.rs"
+      ]
     },
     {
       "id": "providers",
@@ -1419,7 +1573,31 @@
         "repositories/gitlab.rs",
         "repositories/generic.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "provider.rs",
+        "manifest.rs",
+        "registry.rs",
+        "discovery.rs",
+        "capabilities.rs",
+        "credentials.rs",
+        "health.rs",
+        "routing.rs",
+        "fallback.rs",
+        "inference/mod.rs",
+        "inference/openai.rs",
+        "inference/anthropic.rs",
+        "inference/gemini.rs",
+        "inference/deepseek.rs",
+        "inference/ollama.rs",
+        "inference/local.rs",
+        "inference/generic.rs",
+        "repositories/mod.rs",
+        "repositories/github.rs",
+        "repositories/gitlab.rs",
+        "repositories/generic.rs"
+      ]
     },
     {
       "id": "reasoning",
@@ -1603,7 +1781,30 @@
         "providers/local.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "question.rs",
+        "plan.rs",
+        "source.rs",
+        "discovery.rs",
+        "retrieval.rs",
+        "extraction.rs",
+        "credibility.rs",
+        "comparison.rs",
+        "synthesis.rs",
+        "citation.rs",
+        "provenance.rs",
+        "cache.rs",
+        "offline_library.rs",
+        "providers/mod.rs",
+        "providers/web.rs",
+        "providers/documentation.rs",
+        "providers/repository.rs",
+        "providers/academic.rs",
+        "providers/local.rs",
+        "reporting.rs"
+      ]
     },
     {
       "id": "resources",
@@ -1853,7 +2054,22 @@
         "plugins.rs",
         "streaming.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "client.rs",
+        "configuration.rs",
+        "authentication.rs",
+        "assignments.rs",
+        "workflows.rs",
+        "agents.rs",
+        "models.rs",
+        "repositories.rs",
+        "artifacts.rs",
+        "events.rs",
+        "plugins.rs",
+        "streaming.rs"
+      ]
     },
     {
       "id": "search",
@@ -2144,7 +2360,23 @@
         "offline_queue.rs",
         "transport.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "synchronization.rs",
+        "manifest.rs",
+        "change_set.rs",
+        "version.rs",
+        "conflict.rs",
+        "reconciliation.rs",
+        "replication.rs",
+        "compression.rs",
+        "encryption.rs",
+        "integrity.rs",
+        "checkpoint.rs",
+        "offline_queue.rs",
+        "transport.rs"
+      ]
     },
     {
       "id": "terminal",
