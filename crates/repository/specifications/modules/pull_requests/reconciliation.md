@@ -1,15 +1,18 @@
-# External PR effect reconciliation
+# External publication reconciliation
 
-**ZIP-REPOSITORY-PULL-REQUESTS-RECONCILIATION-001 · v1.0 · Owner:** Repository maintainers. **Maturity:** D3 file contract draft.
+**ZIP-REPOSITORY-PULL-REQUESTS-RECONCILIATION-001 · v1.1 candidate · Owner** Repository maintainers
 
-**Planned source:** `crates/repository/src/pull_requests/reconciliation.rs`
+**Planned source** `crates/repository/src/pull_requests/reconciliation.rs`
 
-## Required implementation behavior
+Read-only recovery takes the original effect identity, sealed request and current scoped inspection authority. Use the immutable repository ID. Inspect the provider's durable receipt where available. Otherwise search via complete bounded pages for the recorded exact marker and source and target repositories and refs, including closed candidates when required. Read candidate details and compare pinned head and base, draft flag and sealed content. Return one of the following verdicts.
 
-Search exact provider repo, immutable base/head and recorded effect marker; verify actual returned identity. One exact result completes, ambiguity blocks, confirmed absence permits authorized retry.
+| Verdict | Required observation |
+| --- | --- |
+| Confirmed | One authoritative exact effect and all required observations match |
+| Conflict | Multiple candidates with the recorded marker, an incompatible effect or a verified result that does not match the seal |
+| Absent | Authoritative negative evidence and proof the original dispatch can no longer commit |
+| Unresolved | Inspection incomplete, provider observation stale or ambiguous, or request settlement unknown |
 
-## Acceptance
+Do not collapse multiple candidates by title or arbitrary order. A confirmed receipt may be replayed as historical evidence after a ref advances, but later effects still check live refs. An empty scan alone does not prove absence, even if all pages were read. A provider without settlement proof must keep delayed creation unresolved. A qualified replay from Absent uses the same identity and immutable payload under the original compare preconditions and current authorization. Never create, edit, close or merge during read-only recovery.
 
-**ZIP-REPOSITORY-PULL-REQUESTS-RECONCILIATION-T01.** Two candidate matches cause blocked without another create.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-REPOSITORY-PULL-REQUESTS-RECONCILIATION-T01.** Two matching candidates block. One exact candidate confirms without another create. An empty result with unknown dispatch settlement blocks retry.

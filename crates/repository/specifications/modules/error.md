@@ -1,15 +1,29 @@
-# Repository failure vocabulary
+# Repository failure and reconciliation codes
 
-**ZIP-REPOSITORY-ERROR-001 · v1.0 · Owner:** Repository maintainers. **Maturity:** D3 file contract draft.
+**ZIP-REPOSITORY-ERROR-001 · v1.1 candidate · Owner** Repository maintainers
 
-**Planned source:** `crates/repository/src/error.rs`
+**Planned source** `crates/repository/src/error.rs`
 
-## Required implementation behavior
+```rust
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum RepositoryError {
+    InvalidRef,
+    InvalidPath,
+    ScopeDenied,
+    InstructionsIncomplete,
+    InstructionConflict,
+    StaleRevision,
+    UnsupportedCapability,
+    Conflict,
+    BudgetExceeded,
+    VerificationMismatch,
+    ProviderUnavailable,
+    UnknownEffect,
+    Cancelled,
+}
+```
 
-Classify InvalidRef, InstructionsIncomplete, ScopeDenied, Conflict, StaleRevision, ProviderUnavailable, UnknownEffect, VerificationMismatch and Cancelled. Unknown remote outcome never claims rollback.
+Validate shape and scope before reflecting repository existence or private state. Check pinned base, instructions and affected path completeness before creating a review seal. Recheck branch preconditions and live authority before effect dispatch. Use StaleRevision for an observed changed pin, Conflict for incompatible provider state, and VerificationMismatch for an observed effect that disagrees with required evidence. Preserve the observed effect and retain reconciliation records. Use UnknownEffect when dispatch could have committed but its outcome cannot be established. ProviderUnavailable denotes predispatch denial or proven no effect; retry still requires current scope and the same intended request. Cancellation before submission is Cancelled. After submission classify the effect and report actual known evidence. Redact credentials, payload bytes and unrelated refs.
 
-## Acceptance
-
-**ZIP-REPOSITORY-ERROR-T01.** Timeout following possible push remains unknown until inspected.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-REPOSITORY-ERROR-T01.** Lose the reply after a possible push, then observe its recorded commit. Before observation return UnknownEffect, with no assertion of rollback or retry permission.

@@ -1,15 +1,11 @@
-# Applicable instruction paths
+# Applicable instruction discovery
 
-**ZIP-REPOSITORY-INSTRUCTIONS-DISCOVERY-001 · v1.0 · Owner:** Repository maintainers. **Maturity:** D3 file contract draft.
+**ZIP-REPOSITORY-INSTRUCTIONS-DISCOVERY-001 · v1.1 candidate · Owner** Repository maintainers
 
-**Planned source:** `crates/repository/src/instructions/discovery.rs`
+**Planned source** `crates/repository/src/instructions/discovery.rs`
 
-## Required implementation behavior
+Input is a verified base snapshot and an authorized set of affected paths. Enumerate exactly `AGENTS.md` at root and in every ancestor directory of each affected file. Include both rename sides, deletion targets and ancestors of newly created paths. New directories absent in the pinned base are recorded as absent. Resolve each candidate by tree traversal, with no worktree fallback and no symlink traversal. A checked absence differs from unreadable content, an incomplete tree, unsupported file mode and a skipped lookup. Only a verified absence may be omitted from applied text.
 
-For each normalized target file enumerate AGENTS.md at repository root and every ancestor directory of that file. Inspect pinned tree, dedupe paths in deterministic order and distinguish absent from unreadable.
+Deduplicate candidates by exact path. Traverse ancestor depth and then canonical path-byte order within a depth. Retain the complete searched set and per-target association. Enforce configured and admitted path, object and byte budgets before collecting results. If a lookup cannot complete for any affected target, block that candidate mutation.
 
-## Acceptance
-
-**ZIP-REPOSITORY-INSTRUCTIONS-DISCOVERY-T01.** Nested instruction discovery reports both root and deepest applicable file.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-REPOSITORY-INSTRUCTIONS-DISCOVERY-T01.** A nested rename sees root and both source and destination rules, including an absent destination ancestor when applicable.
