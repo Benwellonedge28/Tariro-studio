@@ -74,3 +74,27 @@ crates/deployment/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test package substitution, partial rollout and failed health verification.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`environment.rs`](specifications/modules/environment.md)
+- [`artifact.rs`](specifications/modules/artifact.md)
+- [`package.rs`](specifications/modules/package.md)
+- [`release.rs`](specifications/modules/release.md)
+- [`signing.rs`](specifications/modules/signing.md)
+- [`verification.rs`](specifications/modules/verification.md)
+- [`strategy.rs`](specifications/modules/strategy.md)
+- [`approval.rs`](specifications/modules/approval.md)
+- [`rollout.rs`](specifications/modules/rollout.md)
+- [`rollback.rs`](specifications/modules/rollback.md)
+- [`health_check.rs`](specifications/modules/health_check.md)
+- [`providers/mod.rs`](specifications/modules/providers/mod.md)
+- [`providers/local.rs`](specifications/modules/providers/local.md)
+- [`providers/container.rs`](specifications/modules/providers/container.md)
+- [`providers/server.rs`](specifications/modules/providers/server.md)
+- [`providers/cloud.rs`](specifications/modules/providers/cloud.md)
+- [`reporting.rs`](specifications/modules/reporting.md)
