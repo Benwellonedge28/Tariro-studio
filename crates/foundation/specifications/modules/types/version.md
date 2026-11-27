@@ -7,12 +7,13 @@
 Rust interface declarations (implementation bodies omitted).
 
 ```rust
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Ord, PartialOrd)]
 pub struct Version { pub major: u16, pub minor: u16, pub patch: u16 } impl Version { pub fn parse(value: &str) -> crate::result::Result<Self>; }
 ```
 
 ## Implementation and invariants
 
-Require exactly three decimal components separated by dots. Accept digit zero alone and reject leading zeros, whitespace, suffixes and missing components as InvalidIdentifier. Accumulate each component with checked multiply/add and return QuantityOverflow at its representational bound. Serialize canonical decimal triplet. Compare using tuple ordering. Provider SemVer prerelease handling belongs to its adapter.
+Require exactly three decimal components separated by dots. Accept digit zero alone and reject leading zeros, whitespace, suffixes and missing components as InvalidIdentifier. Validate the complete input grammar first. Then accumulate each component with checked multiply/add and return QuantityOverflow at its representational bound. Serialize canonical decimal triplet. Compare using tuple ordering. Provider SemVer prerelease handling belongs to its adapter.
 
 ## Acceptance
 

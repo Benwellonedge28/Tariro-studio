@@ -116,6 +116,9 @@ The file-level drafts below cover the planned Foundation source layout. Independ
 - [Error contract](specifications/error-contract.md)
 - [Testing contract](specifications/testing-contract.md)
 
+- [Cross-module Rust API and implementation boundaries](specifications/api-contract.md)
+- [Machine-readable fixture catalog](../../contracts/acceptance/foundation/fixtures.json)
+
 ## Implementation and acceptance
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.

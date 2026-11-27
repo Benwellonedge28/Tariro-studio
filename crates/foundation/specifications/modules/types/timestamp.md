@@ -7,12 +7,13 @@
 Rust interface declarations (implementation bodies omitted).
 
 ```rust
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Ord, PartialOrd)]
 pub struct Timestamp { seconds: i64, nanosecond: u32 } impl Timestamp { pub fn from_unix_parts(seconds: i64, nanosecond: u32) -> crate::result::Result<Self>; pub const fn unix_parts(self) -> (i64, u32); }
 ```
 
 ## Implementation and invariants
 
-Require nanos below 1_000_000_000 and civil time in UTC years 0001–9999. Seconds are floor since Unix epoch with nonnegative fractional nanos. Invalid range returns LimitExceeded. Interchange uses RFC 3339 UTC with Z and nine fractional digits, no leap-second input. Use qualified calendrical conversion at serialization boundary. Never compare wall time to live monotonic deadlines.
+Accept seconds in `-62135596800..=253402300799` and nanoseconds in `0..=999999999`. These constants define UTC civil years 0001–9999 for this wire representation. Seconds are floor since Unix epoch with nonnegative fractional nanos. Invalid range returns LimitExceeded. Interchange uses RFC 3339 UTC with Z and nine fractional digits, no leap-second input. Use qualified calendrical conversion at serialization boundary. Never compare wall time to live monotonic deadlines.
 
 ## Acceptance
 

@@ -7,7 +7,18 @@
 Rust interface declarations (implementation bodies omitted).
 
 ```rust
-Declare #![forbid(unsafe_code)]. Declare pub mod cancellation, contracts, error, identity, limits, prelude, provenance, result, types, validation in lexical order; do not glob re-export those modules.
+#![forbid(unsafe_code)]
+
+pub mod cancellation;
+pub mod contracts;
+pub mod error;
+pub mod identity;
+pub mod limits;
+pub mod prelude;
+pub mod provenance;
+pub mod result;
+pub mod types;
+pub mod validation;
 ```
 
 ## Implementation and invariants
