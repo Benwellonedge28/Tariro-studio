@@ -80,3 +80,34 @@ crates/memory/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test cross-tenant isolation, expired retrieval and crash during purge.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`memory.rs`](specifications/modules/memory.md)
+- [`record.rs`](specifications/modules/record.md)
+- [`scope.rs`](specifications/modules/scope.md)
+- [`store.rs`](specifications/modules/store.md)
+- [`retrieval.rs`](specifications/modules/retrieval.md)
+- [`consolidation.rs`](specifications/modules/consolidation.md)
+- [`compression.rs`](specifications/modules/compression.md)
+- [`deduplication.rs`](specifications/modules/deduplication.md)
+- [`expiration.rs`](specifications/modules/expiration.md)
+- [`forgetting.rs`](specifications/modules/forgetting.md)
+- [`encryption.rs`](specifications/modules/encryption.md)
+- [`provenance.rs`](specifications/modules/provenance.md)
+- [`isolation.rs`](specifications/modules/isolation.md)
+- [`layers/mod.rs`](specifications/modules/layers/mod.md)
+- [`layers/working.rs`](specifications/modules/layers/working.md)
+- [`layers/session.rs`](specifications/modules/layers/session.md)
+- [`layers/episodic.rs`](specifications/modules/layers/episodic.md)
+- [`layers/semantic.rs`](specifications/modules/layers/semantic.md)
+- [`layers/procedural.rs`](specifications/modules/layers/procedural.md)
+- [`layers/project.rs`](specifications/modules/layers/project.md)
+- [`layers/repository.rs`](specifications/modules/layers/repository.md)
+- [`layers/organization.rs`](specifications/modules/layers/organization.md)
+- [`layers/archival.rs`](specifications/modules/layers/archival.md)
+- [`synchronization.rs`](specifications/modules/synchronization.md)

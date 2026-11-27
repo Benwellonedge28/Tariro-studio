@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-SEARCH-LIB-001",
+      "planned_source": "crates/search/src/lib.rs",
+      "contract": "crates/search/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-SEARCH-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-ERROR-001",
+      "planned_source": "crates/search/src/error.rs",
+      "contract": "crates/search/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-SEARCH-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-QUERY-001",
+      "planned_source": "crates/search/src/query.rs",
+      "contract": "crates/search/specifications/modules/query.md",
+      "specified_tests": [
+        "ZIP-SEARCH-QUERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-INDEX-001",
+      "planned_source": "crates/search/src/index.rs",
+      "contract": "crates/search/specifications/modules/index.md",
+      "specified_tests": [
+        "ZIP-SEARCH-INDEX-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-DOCUMENT-001",
+      "planned_source": "crates/search/src/document.rs",
+      "contract": "crates/search/specifications/modules/document.md",
+      "specified_tests": [
+        "ZIP-SEARCH-DOCUMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-INGESTION-001",
+      "planned_source": "crates/search/src/ingestion.rs",
+      "contract": "crates/search/specifications/modules/ingestion.md",
+      "specified_tests": [
+        "ZIP-SEARCH-INGESTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-LEXICAL-MOD-001",
+      "planned_source": "crates/search/src/lexical/mod.rs",
+      "contract": "crates/search/specifications/modules/lexical/mod.md",
+      "specified_tests": [
+        "ZIP-SEARCH-LEXICAL-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-LEXICAL-TOKENIZER-001",
+      "planned_source": "crates/search/src/lexical/tokenizer.rs",
+      "contract": "crates/search/specifications/modules/lexical/tokenizer.md",
+      "specified_tests": [
+        "ZIP-SEARCH-LEXICAL-TOKENIZER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-LEXICAL-INVERTED-INDEX-001",
+      "planned_source": "crates/search/src/lexical/inverted_index.rs",
+      "contract": "crates/search/specifications/modules/lexical/inverted_index.md",
+      "specified_tests": [
+        "ZIP-SEARCH-LEXICAL-INVERTED-INDEX-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-LEXICAL-RANKING-001",
+      "planned_source": "crates/search/src/lexical/ranking.rs",
+      "contract": "crates/search/specifications/modules/lexical/ranking.md",
+      "specified_tests": [
+        "ZIP-SEARCH-LEXICAL-RANKING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-SEMANTIC-MOD-001",
+      "planned_source": "crates/search/src/semantic/mod.rs",
+      "contract": "crates/search/specifications/modules/semantic/mod.md",
+      "specified_tests": [
+        "ZIP-SEARCH-SEMANTIC-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-SEMANTIC-EMBEDDINGS-001",
+      "planned_source": "crates/search/src/semantic/embeddings.rs",
+      "contract": "crates/search/specifications/modules/semantic/embeddings.md",
+      "specified_tests": [
+        "ZIP-SEARCH-SEMANTIC-EMBEDDINGS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-SEMANTIC-VECTOR-001",
+      "planned_source": "crates/search/src/semantic/vector.rs",
+      "contract": "crates/search/specifications/modules/semantic/vector.md",
+      "specified_tests": [
+        "ZIP-SEARCH-SEMANTIC-VECTOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-SEMANTIC-SIMILARITY-001",
+      "planned_source": "crates/search/src/semantic/similarity.rs",
+      "contract": "crates/search/specifications/modules/semantic/similarity.md",
+      "specified_tests": [
+        "ZIP-SEARCH-SEMANTIC-SIMILARITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-SEMANTIC-INDEX-001",
+      "planned_source": "crates/search/src/semantic/index.rs",
+      "contract": "crates/search/specifications/modules/semantic/index.md",
+      "specified_tests": [
+        "ZIP-SEARCH-SEMANTIC-INDEX-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-HYBRID-MOD-001",
+      "planned_source": "crates/search/src/hybrid/mod.rs",
+      "contract": "crates/search/specifications/modules/hybrid/mod.md",
+      "specified_tests": [
+        "ZIP-SEARCH-HYBRID-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-HYBRID-FUSION-001",
+      "planned_source": "crates/search/src/hybrid/fusion.rs",
+      "contract": "crates/search/specifications/modules/hybrid/fusion.md",
+      "specified_tests": [
+        "ZIP-SEARCH-HYBRID-FUSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-HYBRID-RERANKING-001",
+      "planned_source": "crates/search/src/hybrid/reranking.rs",
+      "contract": "crates/search/specifications/modules/hybrid/reranking.md",
+      "specified_tests": [
+        "ZIP-SEARCH-HYBRID-RERANKING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-CODE-SEARCH-001",
+      "planned_source": "crates/search/src/code_search.rs",
+      "contract": "crates/search/specifications/modules/code_search.md",
+      "specified_tests": [
+        "ZIP-SEARCH-CODE-SEARCH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-FILTERS-001",
+      "planned_source": "crates/search/src/filters.rs",
+      "contract": "crates/search/specifications/modules/filters.md",
+      "specified_tests": [
+        "ZIP-SEARCH-FILTERS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-INCREMENTAL-001",
+      "planned_source": "crates/search/src/incremental.rs",
+      "contract": "crates/search/specifications/modules/incremental.md",
+      "specified_tests": [
+        "ZIP-SEARCH-INCREMENTAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SEARCH-PERSISTENCE-001",
+      "planned_source": "crates/search/src/persistence.rs",
+      "contract": "crates/search/specifications/modules/persistence.md",
+      "specified_tests": [
+        "ZIP-SEARCH-PERSISTENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

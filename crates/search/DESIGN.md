@@ -79,3 +79,30 @@ crates/search/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Check index restart, stable ranking and permission filtered snippets.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`query.rs`](specifications/modules/query.md)
+- [`index.rs`](specifications/modules/index.md)
+- [`document.rs`](specifications/modules/document.md)
+- [`ingestion.rs`](specifications/modules/ingestion.md)
+- [`lexical/mod.rs`](specifications/modules/lexical/mod.md)
+- [`lexical/tokenizer.rs`](specifications/modules/lexical/tokenizer.md)
+- [`lexical/inverted_index.rs`](specifications/modules/lexical/inverted_index.md)
+- [`lexical/ranking.rs`](specifications/modules/lexical/ranking.md)
+- [`semantic/mod.rs`](specifications/modules/semantic/mod.md)
+- [`semantic/embeddings.rs`](specifications/modules/semantic/embeddings.md)
+- [`semantic/vector.rs`](specifications/modules/semantic/vector.md)
+- [`semantic/similarity.rs`](specifications/modules/semantic/similarity.md)
+- [`semantic/index.rs`](specifications/modules/semantic/index.md)
+- [`hybrid/mod.rs`](specifications/modules/hybrid/mod.md)
+- [`hybrid/fusion.rs`](specifications/modules/hybrid/fusion.md)
+- [`hybrid/reranking.rs`](specifications/modules/hybrid/reranking.md)
+- [`code_search.rs`](specifications/modules/code_search.md)
+- [`filters.rs`](specifications/modules/filters.md)
+- [`incremental.rs`](specifications/modules/incremental.md)
+- [`persistence.rs`](specifications/modules/persistence.md)

@@ -77,3 +77,31 @@ crates/knowledge/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Reindex changed files, prove stale edges disappear and graph traversal cannot leak private nodes.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`entity.rs`](specifications/modules/entity.md)
+- [`relationship.rs`](specifications/modules/relationship.md)
+- [`graph.rs`](specifications/modules/graph.md)
+- [`ontology.rs`](specifications/modules/ontology.md)
+- [`schema.rs`](specifications/modules/schema.md)
+- [`extraction.rs`](specifications/modules/extraction.md)
+- [`ingestion.rs`](specifications/modules/ingestion.md)
+- [`validation.rs`](specifications/modules/validation.md)
+- [`inference.rs`](specifications/modules/inference.md)
+- [`query.rs`](specifications/modules/query.md)
+- [`traversal.rs`](specifications/modules/traversal.md)
+- [`provenance.rs`](specifications/modules/provenance.md)
+- [`versioning.rs`](specifications/modules/versioning.md)
+- [`conflict.rs`](specifications/modules/conflict.md)
+- [`domains/mod.rs`](specifications/modules/domains/mod.md)
+- [`domains/software.rs`](specifications/modules/domains/software.md)
+- [`domains/architecture.rs`](specifications/modules/domains/architecture.md)
+- [`domains/dependencies.rs`](specifications/modules/domains/dependencies.md)
+- [`domains/documentation.rs`](specifications/modules/domains/documentation.md)
+- [`domains/organizational.rs`](specifications/modules/domains/organizational.md)
+- [`persistence.rs`](specifications/modules/persistence.md)

@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-MEMORY-LIB-001",
+      "planned_source": "crates/memory/src/lib.rs",
+      "contract": "crates/memory/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-ERROR-001",
+      "planned_source": "crates/memory/src/error.rs",
+      "contract": "crates/memory/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-MEMORY-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-MEMORY-001",
+      "planned_source": "crates/memory/src/memory.rs",
+      "contract": "crates/memory/specifications/modules/memory.md",
+      "specified_tests": [
+        "ZIP-MEMORY-MEMORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-RECORD-001",
+      "planned_source": "crates/memory/src/record.rs",
+      "contract": "crates/memory/specifications/modules/record.md",
+      "specified_tests": [
+        "ZIP-MEMORY-RECORD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-SCOPE-001",
+      "planned_source": "crates/memory/src/scope.rs",
+      "contract": "crates/memory/specifications/modules/scope.md",
+      "specified_tests": [
+        "ZIP-MEMORY-SCOPE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-STORE-001",
+      "planned_source": "crates/memory/src/store.rs",
+      "contract": "crates/memory/specifications/modules/store.md",
+      "specified_tests": [
+        "ZIP-MEMORY-STORE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-RETRIEVAL-001",
+      "planned_source": "crates/memory/src/retrieval.rs",
+      "contract": "crates/memory/specifications/modules/retrieval.md",
+      "specified_tests": [
+        "ZIP-MEMORY-RETRIEVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-CONSOLIDATION-001",
+      "planned_source": "crates/memory/src/consolidation.rs",
+      "contract": "crates/memory/specifications/modules/consolidation.md",
+      "specified_tests": [
+        "ZIP-MEMORY-CONSOLIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-COMPRESSION-001",
+      "planned_source": "crates/memory/src/compression.rs",
+      "contract": "crates/memory/specifications/modules/compression.md",
+      "specified_tests": [
+        "ZIP-MEMORY-COMPRESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-DEDUPLICATION-001",
+      "planned_source": "crates/memory/src/deduplication.rs",
+      "contract": "crates/memory/specifications/modules/deduplication.md",
+      "specified_tests": [
+        "ZIP-MEMORY-DEDUPLICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-EXPIRATION-001",
+      "planned_source": "crates/memory/src/expiration.rs",
+      "contract": "crates/memory/specifications/modules/expiration.md",
+      "specified_tests": [
+        "ZIP-MEMORY-EXPIRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-FORGETTING-001",
+      "planned_source": "crates/memory/src/forgetting.rs",
+      "contract": "crates/memory/specifications/modules/forgetting.md",
+      "specified_tests": [
+        "ZIP-MEMORY-FORGETTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-ENCRYPTION-001",
+      "planned_source": "crates/memory/src/encryption.rs",
+      "contract": "crates/memory/specifications/modules/encryption.md",
+      "specified_tests": [
+        "ZIP-MEMORY-ENCRYPTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-PROVENANCE-001",
+      "planned_source": "crates/memory/src/provenance.rs",
+      "contract": "crates/memory/specifications/modules/provenance.md",
+      "specified_tests": [
+        "ZIP-MEMORY-PROVENANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-ISOLATION-001",
+      "planned_source": "crates/memory/src/isolation.rs",
+      "contract": "crates/memory/specifications/modules/isolation.md",
+      "specified_tests": [
+        "ZIP-MEMORY-ISOLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-MOD-001",
+      "planned_source": "crates/memory/src/layers/mod.rs",
+      "contract": "crates/memory/specifications/modules/layers/mod.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-WORKING-001",
+      "planned_source": "crates/memory/src/layers/working.rs",
+      "contract": "crates/memory/specifications/modules/layers/working.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-WORKING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-SESSION-001",
+      "planned_source": "crates/memory/src/layers/session.rs",
+      "contract": "crates/memory/specifications/modules/layers/session.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-SESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-EPISODIC-001",
+      "planned_source": "crates/memory/src/layers/episodic.rs",
+      "contract": "crates/memory/specifications/modules/layers/episodic.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-EPISODIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-SEMANTIC-001",
+      "planned_source": "crates/memory/src/layers/semantic.rs",
+      "contract": "crates/memory/specifications/modules/layers/semantic.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-SEMANTIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-PROCEDURAL-001",
+      "planned_source": "crates/memory/src/layers/procedural.rs",
+      "contract": "crates/memory/specifications/modules/layers/procedural.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-PROCEDURAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-PROJECT-001",
+      "planned_source": "crates/memory/src/layers/project.rs",
+      "contract": "crates/memory/specifications/modules/layers/project.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-PROJECT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-REPOSITORY-001",
+      "planned_source": "crates/memory/src/layers/repository.rs",
+      "contract": "crates/memory/specifications/modules/layers/repository.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-REPOSITORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-ORGANIZATION-001",
+      "planned_source": "crates/memory/src/layers/organization.rs",
+      "contract": "crates/memory/specifications/modules/layers/organization.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-ORGANIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-LAYERS-ARCHIVAL-001",
+      "planned_source": "crates/memory/src/layers/archival.rs",
+      "contract": "crates/memory/specifications/modules/layers/archival.md",
+      "specified_tests": [
+        "ZIP-MEMORY-LAYERS-ARCHIVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MEMORY-SYNCHRONIZATION-001",
+      "planned_source": "crates/memory/src/synchronization.rs",
+      "contract": "crates/memory/specifications/modules/synchronization.md",
+      "specified_tests": [
+        "ZIP-MEMORY-SYNCHRONIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

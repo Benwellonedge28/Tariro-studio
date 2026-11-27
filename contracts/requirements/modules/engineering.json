@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-ENGINEERING-LIB-001",
+      "planned_source": "crates/engineering/src/lib.rs",
+      "contract": "crates/engineering/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ERROR-001",
+      "planned_source": "crates/engineering/src/error.rs",
+      "contract": "crates/engineering/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REQUIREMENTS-MOD-001",
+      "planned_source": "crates/engineering/src/requirements/mod.rs",
+      "contract": "crates/engineering/specifications/modules/requirements/mod.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REQUIREMENTS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REQUIREMENTS-EXTRACTION-001",
+      "planned_source": "crates/engineering/src/requirements/extraction.rs",
+      "contract": "crates/engineering/specifications/modules/requirements/extraction.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REQUIREMENTS-EXTRACTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REQUIREMENTS-SPECIFICATION-001",
+      "planned_source": "crates/engineering/src/requirements/specification.rs",
+      "contract": "crates/engineering/specifications/modules/requirements/specification.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REQUIREMENTS-SPECIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REQUIREMENTS-TRACEABILITY-001",
+      "planned_source": "crates/engineering/src/requirements/traceability.rs",
+      "contract": "crates/engineering/specifications/modules/requirements/traceability.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REQUIREMENTS-TRACEABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REQUIREMENTS-VALIDATION-001",
+      "planned_source": "crates/engineering/src/requirements/validation.rs",
+      "contract": "crates/engineering/specifications/modules/requirements/validation.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REQUIREMENTS-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ARCHITECTURE-MOD-001",
+      "planned_source": "crates/engineering/src/architecture/mod.rs",
+      "contract": "crates/engineering/specifications/modules/architecture/mod.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ARCHITECTURE-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ARCHITECTURE-SYSTEM-001",
+      "planned_source": "crates/engineering/src/architecture/system.rs",
+      "contract": "crates/engineering/specifications/modules/architecture/system.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ARCHITECTURE-SYSTEM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ARCHITECTURE-COMPONENT-001",
+      "planned_source": "crates/engineering/src/architecture/component.rs",
+      "contract": "crates/engineering/specifications/modules/architecture/component.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ARCHITECTURE-COMPONENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ARCHITECTURE-INTERFACES-001",
+      "planned_source": "crates/engineering/src/architecture/interfaces.rs",
+      "contract": "crates/engineering/specifications/modules/architecture/interfaces.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ARCHITECTURE-INTERFACES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ARCHITECTURE-DEPENDENCIES-001",
+      "planned_source": "crates/engineering/src/architecture/dependencies.rs",
+      "contract": "crates/engineering/specifications/modules/architecture/dependencies.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ARCHITECTURE-DEPENDENCIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ARCHITECTURE-DECISIONS-001",
+      "planned_source": "crates/engineering/src/architecture/decisions.rs",
+      "contract": "crates/engineering/specifications/modules/architecture/decisions.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ARCHITECTURE-DECISIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-ARCHITECTURE-VALIDATION-001",
+      "planned_source": "crates/engineering/src/architecture/validation.rs",
+      "contract": "crates/engineering/specifications/modules/architecture/validation.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-ARCHITECTURE-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-IMPLEMENTATION-MOD-001",
+      "planned_source": "crates/engineering/src/implementation/mod.rs",
+      "contract": "crates/engineering/specifications/modules/implementation/mod.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-IMPLEMENTATION-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-IMPLEMENTATION-GENERATION-001",
+      "planned_source": "crates/engineering/src/implementation/generation.rs",
+      "contract": "crates/engineering/specifications/modules/implementation/generation.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-IMPLEMENTATION-GENERATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-IMPLEMENTATION-EDITING-001",
+      "planned_source": "crates/engineering/src/implementation/editing.rs",
+      "contract": "crates/engineering/specifications/modules/implementation/editing.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-IMPLEMENTATION-EDITING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-IMPLEMENTATION-PATCHING-001",
+      "planned_source": "crates/engineering/src/implementation/patching.rs",
+      "contract": "crates/engineering/specifications/modules/implementation/patching.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-IMPLEMENTATION-PATCHING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-IMPLEMENTATION-INTEGRATION-001",
+      "planned_source": "crates/engineering/src/implementation/integration.rs",
+      "contract": "crates/engineering/specifications/modules/implementation/integration.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-IMPLEMENTATION-INTEGRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-IMPLEMENTATION-VALIDATION-001",
+      "planned_source": "crates/engineering/src/implementation/validation.rs",
+      "contract": "crates/engineering/specifications/modules/implementation/validation.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-IMPLEMENTATION-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REFACTORING-MOD-001",
+      "planned_source": "crates/engineering/src/refactoring/mod.rs",
+      "contract": "crates/engineering/specifications/modules/refactoring/mod.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REFACTORING-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REFACTORING-RENAME-001",
+      "planned_source": "crates/engineering/src/refactoring/rename.rs",
+      "contract": "crates/engineering/specifications/modules/refactoring/rename.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REFACTORING-RENAME-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REFACTORING-EXTRACTION-001",
+      "planned_source": "crates/engineering/src/refactoring/extraction.rs",
+      "contract": "crates/engineering/specifications/modules/refactoring/extraction.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REFACTORING-EXTRACTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REFACTORING-RESTRUCTURING-001",
+      "planned_source": "crates/engineering/src/refactoring/restructuring.rs",
+      "contract": "crates/engineering/specifications/modules/refactoring/restructuring.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REFACTORING-RESTRUCTURING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REFACTORING-EQUIVALENCE-001",
+      "planned_source": "crates/engineering/src/refactoring/equivalence.rs",
+      "contract": "crates/engineering/specifications/modules/refactoring/equivalence.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REFACTORING-EQUIVALENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-OPTIMIZATION-MOD-001",
+      "planned_source": "crates/engineering/src/optimization/mod.rs",
+      "contract": "crates/engineering/specifications/modules/optimization/mod.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-OPTIMIZATION-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-OPTIMIZATION-PERFORMANCE-001",
+      "planned_source": "crates/engineering/src/optimization/performance.rs",
+      "contract": "crates/engineering/specifications/modules/optimization/performance.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-OPTIMIZATION-PERFORMANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-OPTIMIZATION-MEMORY-001",
+      "planned_source": "crates/engineering/src/optimization/memory.rs",
+      "contract": "crates/engineering/specifications/modules/optimization/memory.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-OPTIMIZATION-MEMORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-OPTIMIZATION-CONCURRENCY-001",
+      "planned_source": "crates/engineering/src/optimization/concurrency.rs",
+      "contract": "crates/engineering/specifications/modules/optimization/concurrency.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-OPTIMIZATION-CONCURRENCY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-OPTIMIZATION-ALGORITHMS-001",
+      "planned_source": "crates/engineering/src/optimization/algorithms.rs",
+      "contract": "crates/engineering/specifications/modules/optimization/algorithms.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-OPTIMIZATION-ALGORITHMS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REVIEW-MOD-001",
+      "planned_source": "crates/engineering/src/review/mod.rs",
+      "contract": "crates/engineering/specifications/modules/review/mod.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REVIEW-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REVIEW-CORRECTNESS-001",
+      "planned_source": "crates/engineering/src/review/correctness.rs",
+      "contract": "crates/engineering/specifications/modules/review/correctness.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REVIEW-CORRECTNESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REVIEW-MAINTAINABILITY-001",
+      "planned_source": "crates/engineering/src/review/maintainability.rs",
+      "contract": "crates/engineering/specifications/modules/review/maintainability.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REVIEW-MAINTAINABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REVIEW-SECURITY-001",
+      "planned_source": "crates/engineering/src/review/security.rs",
+      "contract": "crates/engineering/specifications/modules/review/security.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REVIEW-SECURITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-REVIEW-COMPATIBILITY-001",
+      "planned_source": "crates/engineering/src/review/compatibility.rs",
+      "contract": "crates/engineering/specifications/modules/review/compatibility.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-REVIEW-COMPATIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ENGINEERING-TRACEABILITY-001",
+      "planned_source": "crates/engineering/src/traceability.rs",
+      "contract": "crates/engineering/specifications/modules/traceability.md",
+      "specified_tests": [
+        "ZIP-ENGINEERING-TRACEABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

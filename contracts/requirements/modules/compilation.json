@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-COMPILATION-LIB-001",
+      "planned_source": "crates/compilation/src/lib.rs",
+      "contract": "crates/compilation/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ERROR-001",
+      "planned_source": "crates/compilation/src/error.rs",
+      "contract": "crates/compilation/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-COMPILER-001",
+      "planned_source": "crates/compilation/src/compiler.rs",
+      "contract": "crates/compilation/specifications/modules/compiler.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-COMPILER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-TOOLCHAIN-001",
+      "planned_source": "crates/compilation/src/toolchain.rs",
+      "contract": "crates/compilation/specifications/modules/toolchain.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-TOOLCHAIN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-BUILD-001",
+      "planned_source": "crates/compilation/src/build.rs",
+      "contract": "crates/compilation/specifications/modules/build.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-BUILD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-TARGET-001",
+      "planned_source": "crates/compilation/src/target.rs",
+      "contract": "crates/compilation/specifications/modules/target.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-TARGET-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ENVIRONMENT-001",
+      "planned_source": "crates/compilation/src/environment.rs",
+      "contract": "crates/compilation/specifications/modules/environment.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ENVIRONMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-DIAGNOSTICS-001",
+      "planned_source": "crates/compilation/src/diagnostics.rs",
+      "contract": "crates/compilation/specifications/modules/diagnostics.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-DIAGNOSTICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ARTIFACTS-001",
+      "planned_source": "crates/compilation/src/artifacts.rs",
+      "contract": "crates/compilation/specifications/modules/artifacts.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ARTIFACTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-REPRODUCIBILITY-001",
+      "planned_source": "crates/compilation/src/reproducibility.rs",
+      "contract": "crates/compilation/specifications/modules/reproducibility.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-REPRODUCIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-CACHE-001",
+      "planned_source": "crates/compilation/src/cache.rs",
+      "contract": "crates/compilation/specifications/modules/cache.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-CACHE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-DEPENDENCY-RESOLUTION-001",
+      "planned_source": "crates/compilation/src/dependency_resolution.rs",
+      "contract": "crates/compilation/specifications/modules/dependency_resolution.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-DEPENDENCY-RESOLUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-MOD-001",
+      "planned_source": "crates/compilation/src/adapters/mod.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/mod.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-CARGO-001",
+      "planned_source": "crates/compilation/src/adapters/cargo.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/cargo.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-CARGO-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-CMAKE-001",
+      "planned_source": "crates/compilation/src/adapters/cmake.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/cmake.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-CMAKE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-MAKE-001",
+      "planned_source": "crates/compilation/src/adapters/make.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/make.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-MAKE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-GRADLE-001",
+      "planned_source": "crates/compilation/src/adapters/gradle.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/gradle.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-GRADLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-MAVEN-001",
+      "planned_source": "crates/compilation/src/adapters/maven.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/maven.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-MAVEN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-NPM-001",
+      "planned_source": "crates/compilation/src/adapters/npm.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/npm.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-NPM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-PYTHON-001",
+      "planned_source": "crates/compilation/src/adapters/python.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/python.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-PYTHON-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-GO-001",
+      "planned_source": "crates/compilation/src/adapters/go.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/go.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-GO-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-DANGA-001",
+      "planned_source": "crates/compilation/src/adapters/danga.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/danga.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-DANGA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-ADAPTERS-GENERIC-001",
+      "planned_source": "crates/compilation/src/adapters/generic.rs",
+      "contract": "crates/compilation/specifications/modules/adapters/generic.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-ADAPTERS-GENERIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-COMPILATION-VERIFICATION-001",
+      "planned_source": "crates/compilation/src/verification.rs",
+      "contract": "crates/compilation/specifications/modules/verification.md",
+      "specified_tests": [
+        "ZIP-COMPILATION-VERIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

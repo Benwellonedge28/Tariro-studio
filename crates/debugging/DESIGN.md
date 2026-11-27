@@ -73,3 +73,27 @@ crates/debugging/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test nonreproducible failure, dependency outage and redaction.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`session.rs`](specifications/modules/session.md)
+- [`diagnostic.rs`](specifications/modules/diagnostic.md)
+- [`reproduction.rs`](specifications/modules/reproduction.md)
+- [`breakpoint.rs`](specifications/modules/breakpoint.md)
+- [`stack_trace.rs`](specifications/modules/stack_trace.md)
+- [`variable.rs`](specifications/modules/variable.md)
+- [`execution_trace.rs`](specifications/modules/execution_trace.md)
+- [`root_cause.rs`](specifications/modules/root_cause.md)
+- [`hypothesis.rs`](specifications/modules/hypothesis.md)
+- [`repair.rs`](specifications/modules/repair.md)
+- [`validation.rs`](specifications/modules/validation.md)
+- [`replay.rs`](specifications/modules/replay.md)
+- [`adapters/mod.rs`](specifications/modules/adapters/mod.md)
+- [`adapters/dap.rs`](specifications/modules/adapters/dap.md)
+- [`adapters/gdb.rs`](specifications/modules/adapters/gdb.md)
+- [`adapters/lldb.rs`](specifications/modules/adapters/lldb.md)
+- [`reporting.rs`](specifications/modules/reporting.md)

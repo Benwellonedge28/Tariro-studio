@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "source_revision": "3bce244e65f00e33c86e9fcf98c8adcb029667c9",
+  "requirements": [
+    {
+      "id": "ZIP-DEBUGGING-LIB-001",
+      "planned_source": "crates/debugging/src/lib.rs",
+      "contract": "crates/debugging/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-ERROR-001",
+      "planned_source": "crates/debugging/src/error.rs",
+      "contract": "crates/debugging/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-SESSION-001",
+      "planned_source": "crates/debugging/src/session.rs",
+      "contract": "crates/debugging/specifications/modules/session.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-SESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-DIAGNOSTIC-001",
+      "planned_source": "crates/debugging/src/diagnostic.rs",
+      "contract": "crates/debugging/specifications/modules/diagnostic.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-DIAGNOSTIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-REPRODUCTION-001",
+      "planned_source": "crates/debugging/src/reproduction.rs",
+      "contract": "crates/debugging/specifications/modules/reproduction.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-REPRODUCTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-BREAKPOINT-001",
+      "planned_source": "crates/debugging/src/breakpoint.rs",
+      "contract": "crates/debugging/specifications/modules/breakpoint.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-BREAKPOINT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-STACK-TRACE-001",
+      "planned_source": "crates/debugging/src/stack_trace.rs",
+      "contract": "crates/debugging/specifications/modules/stack_trace.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-STACK-TRACE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-VARIABLE-001",
+      "planned_source": "crates/debugging/src/variable.rs",
+      "contract": "crates/debugging/specifications/modules/variable.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-VARIABLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-EXECUTION-TRACE-001",
+      "planned_source": "crates/debugging/src/execution_trace.rs",
+      "contract": "crates/debugging/specifications/modules/execution_trace.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-EXECUTION-TRACE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-ROOT-CAUSE-001",
+      "planned_source": "crates/debugging/src/root_cause.rs",
+      "contract": "crates/debugging/specifications/modules/root_cause.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-ROOT-CAUSE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-HYPOTHESIS-001",
+      "planned_source": "crates/debugging/src/hypothesis.rs",
+      "contract": "crates/debugging/specifications/modules/hypothesis.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-HYPOTHESIS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-REPAIR-001",
+      "planned_source": "crates/debugging/src/repair.rs",
+      "contract": "crates/debugging/specifications/modules/repair.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-REPAIR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-VALIDATION-001",
+      "planned_source": "crates/debugging/src/validation.rs",
+      "contract": "crates/debugging/specifications/modules/validation.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-REPLAY-001",
+      "planned_source": "crates/debugging/src/replay.rs",
+      "contract": "crates/debugging/specifications/modules/replay.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-REPLAY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-ADAPTERS-MOD-001",
+      "planned_source": "crates/debugging/src/adapters/mod.rs",
+      "contract": "crates/debugging/specifications/modules/adapters/mod.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-ADAPTERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-ADAPTERS-DAP-001",
+      "planned_source": "crates/debugging/src/adapters/dap.rs",
+      "contract": "crates/debugging/specifications/modules/adapters/dap.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-ADAPTERS-DAP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-ADAPTERS-GDB-001",
+      "planned_source": "crates/debugging/src/adapters/gdb.rs",
+      "contract": "crates/debugging/specifications/modules/adapters/gdb.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-ADAPTERS-GDB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-ADAPTERS-LLDB-001",
+      "planned_source": "crates/debugging/src/adapters/lldb.rs",
+      "contract": "crates/debugging/specifications/modules/adapters/lldb.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-ADAPTERS-LLDB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEBUGGING-REPORTING-001",
+      "planned_source": "crates/debugging/src/reporting.rs",
+      "contract": "crates/debugging/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-DEBUGGING-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

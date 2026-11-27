@@ -89,3 +89,41 @@ crates/source-analysis/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test invalid UTF-8, parser fallback and deterministic changed-file reindexing.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`language.rs`](specifications/modules/language.md)
+- [`detection.rs`](specifications/modules/detection.md)
+- [`parser.rs`](specifications/modules/parser.md)
+- [`syntax_tree.rs`](specifications/modules/syntax_tree.md)
+- [`symbol.rs`](specifications/modules/symbol.md)
+- [`symbol_table.rs`](specifications/modules/symbol_table.md)
+- [`reference.rs`](specifications/modules/reference.md)
+- [`call_graph.rs`](specifications/modules/call_graph.md)
+- [`dependency_graph.rs`](specifications/modules/dependency_graph.md)
+- [`control_flow.rs`](specifications/modules/control_flow.md)
+- [`data_flow.rs`](specifications/modules/data_flow.md)
+- [`type_information.rs`](specifications/modules/type_information.md)
+- [`semantic.rs`](specifications/modules/semantic.md)
+- [`diagnostics.rs`](specifications/modules/diagnostics.md)
+- [`indexing.rs`](specifications/modules/indexing.md)
+- [`impact_analysis.rs`](specifications/modules/impact_analysis.md)
+- [`complexity.rs`](specifications/modules/complexity.md)
+- [`adapters/mod.rs`](specifications/modules/adapters/mod.md)
+- [`adapters/tree_sitter.rs`](specifications/modules/adapters/tree_sitter.md)
+- [`adapters/lsp.rs`](specifications/modules/adapters/lsp.md)
+- [`adapters/rust.rs`](specifications/modules/adapters/rust.md)
+- [`adapters/python.rs`](specifications/modules/adapters/python.md)
+- [`adapters/javascript.rs`](specifications/modules/adapters/javascript.md)
+- [`adapters/typescript.rs`](specifications/modules/adapters/typescript.md)
+- [`adapters/java.rs`](specifications/modules/adapters/java.md)
+- [`adapters/c.rs`](specifications/modules/adapters/c.md)
+- [`adapters/cpp.rs`](specifications/modules/adapters/cpp.md)
+- [`adapters/go.rs`](specifications/modules/adapters/go.md)
+- [`adapters/zamani.rs`](specifications/modules/adapters/zamani.md)
+- [`adapters/generic.rs`](specifications/modules/adapters/generic.md)
+- [`incremental.rs`](specifications/modules/incremental.md)

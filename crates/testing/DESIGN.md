@@ -76,3 +76,30 @@ crates/testing/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test malformed reports, skipped and timeout distinctions, and flake history.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`test_case.rs`](specifications/modules/test_case.md)
+- [`test_suite.rs`](specifications/modules/test_suite.md)
+- [`generation.rs`](specifications/modules/generation.md)
+- [`execution.rs`](specifications/modules/execution.md)
+- [`fixtures.rs`](specifications/modules/fixtures.md)
+- [`isolation.rs`](specifications/modules/isolation.md)
+- [`assertions.rs`](specifications/modules/assertions.md)
+- [`coverage.rs`](specifications/modules/coverage.md)
+- [`results.rs`](specifications/modules/results.md)
+- [`regression.rs`](specifications/modules/regression.md)
+- [`property_based.rs`](specifications/modules/property_based.md)
+- [`mutation.rs`](specifications/modules/mutation.md)
+- [`fuzzing.rs`](specifications/modules/fuzzing.md)
+- [`integration.rs`](specifications/modules/integration.md)
+- [`end_to_end.rs`](specifications/modules/end_to_end.md)
+- [`performance.rs`](specifications/modules/performance.md)
+- [`security.rs`](specifications/modules/security.md)
+- [`flaky_detection.rs`](specifications/modules/flaky_detection.md)
+- [`reporting.rs`](specifications/modules/reporting.md)

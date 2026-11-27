@@ -95,3 +95,44 @@ crates/engineering/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test conflicting edits, out-of-scope files and evidence invalidation after changes.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`requirements/mod.rs`](specifications/modules/requirements/mod.md)
+- [`requirements/extraction.rs`](specifications/modules/requirements/extraction.md)
+- [`requirements/specification.rs`](specifications/modules/requirements/specification.md)
+- [`requirements/traceability.rs`](specifications/modules/requirements/traceability.md)
+- [`requirements/validation.rs`](specifications/modules/requirements/validation.md)
+- [`architecture/mod.rs`](specifications/modules/architecture/mod.md)
+- [`architecture/system.rs`](specifications/modules/architecture/system.md)
+- [`architecture/component.rs`](specifications/modules/architecture/component.md)
+- [`architecture/interfaces.rs`](specifications/modules/architecture/interfaces.md)
+- [`architecture/dependencies.rs`](specifications/modules/architecture/dependencies.md)
+- [`architecture/decisions.rs`](specifications/modules/architecture/decisions.md)
+- [`architecture/validation.rs`](specifications/modules/architecture/validation.md)
+- [`implementation/mod.rs`](specifications/modules/implementation/mod.md)
+- [`implementation/generation.rs`](specifications/modules/implementation/generation.md)
+- [`implementation/editing.rs`](specifications/modules/implementation/editing.md)
+- [`implementation/patching.rs`](specifications/modules/implementation/patching.md)
+- [`implementation/integration.rs`](specifications/modules/implementation/integration.md)
+- [`implementation/validation.rs`](specifications/modules/implementation/validation.md)
+- [`refactoring/mod.rs`](specifications/modules/refactoring/mod.md)
+- [`refactoring/rename.rs`](specifications/modules/refactoring/rename.md)
+- [`refactoring/extraction.rs`](specifications/modules/refactoring/extraction.md)
+- [`refactoring/restructuring.rs`](specifications/modules/refactoring/restructuring.md)
+- [`refactoring/equivalence.rs`](specifications/modules/refactoring/equivalence.md)
+- [`optimization/mod.rs`](specifications/modules/optimization/mod.md)
+- [`optimization/performance.rs`](specifications/modules/optimization/performance.md)
+- [`optimization/memory.rs`](specifications/modules/optimization/memory.md)
+- [`optimization/concurrency.rs`](specifications/modules/optimization/concurrency.md)
+- [`optimization/algorithms.rs`](specifications/modules/optimization/algorithms.md)
+- [`review/mod.rs`](specifications/modules/review/mod.md)
+- [`review/correctness.rs`](specifications/modules/review/correctness.md)
+- [`review/maintainability.rs`](specifications/modules/review/maintainability.md)
+- [`review/security.rs`](specifications/modules/review/security.md)
+- [`review/compatibility.rs`](specifications/modules/review/compatibility.md)
+- [`traceability.rs`](specifications/modules/traceability.md)
