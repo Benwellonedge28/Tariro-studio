@@ -1,1 +1,0 @@
-# Tariro core package
