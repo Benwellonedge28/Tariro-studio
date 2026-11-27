@@ -68,3 +68,23 @@ crates/evolution/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test attempted self-grant and proposal that weakens evidence gate.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`proposal.rs`](specifications/modules/proposal.md)
+- [`experiment.rs`](specifications/modules/experiment.md)
+- [`baseline.rs`](specifications/modules/baseline.md)
+- [`evaluation.rs`](specifications/modules/evaluation.md)
+- [`benchmarking.rs`](specifications/modules/benchmarking.md)
+- [`regression.rs`](specifications/modules/regression.md)
+- [`candidate.rs`](specifications/modules/candidate.md)
+- [`policy.rs`](specifications/modules/policy.md)
+- [`review.rs`](specifications/modules/review.md)
+- [`approval.rs`](specifications/modules/approval.md)
+- [`migration.rs`](specifications/modules/migration.md)
+- [`rollback.rs`](specifications/modules/rollback.md)
+- [`history.rs`](specifications/modules/history.md)

@@ -66,3 +66,21 @@ crates/maintenance/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Restore after interrupted update and verify artifact retention.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`monitoring.rs`](specifications/modules/monitoring.md)
+- [`dependency_updates.rs`](specifications/modules/dependency_updates.md)
+- [`vulnerability_management.rs`](specifications/modules/vulnerability_management.md)
+- [`technical_debt.rs`](specifications/modules/technical_debt.md)
+- [`regression_detection.rs`](specifications/modules/regression_detection.md)
+- [`compatibility.rs`](specifications/modules/compatibility.md)
+- [`backup.rs`](specifications/modules/backup.md)
+- [`recovery.rs`](specifications/modules/recovery.md)
+- [`cleanup.rs`](specifications/modules/cleanup.md)
+- [`lifecycle.rs`](specifications/modules/lifecycle.md)
+- [`reporting.rs`](specifications/modules/reporting.md)
