@@ -75,3 +75,28 @@ crates/reasoning/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Use contradictory evidence and check abstention. Ensure hallucinated citation cannot become acceptance evidence.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`problem.rs`](specifications/modules/problem.md)
+- [`decomposition.rs`](specifications/modules/decomposition.md)
+- [`planning.rs`](specifications/modules/planning.md)
+- [`constraints.rs`](specifications/modules/constraints.md)
+- [`decision.rs`](specifications/modules/decision.md)
+- [`alternatives.rs`](specifications/modules/alternatives.md)
+- [`evaluation.rs`](specifications/modules/evaluation.md)
+- [`uncertainty.rs`](specifications/modules/uncertainty.md)
+- [`reflection.rs`](specifications/modules/reflection.md)
+- [`critique.rs`](specifications/modules/critique.md)
+- [`symbolic/mod.rs`](specifications/modules/symbolic/mod.md)
+- [`symbolic/rules.rs`](specifications/modules/symbolic/rules.md)
+- [`symbolic/logic.rs`](specifications/modules/symbolic/logic.md)
+- [`symbolic/solver.rs`](specifications/modules/symbolic/solver.md)
+- [`hybrid/mod.rs`](specifications/modules/hybrid/mod.md)
+- [`hybrid/deterministic.rs`](specifications/modules/hybrid/deterministic.md)
+- [`hybrid/model_assisted.rs`](specifications/modules/hybrid/model_assisted.md)
+- [`evidence.rs`](specifications/modules/evidence.md)
