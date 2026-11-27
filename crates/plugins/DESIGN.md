@@ -71,3 +71,25 @@ crates/plugins/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test denied imports, timeout termination, revocation and upgrade rollback.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`plugin.rs`](specifications/modules/plugin.md)
+- [`manifest.rs`](specifications/modules/manifest.md)
+- [`registry.rs`](specifications/modules/registry.md)
+- [`loader.rs`](specifications/modules/loader.md)
+- [`installer.rs`](specifications/modules/installer.md)
+- [`lifecycle.rs`](specifications/modules/lifecycle.md)
+- [`compatibility.rs`](specifications/modules/compatibility.md)
+- [`permissions.rs`](specifications/modules/permissions.md)
+- [`signatures.rs`](specifications/modules/signatures.md)
+- [`sandbox.rs`](specifications/modules/sandbox.md)
+- [`host.rs`](specifications/modules/host.md)
+- [`wasm.rs`](specifications/modules/wasm.md)
+- [`process.rs`](specifications/modules/process.md)
+- [`marketplace.rs`](specifications/modules/marketplace.md)
+- [`updates.rs`](specifications/modules/updates.md)
