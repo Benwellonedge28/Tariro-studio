@@ -1,15 +1,11 @@
 # Explicit resume command
 
-**ZIP-ASSIGNMENTS-RESUME-001 · v1.0 · Owner:** Assignments maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ASSIGNMENTS-RESUME-001 · v1.1 candidate · Owner** Assignments maintainers
 
-**Planned source:** `crates/assignments/src/resume.rs`
+**Planned source** `crates/assignments/src/resume.rs`
 
-## Required implementation behavior
+An authenticated Resume expects the current revision and a paused or recoverable assignment. Resume first moves to Recovering. Revalidate the original plan, source snapshot, applicable instructions, effective policy, evidence and currently approved grant. A cached approval, lease, worker epoch or Git reference is insufficient. An expired or revoked grant leaves prior verified units unchanged and requires a new scoped grant before dispatch. Cleanup and read-only evidence inspection use their separate scopes.
 
-Validate current revision and live grant, pin original plan, call recovery to derive next unit and reacquire resource lease. Do not trust cached task handles or widen old approval.
+Use [recovery](recovery.md) to settle prior worker and provider obligations. Resume from the next verified unit boundary, or from verification when every unit is committed. Reach Scheduled before obtaining a fresh worker lease. If scope, required paths, source or evidence criteria changed, require explicit authority and a new plan revision. Keep historical checkpoints under their original plan. The verifier may explicitly requalify matching artifacts against the new plan and commit a contiguous prefix under its new keys. No automatic checkpoint copy.
 
-## Acceptance
-
-**ZIP-ASSIGNMENTS-RESUME-T01.** Expired grant pauses while prior verified artifacts remain referenced.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ASSIGNMENTS-RESUME-T01.** An expired grant advances no unit. After a valid renewed grant for the same pinned plan, resume at the first unverified unit and retain the earlier prefix.
