@@ -75,3 +75,27 @@ crates/sandbox/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test denied path/network and reliable descendant teardown on supported OS.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`sandbox.rs`](specifications/modules/sandbox.md)
+- [`profile.rs`](specifications/modules/profile.md)
+- [`capability.rs`](specifications/modules/capability.md)
+- [`filesystem.rs`](specifications/modules/filesystem.md)
+- [`network.rs`](specifications/modules/network.md)
+- [`process.rs`](specifications/modules/process.md)
+- [`resource_limits.rs`](specifications/modules/resource_limits.md)
+- [`isolation.rs`](specifications/modules/isolation.md)
+- [`lifecycle.rs`](specifications/modules/lifecycle.md)
+- [`cleanup.rs`](specifications/modules/cleanup.md)
+- [`backends/mod.rs`](specifications/modules/backends/mod.md)
+- [`backends/linux.rs`](specifications/modules/backends/linux.md)
+- [`backends/windows.rs`](specifications/modules/backends/windows.md)
+- [`backends/macos.rs`](specifications/modules/backends/macos.md)
+- [`backends/container.rs`](specifications/modules/backends/container.md)
+- [`backends/wasm.rs`](specifications/modules/backends/wasm.md)
+- [`verification.rs`](specifications/modules/verification.md)
