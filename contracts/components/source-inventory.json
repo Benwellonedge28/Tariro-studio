@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_revision": "a145c3a68dcf7c6296ec6d40950c39f5c3ce59e6",
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
   "mapping": "Replace the .rs suffix with .md and resolve relative to contract_root. A path listed in candidate_files has a draft; every other enumerated file is missing a file contract.",
   "crates": [
     {
@@ -135,7 +135,23 @@
         "export.rs",
         "verification.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "record.rs",
+        "journal.rs",
+        "actor.rs",
+        "operation.rs",
+        "authorization.rs",
+        "evidence.rs",
+        "hash_chain.rs",
+        "integrity.rs",
+        "redaction.rs",
+        "query.rs",
+        "retention.rs",
+        "export.rs",
+        "verification.rs"
+      ]
     },
     {
       "id": "compilation",
@@ -372,7 +388,39 @@
         "publishing.rs",
         "batching.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "discovery.rs",
+        "inventory.rs",
+        "classification.rs",
+        "requirements.rs",
+        "templates.rs",
+        "generation.rs",
+        "editing.rs",
+        "validation.rs",
+        "coverage.rs",
+        "consistency.rs",
+        "source_references.rs",
+        "traceability.rs",
+        "design/mod.rs",
+        "design/architecture.rs",
+        "design/subsystem.rs",
+        "design/component.rs",
+        "design/interface.rs",
+        "design/data_model.rs",
+        "design/algorithms.rs",
+        "design/integration.rs",
+        "design/acceptance.rs",
+        "formats/mod.rs",
+        "formats/markdown.rs",
+        "formats/asciidoc.rs",
+        "formats/html.rs",
+        "formats/plain_text.rs",
+        "diagrams.rs",
+        "publishing.rs",
+        "batching.rs"
+      ]
     },
     {
       "id": "economics",
@@ -529,7 +577,27 @@
         "checksum.rs",
         "recovery.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "path.rs",
+        "normalization.rs",
+        "canonicalization.rs",
+        "scope.rs",
+        "permissions.rs",
+        "reader.rs",
+        "writer.rs",
+        "atomic_write.rs",
+        "directory.rs",
+        "traversal.rs",
+        "watcher.rs",
+        "symlink.rs",
+        "locking.rs",
+        "temporary.rs",
+        "snapshot.rs",
+        "checksum.rs",
+        "recovery.rs"
+      ]
     },
     {
       "id": "foundation",
@@ -1344,7 +1412,27 @@
         "backends/wasm.rs",
         "verification.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "sandbox.rs",
+        "profile.rs",
+        "capability.rs",
+        "filesystem.rs",
+        "network.rs",
+        "process.rs",
+        "resource_limits.rs",
+        "isolation.rs",
+        "lifecycle.rs",
+        "cleanup.rs",
+        "backends/mod.rs",
+        "backends/linux.rs",
+        "backends/windows.rs",
+        "backends/macos.rs",
+        "backends/container.rs",
+        "backends/wasm.rs",
+        "verification.rs"
+      ]
     },
     {
       "id": "scheduler",
@@ -1373,7 +1461,29 @@
         "policies/distributed.rs",
         "persistence.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "scheduler.rs",
+        "job.rs",
+        "queue.rs",
+        "priority.rs",
+        "dependency.rs",
+        "deadline.rs",
+        "fairness.rs",
+        "admission.rs",
+        "placement.rs",
+        "preemption.rs",
+        "retry.rs",
+        "backpressure.rs",
+        "policies/mod.rs",
+        "policies/sequential.rs",
+        "policies/parallel.rs",
+        "policies/priority.rs",
+        "policies/resource_aware.rs",
+        "policies/distributed.rs",
+        "persistence.rs"
+      ]
     },
     {
       "id": "sdk",
@@ -1467,7 +1577,42 @@
         "supply_chain/verification.rs",
         "incident_response.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "threat_model.rs",
+        "authentication.rs",
+        "authorization.rs",
+        "secrets/mod.rs",
+        "secrets/vault.rs",
+        "secrets/keyring.rs",
+        "secrets/rotation.rs",
+        "secrets/redaction.rs",
+        "cryptography/mod.rs",
+        "cryptography/hashing.rs",
+        "cryptography/encryption.rs",
+        "cryptography/signatures.rs",
+        "cryptography/key_management.rs",
+        "cryptography/random.rs",
+        "permissions/mod.rs",
+        "permissions/rbac.rs",
+        "permissions/abac.rs",
+        "permissions/capability.rs",
+        "permissions/inheritance.rs",
+        "permissions/revocation.rs",
+        "defenses/mod.rs",
+        "defenses/prompt_injection.rs",
+        "defenses/command_injection.rs",
+        "defenses/data_exfiltration.rs",
+        "defenses/dependency_risk.rs",
+        "defenses/secret_leakage.rs",
+        "supply_chain/mod.rs",
+        "supply_chain/sbom.rs",
+        "supply_chain/provenance.rs",
+        "supply_chain/signatures.rs",
+        "supply_chain/verification.rs",
+        "incident_response.rs"
+      ]
     },
     {
       "id": "source-analysis",
@@ -1620,7 +1765,26 @@
         "policy.rs",
         "audit.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "command.rs",
+        "arguments.rs",
+        "environment.rs",
+        "process.rs",
+        "execution.rs",
+        "stdin.rs",
+        "stdout.rs",
+        "stderr.rs",
+        "output_limits.rs",
+        "timeout.rs",
+        "cancellation.rs",
+        "process_tree.rs",
+        "working_directory.rs",
+        "allowlist.rs",
+        "policy.rs",
+        "audit.rs"
+      ]
     },
     {
       "id": "testing",
@@ -1681,7 +1845,31 @@
         "adapters/mcp.rs",
         "adapters/plugin.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "tool.rs",
+        "manifest.rs",
+        "registry.rs",
+        "discovery.rs",
+        "invocation.rs",
+        "arguments.rs",
+        "schema.rs",
+        "validation.rs",
+        "permissions.rs",
+        "execution.rs",
+        "result.rs",
+        "cancellation.rs",
+        "timeout.rs",
+        "rate_limit.rs",
+        "auditing.rs",
+        "adapters/mod.rs",
+        "adapters/native.rs",
+        "adapters/process.rs",
+        "adapters/http.rs",
+        "adapters/mcp.rs",
+        "adapters/plugin.rs"
+      ]
     },
     {
       "id": "verification",
@@ -1717,7 +1905,36 @@
         "quality/maintainability.rs",
         "reporting.rs"
       ],
-      "candidate_files": []
+      "candidate_files": [
+        "lib.rs",
+        "error.rs",
+        "verifier.rs",
+        "verification_plan.rs",
+        "requirements.rs",
+        "acceptance.rs",
+        "evidence.rs",
+        "provenance.rs",
+        "independent_review.rs",
+        "reproducibility.rs",
+        "static_analysis.rs",
+        "dynamic_analysis.rs",
+        "formal/mod.rs",
+        "formal/specification.rs",
+        "formal/invariants.rs",
+        "formal/model_checking.rs",
+        "formal/proof_adapter.rs",
+        "repository/mod.rs",
+        "repository/diff.rs",
+        "repository/scope.rs",
+        "repository/batch.rs",
+        "repository/integration.rs",
+        "quality/mod.rs",
+        "quality/correctness.rs",
+        "quality/completeness.rs",
+        "quality/consistency.rs",
+        "quality/maintainability.rs",
+        "reporting.rs"
+      ]
     },
     {
       "id": "workflows",

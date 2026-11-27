@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-TOOLS-LIB-001",
+      "planned_source": "crates/tools/src/lib.rs",
+      "contract": "crates/tools/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-TOOLS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ERROR-001",
+      "planned_source": "crates/tools/src/error.rs",
+      "contract": "crates/tools/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-TOOL-001",
+      "planned_source": "crates/tools/src/tool.rs",
+      "contract": "crates/tools/specifications/modules/tool.md",
+      "specified_tests": [
+        "ZIP-TOOLS-TOOL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-MANIFEST-001",
+      "planned_source": "crates/tools/src/manifest.rs",
+      "contract": "crates/tools/specifications/modules/manifest.md",
+      "specified_tests": [
+        "ZIP-TOOLS-MANIFEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-REGISTRY-001",
+      "planned_source": "crates/tools/src/registry.rs",
+      "contract": "crates/tools/specifications/modules/registry.md",
+      "specified_tests": [
+        "ZIP-TOOLS-REGISTRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-DISCOVERY-001",
+      "planned_source": "crates/tools/src/discovery.rs",
+      "contract": "crates/tools/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-TOOLS-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-INVOCATION-001",
+      "planned_source": "crates/tools/src/invocation.rs",
+      "contract": "crates/tools/specifications/modules/invocation.md",
+      "specified_tests": [
+        "ZIP-TOOLS-INVOCATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ARGUMENTS-001",
+      "planned_source": "crates/tools/src/arguments.rs",
+      "contract": "crates/tools/specifications/modules/arguments.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ARGUMENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-SCHEMA-001",
+      "planned_source": "crates/tools/src/schema.rs",
+      "contract": "crates/tools/specifications/modules/schema.md",
+      "specified_tests": [
+        "ZIP-TOOLS-SCHEMA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-VALIDATION-001",
+      "planned_source": "crates/tools/src/validation.rs",
+      "contract": "crates/tools/specifications/modules/validation.md",
+      "specified_tests": [
+        "ZIP-TOOLS-VALIDATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-PERMISSIONS-001",
+      "planned_source": "crates/tools/src/permissions.rs",
+      "contract": "crates/tools/specifications/modules/permissions.md",
+      "specified_tests": [
+        "ZIP-TOOLS-PERMISSIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-EXECUTION-001",
+      "planned_source": "crates/tools/src/execution.rs",
+      "contract": "crates/tools/specifications/modules/execution.md",
+      "specified_tests": [
+        "ZIP-TOOLS-EXECUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-RESULT-001",
+      "planned_source": "crates/tools/src/result.rs",
+      "contract": "crates/tools/specifications/modules/result.md",
+      "specified_tests": [
+        "ZIP-TOOLS-RESULT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-CANCELLATION-001",
+      "planned_source": "crates/tools/src/cancellation.rs",
+      "contract": "crates/tools/specifications/modules/cancellation.md",
+      "specified_tests": [
+        "ZIP-TOOLS-CANCELLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-TIMEOUT-001",
+      "planned_source": "crates/tools/src/timeout.rs",
+      "contract": "crates/tools/specifications/modules/timeout.md",
+      "specified_tests": [
+        "ZIP-TOOLS-TIMEOUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-RATE-LIMIT-001",
+      "planned_source": "crates/tools/src/rate_limit.rs",
+      "contract": "crates/tools/specifications/modules/rate_limit.md",
+      "specified_tests": [
+        "ZIP-TOOLS-RATE-LIMIT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-AUDITING-001",
+      "planned_source": "crates/tools/src/auditing.rs",
+      "contract": "crates/tools/specifications/modules/auditing.md",
+      "specified_tests": [
+        "ZIP-TOOLS-AUDITING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ADAPTERS-MOD-001",
+      "planned_source": "crates/tools/src/adapters/mod.rs",
+      "contract": "crates/tools/specifications/modules/adapters/mod.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ADAPTERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ADAPTERS-NATIVE-001",
+      "planned_source": "crates/tools/src/adapters/native.rs",
+      "contract": "crates/tools/specifications/modules/adapters/native.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ADAPTERS-NATIVE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ADAPTERS-PROCESS-001",
+      "planned_source": "crates/tools/src/adapters/process.rs",
+      "contract": "crates/tools/specifications/modules/adapters/process.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ADAPTERS-PROCESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ADAPTERS-HTTP-001",
+      "planned_source": "crates/tools/src/adapters/http.rs",
+      "contract": "crates/tools/specifications/modules/adapters/http.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ADAPTERS-HTTP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ADAPTERS-MCP-001",
+      "planned_source": "crates/tools/src/adapters/mcp.rs",
+      "contract": "crates/tools/specifications/modules/adapters/mcp.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ADAPTERS-MCP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TOOLS-ADAPTERS-PLUGIN-001",
+      "planned_source": "crates/tools/src/adapters/plugin.rs",
+      "contract": "crates/tools/specifications/modules/adapters/plugin.md",
+      "specified_tests": [
+        "ZIP-TOOLS-ADAPTERS-PLUGIN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

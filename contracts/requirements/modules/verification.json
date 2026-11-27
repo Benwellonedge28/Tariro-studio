@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-VERIFICATION-LIB-001",
+      "planned_source": "crates/verification/src/lib.rs",
+      "contract": "crates/verification/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-ERROR-001",
+      "planned_source": "crates/verification/src/error.rs",
+      "contract": "crates/verification/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-VERIFIER-001",
+      "planned_source": "crates/verification/src/verifier.rs",
+      "contract": "crates/verification/specifications/modules/verifier.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-VERIFIER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-VERIFICATION-PLAN-001",
+      "planned_source": "crates/verification/src/verification_plan.rs",
+      "contract": "crates/verification/specifications/modules/verification_plan.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-VERIFICATION-PLAN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REQUIREMENTS-001",
+      "planned_source": "crates/verification/src/requirements.rs",
+      "contract": "crates/verification/specifications/modules/requirements.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REQUIREMENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-ACCEPTANCE-001",
+      "planned_source": "crates/verification/src/acceptance.rs",
+      "contract": "crates/verification/specifications/modules/acceptance.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-ACCEPTANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-EVIDENCE-001",
+      "planned_source": "crates/verification/src/evidence.rs",
+      "contract": "crates/verification/specifications/modules/evidence.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-EVIDENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-PROVENANCE-001",
+      "planned_source": "crates/verification/src/provenance.rs",
+      "contract": "crates/verification/specifications/modules/provenance.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-PROVENANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-INDEPENDENT-REVIEW-001",
+      "planned_source": "crates/verification/src/independent_review.rs",
+      "contract": "crates/verification/specifications/modules/independent_review.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-INDEPENDENT-REVIEW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REPRODUCIBILITY-001",
+      "planned_source": "crates/verification/src/reproducibility.rs",
+      "contract": "crates/verification/specifications/modules/reproducibility.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REPRODUCIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-STATIC-ANALYSIS-001",
+      "planned_source": "crates/verification/src/static_analysis.rs",
+      "contract": "crates/verification/specifications/modules/static_analysis.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-STATIC-ANALYSIS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-DYNAMIC-ANALYSIS-001",
+      "planned_source": "crates/verification/src/dynamic_analysis.rs",
+      "contract": "crates/verification/specifications/modules/dynamic_analysis.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-DYNAMIC-ANALYSIS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-FORMAL-MOD-001",
+      "planned_source": "crates/verification/src/formal/mod.rs",
+      "contract": "crates/verification/specifications/modules/formal/mod.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-FORMAL-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-FORMAL-SPECIFICATION-001",
+      "planned_source": "crates/verification/src/formal/specification.rs",
+      "contract": "crates/verification/specifications/modules/formal/specification.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-FORMAL-SPECIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-FORMAL-INVARIANTS-001",
+      "planned_source": "crates/verification/src/formal/invariants.rs",
+      "contract": "crates/verification/specifications/modules/formal/invariants.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-FORMAL-INVARIANTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-FORMAL-MODEL-CHECKING-001",
+      "planned_source": "crates/verification/src/formal/model_checking.rs",
+      "contract": "crates/verification/specifications/modules/formal/model_checking.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-FORMAL-MODEL-CHECKING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-FORMAL-PROOF-ADAPTER-001",
+      "planned_source": "crates/verification/src/formal/proof_adapter.rs",
+      "contract": "crates/verification/specifications/modules/formal/proof_adapter.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-FORMAL-PROOF-ADAPTER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REPOSITORY-MOD-001",
+      "planned_source": "crates/verification/src/repository/mod.rs",
+      "contract": "crates/verification/specifications/modules/repository/mod.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REPOSITORY-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REPOSITORY-DIFF-001",
+      "planned_source": "crates/verification/src/repository/diff.rs",
+      "contract": "crates/verification/specifications/modules/repository/diff.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REPOSITORY-DIFF-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REPOSITORY-SCOPE-001",
+      "planned_source": "crates/verification/src/repository/scope.rs",
+      "contract": "crates/verification/specifications/modules/repository/scope.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REPOSITORY-SCOPE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REPOSITORY-BATCH-001",
+      "planned_source": "crates/verification/src/repository/batch.rs",
+      "contract": "crates/verification/specifications/modules/repository/batch.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REPOSITORY-BATCH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REPOSITORY-INTEGRATION-001",
+      "planned_source": "crates/verification/src/repository/integration.rs",
+      "contract": "crates/verification/specifications/modules/repository/integration.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REPOSITORY-INTEGRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-QUALITY-MOD-001",
+      "planned_source": "crates/verification/src/quality/mod.rs",
+      "contract": "crates/verification/specifications/modules/quality/mod.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-QUALITY-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-QUALITY-CORRECTNESS-001",
+      "planned_source": "crates/verification/src/quality/correctness.rs",
+      "contract": "crates/verification/specifications/modules/quality/correctness.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-QUALITY-CORRECTNESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-QUALITY-COMPLETENESS-001",
+      "planned_source": "crates/verification/src/quality/completeness.rs",
+      "contract": "crates/verification/specifications/modules/quality/completeness.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-QUALITY-COMPLETENESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-QUALITY-CONSISTENCY-001",
+      "planned_source": "crates/verification/src/quality/consistency.rs",
+      "contract": "crates/verification/specifications/modules/quality/consistency.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-QUALITY-CONSISTENCY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-QUALITY-MAINTAINABILITY-001",
+      "planned_source": "crates/verification/src/quality/maintainability.rs",
+      "contract": "crates/verification/specifications/modules/quality/maintainability.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-QUALITY-MAINTAINABILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-VERIFICATION-REPORTING-001",
+      "planned_source": "crates/verification/src/reporting.rs",
+      "contract": "crates/verification/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-VERIFICATION-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-AUDIT-LIB-001",
+      "planned_source": "crates/audit/src/lib.rs",
+      "contract": "crates/audit/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-AUDIT-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-ERROR-001",
+      "planned_source": "crates/audit/src/error.rs",
+      "contract": "crates/audit/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-AUDIT-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-RECORD-001",
+      "planned_source": "crates/audit/src/record.rs",
+      "contract": "crates/audit/specifications/modules/record.md",
+      "specified_tests": [
+        "ZIP-AUDIT-RECORD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-JOURNAL-001",
+      "planned_source": "crates/audit/src/journal.rs",
+      "contract": "crates/audit/specifications/modules/journal.md",
+      "specified_tests": [
+        "ZIP-AUDIT-JOURNAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-ACTOR-001",
+      "planned_source": "crates/audit/src/actor.rs",
+      "contract": "crates/audit/specifications/modules/actor.md",
+      "specified_tests": [
+        "ZIP-AUDIT-ACTOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-OPERATION-001",
+      "planned_source": "crates/audit/src/operation.rs",
+      "contract": "crates/audit/specifications/modules/operation.md",
+      "specified_tests": [
+        "ZIP-AUDIT-OPERATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-AUTHORIZATION-001",
+      "planned_source": "crates/audit/src/authorization.rs",
+      "contract": "crates/audit/specifications/modules/authorization.md",
+      "specified_tests": [
+        "ZIP-AUDIT-AUTHORIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-EVIDENCE-001",
+      "planned_source": "crates/audit/src/evidence.rs",
+      "contract": "crates/audit/specifications/modules/evidence.md",
+      "specified_tests": [
+        "ZIP-AUDIT-EVIDENCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-HASH-CHAIN-001",
+      "planned_source": "crates/audit/src/hash_chain.rs",
+      "contract": "crates/audit/specifications/modules/hash_chain.md",
+      "specified_tests": [
+        "ZIP-AUDIT-HASH-CHAIN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-INTEGRITY-001",
+      "planned_source": "crates/audit/src/integrity.rs",
+      "contract": "crates/audit/specifications/modules/integrity.md",
+      "specified_tests": [
+        "ZIP-AUDIT-INTEGRITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-REDACTION-001",
+      "planned_source": "crates/audit/src/redaction.rs",
+      "contract": "crates/audit/specifications/modules/redaction.md",
+      "specified_tests": [
+        "ZIP-AUDIT-REDACTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-QUERY-001",
+      "planned_source": "crates/audit/src/query.rs",
+      "contract": "crates/audit/specifications/modules/query.md",
+      "specified_tests": [
+        "ZIP-AUDIT-QUERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-RETENTION-001",
+      "planned_source": "crates/audit/src/retention.rs",
+      "contract": "crates/audit/specifications/modules/retention.md",
+      "specified_tests": [
+        "ZIP-AUDIT-RETENTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-EXPORT-001",
+      "planned_source": "crates/audit/src/export.rs",
+      "contract": "crates/audit/specifications/modules/export.md",
+      "specified_tests": [
+        "ZIP-AUDIT-EXPORT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-AUDIT-VERIFICATION-001",
+      "planned_source": "crates/audit/src/verification.rs",
+      "contract": "crates/audit/specifications/modules/verification.md",
+      "specified_tests": [
+        "ZIP-AUDIT-VERIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

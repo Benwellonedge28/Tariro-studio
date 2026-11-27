@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "source_revision": "950d5c821ae9c0cf4c6669dfdeb620bba9927215",
+  "requirements": [
+    {
+      "id": "ZIP-TERMINAL-LIB-001",
+      "planned_source": "crates/terminal/src/lib.rs",
+      "contract": "crates/terminal/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-ERROR-001",
+      "planned_source": "crates/terminal/src/error.rs",
+      "contract": "crates/terminal/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-COMMAND-001",
+      "planned_source": "crates/terminal/src/command.rs",
+      "contract": "crates/terminal/specifications/modules/command.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-COMMAND-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-ARGUMENTS-001",
+      "planned_source": "crates/terminal/src/arguments.rs",
+      "contract": "crates/terminal/specifications/modules/arguments.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-ARGUMENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-ENVIRONMENT-001",
+      "planned_source": "crates/terminal/src/environment.rs",
+      "contract": "crates/terminal/specifications/modules/environment.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-ENVIRONMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-PROCESS-001",
+      "planned_source": "crates/terminal/src/process.rs",
+      "contract": "crates/terminal/specifications/modules/process.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-PROCESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-EXECUTION-001",
+      "planned_source": "crates/terminal/src/execution.rs",
+      "contract": "crates/terminal/specifications/modules/execution.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-EXECUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-STDIN-001",
+      "planned_source": "crates/terminal/src/stdin.rs",
+      "contract": "crates/terminal/specifications/modules/stdin.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-STDIN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-STDOUT-001",
+      "planned_source": "crates/terminal/src/stdout.rs",
+      "contract": "crates/terminal/specifications/modules/stdout.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-STDOUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-STDERR-001",
+      "planned_source": "crates/terminal/src/stderr.rs",
+      "contract": "crates/terminal/specifications/modules/stderr.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-STDERR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-OUTPUT-LIMITS-001",
+      "planned_source": "crates/terminal/src/output_limits.rs",
+      "contract": "crates/terminal/specifications/modules/output_limits.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-OUTPUT-LIMITS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-TIMEOUT-001",
+      "planned_source": "crates/terminal/src/timeout.rs",
+      "contract": "crates/terminal/specifications/modules/timeout.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-TIMEOUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-CANCELLATION-001",
+      "planned_source": "crates/terminal/src/cancellation.rs",
+      "contract": "crates/terminal/specifications/modules/cancellation.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-CANCELLATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-PROCESS-TREE-001",
+      "planned_source": "crates/terminal/src/process_tree.rs",
+      "contract": "crates/terminal/specifications/modules/process_tree.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-PROCESS-TREE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-WORKING-DIRECTORY-001",
+      "planned_source": "crates/terminal/src/working_directory.rs",
+      "contract": "crates/terminal/specifications/modules/working_directory.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-WORKING-DIRECTORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-ALLOWLIST-001",
+      "planned_source": "crates/terminal/src/allowlist.rs",
+      "contract": "crates/terminal/specifications/modules/allowlist.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-ALLOWLIST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-POLICY-001",
+      "planned_source": "crates/terminal/src/policy.rs",
+      "contract": "crates/terminal/specifications/modules/policy.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-POLICY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-TERMINAL-AUDIT-001",
+      "planned_source": "crates/terminal/src/audit.rs",
+      "contract": "crates/terminal/specifications/modules/audit.md",
+      "specified_tests": [
+        "ZIP-TERMINAL-AUDIT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
