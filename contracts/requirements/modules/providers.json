@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-PROVIDERS-LIB-001",
+      "planned_source": "crates/providers/src/lib.rs",
+      "contract": "crates/providers/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-ERROR-001",
+      "planned_source": "crates/providers/src/error.rs",
+      "contract": "crates/providers/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-PROVIDER-001",
+      "planned_source": "crates/providers/src/provider.rs",
+      "contract": "crates/providers/specifications/modules/provider.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-PROVIDER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-MANIFEST-001",
+      "planned_source": "crates/providers/src/manifest.rs",
+      "contract": "crates/providers/specifications/modules/manifest.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-MANIFEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-REGISTRY-001",
+      "planned_source": "crates/providers/src/registry.rs",
+      "contract": "crates/providers/specifications/modules/registry.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-REGISTRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-DISCOVERY-001",
+      "planned_source": "crates/providers/src/discovery.rs",
+      "contract": "crates/providers/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-CAPABILITIES-001",
+      "planned_source": "crates/providers/src/capabilities.rs",
+      "contract": "crates/providers/specifications/modules/capabilities.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-CAPABILITIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-CREDENTIALS-001",
+      "planned_source": "crates/providers/src/credentials.rs",
+      "contract": "crates/providers/specifications/modules/credentials.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-CREDENTIALS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-HEALTH-001",
+      "planned_source": "crates/providers/src/health.rs",
+      "contract": "crates/providers/specifications/modules/health.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-HEALTH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-ROUTING-001",
+      "planned_source": "crates/providers/src/routing.rs",
+      "contract": "crates/providers/specifications/modules/routing.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-ROUTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-FALLBACK-001",
+      "planned_source": "crates/providers/src/fallback.rs",
+      "contract": "crates/providers/specifications/modules/fallback.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-FALLBACK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-MOD-001",
+      "planned_source": "crates/providers/src/inference/mod.rs",
+      "contract": "crates/providers/specifications/modules/inference/mod.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-OPENAI-001",
+      "planned_source": "crates/providers/src/inference/openai.rs",
+      "contract": "crates/providers/specifications/modules/inference/openai.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-OPENAI-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-ANTHROPIC-001",
+      "planned_source": "crates/providers/src/inference/anthropic.rs",
+      "contract": "crates/providers/specifications/modules/inference/anthropic.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-ANTHROPIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-GEMINI-001",
+      "planned_source": "crates/providers/src/inference/gemini.rs",
+      "contract": "crates/providers/specifications/modules/inference/gemini.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-GEMINI-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-DEEPSEEK-001",
+      "planned_source": "crates/providers/src/inference/deepseek.rs",
+      "contract": "crates/providers/specifications/modules/inference/deepseek.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-DEEPSEEK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-OLLAMA-001",
+      "planned_source": "crates/providers/src/inference/ollama.rs",
+      "contract": "crates/providers/specifications/modules/inference/ollama.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-OLLAMA-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-LOCAL-001",
+      "planned_source": "crates/providers/src/inference/local.rs",
+      "contract": "crates/providers/specifications/modules/inference/local.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-LOCAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-INFERENCE-GENERIC-001",
+      "planned_source": "crates/providers/src/inference/generic.rs",
+      "contract": "crates/providers/specifications/modules/inference/generic.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-INFERENCE-GENERIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-REPOSITORIES-MOD-001",
+      "planned_source": "crates/providers/src/repositories/mod.rs",
+      "contract": "crates/providers/specifications/modules/repositories/mod.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-REPOSITORIES-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-REPOSITORIES-GITHUB-001",
+      "planned_source": "crates/providers/src/repositories/github.rs",
+      "contract": "crates/providers/specifications/modules/repositories/github.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-REPOSITORIES-GITHUB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-REPOSITORIES-GITLAB-001",
+      "planned_source": "crates/providers/src/repositories/gitlab.rs",
+      "contract": "crates/providers/specifications/modules/repositories/gitlab.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-REPOSITORIES-GITLAB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PROVIDERS-REPOSITORIES-GENERIC-001",
+      "planned_source": "crates/providers/src/repositories/generic.rs",
+      "contract": "crates/providers/specifications/modules/repositories/generic.md",
+      "specified_tests": [
+        "ZIP-PROVIDERS-REPOSITORIES-GENERIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

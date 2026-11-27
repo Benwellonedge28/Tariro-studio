@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-DEPLOYMENT-LIB-001",
+      "planned_source": "crates/deployment/src/lib.rs",
+      "contract": "crates/deployment/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-ERROR-001",
+      "planned_source": "crates/deployment/src/error.rs",
+      "contract": "crates/deployment/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-ENVIRONMENT-001",
+      "planned_source": "crates/deployment/src/environment.rs",
+      "contract": "crates/deployment/specifications/modules/environment.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-ENVIRONMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-ARTIFACT-001",
+      "planned_source": "crates/deployment/src/artifact.rs",
+      "contract": "crates/deployment/specifications/modules/artifact.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-ARTIFACT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-PACKAGE-001",
+      "planned_source": "crates/deployment/src/package.rs",
+      "contract": "crates/deployment/specifications/modules/package.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-PACKAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-RELEASE-001",
+      "planned_source": "crates/deployment/src/release.rs",
+      "contract": "crates/deployment/specifications/modules/release.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-RELEASE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-SIGNING-001",
+      "planned_source": "crates/deployment/src/signing.rs",
+      "contract": "crates/deployment/specifications/modules/signing.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-SIGNING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-VERIFICATION-001",
+      "planned_source": "crates/deployment/src/verification.rs",
+      "contract": "crates/deployment/specifications/modules/verification.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-VERIFICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-STRATEGY-001",
+      "planned_source": "crates/deployment/src/strategy.rs",
+      "contract": "crates/deployment/specifications/modules/strategy.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-STRATEGY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-APPROVAL-001",
+      "planned_source": "crates/deployment/src/approval.rs",
+      "contract": "crates/deployment/specifications/modules/approval.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-APPROVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-ROLLOUT-001",
+      "planned_source": "crates/deployment/src/rollout.rs",
+      "contract": "crates/deployment/specifications/modules/rollout.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-ROLLOUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-ROLLBACK-001",
+      "planned_source": "crates/deployment/src/rollback.rs",
+      "contract": "crates/deployment/specifications/modules/rollback.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-ROLLBACK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-HEALTH-CHECK-001",
+      "planned_source": "crates/deployment/src/health_check.rs",
+      "contract": "crates/deployment/specifications/modules/health_check.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-HEALTH-CHECK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-PROVIDERS-MOD-001",
+      "planned_source": "crates/deployment/src/providers/mod.rs",
+      "contract": "crates/deployment/specifications/modules/providers/mod.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-PROVIDERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-PROVIDERS-LOCAL-001",
+      "planned_source": "crates/deployment/src/providers/local.rs",
+      "contract": "crates/deployment/specifications/modules/providers/local.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-PROVIDERS-LOCAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-PROVIDERS-CONTAINER-001",
+      "planned_source": "crates/deployment/src/providers/container.rs",
+      "contract": "crates/deployment/specifications/modules/providers/container.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-PROVIDERS-CONTAINER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-PROVIDERS-SERVER-001",
+      "planned_source": "crates/deployment/src/providers/server.rs",
+      "contract": "crates/deployment/specifications/modules/providers/server.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-PROVIDERS-SERVER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-PROVIDERS-CLOUD-001",
+      "planned_source": "crates/deployment/src/providers/cloud.rs",
+      "contract": "crates/deployment/specifications/modules/providers/cloud.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-PROVIDERS-CLOUD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DEPLOYMENT-REPORTING-001",
+      "planned_source": "crates/deployment/src/reporting.rs",
+      "contract": "crates/deployment/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-DEPLOYMENT-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

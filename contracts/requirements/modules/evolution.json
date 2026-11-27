@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-EVOLUTION-LIB-001",
+      "planned_source": "crates/evolution/src/lib.rs",
+      "contract": "crates/evolution/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-ERROR-001",
+      "planned_source": "crates/evolution/src/error.rs",
+      "contract": "crates/evolution/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-PROPOSAL-001",
+      "planned_source": "crates/evolution/src/proposal.rs",
+      "contract": "crates/evolution/specifications/modules/proposal.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-PROPOSAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-EXPERIMENT-001",
+      "planned_source": "crates/evolution/src/experiment.rs",
+      "contract": "crates/evolution/specifications/modules/experiment.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-EXPERIMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-BASELINE-001",
+      "planned_source": "crates/evolution/src/baseline.rs",
+      "contract": "crates/evolution/specifications/modules/baseline.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-BASELINE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-EVALUATION-001",
+      "planned_source": "crates/evolution/src/evaluation.rs",
+      "contract": "crates/evolution/specifications/modules/evaluation.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-EVALUATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-BENCHMARKING-001",
+      "planned_source": "crates/evolution/src/benchmarking.rs",
+      "contract": "crates/evolution/specifications/modules/benchmarking.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-BENCHMARKING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-REGRESSION-001",
+      "planned_source": "crates/evolution/src/regression.rs",
+      "contract": "crates/evolution/specifications/modules/regression.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-REGRESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-CANDIDATE-001",
+      "planned_source": "crates/evolution/src/candidate.rs",
+      "contract": "crates/evolution/specifications/modules/candidate.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-CANDIDATE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-POLICY-001",
+      "planned_source": "crates/evolution/src/policy.rs",
+      "contract": "crates/evolution/specifications/modules/policy.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-POLICY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-REVIEW-001",
+      "planned_source": "crates/evolution/src/review.rs",
+      "contract": "crates/evolution/specifications/modules/review.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-REVIEW-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-APPROVAL-001",
+      "planned_source": "crates/evolution/src/approval.rs",
+      "contract": "crates/evolution/specifications/modules/approval.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-APPROVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-MIGRATION-001",
+      "planned_source": "crates/evolution/src/migration.rs",
+      "contract": "crates/evolution/specifications/modules/migration.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-MIGRATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-ROLLBACK-001",
+      "planned_source": "crates/evolution/src/rollback.rs",
+      "contract": "crates/evolution/specifications/modules/rollback.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-ROLLBACK-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-EVOLUTION-HISTORY-001",
+      "planned_source": "crates/evolution/src/history.rs",
+      "contract": "crates/evolution/specifications/modules/history.md",
+      "specified_tests": [
+        "ZIP-EVOLUTION-HISTORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

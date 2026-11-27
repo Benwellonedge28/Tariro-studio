@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-ECONOMICS-LIB-001",
+      "planned_source": "crates/economics/src/lib.rs",
+      "contract": "crates/economics/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-ERROR-001",
+      "planned_source": "crates/economics/src/error.rs",
+      "contract": "crates/economics/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-BUDGET-001",
+      "planned_source": "crates/economics/src/budget.rs",
+      "contract": "crates/economics/specifications/modules/budget.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-BUDGET-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-USAGE-001",
+      "planned_source": "crates/economics/src/usage.rs",
+      "contract": "crates/economics/specifications/modules/usage.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-USAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-PRICING-001",
+      "planned_source": "crates/economics/src/pricing.rs",
+      "contract": "crates/economics/specifications/modules/pricing.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-PRICING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-ESTIMATION-001",
+      "planned_source": "crates/economics/src/estimation.rs",
+      "contract": "crates/economics/specifications/modules/estimation.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-ESTIMATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-ACCOUNTING-001",
+      "planned_source": "crates/economics/src/accounting.rs",
+      "contract": "crates/economics/specifications/modules/accounting.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-ACCOUNTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-TOKEN-USAGE-001",
+      "planned_source": "crates/economics/src/token_usage.rs",
+      "contract": "crates/economics/specifications/modules/token_usage.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-TOKEN-USAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-COMPUTE-USAGE-001",
+      "planned_source": "crates/economics/src/compute_usage.rs",
+      "contract": "crates/economics/specifications/modules/compute_usage.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-COMPUTE-USAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-STORAGE-USAGE-001",
+      "planned_source": "crates/economics/src/storage_usage.rs",
+      "contract": "crates/economics/specifications/modules/storage_usage.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-STORAGE-USAGE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-OPTIMIZATION-001",
+      "planned_source": "crates/economics/src/optimization.rs",
+      "contract": "crates/economics/specifications/modules/optimization.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-OPTIMIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-PROVIDER-COMPARISON-001",
+      "planned_source": "crates/economics/src/provider_comparison.rs",
+      "contract": "crates/economics/specifications/modules/provider_comparison.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-PROVIDER-COMPARISON-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-SPENDING-LIMITS-001",
+      "planned_source": "crates/economics/src/spending_limits.rs",
+      "contract": "crates/economics/specifications/modules/spending_limits.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-SPENDING-LIMITS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-ECONOMICS-REPORTING-001",
+      "planned_source": "crates/economics/src/reporting.rs",
+      "contract": "crates/economics/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-ECONOMICS-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

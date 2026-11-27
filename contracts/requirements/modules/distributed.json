@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-DISTRIBUTED-LIB-001",
+      "planned_source": "crates/distributed/src/lib.rs",
+      "contract": "crates/distributed/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-ERROR-001",
+      "planned_source": "crates/distributed/src/error.rs",
+      "contract": "crates/distributed/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-NODE-001",
+      "planned_source": "crates/distributed/src/node.rs",
+      "contract": "crates/distributed/specifications/modules/node.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-NODE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-IDENTITY-001",
+      "planned_source": "crates/distributed/src/identity.rs",
+      "contract": "crates/distributed/specifications/modules/identity.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-IDENTITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-MEMBERSHIP-001",
+      "planned_source": "crates/distributed/src/membership.rs",
+      "contract": "crates/distributed/specifications/modules/membership.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-MEMBERSHIP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-DISCOVERY-001",
+      "planned_source": "crates/distributed/src/discovery.rs",
+      "contract": "crates/distributed/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-REGISTRY-001",
+      "planned_source": "crates/distributed/src/registry.rs",
+      "contract": "crates/distributed/specifications/modules/registry.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-REGISTRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-HEARTBEAT-001",
+      "planned_source": "crates/distributed/src/heartbeat.rs",
+      "contract": "crates/distributed/specifications/modules/heartbeat.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-HEARTBEAT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-CAPABILITIES-001",
+      "planned_source": "crates/distributed/src/capabilities.rs",
+      "contract": "crates/distributed/specifications/modules/capabilities.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-CAPABILITIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-RESOURCES-001",
+      "planned_source": "crates/distributed/src/resources.rs",
+      "contract": "crates/distributed/specifications/modules/resources.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-RESOURCES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-PLACEMENT-001",
+      "planned_source": "crates/distributed/src/placement.rs",
+      "contract": "crates/distributed/specifications/modules/placement.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-PLACEMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-SCHEDULER-001",
+      "planned_source": "crates/distributed/src/scheduler.rs",
+      "contract": "crates/distributed/specifications/modules/scheduler.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-SCHEDULER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-WORKER-001",
+      "planned_source": "crates/distributed/src/worker.rs",
+      "contract": "crates/distributed/specifications/modules/worker.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-WORKER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-COORDINATOR-001",
+      "planned_source": "crates/distributed/src/coordinator.rs",
+      "contract": "crates/distributed/specifications/modules/coordinator.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-COORDINATOR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-EXECUTION-001",
+      "planned_source": "crates/distributed/src/execution.rs",
+      "contract": "crates/distributed/specifications/modules/execution.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-EXECUTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-TASK-LEASE-001",
+      "planned_source": "crates/distributed/src/task_lease.rs",
+      "contract": "crates/distributed/specifications/modules/task_lease.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-TASK-LEASE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-ARTIFACT-TRANSFER-001",
+      "planned_source": "crates/distributed/src/artifact_transfer.rs",
+      "contract": "crates/distributed/specifications/modules/artifact_transfer.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-ARTIFACT-TRANSFER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-CHECKPOINT-001",
+      "planned_source": "crates/distributed/src/checkpoint.rs",
+      "contract": "crates/distributed/specifications/modules/checkpoint.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-CHECKPOINT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-RECOVERY-001",
+      "planned_source": "crates/distributed/src/recovery.rs",
+      "contract": "crates/distributed/specifications/modules/recovery.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-RECOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-PARTITION-001",
+      "planned_source": "crates/distributed/src/partition.rs",
+      "contract": "crates/distributed/specifications/modules/partition.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-PARTITION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-RECONCILIATION-001",
+      "planned_source": "crates/distributed/src/reconciliation.rs",
+      "contract": "crates/distributed/specifications/modules/reconciliation.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-RECONCILIATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-SECURITY-001",
+      "planned_source": "crates/distributed/src/security.rs",
+      "contract": "crates/distributed/specifications/modules/security.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-SECURITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-DISTRIBUTED-METRICS-001",
+      "planned_source": "crates/distributed/src/metrics.rs",
+      "contract": "crates/distributed/specifications/modules/metrics.md",
+      "specified_tests": [
+        "ZIP-DISTRIBUTED-METRICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

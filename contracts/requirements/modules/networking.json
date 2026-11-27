@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-NETWORKING-LIB-001",
+      "planned_source": "crates/networking/src/lib.rs",
+      "contract": "crates/networking/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-ERROR-001",
+      "planned_source": "crates/networking/src/error.rs",
+      "contract": "crates/networking/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-TRANSPORT-001",
+      "planned_source": "crates/networking/src/transport.rs",
+      "contract": "crates/networking/specifications/modules/transport.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-TRANSPORT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-CONNECTION-001",
+      "planned_source": "crates/networking/src/connection.rs",
+      "contract": "crates/networking/specifications/modules/connection.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-CONNECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-ENDPOINT-001",
+      "planned_source": "crates/networking/src/endpoint.rs",
+      "contract": "crates/networking/specifications/modules/endpoint.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-ENDPOINT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-DISCOVERY-001",
+      "planned_source": "crates/networking/src/discovery.rs",
+      "contract": "crates/networking/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-AUTHENTICATION-001",
+      "planned_source": "crates/networking/src/authentication.rs",
+      "contract": "crates/networking/specifications/modules/authentication.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-AUTHENTICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-TLS-001",
+      "planned_source": "crates/networking/src/tls.rs",
+      "contract": "crates/networking/specifications/modules/tls.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-TLS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-HTTP-001",
+      "planned_source": "crates/networking/src/http.rs",
+      "contract": "crates/networking/specifications/modules/http.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-HTTP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-WEBSOCKET-001",
+      "planned_source": "crates/networking/src/websocket.rs",
+      "contract": "crates/networking/specifications/modules/websocket.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-WEBSOCKET-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-QUIC-001",
+      "planned_source": "crates/networking/src/quic.rs",
+      "contract": "crates/networking/specifications/modules/quic.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-QUIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-RETRY-001",
+      "planned_source": "crates/networking/src/retry.rs",
+      "contract": "crates/networking/specifications/modules/retry.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-RETRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-TIMEOUT-001",
+      "planned_source": "crates/networking/src/timeout.rs",
+      "contract": "crates/networking/specifications/modules/timeout.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-TIMEOUT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-RATE-LIMIT-001",
+      "planned_source": "crates/networking/src/rate_limit.rs",
+      "contract": "crates/networking/specifications/modules/rate_limit.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-RATE-LIMIT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-BANDWIDTH-001",
+      "planned_source": "crates/networking/src/bandwidth.rs",
+      "contract": "crates/networking/specifications/modules/bandwidth.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-BANDWIDTH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-PROXY-001",
+      "planned_source": "crates/networking/src/proxy.rs",
+      "contract": "crates/networking/specifications/modules/proxy.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-PROXY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-OFFLINE-001",
+      "planned_source": "crates/networking/src/offline.rs",
+      "contract": "crates/networking/specifications/modules/offline.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-OFFLINE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-NETWORKING-POLICY-001",
+      "planned_source": "crates/networking/src/policy.rs",
+      "contract": "crates/networking/specifications/modules/policy.md",
+      "specified_tests": [
+        "ZIP-NETWORKING-POLICY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

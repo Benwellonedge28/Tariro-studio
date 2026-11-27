@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-MAINTENANCE-LIB-001",
+      "planned_source": "crates/maintenance/src/lib.rs",
+      "contract": "crates/maintenance/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-ERROR-001",
+      "planned_source": "crates/maintenance/src/error.rs",
+      "contract": "crates/maintenance/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-MONITORING-001",
+      "planned_source": "crates/maintenance/src/monitoring.rs",
+      "contract": "crates/maintenance/specifications/modules/monitoring.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-MONITORING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-DEPENDENCY-UPDATES-001",
+      "planned_source": "crates/maintenance/src/dependency_updates.rs",
+      "contract": "crates/maintenance/specifications/modules/dependency_updates.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-DEPENDENCY-UPDATES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-VULNERABILITY-MANAGEMENT-001",
+      "planned_source": "crates/maintenance/src/vulnerability_management.rs",
+      "contract": "crates/maintenance/specifications/modules/vulnerability_management.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-VULNERABILITY-MANAGEMENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-TECHNICAL-DEBT-001",
+      "planned_source": "crates/maintenance/src/technical_debt.rs",
+      "contract": "crates/maintenance/specifications/modules/technical_debt.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-TECHNICAL-DEBT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-REGRESSION-DETECTION-001",
+      "planned_source": "crates/maintenance/src/regression_detection.rs",
+      "contract": "crates/maintenance/specifications/modules/regression_detection.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-REGRESSION-DETECTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-COMPATIBILITY-001",
+      "planned_source": "crates/maintenance/src/compatibility.rs",
+      "contract": "crates/maintenance/specifications/modules/compatibility.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-COMPATIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-BACKUP-001",
+      "planned_source": "crates/maintenance/src/backup.rs",
+      "contract": "crates/maintenance/specifications/modules/backup.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-BACKUP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-RECOVERY-001",
+      "planned_source": "crates/maintenance/src/recovery.rs",
+      "contract": "crates/maintenance/specifications/modules/recovery.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-RECOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-CLEANUP-001",
+      "planned_source": "crates/maintenance/src/cleanup.rs",
+      "contract": "crates/maintenance/specifications/modules/cleanup.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-CLEANUP-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-LIFECYCLE-001",
+      "planned_source": "crates/maintenance/src/lifecycle.rs",
+      "contract": "crates/maintenance/specifications/modules/lifecycle.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-LIFECYCLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-MAINTENANCE-REPORTING-001",
+      "planned_source": "crates/maintenance/src/reporting.rs",
+      "contract": "crates/maintenance/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-MAINTENANCE-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

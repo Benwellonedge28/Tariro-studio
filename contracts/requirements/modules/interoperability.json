@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-INTEROPERABILITY-LIB-001",
+      "planned_source": "crates/interoperability/src/lib.rs",
+      "contract": "crates/interoperability/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-ERROR-001",
+      "planned_source": "crates/interoperability/src/error.rs",
+      "contract": "crates/interoperability/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-PROTOCOL-001",
+      "planned_source": "crates/interoperability/src/protocol.rs",
+      "contract": "crates/interoperability/specifications/modules/protocol.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-PROTOCOL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-NEGOTIATION-001",
+      "planned_source": "crates/interoperability/src/negotiation.rs",
+      "contract": "crates/interoperability/specifications/modules/negotiation.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-NEGOTIATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-COMPATIBILITY-001",
+      "planned_source": "crates/interoperability/src/compatibility.rs",
+      "contract": "crates/interoperability/specifications/modules/compatibility.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-COMPATIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-SERIALIZATION-001",
+      "planned_source": "crates/interoperability/src/serialization.rs",
+      "contract": "crates/interoperability/specifications/modules/serialization.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-SERIALIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-MCP-MOD-001",
+      "planned_source": "crates/interoperability/src/mcp/mod.rs",
+      "contract": "crates/interoperability/specifications/modules/mcp/mod.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-MCP-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-MCP-CLIENT-001",
+      "planned_source": "crates/interoperability/src/mcp/client.rs",
+      "contract": "crates/interoperability/specifications/modules/mcp/client.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-MCP-CLIENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-MCP-SERVER-001",
+      "planned_source": "crates/interoperability/src/mcp/server.rs",
+      "contract": "crates/interoperability/specifications/modules/mcp/server.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-MCP-SERVER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-MCP-TRANSPORT-001",
+      "planned_source": "crates/interoperability/src/mcp/transport.rs",
+      "contract": "crates/interoperability/specifications/modules/mcp/transport.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-MCP-TRANSPORT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-MCP-TOOLS-001",
+      "planned_source": "crates/interoperability/src/mcp/tools.rs",
+      "contract": "crates/interoperability/specifications/modules/mcp/tools.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-MCP-TOOLS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-MCP-RESOURCES-001",
+      "planned_source": "crates/interoperability/src/mcp/resources.rs",
+      "contract": "crates/interoperability/specifications/modules/mcp/resources.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-MCP-RESOURCES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-INTEROPERABILITY-MCP-SECURITY-001",
+      "planned_source": "crates/interoperability/src/mcp/security.rs",
+      "contract": "crates/interoperability/specifications/modules/mcp/security.md",
+      "specified_tests": [
+        "ZIP-INTEROPERABILITY-MCP-SECURITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
