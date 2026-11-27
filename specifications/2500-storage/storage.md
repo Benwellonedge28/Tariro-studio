@@ -1,36 +1,17 @@
 # Durable state and recovery
 
-**Contract version** 1.0. Master design §71.
+**Contract version** 1.1 candidate. Master design §§12 and 71.
 
-## Contract
+Store mutable revisioned metadata using the [backend port](../../crates/storage/specifications/modules/backend.md) and immutable verified bytes using the [object contract](../../crates/storage/specifications/modules/objects/content_addressed.md). The embedded redb backend is the preferred candidate. Each enabled backend must qualify writer exclusivity, snapshot isolation and its durability boundary. Logical tables and keys come from the [storage schema](../../crates/storage/specifications/modules/schema.md).
 
-Store mutable revisioned metadata in redb and immutable verified objects under content-addressed storage. Use primary keys defined by type and ID. Keep a transactional outbox near domain state and index projections by generation.
+A domain batch commits record changes, references, stream sequences, outbox entries and its receipt in one transaction. For a lost acknowledgement, reconcile under the original transaction identity. Never infer missing effects from an absent receipt in a rewound store. Promotion can leave orphan bytes before metadata commit. Metadata must never commit a reference to absent bytes.
 
-## Execution and integration
+A backup pins its metadata generation and complete reachable object set. A restore verifies a new root, records intent outside the replaceable root and activates under a durable selector and writer fence. Preserve the prior root according to policy. Newly restored workers cannot emit external effects until their identity and outcome evidence reconcile.
 
-Migrations are versioned, staged with backup, checksummed and restart-safe. Backups snapshot metadata and referenced objects as a unit. Validate manifest and restore into staging before atomic activation.
-
-## Verification
-
-Inject failures before/after rename, before/after metadata transaction and during restore. Referenced objects remain valid or the runtime quarantines the store.
-
-Capture exact inputs, configured limits, actual result, policy revision and the evidence reference. Map applicable release requirements from [REQUIREMENTS.md](../../REQUIREMENTS.md).
-
-## Storage keyspace
-
-| Table | Key | Value / invariants |
-| --- | --- | --- |
-| schema | singleton | format major/minor, migration and generation |
-| domain_records | namespace, record ID | typed envelope, revision and checksum |
-| objects | tagged digest | byte length, staging state, references |
-| event_outbox | stream ID, sequence | complete event and delivery state |
-| audit | workspace ID, sequence | redacted hash-chain record |
-| migration_ledger | ordered migration ID | input digest, started/verified/completed, output digest |
-
-Use immutable object bytes, one transactionally updated metadata writer, and snapshot reads. Stage file on the same volume, fsync, atomically rename and verify, then commit metadata. Crash before metadata may leave orphan bytes eligible for GC after grace; crash after metadata must never reference a missing object. Mark database corruption and preserve evidence before manual recovery. Restore writes a new data root and retains the previous root until verification passes.
+Run the [durability fixtures](../../contracts/acceptance/storage/durability-fixtures.json) against the deterministic test backend, then exercise each qualified adapter at process and filesystem fault points. Record exact inputs, bounds, outcome and evidence. Map applicable release requirements in [REQUIREMENTS.md](../../REQUIREMENTS.md).
 
 ## Implementing components
 
-- [storage crate design](../../crates/storage/DESIGN.md)
-- [events crate design](../../crates/events/DESIGN.md)
-- [audit crate design](../../crates/audit/DESIGN.md)
+- [Storage](../../crates/storage/DESIGN.md)
+- [Events](../../crates/events/DESIGN.md)
+- [Audit](../../crates/audit/DESIGN.md)

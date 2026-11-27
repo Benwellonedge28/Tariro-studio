@@ -1,8 +1,8 @@
 # Storage backend contract
 
-**ZIP-STO-BACK-001 · v1.0 · Owner:** Storage maintainers. **Maturity:** D4 candidate. **Planned source:** `crates/storage/src/backend.rs`.
+**ZIP-STO-BACK-001 · v1.1 candidate · Owner** Storage maintainers
 
-## API
+**Planned source** `crates/storage/src/backend.rs`
 
 ```rust
 pub trait StorageBackend: Send + Sync {
@@ -10,17 +10,16 @@ pub trait StorageBackend: Send + Sync {
     fn snapshot(&self) -> Result<Box<dyn ReadSnapshot + '_>, StorageError>;
     fn commit(&self, batch: WriteBatch, lease: &WriteLease)
         -> Result<CommitReceipt, StorageError>;
+    fn reconcile(
+        &self, id: TransactionId, digest: Digest, lease: &WriteLease
+    ) -> Result<CommitStatus, StorageError>;
 }
 ```
 
-`BackendCapabilities` exposes format major, maximum supported key/value size, snapshot isolation, writer serialization and sync guarantee. `ReadSnapshot` is a synchronous immutable generation guard with bounded point reads and prefix scans. `WriteBatch`, `WriteLease` and `CommitReceipt` follow [transaction.md](transaction.md). `StorageError` distinguishes unavailable capability, conflict, corrupt state, lease invalid, quota exceeded, I/O failure and unknown commit outcome. Return owned values only after charging byte read/write bounds.
+Import write, receipt and identity types from [transaction](transaction.md), `StorageError` from [error](error.md), `Digest` from Foundation and `CommitStatus` from [reconciliation](recovery/reconciliation.md). A snapshot is a bounded read guard for one committed generation. Point and prefix reads share that view. Writers and readers may use different generations, but a reader sees a complete old or new transaction. Expose tombstone revision to compare-and-swap readers without returning deleted payload.
 
-## Execution contract
+Backend capabilities declare format reader/writer ranges, key and record bounds, process writer exclusivity, snapshot isolation, and verified persistence semantics for metadata, object promotion and the active-root selector. Validate format and exclusivity before opening writable handles. The composition selects one qualified embedded backend and releases durable success only after its tested sync boundary. The memory adapter is a logical conformance oracle. An adapter lacking necessary semantics returns Unsupported at open. Open explicitly in recovery-only mode if the integrity or selector checks fail.
 
-Open starts in validation mode. Check header and compatibility before opening writable handles. Reject backends that cannot guarantee writer serialization and required durability. Hold a read snapshot only through bounded scans. A single writer serializes commits across handles; multiple process support depends on an enforceable backend lock.
+No backend may report a definite abort after a synchronization error unless it can prove that the operation did not commit. Return UnknownCommit and require the original identity. Commit may block only within admitted bounds and must classify interruption at its submission boundary. All external file-copy and verification work occurs outside metadata serialization. An object pin bridges the final verification and the database commit.
 
-Read-only fallback is explicit when repair is required. Never map corruption or an unknown commit to successful empty state. Closing a read guard does not mutate state. Commit returns durable success only after the backend's qualified persistence boundary. Where outcome is ambiguous, callers reconcile using the transaction ID before retry.
-
-## Tests
-
-STO-BACK-T01 runs two contending writers from one revision and verifies one succeeds. T02 shows a snapshot reads a stable generation during writes. T03 fails open for incompatible writer schema without changing bytes. T04 simulates sync failure and distinguishes confirmed abort from unknown outcome. Conformance runs against memory and the qualified embedded backend; memory-only tests cannot demonstrate disk durability.
+**STO-BACK-T01–T04.** Compare competing writes, snapshot isolation, incompatible format rejection and sync ambiguity in memory and a qualified embedded adapter. Disk durability requires process and filesystem fault tests.

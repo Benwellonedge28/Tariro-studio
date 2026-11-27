@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "contract": "ZIP-STO-TXN-001",
+  "cases": [
+    {
+      "id": "ZIP-STO-FIX-001",
+      "requirement": "STO-TXN-T02",
+      "scenario": "Interruption around object promotion and domain commit",
+      "input": {"phases": ["before_promote", "after_promote", "after_commit", "after_reply"]},
+      "expected": {
+        "object_counts": [0, 1, 1, 1],
+        "record_counts": [0, 0, 1, 1],
+        "outbox_counts": [0, 0, 1, 1],
+        "receipt_counts": [0, 0, 1, 1]
+      }
+    },
+    {
+      "id": "ZIP-STO-FIX-002",
+      "requirement": "ZIP-STORAGE-OBJECTS-CONTENT-ADDRESSED-T01",
+      "scenario": "Duplicate upload and damage detection",
+      "input": {"logical_text": "abc", "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", "puts_before_damage": 2},
+      "expected": {"physical_targets": 1, "reuse": true, "damaged_reuse": "Corrupt", "overwrite": false}
+    },
+    {
+      "id": "ZIP-STO-FIX-003",
+      "requirement": "ZIP-STORAGE-OBJECTS-METADATA-T01",
+      "scenario": "Reference and collector race",
+      "input": {"orders": ["link_first", "deletion_mark_first"]},
+      "expected": {"link_first": {"link_committed": true, "object_retained": true}, "deletion_mark_first": {"link_committed": false, "object_retained": false}}
+    },
+    {
+      "id": "ZIP-STO-FIX-004",
+      "requirement": "STO-TXN-T01",
+      "scenario": "Tombstone prevents stale Missing and whole batch rollback",
+      "input": {"retired_key_revision": 3, "expected": "Missing", "other_mutations": 1, "pending_events": 1},
+      "expected": {"error": "Conflict", "record_mutations": 0, "outbox_entries": 0, "receipts": 0}
+    },
+    {
+      "id": "ZIP-STO-FIX-005",
+      "requirement": "ZIP-STORAGE-RECOVERY-RECONCILIATION-T01",
+      "scenario": "Lost commit acknowledgement and rewound receipt",
+      "input": {"id": "txn-a", "digest_matches": true, "observations": ["retained_receipt", "different_digest", "missing_after_restore"]},
+      "expected": {"observations": ["Committed", "Conflicting", "Unresolved"], "new_events_after_exact_replay": 0}
+    },
+    {
+      "id": "ZIP-STO-FIX-006",
+      "requirement": "ZIP-STORAGE-BACKUP-SNAPSHOT-T01",
+      "scenario": "Live writes after backup pin",
+      "input": {"pinned_generation": 4, "pin_view": {"old": "x"}, "next_generation": 5, "next_view": {"new": "y"}},
+      "expected": {"backup_generation": 4, "backup_records": {"old": "x"}, "backup_objects": ["x"], "gc_removes_x_while_pinned": false}
+    },
+    {
+      "id": "ZIP-STO-FIX-007",
+      "requirement": "ZIP-STORAGE-BACKUP-RESTORE-T01",
+      "scenario": "Restore round trip and selector interruption",
+      "input": {"archive": {"generation": 4, "records": {"old": "x"}, "objects": ["x"], "streams": {"e": 2}}, "previous_epoch": 8, "candidate_epoch": 9},
+      "expected": {"restored_generation": 4, "restored_records": {"old": "x"}, "restored_objects": ["x"], "restored_streams": {"e": 2}, "before_switch_epoch": 8, "after_switch_epoch": 9, "external_dispatch_before_reconciliation": false}
+    },
+    {
+      "id": "ZIP-STO-FIX-008",
+      "requirement": "ZIP-STORAGE-BACKUP-VERIFICATION-T01",
+      "scenario": "Archive closure",
+      "input": {"reachable": ["x","y"], "archives": [["x","y"],["x"],["x","y","z"]]},
+      "expected": {"accepted": [true, false, false]}
+    },
+    {
+      "id": "ZIP-STO-FIX-009",
+      "requirement": "ZIP-STORAGE-ERROR-T01",
+      "scenario": "Cancellation before submission and sync ambiguity after submission",
+      "input": {"points": ["cancel_before_submit", "sync_unconfirmed_after_submit"]},
+      "expected": {"outcomes": ["Cancelled", "UnknownCommit"], "unconditional_retry": false}
+    },
+    {
+      "id": "ZIP-STO-FIX-010",
+      "requirement": "STO-SCH-T01",
+      "scenario": "Network-order stream sequences",
+      "input": {"stream_uuid": "00000000-0000-0000-0000-000000000001", "sequences": [256, 1, 255]},
+      "expected": {"sorted_sequences": [1, 255, 256], "key_hex_at_256": "000000000000000000000000000000010000000000000100"}
+    }
+  ]
+}
