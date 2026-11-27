@@ -75,3 +75,21 @@ crates/interoperability/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Golden fixtures for version negotiation and oversized input rejection.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`protocol.rs`](specifications/modules/protocol.md)
+- [`negotiation.rs`](specifications/modules/negotiation.md)
+- [`compatibility.rs`](specifications/modules/compatibility.md)
+- [`serialization.rs`](specifications/modules/serialization.md)
+- [`mcp/mod.rs`](specifications/modules/mcp/mod.md)
+- [`mcp/client.rs`](specifications/modules/mcp/client.md)
+- [`mcp/server.rs`](specifications/modules/mcp/server.md)
+- [`mcp/transport.rs`](specifications/modules/mcp/transport.md)
+- [`mcp/tools.rs`](specifications/modules/mcp/tools.md)
+- [`mcp/resources.rs`](specifications/modules/mcp/resources.md)
+- [`mcp/security.rs`](specifications/modules/mcp/security.md)

@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-SYNCHRONIZATION-LIB-001",
+      "planned_source": "crates/synchronization/src/lib.rs",
+      "contract": "crates/synchronization/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-ERROR-001",
+      "planned_source": "crates/synchronization/src/error.rs",
+      "contract": "crates/synchronization/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-SYNCHRONIZATION-001",
+      "planned_source": "crates/synchronization/src/synchronization.rs",
+      "contract": "crates/synchronization/specifications/modules/synchronization.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-SYNCHRONIZATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-MANIFEST-001",
+      "planned_source": "crates/synchronization/src/manifest.rs",
+      "contract": "crates/synchronization/specifications/modules/manifest.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-MANIFEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-CHANGE-SET-001",
+      "planned_source": "crates/synchronization/src/change_set.rs",
+      "contract": "crates/synchronization/specifications/modules/change_set.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-CHANGE-SET-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-VERSION-001",
+      "planned_source": "crates/synchronization/src/version.rs",
+      "contract": "crates/synchronization/specifications/modules/version.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-VERSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-CONFLICT-001",
+      "planned_source": "crates/synchronization/src/conflict.rs",
+      "contract": "crates/synchronization/specifications/modules/conflict.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-CONFLICT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-RECONCILIATION-001",
+      "planned_source": "crates/synchronization/src/reconciliation.rs",
+      "contract": "crates/synchronization/specifications/modules/reconciliation.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-RECONCILIATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-REPLICATION-001",
+      "planned_source": "crates/synchronization/src/replication.rs",
+      "contract": "crates/synchronization/specifications/modules/replication.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-REPLICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-COMPRESSION-001",
+      "planned_source": "crates/synchronization/src/compression.rs",
+      "contract": "crates/synchronization/specifications/modules/compression.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-COMPRESSION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-ENCRYPTION-001",
+      "planned_source": "crates/synchronization/src/encryption.rs",
+      "contract": "crates/synchronization/specifications/modules/encryption.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-ENCRYPTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-INTEGRITY-001",
+      "planned_source": "crates/synchronization/src/integrity.rs",
+      "contract": "crates/synchronization/specifications/modules/integrity.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-INTEGRITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-CHECKPOINT-001",
+      "planned_source": "crates/synchronization/src/checkpoint.rs",
+      "contract": "crates/synchronization/specifications/modules/checkpoint.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-CHECKPOINT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-OFFLINE-QUEUE-001",
+      "planned_source": "crates/synchronization/src/offline_queue.rs",
+      "contract": "crates/synchronization/specifications/modules/offline_queue.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-OFFLINE-QUEUE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SYNCHRONIZATION-TRANSPORT-001",
+      "planned_source": "crates/synchronization/src/transport.rs",
+      "contract": "crates/synchronization/specifications/modules/transport.md",
+      "specified_tests": [
+        "ZIP-SYNCHRONIZATION-TRANSPORT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

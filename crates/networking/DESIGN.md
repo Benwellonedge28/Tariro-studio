@@ -71,3 +71,26 @@ crates/networking/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test redirect to denied destination, offline no DNS and truncated body handling.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`transport.rs`](specifications/modules/transport.md)
+- [`connection.rs`](specifications/modules/connection.md)
+- [`endpoint.rs`](specifications/modules/endpoint.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`authentication.rs`](specifications/modules/authentication.md)
+- [`tls.rs`](specifications/modules/tls.md)
+- [`http.rs`](specifications/modules/http.md)
+- [`websocket.rs`](specifications/modules/websocket.md)
+- [`quic.rs`](specifications/modules/quic.md)
+- [`retry.rs`](specifications/modules/retry.md)
+- [`timeout.rs`](specifications/modules/timeout.md)
+- [`rate_limit.rs`](specifications/modules/rate_limit.md)
+- [`bandwidth.rs`](specifications/modules/bandwidth.md)
+- [`proxy.rs`](specifications/modules/proxy.md)
+- [`offline.rs`](specifications/modules/offline.md)
+- [`policy.rs`](specifications/modules/policy.md)

@@ -70,3 +70,22 @@ crates/sdk/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Contract tests against previous supported versions and offline transport.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`client.rs`](specifications/modules/client.md)
+- [`configuration.rs`](specifications/modules/configuration.md)
+- [`authentication.rs`](specifications/modules/authentication.md)
+- [`assignments.rs`](specifications/modules/assignments.md)
+- [`workflows.rs`](specifications/modules/workflows.md)
+- [`agents.rs`](specifications/modules/agents.md)
+- [`models.rs`](specifications/modules/models.md)
+- [`repositories.rs`](specifications/modules/repositories.md)
+- [`artifacts.rs`](specifications/modules/artifacts.md)
+- [`events.rs`](specifications/modules/events.md)
+- [`plugins.rs`](specifications/modules/plugins.md)
+- [`streaming.rs`](specifications/modules/streaming.md)

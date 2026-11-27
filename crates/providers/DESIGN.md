@@ -83,3 +83,31 @@ crates/providers/src/
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
 Test unavailable provider, feature negotiation and token omission.
+
+## Planned source-file contracts
+
+The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+
+- [`lib.rs`](specifications/modules/lib.md)
+- [`error.rs`](specifications/modules/error.md)
+- [`provider.rs`](specifications/modules/provider.md)
+- [`manifest.rs`](specifications/modules/manifest.md)
+- [`registry.rs`](specifications/modules/registry.md)
+- [`discovery.rs`](specifications/modules/discovery.md)
+- [`capabilities.rs`](specifications/modules/capabilities.md)
+- [`credentials.rs`](specifications/modules/credentials.md)
+- [`health.rs`](specifications/modules/health.md)
+- [`routing.rs`](specifications/modules/routing.md)
+- [`fallback.rs`](specifications/modules/fallback.md)
+- [`inference/mod.rs`](specifications/modules/inference/mod.md)
+- [`inference/openai.rs`](specifications/modules/inference/openai.md)
+- [`inference/anthropic.rs`](specifications/modules/inference/anthropic.md)
+- [`inference/gemini.rs`](specifications/modules/inference/gemini.md)
+- [`inference/deepseek.rs`](specifications/modules/inference/deepseek.md)
+- [`inference/ollama.rs`](specifications/modules/inference/ollama.md)
+- [`inference/local.rs`](specifications/modules/inference/local.md)
+- [`inference/generic.rs`](specifications/modules/inference/generic.md)
+- [`repositories/mod.rs`](specifications/modules/repositories/mod.md)
+- [`repositories/github.rs`](specifications/modules/repositories/github.md)
+- [`repositories/gitlab.rs`](specifications/modules/repositories/gitlab.md)
+- [`repositories/generic.rs`](specifications/modules/repositories/generic.md)

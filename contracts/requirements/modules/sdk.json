@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-SDK-LIB-001",
+      "planned_source": "crates/sdk/src/lib.rs",
+      "contract": "crates/sdk/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-SDK-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-ERROR-001",
+      "planned_source": "crates/sdk/src/error.rs",
+      "contract": "crates/sdk/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-SDK-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-CLIENT-001",
+      "planned_source": "crates/sdk/src/client.rs",
+      "contract": "crates/sdk/specifications/modules/client.md",
+      "specified_tests": [
+        "ZIP-SDK-CLIENT-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-CONFIGURATION-001",
+      "planned_source": "crates/sdk/src/configuration.rs",
+      "contract": "crates/sdk/specifications/modules/configuration.md",
+      "specified_tests": [
+        "ZIP-SDK-CONFIGURATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-AUTHENTICATION-001",
+      "planned_source": "crates/sdk/src/authentication.rs",
+      "contract": "crates/sdk/specifications/modules/authentication.md",
+      "specified_tests": [
+        "ZIP-SDK-AUTHENTICATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-ASSIGNMENTS-001",
+      "planned_source": "crates/sdk/src/assignments.rs",
+      "contract": "crates/sdk/specifications/modules/assignments.md",
+      "specified_tests": [
+        "ZIP-SDK-ASSIGNMENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-WORKFLOWS-001",
+      "planned_source": "crates/sdk/src/workflows.rs",
+      "contract": "crates/sdk/specifications/modules/workflows.md",
+      "specified_tests": [
+        "ZIP-SDK-WORKFLOWS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-AGENTS-001",
+      "planned_source": "crates/sdk/src/agents.rs",
+      "contract": "crates/sdk/specifications/modules/agents.md",
+      "specified_tests": [
+        "ZIP-SDK-AGENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-MODELS-001",
+      "planned_source": "crates/sdk/src/models.rs",
+      "contract": "crates/sdk/specifications/modules/models.md",
+      "specified_tests": [
+        "ZIP-SDK-MODELS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-REPOSITORIES-001",
+      "planned_source": "crates/sdk/src/repositories.rs",
+      "contract": "crates/sdk/specifications/modules/repositories.md",
+      "specified_tests": [
+        "ZIP-SDK-REPOSITORIES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-ARTIFACTS-001",
+      "planned_source": "crates/sdk/src/artifacts.rs",
+      "contract": "crates/sdk/specifications/modules/artifacts.md",
+      "specified_tests": [
+        "ZIP-SDK-ARTIFACTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-EVENTS-001",
+      "planned_source": "crates/sdk/src/events.rs",
+      "contract": "crates/sdk/specifications/modules/events.md",
+      "specified_tests": [
+        "ZIP-SDK-EVENTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-PLUGINS-001",
+      "planned_source": "crates/sdk/src/plugins.rs",
+      "contract": "crates/sdk/specifications/modules/plugins.md",
+      "specified_tests": [
+        "ZIP-SDK-PLUGINS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-SDK-STREAMING-001",
+      "planned_source": "crates/sdk/src/streaming.rs",
+      "contract": "crates/sdk/specifications/modules/streaming.md",
+      "specified_tests": [
+        "ZIP-SDK-STREAMING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

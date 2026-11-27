@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-OBSERVABILITY-LIB-001",
+      "planned_source": "crates/observability/src/lib.rs",
+      "contract": "crates/observability/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-ERROR-001",
+      "planned_source": "crates/observability/src/error.rs",
+      "contract": "crates/observability/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-LOGGING-001",
+      "planned_source": "crates/observability/src/logging.rs",
+      "contract": "crates/observability/specifications/modules/logging.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-LOGGING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-TRACING-001",
+      "planned_source": "crates/observability/src/tracing.rs",
+      "contract": "crates/observability/specifications/modules/tracing.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-TRACING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-METRICS-001",
+      "planned_source": "crates/observability/src/metrics.rs",
+      "contract": "crates/observability/specifications/modules/metrics.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-METRICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-HEALTH-001",
+      "planned_source": "crates/observability/src/health.rs",
+      "contract": "crates/observability/specifications/modules/health.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-HEALTH-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-DIAGNOSTICS-001",
+      "planned_source": "crates/observability/src/diagnostics.rs",
+      "contract": "crates/observability/specifications/modules/diagnostics.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-DIAGNOSTICS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-PROFILING-001",
+      "planned_source": "crates/observability/src/profiling.rs",
+      "contract": "crates/observability/specifications/modules/profiling.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-PROFILING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-ALERTS-001",
+      "planned_source": "crates/observability/src/alerts.rs",
+      "contract": "crates/observability/specifications/modules/alerts.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-ALERTS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-DASHBOARDS-001",
+      "planned_source": "crates/observability/src/dashboards.rs",
+      "contract": "crates/observability/specifications/modules/dashboards.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-DASHBOARDS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-REDACTION-001",
+      "planned_source": "crates/observability/src/redaction.rs",
+      "contract": "crates/observability/specifications/modules/redaction.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-REDACTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-EXPORTERS-001",
+      "planned_source": "crates/observability/src/exporters.rs",
+      "contract": "crates/observability/specifications/modules/exporters.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-EXPORTERS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-OBSERVABILITY-RETENTION-001",
+      "planned_source": "crates/observability/src/retention.rs",
+      "contract": "crates/observability/specifications/modules/retention.md",
+      "specified_tests": [
+        "ZIP-OBSERVABILITY-RETENTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

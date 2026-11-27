@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-RESEARCH-LIB-001",
+      "planned_source": "crates/research/src/lib.rs",
+      "contract": "crates/research/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-ERROR-001",
+      "planned_source": "crates/research/src/error.rs",
+      "contract": "crates/research/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-QUESTION-001",
+      "planned_source": "crates/research/src/question.rs",
+      "contract": "crates/research/specifications/modules/question.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-QUESTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PLAN-001",
+      "planned_source": "crates/research/src/plan.rs",
+      "contract": "crates/research/specifications/modules/plan.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PLAN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-SOURCE-001",
+      "planned_source": "crates/research/src/source.rs",
+      "contract": "crates/research/specifications/modules/source.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-SOURCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-DISCOVERY-001",
+      "planned_source": "crates/research/src/discovery.rs",
+      "contract": "crates/research/specifications/modules/discovery.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-DISCOVERY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-RETRIEVAL-001",
+      "planned_source": "crates/research/src/retrieval.rs",
+      "contract": "crates/research/specifications/modules/retrieval.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-RETRIEVAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-EXTRACTION-001",
+      "planned_source": "crates/research/src/extraction.rs",
+      "contract": "crates/research/specifications/modules/extraction.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-EXTRACTION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-CREDIBILITY-001",
+      "planned_source": "crates/research/src/credibility.rs",
+      "contract": "crates/research/specifications/modules/credibility.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-CREDIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-COMPARISON-001",
+      "planned_source": "crates/research/src/comparison.rs",
+      "contract": "crates/research/specifications/modules/comparison.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-COMPARISON-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-SYNTHESIS-001",
+      "planned_source": "crates/research/src/synthesis.rs",
+      "contract": "crates/research/specifications/modules/synthesis.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-SYNTHESIS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-CITATION-001",
+      "planned_source": "crates/research/src/citation.rs",
+      "contract": "crates/research/specifications/modules/citation.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-CITATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PROVENANCE-001",
+      "planned_source": "crates/research/src/provenance.rs",
+      "contract": "crates/research/specifications/modules/provenance.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PROVENANCE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-CACHE-001",
+      "planned_source": "crates/research/src/cache.rs",
+      "contract": "crates/research/specifications/modules/cache.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-CACHE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-OFFLINE-LIBRARY-001",
+      "planned_source": "crates/research/src/offline_library.rs",
+      "contract": "crates/research/specifications/modules/offline_library.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-OFFLINE-LIBRARY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PROVIDERS-MOD-001",
+      "planned_source": "crates/research/src/providers/mod.rs",
+      "contract": "crates/research/specifications/modules/providers/mod.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PROVIDERS-MOD-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PROVIDERS-WEB-001",
+      "planned_source": "crates/research/src/providers/web.rs",
+      "contract": "crates/research/specifications/modules/providers/web.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PROVIDERS-WEB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PROVIDERS-DOCUMENTATION-001",
+      "planned_source": "crates/research/src/providers/documentation.rs",
+      "contract": "crates/research/specifications/modules/providers/documentation.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PROVIDERS-DOCUMENTATION-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PROVIDERS-REPOSITORY-001",
+      "planned_source": "crates/research/src/providers/repository.rs",
+      "contract": "crates/research/specifications/modules/providers/repository.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PROVIDERS-REPOSITORY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PROVIDERS-ACADEMIC-001",
+      "planned_source": "crates/research/src/providers/academic.rs",
+      "contract": "crates/research/specifications/modules/providers/academic.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PROVIDERS-ACADEMIC-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-PROVIDERS-LOCAL-001",
+      "planned_source": "crates/research/src/providers/local.rs",
+      "contract": "crates/research/specifications/modules/providers/local.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-PROVIDERS-LOCAL-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-RESEARCH-REPORTING-001",
+      "planned_source": "crates/research/src/reporting.rs",
+      "contract": "crates/research/specifications/modules/reporting.md",
+      "specified_tests": [
+        "ZIP-RESEARCH-REPORTING-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}

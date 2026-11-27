@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "source_revision": "04c0d4b598a253ec3bb19240f7e7b63efebba8d9",
+  "requirements": [
+    {
+      "id": "ZIP-PLUGINS-LIB-001",
+      "planned_source": "crates/plugins/src/lib.rs",
+      "contract": "crates/plugins/specifications/modules/lib.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-LIB-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-ERROR-001",
+      "planned_source": "crates/plugins/src/error.rs",
+      "contract": "crates/plugins/specifications/modules/error.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-ERROR-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-PLUGIN-001",
+      "planned_source": "crates/plugins/src/plugin.rs",
+      "contract": "crates/plugins/specifications/modules/plugin.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-PLUGIN-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-MANIFEST-001",
+      "planned_source": "crates/plugins/src/manifest.rs",
+      "contract": "crates/plugins/specifications/modules/manifest.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-MANIFEST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-REGISTRY-001",
+      "planned_source": "crates/plugins/src/registry.rs",
+      "contract": "crates/plugins/specifications/modules/registry.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-REGISTRY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-LOADER-001",
+      "planned_source": "crates/plugins/src/loader.rs",
+      "contract": "crates/plugins/specifications/modules/loader.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-LOADER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-INSTALLER-001",
+      "planned_source": "crates/plugins/src/installer.rs",
+      "contract": "crates/plugins/specifications/modules/installer.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-INSTALLER-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-LIFECYCLE-001",
+      "planned_source": "crates/plugins/src/lifecycle.rs",
+      "contract": "crates/plugins/specifications/modules/lifecycle.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-LIFECYCLE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-COMPATIBILITY-001",
+      "planned_source": "crates/plugins/src/compatibility.rs",
+      "contract": "crates/plugins/specifications/modules/compatibility.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-COMPATIBILITY-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-PERMISSIONS-001",
+      "planned_source": "crates/plugins/src/permissions.rs",
+      "contract": "crates/plugins/specifications/modules/permissions.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-PERMISSIONS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-SIGNATURES-001",
+      "planned_source": "crates/plugins/src/signatures.rs",
+      "contract": "crates/plugins/specifications/modules/signatures.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-SIGNATURES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-SANDBOX-001",
+      "planned_source": "crates/plugins/src/sandbox.rs",
+      "contract": "crates/plugins/specifications/modules/sandbox.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-SANDBOX-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-HOST-001",
+      "planned_source": "crates/plugins/src/host.rs",
+      "contract": "crates/plugins/specifications/modules/host.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-HOST-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-WASM-001",
+      "planned_source": "crates/plugins/src/wasm.rs",
+      "contract": "crates/plugins/specifications/modules/wasm.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-WASM-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-PROCESS-001",
+      "planned_source": "crates/plugins/src/process.rs",
+      "contract": "crates/plugins/specifications/modules/process.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-PROCESS-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-MARKETPLACE-001",
+      "planned_source": "crates/plugins/src/marketplace.rs",
+      "contract": "crates/plugins/specifications/modules/marketplace.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-MARKETPLACE-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    },
+    {
+      "id": "ZIP-PLUGINS-UPDATES-001",
+      "planned_source": "crates/plugins/src/updates.rs",
+      "contract": "crates/plugins/specifications/modules/updates.md",
+      "specified_tests": [
+        "ZIP-PLUGINS-UPDATES-T01"
+      ],
+      "status": "candidate",
+      "evidence": []
+    }
+  ]
+}
