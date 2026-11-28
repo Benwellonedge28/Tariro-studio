@@ -1,12 +1,12 @@
 # Lightweight profile rules
 
-**ZIP-CONFIGURATION-PROFILES-LIGHTWEIGHT-001 · v1.1 · Owner:** Configuration maintainers. **Maturity:** D4 candidate for the scope below.
+**ZIP-CONFIGURATION-PROFILES-LIGHTWEIGHT-001 · v1.2 · Owner:** Configuration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/configuration/src/profiles/lightweight.rs`
 
 ## Boundary and inputs
 
-Accept an explicitly installed, registered lightweight profile definition for this candidate. Resolve a serial preference and prefer the smallest compatible local model among verified candidates with a comparable measured demand. Use the inference preference contract and the assignment's quality floor. Register the actual installed definition through [profile dispatch](mod.md). Availability cannot be inferred from the profile name or example hardware.
+Load the registered [Lightweight manifest](../../../../../configurations/profiles/lightweight.toml) under the profile schema. The manifest explicitly sets one local generation-model slot and one active agent as profile preferences. Admission and mandatory policy can reduce them. Resolve a serial preference and prefer the smallest compatible local model among verified candidates with a comparable measured demand. Use the inference preference contract and the assignment's quality floor. Register the actual installed definition through [profile dispatch](mod.md). Availability cannot be inferred from the profile name or example hardware.
 
 ## Behavior and failure handling
 

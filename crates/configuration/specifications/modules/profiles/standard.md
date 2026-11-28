@@ -1,16 +1,16 @@
 # Standard profile rules
 
-**ZIP-CONFIGURATION-PROFILES-STANDARD-001 · v1.1 · Owner:** Configuration maintainers. **Maturity:** D4 candidate for the scope below.
+**ZIP-CONFIGURATION-PROFILES-STANDARD-001 · v1.2 · Owner:** Configuration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/configuration/src/profiles/standard.rs`
 
 ## Boundary and inputs
 
-Treat standard as a validated locally installed profile giving resource-admitted concurrency. Resolve finite per-unit model and agent demand, required quality and all observed capacities through the Resources owner. Configuration publishes explicit caps or derivation markers and does not measure hardware. Register the actual installed definition through [profile dispatch](mod.md).
+Load the registered [Standard manifest](../../../../../configurations/profiles/standard.toml). It selects local-only best-fit inference and derives generation-model and agent bounds from admission. Resolve finite per-unit model and agent demand, required quality and all observed capacities through the Resources owner. Configuration publishes explicit caps or derivation markers and does not measure hardware. Register the actual installed definition through [profile dispatch](mod.md).
 
 ## Behavior and failure handling
 
-Use only compatible occupancy coordinates when deriving concurrency. The smallest verified occupancy ratio across required pools and the strictest applicable configured cap bound the derived result. A workload must still be admitted atomically under current capacity and policy. Unknown mandatory input preserves an unavailable state. This contract supplies no universal RAM threshold or new concurrency constant.
+Use only compatible occupancy coordinates when deriving concurrency. The smallest verified occupancy ratio across required pools and the strictest applicable configured cap bound the derived result. Do not inherit the numeric baseline slot preferences when a valid derivation marker applies. A workload must still be admitted atomically under current capacity and policy. Unknown mandatory input preserves an unavailable state. This contract supplies no universal RAM threshold or new concurrency constant.
 
 ## Acceptance
 

@@ -1,15 +1,17 @@
 # Conflict-aware parallel proposals
 
-**ZIP-ORCHESTRATION-STRATEGIES-PARALLEL-001 · v1.0 · Owner:** Orchestration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ORCHESTRATION-STRATEGIES-PARALLEL-001 · v1.1 · Owner:** Orchestration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/orchestration/src/strategies/parallel.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Partition independent ready tasks by conflict key; submit only admitted candidates. Preserve deterministic selection when resources are scarce.
+Select bounded ready tasks in canonical plan order. Partition using canonical write conflict keys from the trusted planner, including the exact workspace and normalized path or approved broader scope. Treat unknown or overlapping scopes as conflicting. Build a proposal up to the effective agent envelope, taking active and recovering agents into account.
+
+## Behavior and failure handling
+
+Apply revision-checked conflict protection before handoff so two concurrent rounds cannot assign overlapping writes. Independent candidates may proceed around an earlier conflicting candidate in stable order within the bounded scan. Each selected task requires Scheduler claim and assigned lease. Keep author and reviewer separation under Verification and keep conflicts unresolved until authorized resolution.
 
 ## Acceptance
 
-**ZIP-ORCHESTRATION-STRATEGIES-PARALLEL-T01.** Overlapping write paths serialize despite available workers.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ORCHESTRATION-STRATEGIES-PARALLEL-T01.** Offer two competing writes to the same normalized path, including aliases, and one independent task. With free slots verify no overlapping dispatch and the independent task can proceed. Rotate input order and confirm the same proposal.

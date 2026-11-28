@@ -1,15 +1,17 @@
 # Serial execution strategy
 
-**ZIP-ORCHESTRATION-STRATEGIES-SEQUENTIAL-001 · v1.0 · Owner:** Orchestration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ORCHESTRATION-STRATEGIES-SEQUENTIAL-001 · v1.1 · Owner:** Orchestration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/orchestration/src/strategies/sequential.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Propose one eligible step in stable order; count unreaped attempt as active until supervisor proves cleanup.
+Select a single eligible task by canonical plan order within the explicit serial scope. Count a pending scheduler submission, active task and unresolved cleanup as occupying the scope. Check the durable snapshot before proposing and keep its expected revision attached to the proposal.
+
+## Behavior and failure handling
+
+When no attempt occupies the scope, propose the first eligible task under current role and dependency constraints. Apply through the owning assignment and Scheduler transition. A task cancellation or lost reply cannot clear the scope in the absence of verified settlement. A repeated proposal reuses its original intent or observes the stored decision.
 
 ## Acceptance
 
-**ZIP-ORCHESTRATION-STRATEGIES-SEQUENTIAL-T01.** Next step waits while prior child still holds lease.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ORCHESTRATION-STRATEGIES-SEQUENTIAL-T01.** Retain an earlier child with unresolved ownership and offer another ready task. Verify no successor proposal. Settle the previous child, replay the round and verify the same single successor is selected for every permitted input ordering.
