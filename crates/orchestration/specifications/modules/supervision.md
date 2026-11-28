@@ -1,15 +1,17 @@
 # Coordination supervision
 
-**ZIP-ORCHESTRATION-SUPERVISION-001 · v1.0 · Owner:** Orchestration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ORCHESTRATION-SUPERVISION-001 · v1.1 · Owner:** Orchestration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/orchestration/src/supervision.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Maintain lifecycle, queue, epochs and pending effects with same runtime lease discipline. Stop intake on revoke and reconcile before retry.
+Track current orchestration ownership, assignment checkpoint and scheduler intent bindings for each active child. At resume load the exact plan and role revisions and reconcile outstanding submissions. Use the Scheduler and owning effect verifier for settlement. The supervisor does not reconstitute an old worker lease from an observation.
+
+## Behavior and failure handling
+
+Stop intake for affected work on revocation or incompatible plan change. Use the owning scheduler and runtime control path to fence or stop prior work. Preserve verified receipts, held resources and unresolved effects while trusted recovery runs. A stale result may inform authorized inspection but cannot advance graph progress. Only current scoped authority plus confirmed settlement allows fresh work. Bound outstanding observations and retries by the approved plan.
 
 ## Acceptance
 
-**ZIP-ORCHESTRATION-SUPERVISION-T01.** Crash with unresolved remote work cannot duplicate dispatch.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ORCHESTRATION-SUPERVISION-T01.** Crash during an authorized remote child with an ambiguous response, then deliver an old-epoch result. Verify the old result cannot complete a node, occupancy and external obligations stay visible, and no second dispatch starts before settlement.

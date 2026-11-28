@@ -1,6 +1,6 @@
 # Configuration crate design
 
-**Contract version** 1.2 candidate. Master design §10. Planned implementation.
+**Contract version** 1.3 candidate. Master design §10. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -75,7 +75,7 @@ Permute unordered inputs and obtain identical digests. Verify a project cannot e
 
 ## Planned source-file contracts
 
-The entries below specify file ownership and acceptance. Each contract carries its maturity status. The [requirements map](../../contracts/requirements/modules/configuration.json) associates planned paths with acceptance identifiers. Every planned Configuration source path now has a candidate file contract. Lightweight and standard still need registered installable profile definitions before those options can be activated. Concrete codec, adapter qualification and independent design review remain open.
+The entries below specify file ownership and acceptance. Each contract carries its maturity status. The [requirements map](../../contracts/requirements/modules/configuration.json) associates planned paths with acceptance identifiers. Every planned Configuration source path now has a candidate file contract. The [installed profiles](../../configurations/README.md) include Lightweight and Standard. Activation requires registered artifacts, exact edition validation and resolved policy. Concrete codec, adapter qualification and independent design review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

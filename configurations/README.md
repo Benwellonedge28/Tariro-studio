@@ -2,6 +2,12 @@
 
 The [resource key catalog](../contracts/resources/budget-keys.json) assigns a unit, owner and enforcement point to every listed operational key. The [base defaults](defaults/limits.toml) are conservative starting values and must pass the policy and capacity resolution described in [CONFIGURATION_STANDARD.md](../CONFIGURATION_STANDARD.md). Numeric values belong in reviewed configuration or policy.
 
+## Installed profiles
+
+[Lightweight](profiles/lightweight.toml) prefers serial local work and the smallest compatible model. Its single-agent and single-model settings are starting preferences and must still pass admission. [Standard](profiles/standard.toml) prefers local best-fit inference and derives concurrency from qualified capacity and mandatory policy.
+
+A profile manifest declares edition 1 and validates against the [profile schema](schemas/profile-v1.schema.json) after bounded TOML parsing. Resolve the manifest ID against the installed profile registry and verify its artifact digest. Preserve TOML node kinds and reject noninteger limit nodes even when their numeric value is integral. Match each dotted limit to the resource key catalog, enforce units, ranges and profile write permissions, and reject a key appearing in both the override and derivation sets. Shape validation cannot replace registry and policy checks.
+
 Profiles define workload preferences. A preference can reduce parallelism or select a locality allowed by policy. It cannot make an operation available where discovery or enforcement is missing, nor override an exact assignment rule. Policy wins on egress, spending and task authority. Capacity changes invalidate admission snapshots for new work; already occupied resources must be reconciled before release.
 
 ## Bootstrap and validation
