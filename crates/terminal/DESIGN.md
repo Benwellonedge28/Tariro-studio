@@ -1,6 +1,6 @@
 # Terminal crate design
 
-**Contract version** 1.0. Master design §39. Planned implementation.
+**Contract version** 1.1 candidate. Master design §39. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -29,6 +29,8 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 - `ProcessReceipt { status, stdout_ref, stderr_ref, cleanup }`
 
 - `start(spec: CommandSpec, sandbox: SandboxLease, cancel: Cancellation) -> Result<ProcessHandle>`
+
+The [execution boundary](specifications/modules/execution.md) prepares through Sandbox and the trusted supervisor controls launch. [Output limits](specifications/modules/output_limits.md) apply one combined budget to both streams. Process exit, effect settlement and verified tree cleanup remain independent observations.
 
 ## Failure, safety and resource limits
 
@@ -76,7 +78,7 @@ Test shell metacharacters as literal argv, child processes and output flooding.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned source path has a candidate contract and stable acceptance mapping in the [requirements map](../../contracts/requirements/modules/terminal.json). Compiled native argv and working-directory proofs, native process-tree qualification and independent review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

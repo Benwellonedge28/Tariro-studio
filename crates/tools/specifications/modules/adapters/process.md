@@ -1,15 +1,17 @@
 # Structured process adapter
 
-**ZIP-TOOLS-ADAPTERS-PROCESS-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-ADAPTERS-PROCESS-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/adapters/process.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Translate reviewed typed arguments into controlled command, scoped environment and rooted cwd. Use supervised containment and bounded exit status/output.
+Translate only normalized arguments supplied by the approved tool descriptor into a typed executable, scoped working directory, bounded input/output and explicit environment. Bind command review, live lease, and Sandbox controls through application composition. No direct Tools-to-Terminal dependency is introduced.
+
+## Behavior and failure handling
+
+Submit the exact request through the supervised process boundary and record actual exit, stream completeness, teardown and external effects separately. Reject arbitrary command text and unavailable isolation. Do not interpret output as follow-on authority or declare success from an unverified exit.
 
 ## Acceptance
 
-**ZIP-TOOLS-ADAPTERS-PROCESS-T01.** Untrusted text does not change executable or create a shell pipeline.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-ADAPTERS-PROCESS-T01.** Send inert punctuation to a controlled synthetic argument recorder. Verify one expected executable and exact argument boundaries. Supply an unsupported working-directory proof and verify no process begins.

@@ -1,15 +1,17 @@
 # Schema and adapter version constraints
 
-**ZIP-TOOLS-SCHEMA-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-SCHEMA-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/schema.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Advertise supported value shapes and negotiated major/minor. Reject unsupported mandatory fields and unknown effect classes before invocation.
+Represent the supported versioned input and output shapes, mandatory fields, typed values, negotiated compatibility rules and effect class. Use a bounded qualified schema registry. Validate shapes before spawning, external transmission or interpreting a response. Unknown mandatory declarations or effect kinds deny.
+
+## Behavior and failure handling
+
+An accepted minor edition follows explicit compatibility rules and must preserve exact effect semantics and enforced constraints. An incompatible mandatory edition is unavailable. Store canonical descriptor digests with issuer and version. Distinguish response-shape parsing from evidence and permission validation.
 
 ## Acceptance
 
-**ZIP-TOOLS-SCHEMA-T01.** Valid response on incompatible major cannot enter runtime.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-SCHEMA-T01.** Provide a valid-looking response from an incompatible major edition and verify it is unavailable for the owning operation. An unknown effect declaration must prevent invocation rather than be treated as read-only.

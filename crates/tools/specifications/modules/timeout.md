@@ -1,15 +1,17 @@
 # Deadline negotiation
 
-**ZIP-TOOLS-TIMEOUT-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-TIMEOUT-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/timeout.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Use earliest operation, lease and adapter deadlines, all finite. Expired mutation remains unresolved if effect may have crossed dispatch boundary.
+Resolve one finite monotonic deadline from request, resource lease, adapter envelope and governing policy. Use compatible live clock domain and checked conversions. Equality ends eligibility. Revalidate immediately before external dispatch and between bounded pages.
+
+## Behavior and failure handling
+
+Cancel waiting under the owner without inferring that a sent request did not take effect. After uncertain dispatch retain the original identity and recover through a scoped independent observation. Cleanup proceeds only under its own approved authority and bounds. Restart does not recreate the old deadline as live authority.
 
 ## Acceptance
 
-**ZIP-TOOLS-TIMEOUT-T01.** Timing out receive does not classify remote operation as absent.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-TIMEOUT-T01.** Expire a receive wait after a synthetic provider accepts the operation. Verify unresolved outcome and no blind retry. Expire before claim and verify zero calls.

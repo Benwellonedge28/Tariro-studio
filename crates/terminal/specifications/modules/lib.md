@@ -1,15 +1,17 @@
 # Terminal capability facade
 
-**ZIP-TERMINAL-LIB-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-LIB-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/lib.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Expose typed command, execution and output ports through supervised sandbox. No default shell entry point.
+Declare the [Terminal modules](../../DESIGN.md) with unsafe first-party code forbidden. Export typed command, process, bounded output and stop interfaces. Keep unqualified execution handles and raw platform launch APIs private. Composition supplies the qualified launch and authorization scope.
+
+## Behavior and failure handling
+
+Use Foundation, Sandbox and Resources as the only first-party crate dependencies. Import and typed request construction do not spawn or contact a network. There is no arbitrary command-string entry point. Interactive operation requires its own explicitly approved capability and qualified containment.
 
 ## Acceptance
 
-**ZIP-TERMINAL-LIB-T01.** Downstream code cannot execute an arbitrary untyped command from public facade.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-LIB-T01.** Compile a consumer using a typed command fixture. Verify no effect at construction and that arbitrary command strings or raw process IDs cannot be passed to a public spawning constructor.

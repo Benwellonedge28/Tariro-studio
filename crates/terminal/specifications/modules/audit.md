@@ -1,15 +1,17 @@
 # Execution audit intent and outcome
 
-**ZIP-TERMINAL-AUDIT-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-AUDIT-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/audit.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Record command schema and redacted digest, grant/lease, process status, output artifact and reconciliation state. Omit raw secrets and env values.
+Project a redacted intent and outcome record binding command digest, exact actor and scope, attempt identity, grant and resource references, and safe artifact or cleanup evidence. Do not include raw argv, command environments, secret content or raw stream output in audit. Use the injected owning audit participant for required durable evidence.
+
+## Behavior and failure handling
+
+Commit redacted intent before privileged launch and reconcile final observations under the same attempt. A missing required audit write denies dispatch. If outcome persistence is unknown, keep the active obligation and never fabricate a receipt. Digest a reviewed redacted command representation rather than secret material.
 
 ## Acceptance
 
-**ZIP-TERMINAL-AUDIT-T01.** Canary strings from argv or environment never appear in audit record.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-AUDIT-T01.** Insert synthetic canaries in command inputs and environment. Verify neither enters audit bytes. Fail the required intent append and confirm zero process starts.

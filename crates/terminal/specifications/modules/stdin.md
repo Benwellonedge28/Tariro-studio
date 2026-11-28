@@ -1,15 +1,17 @@
 # Controlled input streaming
 
-**ZIP-TERMINAL-STDIN-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-STDIN-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/stdin.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Use finite stdin capability and deadline; close input once at EOF or cancellation. No implicit interactive credential input.
+Accept only an explicitly admitted input adapter with finite bytes, live deadline, approved data class and exact process attempt. Attach it only after qualified launch. Default to closed input when no source is approved. Interactive input and credential delivery each require their own capability.
+
+## Behavior and failure handling
+
+Stream only bounded chunks, enforce the exact operation scope, and close the input once at EOF or authorized cancellation. Detach pending producers without exposing buffered data. Keep pipe closure distinct from tree exit and prevent retry under stale ownership.
 
 ## Acceptance
 
-**ZIP-TERMINAL-STDIN-T01.** Downstream blocked reader unblocks on cancellation without leaking bytes.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-STDIN-T01.** Cancel a synthetic blocked input read. Verify the child observes closure, no additional bytes are delivered, and a foreground observer dropping its own wait does not remove cleanup supervision.

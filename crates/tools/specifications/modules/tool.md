@@ -1,15 +1,17 @@
 # Tool descriptor and authority request
 
-**ZIP-TOOLS-TOOL-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-TOOL-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/tool.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bind name/version, schema, effect class, limit declarations and adapter identity. Descriptors provide capability metadata; identity grant is separate.
+Define an immutable qualified tool descriptor with stable ID, version, exact schema digests, purpose, effect class, required capability, limit requirements and enrolled adapter identity. Keep human display metadata separate from identity. Descriptor discovery supplies a proposition and requires review before registration.
+
+## Behavior and failure handling
+
+Verify the descriptor digest and current registered edition before normalizing a request. Missing or changed scope, schema or adapter requires qualification under the owning registry. A requested name, display label or output statement never changes effect class or permissions.
 
 ## Acceptance
 
-**ZIP-TOOLS-TOOL-T01.** A tool cannot gain an effect by changing its displayed name.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-TOOL-T01.** Rename a tool's display label to a privileged-sounding name while its effect class remains read-only. Verify unchanged eligibility and scope and no authority to publish.

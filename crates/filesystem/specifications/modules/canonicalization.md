@@ -1,15 +1,17 @@
 # Rooted component resolution
 
-**ZIP-FILESYSTEM-CANONICALIZATION-001 · v1.0 · Owner:** Filesystem maintainers. **Maturity:** D3 file contract draft.
+**ZIP-FILESYSTEM-CANONICALIZATION-001 · v1.1 · Owner:** Filesystem maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/filesystem/src/canonicalization.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Resolve one component at a time beneath an opened root using qualified no-follow semantics. Validate final object identity and mode rather than trusting a string prefix.
+Resolve validated relative [path](path.md) components starting from an enrolled root handle. Record root generation, parent and target identity, object type and access mode through trusted platform proof. Canonical display strings are for diagnostics. They cannot authorize an open.
+
+## Behavior and failure handling
+
+Validate component identity under qualified handle-relative resolution and link policy. Revalidate exact directory or target bindings at the actual effect boundary, including after an ancestor changes. If the adapter cannot prove the required scope and object type under concurrent substitution, fail closed. Return no broad reusable host handle.
 
 ## Acceptance
 
-**ZIP-FILESYSTEM-CANONICALIZATION-T01.** Swap an ancestor between checks and confirm no outside read/write succeeds.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-FILESYSTEM-CANONICALIZATION-T01.** Change a synthetic ancestor between preliminary observation and controlled access. Verify no access outside the approved root and no verified identity receipt for the stale binding.

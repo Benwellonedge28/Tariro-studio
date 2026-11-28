@@ -1,15 +1,17 @@
 # Atomic shared output accounting
 
-**ZIP-TERMINAL-OUTPUT-LIMITS-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-OUTPUT-LIMITS-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/output_limits.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Coordinate stdout and stderr with checked reservation, capture accepted prefix and typed overflow and stop or truncate only as policy defines.
+Resolve a single finite combined byte cap from terminal.max_output_bytes and all tighter applicable grant and lease envelopes. Both streams reserve against the same checked counter before buffering or storing. Stage accepted portions under bounded scratch capacity and keep observed stream totals where authorized.
+
+## Behavior and failure handling
+
+Serialize competing charges or use an equivalent atomic reservation. A requested read may retain only the admitted prefix. On cap exhaustion follow the resolved stop or bounded truncation policy and record explicit incomplete output. Never allow unbounded drain buffering or deadlock while a child waits on a full pipe. Keep output decisions separate from cleanup and exit.
 
 ## Acceptance
 
-**ZIP-TERMINAL-OUTPUT-LIMITS-T01.** Concurrent stream writes cannot both spend the final available byte.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-OUTPUT-LIMITS-T01.** Race two stream readers requesting the final available byte. At most one can retain it. Flood both streams and verify aggregate retained bytes stay within the cap, with explicit overflow and verified supervised stop.

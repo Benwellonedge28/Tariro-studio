@@ -1,15 +1,17 @@
 # Redacted standard error
 
-**ZIP-TERMINAL-STDERR-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-STDERR-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/stderr.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Charge same shared output bound and store redacted diagnostics separately from exit status. Formatting cannot transform failed process into success.
+Capture ordered stderr bytes using the shared [combined cap](output_limits.md). Reserve before buffering or persistence, and record provenance and completeness separately. When surfacing diagnostics, apply the scoped safe output projection without retaining classified raw content.
+
+## Behavior and failure handling
+
+Report actual stderr capture or truncation without assigning process success. A benign diagnostic line cannot erase nonzero exit, and empty stderr never proves success. When the cap is reached use the shared supervisor handling and preserve exact output-limit evidence.
 
 ## Acceptance
 
-**ZIP-TERMINAL-STDERR-T01.** Flooding stderr exhausts the shared cap even if stdout is empty.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-STDERR-T01.** Flood stderr with stdout idle and verify exhaustion at the same cap. Run a benign nonzero exit with empty diagnostics and confirm there is still an exit failure receipt.

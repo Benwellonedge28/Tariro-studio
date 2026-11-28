@@ -1,15 +1,17 @@
 # Case and component normalization
 
-**ZIP-FILESYSTEM-NORMALIZATION-001 · v1.0 · Owner:** Filesystem maintainers. **Maturity:** D3 file contract draft.
+**ZIP-FILESYSTEM-NORMALIZATION-001 · v1.1 · Owner:** Filesystem maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/filesystem/src/normalization.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Apply target filesystem normalization to comparison keys, preserve canonical display spelling, reject ambiguity rather than coalescing distinct files. Enforce caller-supplied length and depth.
+Convert validated repository spelling to a lookup and collision key using the qualified target volume's declared case and equivalence rules. Separate canonical comparison keys, raw repository spelling and safe display. Charge byte and depth limits before mapping.
+
+## Behavior and failure handling
+
+Reject two distinct entries with the same comparison key for an affected destination. Avoid silently changing the requested spelling or treating unproven encodings as safe. Return typed unavailable if target semantics cannot be determined for the requested mutation. Bind outputs to the root generation and policy.
 
 ## Acceptance
 
-**ZIP-FILESYSTEM-NORMALIZATION-T01.** Two names that collapse on a case-folding destination conflict.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-FILESYSTEM-NORMALIZATION-T01.** Offer two spellings that map to one key on a synthetic case-insensitive volume. Reject the ambiguous batch. Repeat on a separately qualified case-sensitive target and preserve both identities when policy permits.
