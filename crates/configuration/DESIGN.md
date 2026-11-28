@@ -1,6 +1,6 @@
 # Configuration crate design
 
-**Contract version** 1.1 candidate. Master design §10. Planned implementation.
+**Contract version** 1.2 candidate. Master design §10. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -21,7 +21,7 @@ pub fn resolve(
 ) -> Result<ResolvedConfig, ConfigError>;
 ```
 
-`ConfigLayer` is an authorized normalized input with source class, source digest, edition and typed values. `PolicyConstraints` is the normalized mandatory domain derived from verified policy inputs. `ResolvedConfig` exposes effective typed values, active provenance and tagged configuration and policy digests without mutable access. [Schema](specifications/modules/schema.md) owns key and value types. [Errors](specifications/modules/error.md) owns `ConfigError`. The resolver borrows its inputs and returns an owned candidate without publishing it. It applies [precedence](specifications/modules/overrides.md) and [validation](specifications/modules/validation.md). Treat effective values and contributing origins as one indivisible generation.
+`ConfigLayer` is an authorized normalized input with source class, source digest, edition and typed values. `PolicyConstraints` is the normalized mandatory domain derived from verified policy inputs. `ResolvedConfig` exposes effective typed values, active provenance and tagged configuration and policy digests without mutable access. [Schema](specifications/modules/schema.md) owns key and value types. [Errors](specifications/modules/error.md) owns `ConfigError`. The resolver borrows its inputs and returns an owned candidate without publishing it. It applies [precedence](specifications/modules/overrides.md) and [validation](specifications/modules/validation.md). Treat effective values and contributing origins as one indivisible generation. The [profile registry](specifications/modules/profiles/mod.md) separates explicit preferences from derivation markers. [Security](specifications/modules/security.md) and [inference](specifications/modules/inference.md) project typed preferences and requirements without acquiring execution or network authority.
 
 [Loader](specifications/modules/loader.md) owns explicit bounded I/O and compare-and-swap activation. [Defaults](specifications/modules/defaults.md) and [migration](specifications/modules/migration.md) own base schema edition handling. Preserve original bytes and use a verified release baseline as the sole source of the added drain setting during v1 upgrade. Scope, parsing and migration are verified before merge. Neither a local preference nor a previously activated snapshot confers live permission for protected effects.
 
@@ -75,7 +75,7 @@ Permute unordered inputs and obtain identical digests. Verify a project cannot e
 
 ## Planned source-file contracts
 
-The entries below specify file ownership and acceptance. Each contract carries its maturity status. The [requirements map](../../contracts/requirements/modules/configuration.json) associates planned paths with acceptance identifiers. Profile, user, security and inference module drafts and native acceptance remain open.
+The entries below specify file ownership and acceptance. Each contract carries its maturity status. The [requirements map](../../contracts/requirements/modules/configuration.json) associates planned paths with acceptance identifiers. Every planned Configuration source path now has a candidate file contract. Lightweight and standard still need registered installable profile definitions before those options can be activated. Concrete codec, adapter qualification and independent design review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

@@ -1,15 +1,17 @@
 # Standard profile rules
 
-**ZIP-CONFIGURATION-PROFILES-STANDARD-001 · v1.0 · Owner:** Configuration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-CONFIGURATION-PROFILES-STANDARD-001 · v1.1 · Owner:** Configuration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/configuration/src/profiles/standard.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Use resource-admitted concurrency with bounded active assignments. Admit model and agent slots by finite per-unit demand and observed capacity, then intersect mandatory caps. Profile name does not imply physical capacity.
+Treat standard as a validated locally installed profile giving resource-admitted concurrency. Resolve finite per-unit model and agent demand, required quality and all observed capacities through the Resources owner. Configuration publishes explicit caps or derivation markers and does not measure hardware. Register the actual installed definition through [profile dispatch](mod.md).
+
+## Behavior and failure handling
+
+Use only compatible occupancy coordinates when deriving concurrency. The smallest verified occupancy ratio across required pools and the strictest applicable configured cap bound the derived result. A workload must still be admitted atomically under current capacity and policy. Unknown mandatory input preserves an unavailable state. This contract supplies no universal RAM threshold or new concurrency constant.
 
 ## Acceptance
 
-**ZIP-CONFIGURATION-PROFILES-STANDARD-T01.** Same manifest on two host fixtures yields different admitted concurrency.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-CONFIGURATION-PROFILES-STANDARD-T01.** Use one standard profile definition across two synthetic hosts whose measured available RAM differs. Verify the finite slot bound changes when RAM is limiting, a tighter explicit cap still wins, and unknown RAM blocks the hard demand.

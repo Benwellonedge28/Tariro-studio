@@ -1,15 +1,17 @@
 # Authorized placement change
 
-**ZIP-RESOURCES-OPTIMIZATION-OFFLOADING-001 · v1.0 · Owner:** Resources maintainers. **Maturity:** D3 file contract draft.
+**ZIP-RESOURCES-OPTIMIZATION-OFFLOADING-001 · v1.1 · Owner:** Resources maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/resources/src/optimization/offloading.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Select eligible node using capability, locality, allowed data classes, lease and cost. Verify node advertisement freshness and transmit only under separate permission.
+Return only routable candidates from enrolled providers or nodes with fresh verified identities, supported execution capabilities, approved locality and compatible data classes. Require live permission for transfer and an enforceable budget in the applicable currency or usage units. A remote observation is scoped to its own service and never enlarges a local pool.
+
+## Behavior and failure handling
+
+Compare eligible candidates with the preapproved ordering and stable identity tie-break. Produce a typed proposed demand with provider, data-class and pricing revisions. The owning adapter rechecks live authorization, data scope, exact destination, verified budget and lease before sending. No provider call is made merely to establish an option without authority. Ambiguous original work is reconciled before replacement according to its effect boundary.
 
 ## Acceptance
 
-**ZIP-RESOURCES-OPTIMIZATION-OFFLOADING-T01.** Local GPU shortage cannot silently activate a remote provider or alter spending authorization.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-RESOURCES-OPTIMIZATION-OFFLOADING-T01.** Induce local GPU shortage with a remote candidate that lacks egress grant, then with a stale budget. Observe no remote calls and no change to spend limits. A fully verified candidate remains a proposal until an authorized lease and route are accepted.
