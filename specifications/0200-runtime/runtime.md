@@ -1,6 +1,6 @@
 # Runtime and scheduling
 
-**ZIP-RT-001 · v1.1 · Owner:** Runtime and scheduler maintainers. **Maturity:** D4 candidate for the local attempt lifecycle.
+**ZIP-RT-001 · v1.2 · Owner:** Runtime and scheduler maintainers. **Maturity:** D4 candidate for the local attempt lifecycle.
 
 ## Ownership and scope
 
@@ -27,7 +27,7 @@ All other edges deny. An exact accepted command replay returns its stored decisi
 
 ## Stop, deadlines and restart
 
-Check the current claim, runtime ownership, resource permit, grant, cancellation and effective monotonic deadline at launch and worker publication. Derive the effective deadline from the request, resolved policy and the resource permit. Eligibility ends at equality. Stop grace uses resolved `runtime.stop_grace_ms` clipped to the applicable deadline. Continue verified cleanup under cleanup authority when execution authority is revoked or expired. A cancelled foreground wait leaves supervision intact. Daemon shutdown stops intake, drains within its configured deadline and preserves anything unfinished for recovery.
+Check the current claim, runtime ownership, resource permit, grant, cancellation and effective monotonic deadline at launch and worker publication. Derive the effective deadline from the request, resolved policy and the resource permit. Eligibility ends at equality. Stop grace uses resolved `runtime.stop_grace_ms` clipped to the applicable deadline. Continue verified cleanup under cleanup authority when execution authority is revoked or expired. A cancelled foreground wait leaves supervision intact. Daemon shutdown stops intake and selects one installation drain deadline from resolved `runtime.shutdown_drain_ms` and any tighter caller deadline. [Ordered shutdown](../../crates/runtime/specifications/modules/control/shutdown.md) owns the single clock sample, checked calculation, replay and preservation of unfinished recovery obligations.
 
 Validate storage before startup. Reconcile each unresolved attempt before the scheduler may run any replacement for its task. Restore the highest contiguous verified checkpoint under the [checkpoint contract](../../crates/runtime/specifications/modules/checkpoint/store.md). Old monotonic instants cannot establish fresh authority. The recovery path and evidence rules are defined in the [crash recovery](../../crates/runtime/specifications/modules/recovery/crash_recovery.md) and [reconciliation](../../crates/runtime/specifications/modules/recovery/reconciliation.md) contracts.
 
@@ -35,4 +35,4 @@ Validate storage before startup. Reconcile each unresolved attempt before the sc
 
 [Lifecycle fixtures](../../contracts/acceptance/runtime/lifecycle-fixtures.json) map launch, checkpoint, fencing, teardown and response loss to ZR-001, ZR-003, ZR-004, ZR-006 and ZR-007. Exercise them first against a deterministic journal/adapter harness and then against each supported real process adapter. Retain exact inputs, resolved limit and policy revisions, observed event counts, final resource state and immutable evidence. See [runtime](../../crates/runtime/DESIGN.md), [scheduler](../../crates/scheduler/DESIGN.md), [events](../../crates/events/DESIGN.md) and [requirements](../../REQUIREMENTS.md).
 
-Independent review, compilable Rust signatures and actual fault-injection runs remain completion gates.
+Use the [drain policy fixtures](../../contracts/acceptance/runtime/drain-policy-fixtures.json) to verify v1 defaults migration, authorization-safe cutoff selection, reload stability and retained obligations on expiry. Independent review, compilable Rust signatures and actual fault-injection runs remain completion gates.

@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "scope": "runtime installation drain configuration and deadline selection",
+  "execution_status": "design_fixture",
+  "source_revision": "6b2e3272edca86d81c484b5abeccf849844238ef",
+  "requirements": ["ZR-001", "ZR-004", "ZR-009"],
+  "specified_tests": ["ZIP-CONFIGURATION-RESOURCES-T01", "ZIP-RUNTIME-CONTROL-SHUTDOWN-T01"],
+  "interpretation": {
+    "defaults": "Start from the pinned v1 defaults or the candidate v2 defaults. Apply only the specified edit before resolving. The v1 source bytes and non-version v1 values must survive migration. For reload denial leave the previous valid snapshot active.",
+    "deadline": "Use an isolated monotonic clock with integer millisecond ticks. Caller ticks are absolute in the same clock domain unless stated otherwise. Select the earlier of the remaining caller cutoff and the resolved positive duration. Tick equality exhausts the operation's remaining drain time.",
+    "recovery": "An unreaped containment has a held reservation before the first shutdown command. The adapter supplies no successful teardown evidence. Timeout or application exit must not produce a release credit or attempt terminal event."
+  },
+  "configuration_cases": [
+    {
+      "id": "RT-DRAIN-CFG-01",
+      "edition": 1,
+      "case": "migrate_from_verified_v2_release_baseline",
+      "expect": {"activation": "allowed", "resolved_edition": 2, "inserted_origin": "verified_v2_release_defaults", "v1_bytes_preserved": true, "v1_values_preserved": true}
+    },
+    {
+      "id": "RT-DRAIN-CFG-02",
+      "edition": 1,
+      "case": "missing_verified_v2_release_baseline",
+      "expect": {"activation": "denied", "v1_bytes_preserved": true}
+    },
+    {
+      "id": "RT-DRAIN-CFG-03",
+      "edition": 1,
+      "case": "explicit_v2_drain_key_in_v1",
+      "expect": {"activation": "denied", "v1_bytes_preserved": true}
+    },
+    {
+      "id": "RT-DRAIN-CFG-04",
+      "edition": 2,
+      "case": "reload_with_required_key_removed",
+      "expect": {"activation": "denied", "previous_snapshot_retained": true}
+    },
+    {
+      "id": "RT-DRAIN-CFG-05",
+      "edition": 2,
+      "case": "reload_with_invalid_key_values",
+      "values": [0, -1, 1.5, "5000", 9223372036854775808],
+      "expect": {"activation": "denied_for_each", "previous_snapshot_retained": true}
+    },
+    {
+      "id": "RT-DRAIN-CFG-06",
+      "edition": 2,
+      "case": "intersect_installation_ceiling",
+      "preference_ms": 30000,
+      "system_ceiling_ms": 15000,
+      "installation_ceiling_ms": 12000,
+      "expect": {"activation": "allowed", "resolved_duration_ms": 12000, "ceiling_origin": "installation_policy"}
+    }
+  ],
+  "deadline_cases": [
+    {
+      "id": "RT-DRAIN-DEADLINE-01",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 30000,
+      "expect": {"accepted": true, "deadline_tick_ms": 31000, "intake": "closed"}
+    },
+    {
+      "id": "RT-DRAIN-DEADLINE-02",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 30000,
+      "caller_deadline_tick_ms": 6000,
+      "expect": {"accepted": true, "deadline_tick_ms": 6000, "intake": "closed"}
+    },
+    {
+      "id": "RT-DRAIN-DEADLINE-03",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 30000,
+      "caller_deadline_tick_ms": 900,
+      "expect": {"accepted": true, "deadline_tick_ms": 1000, "intake": "closed", "immediate_escalation": true}
+    },
+    {
+      "id": "RT-DRAIN-DEADLINE-04",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 30000,
+      "caller_deadline_tick_ms": 6000,
+      "caller_clock_domain": "other",
+      "expect": {"accepted": false, "error": "invalid_spec", "intake": "open"}
+    },
+    {
+      "id": "RT-DRAIN-DEADLINE-05",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 30000,
+      "max_clock_tick_ms": 2000,
+      "expect": {"accepted": false, "error": "invalid_spec", "intake": "open"}
+    },
+    {
+      "id": "RT-DRAIN-DEADLINE-06",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 30000,
+      "max_clock_tick_ms": 2000,
+      "caller_deadline_tick_ms": 1500,
+      "expect": {"accepted": true, "deadline_tick_ms": 1500, "intake": "closed"}
+    },
+    {
+      "id": "RT-DRAIN-DEADLINE-07",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 5000,
+      "reload_after_accept_ms": 15000,
+      "replay_at_tick_ms": 2500,
+      "expect": {"accepted": true, "deadline_tick_ms": 6000, "intake": "closed", "replay_deadline_tick_ms": 6000, "same_operation": true}
+    },
+    {
+      "id": "RT-DRAIN-DEADLINE-08",
+      "accept_at_tick_ms": 1000,
+      "configured_duration_ms": 5000,
+      "observe_at_tick_ms": 3000,
+      "caller_deadline_tick_ms": 3000,
+      "task_deadline_tick_ms": 9000,
+      "stop_observed_at_tick_ms": 1500,
+      "stop_grace_ms": 2000,
+      "teardown_evidence": "unreaped",
+      "expect": {"accepted": true, "deadline_tick_ms": 3000, "grace_deadline_tick_ms": 3000, "intake": "closed", "expired": true, "release_credits": 0, "terminal_events": 0, "resource": "held", "shutdown_result": "incomplete"}
+    }
+  ]
+}
