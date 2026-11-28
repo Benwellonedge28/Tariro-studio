@@ -1,15 +1,17 @@
 # Backend negotiation dispatch
 
-**ZIP-SANDBOX-BACKENDS-MOD-001 · v1.0 · Owner:** Sandbox maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SANDBOX-BACKENDS-MOD-001 · v1.1 · Owner:** Sandbox maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/sandbox/src/backends/mod.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Select approved platform adapter matching required capabilities and version. Remain unavailable if no backend qualifies.
+Resolve the selected platform adapter from an enrolled backend identity, edition, host capability snapshot and immutable profile. Filter candidates by current qualification of every mandatory control. Select among fitting approved adapters in configured order with a stable identity tie-break. Probing provides an observation and never a launch right.
+
+## Behavior and failure handling
+
+Return an unsupported-control decision when no qualified candidate fits. Never relabel optional, unavailable or untested controls as enforced. A type, host name or version string is insufficient qualification. Bind preparation and inspection to the same selected adapter revision, and invalidate launch if the binding changes.
 
 ## Acceptance
 
-**ZIP-SANDBOX-BACKENDS-MOD-T01.** Unsupported adapter cannot fall back to native unconfined execution.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SANDBOX-BACKENDS-MOD-T01.** Provide an unavailable qualified option, an unconfined option and a fitting qualified option. Only the last may prepare. Remove its mandatory evidence and verify zero launches and no unconfined fallback.

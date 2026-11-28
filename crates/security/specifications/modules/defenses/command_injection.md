@@ -1,15 +1,17 @@
 # Structured execution defense
 
-**ZIP-SECURITY-DEFENSES-COMMAND-INJECTION-001 · v1.0 · Owner:** Security maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SECURITY-DEFENSES-COMMAND-INJECTION-001 · v1.1 · Owner:** Security maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/security/src/defenses/command_injection.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Reject shell fragments from untrusted sources, validate executable and each argument independently and route through admitted terminal capability.
+Accept only typed executable selection and structured argument values from a qualified tool descriptor. Verify the executable, parameter classes, approved working root, credential handling and environment allowlist. Keep untrusted text in data fields and preserve token boundaries through the owning terminal adapter.
+
+## Behavior and failure handling
+
+Reject requests that would turn data into interpreter control, exceed the approved argument schema or select an unscoped program or path. Qualification requires equivalent behavior at the target platform interface. If argument boundaries cannot be guaranteed, deny. Command construction and review supply no effect authority and do not start processes.
 
 ## Acceptance
 
-**ZIP-SECURITY-DEFENSES-COMMAND-INJECTION-T01.** Synthetic metacharacters remain data and cannot introduce an extra command.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SECURITY-DEFENSES-COMMAND-INJECTION-T01.** Use a benign fixture that records arguments. Submit inert text containing sentinel punctuation as one argument and verify the same single argument arrives with no additional process. Reject an unqualified execution adapter before dispatch.

@@ -1,10 +1,10 @@
 # Sandbox crate design
 
-**Contract version** 1.0. Master design §41. Planned implementation.
+**Contract version** 1.1 candidate. Master design §41. Planned implementation.
 
 ## Responsibility and dependencies
 
-Select OS adapter matching required filesystem, process, network and quota controls, establish policy before child launch, then capture enforcement receipt.
+Select an enrolled adapter matching the required filesystem, process, network and resource controls. Prepare a contained environment while workload code remains blocked. Verify installed controls before the supervising owner may open its one-way launch gate.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [governance](../governance/DESIGN.md), [resources](../resources/DESIGN.md), [security](../security/DESIGN.md)
 
@@ -29,7 +29,9 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 - `IsolationProfile { allowed_roots, network_rule, device_rule, environment_rule, process_limit, memory_bytes }`
 - `SandboxLease { policy_digest, capabilities, handle }`
 
-- `prepare(policy: IsolationProfile, reservation: Reservation) -> Result<SandboxLease>`
+- `prepare(policy: IsolationProfile, admission: AdmittedAttempt) -> Result<SandboxLease>`
+
+These are Rust-shaped declarations. AdmittedAttempt is the candidate application-composed input carrying the trusted attempt binding and current admitted lease evidence. SandboxLease is an opaque prepared isolation handle with no authority to run code. The [launch service](specifications/modules/sandbox.md) prepares and verifies. The owning Runtime supervisor commits launch, records durable recovery identity and consumes the verified cleanup observation. [Resources](../resources/DESIGN.md) owns settlement.
 
 ## Failure, safety and resource limits
 
@@ -78,7 +80,7 @@ Test denied path/network and reliable descendant teardown on supported OS.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned Sandbox source path has a candidate contract. The [requirements map](../../contracts/requirements/modules/sandbox.json) binds source and acceptance IDs. Backend support requires evidence from the exact platform, runtime and profile. Concrete signatures, native qualification and independent design review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

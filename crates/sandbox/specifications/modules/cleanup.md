@@ -1,15 +1,17 @@
 # Confirmed resource reclamation
 
-**ZIP-SANDBOX-CLEANUP-001 · v1.0 · Owner:** Sandbox maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SANDBOX-CLEANUP-001 · v1.1 · Owner:** Sandbox maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/sandbox/src/cleanup.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Stop new work, cancel under configured grace, terminate contained tree and verify descendants exited. Preserve failed evidence and release no lease until verified.
+Consume a scoped recovery or supervisor command referencing the exact containment locator and current cleanup ownership. Close new work into the group, signal cooperative cancellation and follow the resolved stop-grace deadline. Escalate to trusted contained-group termination when the window ends.
+
+## Behavior and failure handling
+
+Require independent group-exit and usage evidence before reporting cleanup complete. Unknown descendants, refusal or unreachable observer leave a durable obligation. Runtime or the owning supervisor applies verified cleanup to Resources. Dropping a local handle, expiring a lease or reissuing termination does not release holds. Exact replay returns the known settlement or continues scoped inspection.
 
 ## Acceptance
 
-**ZIP-SANDBOX-CLEANUP-T01.** Adapter refusing termination leaves resource capacity reserved.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SANDBOX-CLEANUP-T01.** Use an adapter that can report parent exit but cannot confirm the remaining fixture child. Verify cleanup stays incomplete and capacity is held. Supply trusted exit and usage evidence and verify one settlement.

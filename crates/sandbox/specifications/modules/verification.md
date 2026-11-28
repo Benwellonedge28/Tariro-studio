@@ -1,15 +1,17 @@
 # Qualification and cleanup evidence
 
-**ZIP-SANDBOX-VERIFICATION-001 · v1.0 · Owner:** Sandbox maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SANDBOX-VERIFICATION-001 · v1.1 · Owner:** Sandbox maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/sandbox/src/verification.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Record backend/version, requested controls, observed bounds, termination status and fixture provenance. An untested capability remains unavailable.
+Collect qualification evidence for exact backend edition, environment, profile digest, required controls, fixture input, observed enforcement and whole-group termination. Distinguish advertised capability, verified installed control and observed production behavior. Keep fixture, policy and qualified adapter provenance immutable.
+
+## Behavior and failure handling
+
+Check mandatory denied path, network, bounded resources and descendant cleanup using synthetic fixtures and current evidence. A missing, failed or stale required case blocks positive qualification for the affected control. Verify authority, bounds and evidence scope before reusing an observation. Reference cases help specify behavior and leave native qualification open.
 
 ## Acceptance
 
-**ZIP-SANDBOX-VERIFICATION-T01.** Verify network deny, link confinement and descendant cleanup before claiming production support.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SANDBOX-VERIFICATION-T01.** Inspect the exact scoped path denial, offline network fixture and descendant teardown results. Remove a required observation or change the backend edition and verify no production support may be claimed from the older evidence.

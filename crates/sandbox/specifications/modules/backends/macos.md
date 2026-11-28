@@ -1,15 +1,17 @@
 # macOS isolation capability
 
-**ZIP-SANDBOX-BACKENDS-MACOS-001 · v1.0 · Owner:** Sandbox maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SANDBOX-BACKENDS-MACOS-001 · v1.1 · Owner:** Sandbox maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/sandbox/src/backends/macos.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Expose only capabilities proven by platform-specific adapters and test fixtures. Required filesystem or network control unavailable prevents spawn.
+Treat the macOS adapter as a candidate until the exact supported environment proves root confinement, egress, resource limits and group observation required by the selected profile. Return typed per-control evidence scoped to the backend and edition. A target platform name or a successful process start supplies no isolation evidence.
+
+## Behavior and failure handling
+
+Keep the workload blocked during setup. If filesystem, network or another required dimension is unavailable, deny launch and retain any partial preparation locator for cleanup. Separately test recovery and full descendant or guest termination before advertising those capabilities.
 
 ## Acceptance
 
-**ZIP-SANDBOX-BACKENDS-MACOS-T01.** Probe and stage a profile requiring unsupported control; launch does not occur.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SANDBOX-BACKENDS-MACOS-T01.** Stipulate a mandatory control absent from a synthetic adapter. Verify that capability is unavailable and the later execution count remains zero. A real native run is required to promote any positive capability claim.
