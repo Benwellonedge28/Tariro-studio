@@ -1,15 +1,17 @@
 # Agent runtime boundary
 
-**ZIP-AGENTS-LIB-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-LIB-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/lib.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Export typed manifests, role descriptors and lifecycle/control ports; inject all runtime and policy adapters. No work launches during setup.
+Declare modules from the [Agents crate design](../../DESIGN.md) and forbid unsafe first-party code. Export typed manifest and identity views, agent status, errors and the authorized lifecycle and dispatch interface. Keep mutable registry, mailbox and state transitions, provisional outputs and private authority constructors inside the crate.
+
+## Behavior and failure handling
+
+Use Foundation, Governance, Intelligence and Runtime as the only first-party dependencies. Composition supplies other identity, persistence and verification evidence through bounded typed interfaces. Import and object construction do not enable work, enumerate models, read credentials or open network connections. Effect controls require explicitly assembled, validated adapters.
 
 ## Acceptance
 
-**ZIP-AGENTS-LIB-T01.** A manifest can be inspected without executing any agent.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-LIB-T01.** Compile a synthetic consumer inspecting a manifest and state view through public exports. Verify no adapter calls occur and the consumer cannot construct an approved grant or mutate the mailbox directly.

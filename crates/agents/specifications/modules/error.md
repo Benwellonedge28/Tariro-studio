@@ -1,15 +1,17 @@
 # Agent failure vocabulary
 
-**ZIP-AGENTS-ERROR-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-ERROR-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/error.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Distinguish denied permission, invalid role, mailbox full, lease lost, cancelled, unsupported model and uncertain effect. Preserve safe IDs only.
+Provide stable agent errors CapabilityDenied, InvalidRole, MailboxFull, AgentStopped, DelegationLimit, LeaseLost, Cancelled, UnsupportedModel, Conflict and OutcomeUnknown. Carry only operation class and permitted scoped evidence. Preserve diagnostic provenance without raw grants, source payloads, model responses or security tokens.
+
+## Behavior and failure handling
+
+Validate shape and authority before returning membership or state details. For a scoped replay distinguish an exact committed receipt, conflicting request and unresolved disposition. Then check lifecycle, binding and relevant capacity. OutcomeUnknown requires reconciliation and never communicates successful delegation or execution. A cancellation signal leaves previously verified effects intact. Retry only at the owning documented idempotent boundary.
 
 ## Acceptance
 
-**ZIP-AGENTS-ERROR-T01.** Mailbox exhaustion is not reported as successful delegation.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-ERROR-T01.** Fill the mailbox, simulate an uncertain effect and deliver a stale outcome under authorized scope. Assert separate stable error codes, no false success and no leaked private payload in diagnostics.

@@ -1,15 +1,17 @@
 # Proposal compatibility review
 
-**ZIP-ORCHESTRATION-NEGOTIATION-001 · v1.0 · Owner:** Orchestration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ORCHESTRATION-NEGOTIATION-001 · v1.1 · Owner:** Orchestration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/orchestration/src/negotiation.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Exchange normalized typed proposals and constraints, preserving identities and conflicts. Accept compatibility only if shared cap and preconditions agree.
+Accept bounded typed proposals binding actor, candidate digest, constraints, resource assumptions and expected state. Verify all proposals against the same authorized comparison scope. Keep each origin and distinguish fixed requirements, compatible preferences and unavailable observations.
+
+## Behavior and failure handling
+
+Check scope and preconditions before computing overlap. Intersect compatible bounds in the same dimensions, reject contradictory exact assumptions, and report unresolved mandatory evidence without choosing a winner. A compatible counterproposal is a new reviewable candidate. Its digest and approval are separate from the inputs. Negotiation performs no reservation, enactment or authority change.
 
 ## Acceptance
 
-**ZIP-ORCHESTRATION-NEGOTIATION-T01.** Incompatible budget assumptions become explicit blocker.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ORCHESTRATION-NEGOTIATION-T01.** Provide mutually exclusive exact requirements and a pair that can fit only when one shared capacity is measured. Observe explicit conflict and unavailable evidence respectively. Reverse proposal order without changing either result.

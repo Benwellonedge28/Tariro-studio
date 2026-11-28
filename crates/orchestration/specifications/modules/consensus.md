@@ -1,15 +1,17 @@
 # Evidence consensus
 
-**ZIP-ORCHESTRATION-CONSENSUS-001 · v1.0 · Owner:** Orchestration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ORCHESTRATION-CONSENSUS-001 · v1.1 · Owner:** Orchestration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/orchestration/src/consensus.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Compare independent observations and record agreement and disagreement. Consensus is a provisional design result, not scope or production authorization.
+Group verified observations by candidate digest, requirement and independent principal or verifier identity. Reject out-of-scope evidence, detect divergent results from one identity and retain each dissenting receipt under its original provenance. Accept criteria come from Verification and policy. An advisory agreement has no authority to approve a write or certify release.
+
+## Behavior and failure handling
+
+Compare observations in stable order. Report agreement only on the matching scoped claim, disagreement when authoritative evidence conflicts, and insufficient evidence when required observations are absent or unavailable. A majority does not erase a contradiction or fill a missing required receipt. Preserve all evidence referenced by the decision, and route disagreements to the owning resolution boundary.
 
 ## Acceptance
 
-**ZIP-ORCHESTRATION-CONSENSUS-T01.** Conflicting immutable evidence causes blocked verdict.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ORCHESTRATION-CONSENSUS-T01.** Submit agreeing observations, one contradictory immutable receipt and a duplicate identity. Verify conflict remains blocked under any order. Remove a mandatory receipt and confirm the remaining agreement cannot satisfy the gate.

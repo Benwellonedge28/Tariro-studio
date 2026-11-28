@@ -1,15 +1,17 @@
 # Admitted mailbox queue
 
-**ZIP-AGENTS-MAILBOX-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-MAILBOX-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/mailbox.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bound queued count via agents.max_mailbox_items and charged bytes. Use FIFO per sender where promised; on overflow return backpressure, keep cursor.
+Accept scoped immutable messages with sender identity, per-sender order, semantic digest and grant context. Track a durable bounded queue and receipt cursor per agent. Enforce effective item count and byte budget before staging growth. Keep the per-sender order promised by the approved delivery contract. Use stable tie ordering when selecting messages that are concurrently available.
+
+## Behavior and failure handling
+
+Check authorization before lookup, then replay or conflict, then intake and count. Commit first insertion, count and receipt together. An exact replay consumes no slot. Return typed backpressure on exhaustion without moving the cursor. Remove or acknowledge items only after the owning authorized transition. A dropped receiver leaves the last committed state available after restart. Revocation prevents delivery to an unauthorized agent.
 
 ## Acceptance
 
-**ZIP-AGENTS-MAILBOX-T01.** Concurrent writers cannot exceed remaining shared capacity.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-MAILBOX-T01.** Race two writers for the last item and then replay the winner with a lost reply. Verify one admitted message and stable receipt. Try a mismatched payload under the same sender sequence. Verify conflict and unchanged count.

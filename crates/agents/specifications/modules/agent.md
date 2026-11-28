@@ -1,15 +1,17 @@
 # Agent instance identity
 
-**ZIP-AGENTS-AGENT-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-AGENT-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/agent.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bind agent # to workspace, assignment, reviewed manifest and principal epoch. Keep model route separate from agent authority.
+An agent instance binds one verified AgentId, principal epoch, workspace, assignment and reviewed manifest digest. Hold its approved role separately from the selected model route and adapter edition. Expose immutable identity and scoped lifecycle views. Only [factory](factory.md) may construct a registered instance through [registry](registry.md).
+
+## Behavior and failure handling
+
+Use the verified binding for every context request and task submission. An instance cannot exchange roles or widen capabilities by changing models. A changed manifest or identity requires a new authorized registry binding. Private state, mailbox and active attempt are scoped to the instance. Runtime owns execution and cleanup. Keep raw grant material and credentials outside instances.
 
 ## Acceptance
 
-**ZIP-AGENTS-AGENT-T01.** Shared model cannot imply shared identity.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-AGENT-T01.** Bind two agents to the same model and perform equivalent dispatch requests. Verify different principals and private state views and no borrowing of the other agent's role, mailbox or result rights.

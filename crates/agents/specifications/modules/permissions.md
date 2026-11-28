@@ -1,15 +1,17 @@
 # Last-moment agent permissions
 
-**ZIP-AGENTS-PERMISSIONS-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-PERMISSIONS-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/permissions.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Revalidate scope, grants, current epoch and qualified tool before each effect. Treat discovery as read-only unless separately approved.
+Check the exact action, approved digest, actor, target scope, current principal and grant epochs, effective deadline and qualified adapter at the effect boundary. Resolve authority through Governance and stage effect intent under the applicable scope. Task data and proposed instructions are untrusted. Read-only discovery has separately bounded permission and cannot invoke mutation.
+
+## Behavior and failure handling
+
+Before an effect claim, recheck revocation with the owning verifier. When revoke wins before claim, deny with no effect. When claim wins first, retain the durable effect obligation and reconcile using separately authorized evidence. A lost reply cannot justify a second dispatch. Keep grant strings and adapter credentials outside agent state and diagnostics. The [governance contract](../../../../specifications/2400-governance/governance.md) supplies the authoritative claim semantics.
 
 ## Acceptance
 
-**ZIP-AGENTS-PERMISSIONS-T01.** Revoked grant between planning and dispatch denies execution.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-PERMISSIONS-T01.** Race revoke and effect claim in both orders. Verify zero calls when revoke wins, at most one call and retained intent when claim wins, and no disclosure of unrelated grant or target details.

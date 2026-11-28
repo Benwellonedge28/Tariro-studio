@@ -1,15 +1,17 @@
 # Explicit write conflict handling
 
-**ZIP-ORCHESTRATION-CONFLICT-RESOLUTION-001 · v1.0 · Owner:** Orchestration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ORCHESTRATION-CONFLICT-RESOLUTION-001 · v1.1 · Owner:** Orchestration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/orchestration/src/conflict_resolution.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Detect path/record conflict from normalized identities and current revision. Serialize or seek owner decision; revalidate exact changed candidate afterward.
+Compare two proposed writes using the planner's canonical workspace and path or record identities, exact candidate digests and expected revision. Treat overlapping or unresolved write scopes as conflicting. Preserve each independently verified proposal and its evidence even if both were valid against the same old snapshot.
+
+## Behavior and failure handling
+
+Before an allowed write, acquire the owning conflict guard and compare the current revision. Serialize authorized work with compatible preconditions and send incompatible proposals to the authorized decision owner. A selected or composed candidate must be resealed and verified against its actual preimage, with fresh authority where scope changes. Keep the losing proposal visible but unable to publish. A lost write response requires reconciliation by the original effect identity.
 
 ## Acceptance
 
-**ZIP-ORCHESTRATION-CONFLICT-RESOLUTION-T01.** Two contested patches cannot both publish under one reviewed revision.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ORCHESTRATION-CONFLICT-RESOLUTION-T01.** Race two proposals for the same path from an identical base. Only a revision-matching candidate can cross the write gate. Verify the other proposal remains available for an authorized decision and its old evidence cannot validate a rebased candidate.

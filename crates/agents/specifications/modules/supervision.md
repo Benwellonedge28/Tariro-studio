@@ -1,15 +1,17 @@
 # Failure and cleanup owner
 
-**ZIP-AGENTS-SUPERVISION-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-SUPERVISION-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/supervision.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Track attempt epoch and active child handles, fence stale reports, cancel on revoke and release lease only after reconciliation.
+Own the agent-side tracking of accepted runtime attempts, expected epochs and pending effects. Observe the [Runtime supervisor](../../../runtime/specifications/modules/supervisor.md) for verified teardown and resource settlement. Actor lifecycle and agent-owned mailbox handling remain separate from Runtime's authority over process trees and leases.
+
+## Behavior and failure handling
+
+Close new admissions on revoke or stop, fence stale publication, and request cooperative drain through the authorized Runtime path. Preserve all accepted evidence and reconcile lost responses under original attempt identity. A released handle or timeout does not establish teardown. The owner accounts for unsettled resources until verified cleanup. Only confirmed settlement permits a successor.
 
 ## Acceptance
 
-**ZIP-AGENTS-SUPERVISION-T01.** Unreaped child retains reserved capacity.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-SUPERVISION-T01.** Inject agent revocation with an unreaped synthetic child and a stale result. Verify no new effect or accepted progress, a retained resource hold and a Draining agent. Supply valid teardown and observe one recorded settlement.
