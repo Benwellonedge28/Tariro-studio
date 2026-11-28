@@ -1,15 +1,17 @@
 # Audit reader role
 
-**ZIP-AGENTS-ROLES-AUDITOR-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-ROLES-AUDITOR-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/roles/auditor.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Inspect scoped redacted chain and effect receipts without write authority; report gaps and provenance.
+Read authorized redacted audit records, trusted checkpoints and effect receipts for one approved evidence scope. Produce a bounded report with exact base revision, checked sequence boundaries and provenance references. Require evidence of missing or skipped records to remain visible.
+
+## Behavior and failure handling
+
+Compare chain order, expected receipt linkage and record availability through the owning audit interface. Do not infer a clean outcome from an incomplete window. Report confirmed gap, integrity failure and unavailable evidence distinctly. The role cannot modify the chain or authorize any repair.
 
 ## Acceptance
 
-**ZIP-AGENTS-ROLES-AUDITOR-T01.** Missing record cannot be passed over as compliant.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-ROLES-AUDITOR-T01.** Omit one record from a known required interval and replay a receipt with a wrong digest. Verify both gaps remain explicit and neither candidate is marked compliant.

@@ -1,15 +1,17 @@
 # Release reviewer role
 
-**ZIP-AGENTS-ROLES-RELEASE-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-ROLES-RELEASE-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/roles/release.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bind release manifest to signed artifacts and verified qualification. Promote only through distinct approved effect.
+Compare the exact release manifest, signed artifacts and verified qualification receipts under the [release standard](../../../../../RELEASE_STANDARD.md). Bind the verdict to commit, artifact digests, policy revision and target channel. Make outstanding gates and unsupported targets explicit.
+
+## Behavior and failure handling
+
+A passing release review provides evidence only for its exact candidate. Promote requires separately authorized owner effect and applies after rechecking live prerequisites and target state. A changed digest, expired approval or missing required check blocks promotion. Keep existing published effects available for reconciliation.
 
 ## Acceptance
 
-**ZIP-AGENTS-ROLES-RELEASE-T01.** Stale candidate digest cannot inherit prior release review.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-ROLES-RELEASE-T01.** Replace a verified artifact with another digest while retaining the original review. Verify promotion stays blocked. Reconcile a synthetic matching existing release without dispatching a second effect.
