@@ -1,15 +1,17 @@
 # Human oversight boundary
 
-**ZIP-GOVERNANCE-OVERSIGHT-MOD-001 · v1.0 · Owner:** Governance maintainers. **Maturity:** D3 file contract draft.
+**ZIP-GOVERNANCE-OVERSIGHT-MOD-001 · v1.1 · Owner:** Governance maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/governance/src/oversight/mod.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Expose escalation, intervention and stop through separately authenticated commands; machine recommendation does not create a human approval.
+Route separately authenticated human oversight commands to [review presentation](human.md), [escalation](escalation.md), [manual control](intervention.md) or [emergency stop](emergency_stop.md). Each owner validates the exact scope, issuer and expected revision. Keep descriptive recommendation inputs distinct from authenticated decisions.
+
+## Behavior and failure handling
+
+Resolve authorization before returning private evidence or target state. Publish notifications only after their originating durable transaction. Replay cannot elevate the caller, issue another approval or clear an emergency stop. A failed notification leaves durable authority and pending obligations intact. No module initialization opens access or starts a worker.
 
 ## Acceptance
 
-**ZIP-GOVERNANCE-OVERSIGHT-MOD-T01.** Agent message claiming owner approval cannot bypass any governance gate.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-GOVERNANCE-OVERSIGHT-MOD-T01.** Submit an agent message asserting owner approval and simulate a lost notification for a valid stop. The first creates no authority. The second leaves stop effective and reloadable.

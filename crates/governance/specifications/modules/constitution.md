@@ -1,15 +1,17 @@
 # Mandatory invariant boundary
 
-**ZIP-GOVERNANCE-CONSTITUTION-001 · v1.0 · Owner:** Governance maintainers. **Maturity:** D3 file contract draft.
+**ZIP-GOVERNANCE-CONSTITUTION-001 · v1.1 · Owner:** Governance maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/governance/src/constitution.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Load reviewed constitution version and digest before mutable overlays. Reject invalid or unsupported version. Mandatory constraints can only tighten, never be waived by an assignment grant.
+Load the exact reviewed [constitution](../../../../CONSTITUTION.md) edition and digest from trusted composition. Compile its mandatory invariant identifiers and applicable authoritative controls before loading mutable overlays. If the version, authenticity or required control is unsupported, keep affected operations closed.
+
+## Behavior and failure handling
+
+Do not let workspace, assignment or exception policy weaken an invariant. Incompatible tightening also denies the affected candidate rather than choosing a weaker interpretation. Record the controlling version and invariant in redacted decisions. Constitutional updates require dedicated owner approval, impact analysis, review and validated transition evidence. Retain the active generation if candidate qualification fails.
 
 ## Acceptance
 
-**ZIP-GOVERNANCE-CONSTITUTION-T01.** Workspace override conflicts with mandatory invariant and remains denied.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-GOVERNANCE-CONSTITUTION-T01.** Provide an overlay permitting egress where a constitutional control denies it. Verify the invariant remains effective and the conflicting candidate cannot expand authority.

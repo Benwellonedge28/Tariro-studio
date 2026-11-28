@@ -1,15 +1,17 @@
 # Typed decision outcomes
 
-**ZIP-GOVERNANCE-DECISION-001 · v1.0 · Owner:** Governance maintainers. **Maturity:** D3 file contract draft.
+**ZIP-GOVERNANCE-DECISION-001 · v1.1 · Owner:** Governance maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/governance/src/decision.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Return Allowed with decision ID and exact scope/policy digests, Denied with stable code, or AwaitingApproval with effect digest. Decision is inspectable and does not hold credential material.
+Represent the [security decision contract](../../../../specifications/2300-security/security.md) as Allowed with a decision ID, policy digest and scope digest, Denied with decision and stable reason code, or AwaitingApproval with request identity and exact effect digest. Bind each allowed decision to the canonical action digest and input revisions in its internal evidence record.
+
+## Behavior and failure handling
+
+Treat the decision as an observation. Dispatch still requires a fresh authorized claim, currently valid attributes and independent execution capacity. Do not include raw grants, model prompts, credentials or unauthorized resource details. An exact replay returns the scoped stored decision rather than creating permission. A changed effect must be re-evaluated and may require fresh approval.
 
 ## Acceptance
 
-**ZIP-GOVERNANCE-DECISION-T01.** Allowed decision for one digest cannot execute changed effects.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-GOVERNANCE-DECISION-T01.** Obtain an allowed decision on a scoped action, then change its digest or underlying target state. Confirm the old decision cannot cross the claim gate. Verify a redacted denial exposes no protected metadata.

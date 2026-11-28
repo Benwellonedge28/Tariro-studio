@@ -1,15 +1,17 @@
 # Attribution identity
 
-**ZIP-AUDIT-ACTOR-001 · v1.0 · Owner:** Audit maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AUDIT-ACTOR-001 · v1.1 · Owner:** Audit maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/audit/src/actor.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Record stable principal ID, workspace, actor type and provenance, never raw identity credentials. Unknown actor cannot authorize privileged append.
+Accept an attribution view from the authenticated composition boundary. Bind stable principal identifier, workspace, actor category and a safe provenance reference. Distinguish verified human, service and agent attribution from explicitly unattributed nonprivileged observations. A request-supplied name or role cannot supply identity.
+
+## Behavior and failure handling
+
+Require trustworthy attribution for privileged intent and result append. Keep role and delegation evidence as scoped references. An unauthenticated observation may be recorded only under an authorized event category that permits unknown attribution, with no fabricated principal. Omit sessions, tokens, signatures used for authentication and raw provider user records.
 
 ## Acceptance
 
-**ZIP-AUDIT-ACTOR-T01.** Unauthenticated event cannot be attributed to a legitimate owner.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AUDIT-ACTOR-T01.** Submit a forged owner label and a legitimately attributed test actor. The first cannot append a privileged intent. The second records the stable principal and safe provenance without exposing synthetic credentials.
