@@ -1,15 +1,17 @@
 # CPU share discovery
 
-**ZIP-RESOURCES-DISCOVERY-CPU-001 · v1.0 · Owner:** Resources maintainers. **Maturity:** D3 file contract draft.
+**ZIP-RESOURCES-DISCOVERY-CPU-001 · v1.1 · Owner:** Resources maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/resources/src/discovery/cpu.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Record logical CPU availability, affinity/cgroup quotas where supported and effective schedulable share. Do not substitute physical core totals for enforceable quotas.
+Consume a trusted adapter sample for the same host, execution group and observation generation. Read effective schedulable affinity or CPU set, independently enforceable quota and its period where present. Convert the affinity count to millicores and normalize quota by flooring the checked ratio of quota to period in millicores. A valid observation of no schedulable share is known zero.
+
+## Behavior and failure handling
+
+Apply the smallest compatible hard bound. Reject zero period, arithmetic overflow, stale evidence and a missing mandatory control as unavailable. If a host or sandbox cannot qualify an enforceable CPU bound, expose its descriptive capacity only as advisory. Preserve identity and accounting basis for the [allocator](../allocation/allocator.md), which owns holds and headroom. Probe CPU without task dispatch or quota mutation.
 
 ## Acceptance
 
-**ZIP-RESOURCES-DISCOVERY-CPU-T01.** Synthetic host with more logical CPUs than sandbox quota yields sandbox bound.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-RESOURCES-DISCOVERY-CPU-T01.** Measure a synthetic host with many logical CPUs and a smaller contained quota. Verify the smaller share sets the bound, a fractional result rounds down, and an unavailable mandatory quota cannot be replaced by the host count.

@@ -1,15 +1,17 @@
 # Distributed profile rules
 
-**ZIP-CONFIGURATION-PROFILES-DISTRIBUTED-001 · v1.0 · Owner:** Configuration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-CONFIGURATION-PROFILES-DISTRIBUTED-001 · v1.1 · Owner:** Configuration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/configuration/src/profiles/distributed.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Consider remote workers only when both node identity and egress are authorized. Capacity from each node is its own revisioned pool, and local work remains viable without mesh discovery.
+Read the [distributed manifest](../../../../../configurations/profiles/distributed.toml) through the named profile registry. Its concurrency and inference settings express preferences, and its approved-nodes locality restricts candidate placement to identities verified by the owning composition. The profile contributes derivation declarations for agent and generation-model slots. Each entitled node's pool remains associated with its own qualified observation revision.
+
+## Behavior and failure handling
+
+Validate node identity, liveness and egress grant separately before distributed discovery or placement. A stale advertisement or missing grant removes the affected node from consideration. Do not add disconnected capacity to local capacity. Local work may continue when its own capability, assignment policy and admission permit it. A selected remote proposal still requires the owning networking and execution checks before any data leaves the installation.
 
 ## Acceptance
 
-**ZIP-CONFIGURATION-PROFILES-DISTRIBUTED-T01.** Stale node snapshot and disconnected mesh cannot widen local admission.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-CONFIGURATION-PROFILES-DISTRIBUTED-T01.** Disconnect the mesh and supply one stale and one revoked advertisement. Verify zero unauthorized calls, no admitted remote work, unchanged local accounting and normal local execution when separately permitted.

@@ -1,15 +1,17 @@
 # Approved optimization boundary
 
-**ZIP-RESOURCES-OPTIMIZATION-MOD-001 · v1.0 · Owner:** Resources maintainers. **Maturity:** D3 file contract draft.
+**ZIP-RESOURCES-OPTIMIZATION-MOD-001 · v1.1 · Owner:** Resources maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/resources/src/optimization/mod.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Offer proposals for resize, locality routing and eviction. Apply through admission and authorization ports. Resource pressure alone is not permission to egress.
+Expose bounded proposal interfaces for [adaptive sizing](adaptive.md), [eviction](eviction.md) and [offloading](offloading.md). Inputs are verified current capacity snapshots, effective policy revisions and an approved request. Return typed proposals with affected scope, prerequisites and observations. Route acceptance to the respective owning service through composition.
+
+## Behavior and failure handling
+
+Require a fresh grant and resource admission before new execution, and separate deletion or cleanup authority for reclaim actions. Stale or conflicting observations force recomputation. Pressure can limit eligible choices, and creates no grant, network permission or billing ceiling. The optimization module does not issue an effect, close a reservation or enlarge a lease.
 
 ## Acceptance
 
-**ZIP-RESOURCES-OPTIMIZATION-MOD-T01.** No proposal executes an effect without a refreshed grant and valid lease.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-RESOURCES-OPTIMIZATION-MOD-T01.** Supply a plausible proposal with a revoked grant, then with stale capacity. Verify no dispatch, cache deletion or transfer. Repeat with a qualified proposal and demonstrate that execution still passes through the owning admission and effect boundary.
