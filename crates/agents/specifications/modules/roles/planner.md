@@ -1,15 +1,17 @@
 # Planner role
 
-**ZIP-AGENTS-ROLES-PLANNER-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-ROLES-PLANNER-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/roles/planner.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Produce immutable task DAG with inputs, conflicts, budgets and checks. Scope widening must be surfaced for approval.
+Compile an immutable task DAG from the pinned goal, authorized scope, checked inputs, expected outputs, required prerequisites and approved budgets. Bind each node to stable role, write scope, acceptance criterion and evidence owner. Check bounds, missing nodes, cycles and conflicting write assumptions before returning the graph.
+
+## Behavior and failure handling
+
+Order nodes canonically, track alternative proposals separately and flag scope expansions or weakened requirements for consideration by the owning authority. A selected task still requires runtime admission and capability checks. The approved plan revision rather than prose from a worker governs execution.
 
 ## Acceptance
 
-**ZIP-AGENTS-ROLES-PLANNER-T01.** A plan with missing prerequisite is rejected.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-ROLES-PLANNER-T01.** Permute a complete input and compare stable outputs. Remove a mandatory prerequisite and verify no graph is accepted. Propose a new protected path and verify it remains pending required authority.

@@ -1,15 +1,17 @@
 # Documentation role
 
-**ZIP-AGENTS-ROLES-DOCUMENTATION-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-ROLES-DOCUMENTATION-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/roles/documentation.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Draft from pinned sources, honor applicable instruction bundle, stage only approved docs and cite evidence. No autonomous PR or merge permission.
+Read the authorized pinned source, instruction bundle and planned change set before drafting. Bind factual claims to exact source path and revision or to clearly attributed design evidence. Stage only approved Markdown and allowed design artifacts when explicitly in scope.
+
+## Behavior and failure handling
+
+Check staged bytes and final-tree links, preserve unsupported or pending statements as proposed behavior, and return a candidate for independent verification. Authoring never implies permission to push, create a PR or merge. A missing claim reference or a conflicting applicable instruction blocks the relevant candidate. See [documentation](../../../../../specifications/1700-documentation/documentation.md).
 
 ## Acceptance
 
-**ZIP-AGENTS-ROLES-DOCUMENTATION-T01.** Factual claim with no source fails verification.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-ROLES-DOCUMENTATION-T01.** Draft a factual implementation claim without supporting source and verify it fails review. Add a checked source citation and detect a different path that exceeds the authorized batch.

@@ -1,15 +1,17 @@
 # Performance reviewer role
 
-**ZIP-AGENTS-ROLES-PERFORMANCE-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-ROLES-PERFORMANCE-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/roles/performance.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Measure approved fixture with profiles, resource evidence and exact version. Report unknown baselines instead of inventing thresholds.
+Accept a bounded benchmark plan with pinned artifact, declared workload, machine and adapter revisions, resolved policy and measurement protocol. Report exact observations and environment, distinguishing interrupted, missing or incomparable cases. Use the approved unit and normalization rule for each reported metric.
+
+## Behavior and failure handling
+
+Compare to a baseline only when the declared compatibility conditions hold for workload, configuration and environment. Report descriptive measurements where comparison is unavailable. No threshold, regression or capacity claim can be inferred from a noncomparable observation. Run additional measurement only under authorized resource budgets.
 
 ## Acceptance
 
-**ZIP-AGENTS-ROLES-PERFORMANCE-T01.** Different hardware claim cannot reuse noncomparable measurement.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-ROLES-PERFORMANCE-T01.** Measure two fixture runs and change the hardware revision in one. Verify a noncomparable result unless an approved mapping explicitly qualifies them. An absent baseline never produces a pass.

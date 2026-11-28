@@ -1,15 +1,17 @@
 # Maintenance planner role
 
-**ZIP-AGENTS-ROLES-MAINTENANCE-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-ROLES-MAINTENANCE-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/roles/maintenance.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Propose bounded rotation, cleanup or dependency work with rollback and retention evidence. No implicit destructive authority.
+Propose bounded retention, rotation, cleanup or dependency changes against exact asset identity and current usage evidence. Use the owning maintenance and storage inventories to identify state, active references, retention rules and rollback dependencies. Keep estimates distinct from verified reclamation.
+
+## Behavior and failure handling
+
+Exclude active, pinned or retained artifacts. Require explicit delegated effect authority for deletion or mutation, then check the reference and policy revision at the owning boundary. Lost deletion response preserves an unresolved intent rather than reissuing. A policy conflict stops the proposed maintenance operation.
 
 ## Acceptance
 
-**ZIP-AGENTS-ROLES-MAINTENANCE-T01.** Pinned artifact excluded from recommended cleanup.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-ROLES-MAINTENANCE-T01.** Mark an artifact pinned after proposal but before execution and verify it is preserved. List separately an eligible unpinned candidate with no deletion authority and verify no artifact is removed.

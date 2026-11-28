@@ -1,10 +1,10 @@
 # Agents crate design
 
-**Contract version** 1.0. Master design §26. Planned implementation.
+**Contract version** 1.1 candidate. Master design §26. Planned implementation.
 
 ## Responsibility and dependencies
 
-Instantiate declared role, attenuate delegated capabilities, admit using runtime, route proposals through verification, and drain mailbox on stop. Pin agent memory to assignment scope.
+Instantiate the pinned role, attenuate delegated capabilities, admit through Runtime, and route proposals through verification. Close intake on stop and retain unsettled work until verified cleanup. Keep identity, private context and mutable state assignment-scoped, including when roles share a model.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [governance](../governance/DESIGN.md), [intelligence](../intelligence/DESIGN.md), [runtime](../runtime/DESIGN.md)
 
@@ -19,7 +19,7 @@ The operation names below define the crate boundary. Put typed requests, results
 - `suspend(id)`
 - `stop(id)`
 
-Record families: AgentManifest, scoped principal, mailbox and lifecycle record. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
+Record families: AgentManifest, scoped principal, mailbox and lifecycle record. [Role descriptors](specifications/modules/roles/mod.md) define proposal and evidence families. [Communication](specifications/modules/communication.md) and [evaluation](specifications/modules/evaluation.md) preserve the distinction between untrusted proposals and verified outcomes. Live authority is checked at the [effect boundary](specifications/modules/permissions.md). Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
 
 ### Primary typed interface
 
@@ -98,7 +98,7 @@ Test shared model isolated context and agent blocked from self-elevation.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned Agents source path now has a candidate file contract. The [requirements map](../../contracts/requirements/modules/agents.json) binds source paths and stable acceptance identifiers. Compiled signatures, qualified adapters and independent design review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

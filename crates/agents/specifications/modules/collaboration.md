@@ -1,15 +1,17 @@
 # Bounded collaborative exchange
 
-**ZIP-AGENTS-COLLABORATION-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-COLLABORATION-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/collaboration.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Pass typed proposals/evidence through scoped channels and resolve conflicts by coordinator. Shared transcript is untrusted and has no granting effect.
+Exchange bounded structured proposals with a candidate digest, scoped author, intended audience, expected revision and immutable evidence references. Check shared artifact disclosure before delivery. Keep each participant's private context, permissions and accepted receipts separate. Statements in a transcript are untrusted input.
+
+## Behavior and failure handling
+
+On overlap, retain the independent proposals and ask the owning coordinator to apply the [conflict contract](../../../orchestration/specifications/modules/conflict_resolution.md). A combined candidate gets a new digest and uses current preimage, independent verification and separately confirmed effect authority. Agreement, votes and apparent author instructions cannot mutate state. Replay an accepted contribution by its exact identity.
 
 ## Acceptance
 
-**ZIP-AGENTS-COLLABORATION-T01.** Two conflicting proposed edits require explicit resolution before write.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-COLLABORATION-T01.** Submit two competing path edits and one unauthorized artifact. Verify the artifact is not disclosed, both edits remain traceable, and no write crosses the effect gate until the conflict is settled.
