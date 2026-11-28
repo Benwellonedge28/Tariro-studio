@@ -1,15 +1,17 @@
 # Bounded team definition
 
-**ZIP-ORCHESTRATION-TEAM-001 · v1.0 · Owner:** Orchestration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-ORCHESTRATION-TEAM-001 · v1.1 · Owner:** Orchestration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/orchestration/src/team.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Represent membership, roles, dependencies, review independence and approved limits. Reject contradictory responsibility or scope mismatch.
+Compile a bounded team from the approved assignment and versioned role catalog. Bind members to scoped principals, exact responsibilities, task dependencies, conflict identities and required reviewer independence. Use canonical task and identity order and reject duplicate or contradictory commitments before returning a plan.
+
+## Behavior and failure handling
+
+Validate role eligibility and the effective agent cap. Treat unfilled mandatory role or review requirements as blocked. A compiled team describes the proposed mapping and does not reserve leases or issue tool grants. A membership replacement makes a new versioned decision and preserves historical evidence. Revalidate the affected candidate and remaining graph before dispatch.
 
 ## Acceptance
 
-**ZIP-ORCHESTRATION-TEAM-T01.** Author assigned as mandatory independent reviewer causes planning failure.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-ORCHESTRATION-TEAM-T01.** Assign an author as mandatory independent reviewer and verify planning fails. Add a qualified reviewer and permute membership input. Verify the same canonical mapping and no implicit resource request.

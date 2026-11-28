@@ -1,15 +1,17 @@
 # Finite agent admission
 
-**ZIP-AGENTS-LIMITS-001 · v1.0 · Owner:** Agents maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AGENTS-LIMITS-001 · v1.1 · Owner:** Agents maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/agents/src/limits.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Use resolved mailbox/delegation keys, attempt deadlines, quotas and measured resource lease. Do not add local fixed ceilings.
+Read resolved agents.max_mailbox_items and agents.max_delegation_depth from the [resource key catalog](../../../../contracts/resources/budget-keys.json) through composition. Tighten by the authorized assignment, applicable data scope and admitted memory. Keep queue items, charged bytes, delegation depth and monotonic deadline as independent dimensions. A missing required bound blocks admission.
+
+## Behavior and failure handling
+
+Use checked admission arithmetic and no local fallback constants. Compare depth before child registration and mailbox occupancy before insertion. On a tighter reload close affected new admission even if existing occupancy exceeds the new cap. Preserve accepted items and delegate cancellation or drain to the supervisor. Active leases and attempt deadlines remain governed by their owners.
 
 ## Acceptance
 
-**ZIP-AGENTS-LIMITS-T01.** Same build enforces two configured mailbox bounds.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AGENTS-LIMITS-T01.** Run the same harness under two different mailbox caps and one tighter assignment limit. Verify each boundary without recompilation. Lower the cap below occupied items and verify no new insertion or silent loss.

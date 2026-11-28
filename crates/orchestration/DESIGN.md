@@ -1,10 +1,10 @@
 # Orchestration crate design
 
-**Contract version** 1.0. Master design §27. Planned implementation.
+**Contract version** 1.1 candidate. Master design §27. Planned implementation.
 
 ## Responsibility and dependencies
 
-Topologically schedule tasks, assign stable IDs and roles; isolate reviewer context; consolidate outcomes by task ID, preserve disputes and escalate unresolved choices.
+Compile a bounded task graph with stable identities, role bindings and conflict scopes. Scheduler owns durable dispatch and attempts. Assignments owns durable orchestration progress. Isolate reviewers from author context, preserve disagreements, and escalate choices that require owner authority.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [agents](../agents/DESIGN.md), [assignments](../assignments/DESIGN.md), [scheduler](../scheduler/DESIGN.md), [verification](../verification/DESIGN.md)
 
@@ -37,7 +37,7 @@ Admit concurrent agents under `orchestration.max_concurrent_agents` and the reso
 - `NoEligibleAgent`
 - `ConflictUnresolved`
 
-Report the specific limiting field or missing capability and preserve safe status/evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
+Use [scoped conflict handling](specifications/modules/conflict_resolution.md) for concurrent writes and [independent review](specifications/modules/strategies/independent_review.md) for exact candidate evidence. Advisory votes and consensus cannot satisfy either requirement. Report the specific limiting field or missing capability and preserve safe status and evidence. A transient failure is retryable only at a documented idempotent boundary. Revalidate permissions before retries and reconcile uncertain effects before repeating writes.
 
 ## Source layout
 
@@ -80,7 +80,7 @@ Test two competing edits to one path, reviewer independence and deterministic re
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned Orchestration source path now has a candidate file contract. The [requirements map](../../contracts/requirements/modules/orchestration.json) binds source paths to stable test IDs. Compiled signatures, trusted adapters and independent review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
