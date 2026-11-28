@@ -1,15 +1,17 @@
 # Agent principal representation
 
-**ZIP-IDENTITY-AGENT-001 · v1.0 · Owner:** Identity maintainers. **Maturity:** D3 file contract draft.
+**ZIP-IDENTITY-AGENT-001 · v1.1 · Owner:** Identity maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/identity/src/agent.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bind agent ID to assignment, owner lineage and revocation epoch. Agent can present only delegated scope and cannot authorize its own delegation.
+Represent an agent as a distinct typed principal linked to one workspace, assignment, reviewed role manifest and authorized owner lineage. Store its identity generation and enrollment provenance. A shared inference model, agent display name or requested role supplies no identity evidence.
+
+## Behavior and failure handling
+
+Resolve the binding only while both the exact assignment and owner lineage remain current. Agent credential verification and scope attenuation belong to their owning policies. Retiring an agent fences previous generations and preserves historical provenance. A new assignment requires a separate bound identity even if the manifest is reused.
 
 ## Acceptance
 
-**ZIP-IDENTITY-AGENT-T01.** An agent in one assignment cannot act in another with the same model.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-IDENTITY-AGENT-T01.** Enroll two agents using the same synthetic model in different workspaces. Attempt to resolve the first against the second assignment. Verify rejection before private scope is disclosed and preserve distinct history.

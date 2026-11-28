@@ -1,15 +1,17 @@
 # Canonical identity indexing
 
-**ZIP-IDENTITY-REGISTRY-001 · v1.0 · Owner:** Identity maintainers. **Maturity:** D3 file contract draft.
+**ZIP-IDENTITY-REGISTRY-001 · v1.1 · Owner:** Identity maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/identity/src/registry.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Index typed IDs and trusted issuer/subject pairs; enforce uniqueness and snapshot consistency. Identity lookup alone grants no authorization.
+Index stable typed principal IDs and exact qualified issuer and subject bindings through the Identity journal. Keep authoritative mapping, revision and retirement state in one scoped snapshot. Resolve lookup only after caller scope is verified. Neither a registry match nor display metadata constitutes proof.
+
+## Behavior and failure handling
+
+Enforce scoped uniqueness under a single transaction. An overlapping nonidentical issuer binding or duplicate stable ID conflicts without partial index writes. Return prior receipt for exact authorized replay. Retain historical epoch and retirement fences. Fail closed if any required index or mapping is inconsistent with its records after restart.
 
 ## Acceptance
 
-**ZIP-IDENTITY-REGISTRY-T01.** Duplicate issuer/subject mapping fails atomically.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-IDENTITY-REGISTRY-T01.** Race two different principal IDs against the same issuer/subject enrollment. One mapping may commit and both indices remain aligned. Restart and verify an exact replay cannot revive a retired mapping.

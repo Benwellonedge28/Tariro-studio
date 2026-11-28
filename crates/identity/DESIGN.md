@@ -1,10 +1,10 @@
 # Identity crate design
 
-**Contract version** 1.0. Master design §11. Planned implementation.
+**Contract version** 1.1 candidate. Master design §11. Planned implementation.
 
 ## Responsibility and dependencies
 
-Resolve authenticated OS user for local IPC or a verified external identity for remote access. Bind session to principal, device and workspace. Persist revocation before notification.
+Resolve authenticated OS user for local IPC or a verified external identity for remote access. Bind session to the verified principal, workspace, audience and required device or channel. Persist revocation before notification.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../storage/DESIGN.md)
 
@@ -13,7 +13,7 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../st
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
+The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies typed request identifiers and a deadline where execution can block. App composition supplies the trusted verifier and clock observations. Persistent identifiers alone carry no proof. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
 
 - `authenticate(presentation)`
 - `resolve(session)`
@@ -28,7 +28,9 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 - `Session { id, principal_id, workspace_id, issued_at, expires_at, audience, revocation_epoch }`
 - `CredentialRef { namespace, key_id }`
 
-- `resolve(session: SessionId, audience: Audience, now: Timestamp) -> Result<PrincipalContext>`
+- `resolve(session: SessionId, audience: Audience, proof: SessionPresentation) -> Result<PrincipalContext>`
+
+The signature is Rust-shaped pseudocode. [Session](specifications/modules/session.md) owns SessionId, expected audience and live presentation binding. [Authentication](specifications/modules/authentication.md) owns proof verification, and [principal](specifications/modules/principal.md) owns the verified PrincipalContext. The composed resolver reads trusted time and current membership before projecting context.
 
 ## Failure, safety and resource limits
 
@@ -73,7 +75,7 @@ Test cross-workspace access, logout races and revocation persistence.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned Identity source path has a candidate contract. See the [requirements map](../../contracts/requirements/modules/identity.json). Proof transport qualification, compiled signatures, Storage schema integration and independent review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

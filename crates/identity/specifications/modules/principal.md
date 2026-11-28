@@ -1,15 +1,17 @@
 # Stable authenticated principal
 
-**ZIP-IDENTITY-PRINCIPAL-001 · v1.0 · Owner:** Identity maintainers. **Maturity:** D3 file contract draft.
+**ZIP-IDENTITY-PRINCIPAL-001 · v1.1 · Owner:** Identity maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/identity/src/principal.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Pair typed principal ID and kind with trusted issuer, workspace membership revision and status. Agent, device and user roles have distinct namespaces.
+Represent a stable principal with typed identifier and kind, trusted issuer binding and active status generation. Compute an authenticated context only from verified proof, scoped membership and trusted epoch observations. Store prepared user, agent, service and device profiles separately from verified authentication evidence.
+
+## Behavior and failure handling
+
+Validate kind and issuer before constructing proof-bearing context. Returned identifiers have scoped immutable views and can never be reinterpreted by a consumer as another principal kind. A raw persisted principal record or imported DTO supplies no trust. Retired principals retain provenance and fail current authorization checks.
 
 ## Acceptance
 
-**ZIP-IDENTITY-PRINCIPAL-T01.** An agent cannot deserialize itself as an authenticated user.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-IDENTITY-PRINCIPAL-T01.** Attempt to deserialize an agent claim as a user and replay a retired principal record. Both fail verified context construction. A genuine in-scope proof yields only its original typed kind.

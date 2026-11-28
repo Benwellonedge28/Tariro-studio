@@ -1,15 +1,17 @@
 # Paired device identity
 
-**ZIP-IDENTITY-DEVICE-001 · v1.0 · Owner:** Identity maintainers. **Maturity:** D3 file contract draft.
+**ZIP-IDENTITY-DEVICE-001 · v1.1 · Owner:** Identity maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/identity/src/device.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bind device ID, approved key reference, workspace and scope to explicit pairing receipt. Revoke by advancing generation.
+Bind a typed device ID, paired workspace, authorized owner principal, qualified key reference, pairing purpose and accepted pairing receipt. Verify proof binds the exact enrolled key and challenge or qualified channel before activation. Key or device labels entered by a caller do not establish possession.
+
+## Behavior and failure handling
+
+Claim single-use pairing approval under the owning revision-checked enrollment path and persist generation and original receipt. A device's enrollment does not transfer the owner's role. Rotation updates proof reference under a separately authorized transition. Revoke or retire through the live generation fence and preserve old provenance.
 
 ## Acceptance
 
-**ZIP-IDENTITY-DEVICE-T01.** A copied pairing token for a different device fails proof.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-IDENTITY-DEVICE-T01.** Replay a synthetic pairing approval with a different enrolled device key, then replay the accepted command. Verify the first denies, the second does not create another enrollment, and old generation is fenced after revoke.

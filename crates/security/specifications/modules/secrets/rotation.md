@@ -1,15 +1,17 @@
 # Credential generation replacement
 
-**ZIP-SECURITY-SECRETS-ROTATION-001 · v1.0 · Owner:** Security maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SECURITY-SECRETS-ROTATION-001 · v1.1 · Owner:** Security maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/security/src/secrets/rotation.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Stage new generation, verify live scope, atomically activate reference and revoke old effect authority. Reconcile in-flight effects and retain only approved recovery handles.
+Create a stable rotation intent scoped to the exact credential reference, provider and current generation. Stage and verify the new generation through the owning adapter under current authority. Keep old active selection before activation only when the provider proves staged setup did not invalidate it. Do not infer old availability from local state.
+
+## Behavior and failure handling
+
+Use an expected-revision activation to change the active reference and fence new effects from its old generation. Keep external provider state changes under original intent and reconcile if activation or retirement becomes ambiguous. A recovery handle is only available under approved retention and cleanup authority. No stage writes secret bytes to shared state.
 
 ## Acceptance
 
-**ZIP-SECURITY-SECRETS-ROTATION-T01.** Partial rotation before activation leaves old generation consistent; after activation old cannot start work.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SECURITY-SECRETS-ROTATION-T01.** Interrupt before local activation and after activation, then lose the provider reply. Confirm old behavior only with supporting provider evidence. After activation verify the old generation cannot start a new effect and recovery does not repeat an uncertain provider mutation.

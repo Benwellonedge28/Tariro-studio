@@ -1,15 +1,17 @@
 # Platform keyring integration
 
-**ZIP-SECURITY-SECRETS-KEYRING-001 · v1.0 · Owner:** Security maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SECURITY-SECRETS-KEYRING-001 · v1.1 · Owner:** Security maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/security/src/secrets/keyring.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Probe owner-scoped secure store, resolve typed reference and track backend identity. If required store is unavailable, block effect without plaintext fallback.
+Accept an opaque reference and approved backend binding scoped to tenant, owner, adapter and generation. Probe a qualified platform secure store through the enrolled provider. Check backend identity, expected scope and availability before lookup. Return only authorized in-adapter access or typed unavailability.
+
+## Behavior and failure handling
+
+If the required backend fails or becomes locked, block the affected effect. Never create diagnostic plaintext copies, token files or environment fallbacks. No cross-account or cross-backend lookup without a separately approved binding. Adapter diagnostics must omit identifiers outside authorized scope and omit secret data entirely.
 
 ## Acceptance
 
-**ZIP-SECURITY-SECRETS-KEYRING-T01.** Missing keyring never creates a local plaintext token file.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SECURITY-SECRETS-KEYRING-T01.** Disable the required synthetic keyring and inspect all file and diagnostic writes. Confirm no plaintext fallback, no external call using unavailable credentials and an explicit unavailable disposition.
