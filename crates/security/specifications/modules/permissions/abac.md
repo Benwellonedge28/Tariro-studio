@@ -1,15 +1,17 @@
 # Typed attribute predicates
 
-**ZIP-SECURITY-PERMISSIONS-ABAC-001 · v1.0 · Owner:** Security maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SECURITY-PERMISSIONS-ABAC-001 · v1.1 · Owner:** Security maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/security/src/permissions/abac.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Evaluate typed actor, resource, operation and environment attributes from trusted sources. Unknown mandatory attributes deny.
+Evaluate typed subject, resource, operation and environment attributes from the trusted sources named by each policy rule. Validate scope, edition, origin and freshness before predicate evaluation. Distinguish absent, wrong-type, unknown, and verified values. Treat caller claims as untrusted until their owning verifier qualifies them.
+
+## Behavior and failure handling
+
+For a mandatory predicate, missing or incomparable data denies. Do not coerce unknown classification to public or convert time and quantity with unspecified units. Return the typed criterion and scoped observation references in deterministic order. Policy conjunction and applicable denies stay in [permission composition](mod.md).
 
 ## Acceptance
 
-**ZIP-SECURITY-PERMISSIONS-ABAC-T01.** Missing classification never satisfies a public-only predicate.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SECURITY-PERMISSIONS-ABAC-T01.** Evaluate a public-only rule with public, restricted, missing, and stale classification inputs. Only the exact current public observation can satisfy that predicate. Each other outcome remains explicit within scoped diagnostics.

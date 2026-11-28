@@ -1,15 +1,17 @@
 # Opaque credential references
 
-**ZIP-IDENTITY-CREDENTIALS-001 · v1.0 · Owner:** Identity maintainers. **Maturity:** D3 file contract draft.
+**ZIP-IDENTITY-CREDENTIALS-001 · v1.1 · Owner:** Identity maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/identity/src/credentials.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Expose owner/adapter-scoped key references only. Resolve in authorized security adapter; never persist credential bytes in identity state.
+Expose CredentialRef as an opaque owner- and adapter-scoped locator with identity, namespace and expected generation, validated against the trusted registry. It is permitted as metadata only where the consumer is authorized to see that scope. It conveys no bearer proof or lookup authority.
+
+## Behavior and failure handling
+
+Persist only scoped reference metadata in Identity. Secret retrieval and use stay in the approved Security adapter with effect, destination and epoch validation. Omit actual credential values from diagnostics, sessions, audit, and serialization. A stale reference remains attributable but cannot activate a retired credential generation.
 
 ## Acceptance
 
-**ZIP-IDENTITY-CREDENTIALS-T01.** Serialized session/actor contains reference metadata and no canary secret.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-IDENTITY-CREDENTIALS-T01.** Serialize scoped principals and session views and scan for synthetic bearer canaries. Substitute a reference from another adapter and verify it cannot enter an authenticated binding.

@@ -1,15 +1,17 @@
 # Identity failure classes
 
-**ZIP-IDENTITY-ERROR-001 · v1.0 · Owner:** Identity maintainers. **Maturity:** D3 file contract draft.
+**ZIP-IDENTITY-ERROR-001 · v1.1 · Owner:** Identity maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/identity/src/error.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Distinguish malformed, unauthenticated, expired, revoked, wrong audience, stale revision and unavailable issuer. Keep sensitive context internal.
+Define stable typed failure classes for malformed request, unauthenticated proof, expiry, revocation, wrong audience or workspace, stale revision and unavailable issuer. Scope any diagnostic provenance to an authorized observer. Preserve no proof material, secret tokens or unverified external profile content.
+
+## Behavior and failure handling
+
+At unauthorized boundaries map unavailable or concealed principal details to the same public denial as unknown identity. Authenticated scoped diagnostics may distinguish a recoverable adapter outage from an expired session. Ambiguous mutations reconcile under original identity before retry. No diagnostic-driven fallback relaxes a verification rule.
 
 ## Acceptance
 
-**ZIP-IDENTITY-ERROR-T01.** Unauthorized caller cannot learn whether a principal exists.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-IDENTITY-ERROR-T01.** Compare public results for absent and concealed principals under unauthorized identities. Verify equal safe denials and no enrollment disclosure. Inject a synthetic secret in an adapter error and confirm redaction.

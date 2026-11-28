@@ -1,15 +1,17 @@
 # Threat and control registry
 
-**ZIP-SECURITY-THREAT-MODEL-001 · v1.0 · Owner:** Security maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SECURITY-THREAT-MODEL-001 · v1.1 · Owner:** Security maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/security/src/threat_model.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bind threat, asset, actor, trust crossing, invariant, residual risk and linked qualification evidence per effect. Record unavailable controls explicitly.
+Record per-effect asset and data class, authenticated and untrusted actors, trust boundary, threat, mandatory invariant, control owner and qualification evidence. Include untrusted repository or model instructions, authority confusion, unintended disclosure, unverified artifact and interrupted-effect recovery threats from the [numbered security specification](../../../../specifications/2300-security/security.md). Bind version and affected capabilities.
+
+## Behavior and failure handling
+
+Use a stable ordered mapping from threats to mandatory controls. Missing, stale or unsupported required qualification blocks the affected capability. Advisory mitigations and residual risks remain explicit without changing the authorized effect boundary. Update findings when policy, adapter, threat assumptions or deployed configuration changes. A report supplies evidence only and cannot modify policy.
 
 ## Acceptance
 
-**ZIP-SECURITY-THREAT-MODEL-T01.** Missing mandatory mitigation blocks affected capability.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SECURITY-THREAT-MODEL-T01.** Remove a required isolation or redaction control from one candidate and verify that its affected capability becomes unavailable while an independent verified capability stays eligible.

@@ -1,10 +1,10 @@
 # Security crate design
 
-**Contract version** 1.0. Master design §42. Planned implementation.
+**Contract version** 1.1 candidate. Master design §42. Planned implementation.
 
 ## Responsibility and dependencies
 
-Evaluate authenticated principal, RBAC, ABAC, capability and revocation. Resolve opaque secrets only inside approved adapter. Redact before persistence or egress.
+Consume a verified Identity context and evaluate exact scoped role, attribute, capability and revocation inputs. Governance and the owning adapter check current bindings at effect claim and dispatch. Resolve opaque secrets only inside approved adapters. Redact before persistence or egress.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [identity](../identity/DESIGN.md), [storage](../storage/DESIGN.md)
 
@@ -19,7 +19,7 @@ The operation names below define the crate boundary. Put typed requests, results
 - `inspect_output(data)`
 - `verify_signature()`
 
-Record families: Capability and assurance records, SecretRef, KeyId, signature envelope. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
+Record families: capability and assurance records, SecretRef, KeyId and signature envelope. The [permission boundary](specifications/modules/permissions/mod.md) coordinates evidence. The [secrets boundary](specifications/modules/secrets/mod.md) exposes scoped references and keeps resolved material within an approved adapter lifetime. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
 
 ### Primary typed interface
 
@@ -96,7 +96,7 @@ Test prompt injection boundaries, secret canaries and delegated capability atten
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership and stable acceptance cases. See the [requirements map](../../contracts/requirements/modules/security.json). The cryptography, defensive controls, supply-chain and incident response drafts remain open along with concrete adapter qualification and independent review.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

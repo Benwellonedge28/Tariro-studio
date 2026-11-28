@@ -1,15 +1,17 @@
 # Explicit external identity negotiation
 
-**ZIP-IDENTITY-FEDERATION-001 · v1.0 · Owner:** Identity maintainers. **Maturity:** D3 file contract draft.
+**ZIP-IDENTITY-FEDERATION-001 · v1.1 · Owner:** Identity maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/identity/src/federation.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Pin issuer and subject mapping, advertised protocol major and local approval. No implicit user creation on issuer collision.
+Bind a qualified external issuer, exact subject identifier, supported protocol edition, audience and explicit local enrollment mapping. The mapping belongs to the trusted Identity registry. Never join accounts by display name, email or subject string across issuers. Validate current trust before using an enrolled mapping.
+
+## Behavior and failure handling
+
+Reject issuer drift, stale or missing trust evidence and mismatched audience. Unknown qualified subjects require the deliberate local enrollment path before access. Disable unavailable federated authentication without falling back to another issuer or impairing independently authorized local mechanisms. Reconcile same-revision mapping replacements before allowing new sessions.
 
 ## Acceptance
 
-**ZIP-IDENTITY-FEDERATION-T01.** Same subject from another issuer cannot access local account.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-IDENTITY-FEDERATION-T01.** Supply the same subject under two configured issuers, with only the first enrolled. Reject the second even if profile fields match. Pin a different audience and verify the original proof cannot establish that context.
