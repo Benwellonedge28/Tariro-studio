@@ -1,15 +1,17 @@
 # Verified checkpoint restore
 
-**ZIP-RUNTIME-CHECKPOINT-RESTORE-001 · v1.0 · Owner:** Runtime maintainers. **Maturity:** D3 file contract draft.
+**ZIP-RUNTIME-CHECKPOINT-RESTORE-001 · v1.1 · Owner:** Runtime maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/runtime/src/checkpoint/restore.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Read highest contiguous checkpoint for pinned plan, verify digests, lease epoch and current authority. Missing content or incompatible serialization blocks resume with reason.
+Read a pinned journal view for one approved attempt lineage and reviewed action. Walk receipts in sequence order using the verified predecessor binding and compare referenced object digest, byte count and codec edition. A successful restore returns the highest contiguous verified receipt and a bounded payload reference. An absent first checkpoint is the initial boundary. A missing, corrupt or unsupported entry within the committed prefix blocks automatic resume. Retain the preceding verified receipt for authorized diagnosis without silently rewinding.
+
+## Behavior and failure handling
+
+Use bounded pages and check cancellation before each page and bounded decode. Stop at the journal's recorded committed cursor. Staged objects without receipts do not enter the prefix. Checkpoint metadata may support a separately authorized successor using the same reviewed plan and action. A successor receives new authority, never the previous execution context. Restore performs no scheduler submission, resource release or external mutation.
 
 ## Acceptance
 
-**ZIP-RUNTIME-CHECKPOINT-RESTORE-T01.** Corrupt latest checkpoint does not silently infer success or advance cursor.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-RUNTIME-CHECKPOINT-RESTORE-T01.** Run RT-LIFE-04 and RT-LIFE-05 in the [lifecycle fixtures](../../../../../contracts/acceptance/runtime/lifecycle-fixtures.json). Inject a missing committed object, a foreign preimage and an unsupported codec after a valid lower receipt. Preserve the lower evidence and refuse automatic resume. A cancelled read leaves the journal unchanged.

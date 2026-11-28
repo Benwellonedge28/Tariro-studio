@@ -1,15 +1,17 @@
 # Versioned baseline defaults
 
-**ZIP-CONFIGURATION-DEFAULTS-001 · v1.0 · Owner:** Configuration maintainers. **Maturity:** D3 file contract draft.
+**ZIP-CONFIGURATION-DEFAULTS-001 · v1.1 · Owner:** Configuration maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/configuration/src/defaults.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-load_defaults(manifest: VerifiedDefaults, registry: &KeyRegistry) -> Result<DefaultLayer, ConfigError>. Check schema/version and integrity, then validate every required key exactly once. Apply no fallback literals on a missing key.
+Accept a trusted artifact descriptor for the base defaults, declared byte budget, expected digest and schema registry. The launcher supplies the descriptor and budget. Parse with [bounded parser](parser.md), verify the digest over the exact bytes and select the exact declared base edition before normalizing. Raw source failures never replace an already active snapshot.
+
+## Behavior and failure handling
+
+Validate all required keys once and reject unknown or duplicate entries. For supported v1 input delegate the only qualified migration to [migration](migration.md). A current v2 release baseline must validate directly and must never call the v1 migration as a fallback. Import defaults and resolved key origins as one typed layer. A missing field, digest mismatch, unsupported edition or unrepresentable value blocks the candidate. The input path and contents are not public diagnostics.
 
 ## Acceptance
 
-**ZIP-CONFIGURATION-DEFAULTS-T01.** Remove one mandatory limit and prove the runtime cannot admit work through default resolution.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-CONFIGURATION-DEFAULTS-T01.** Remove a required limit from v2, provide a v1 source plus a verified v2 baseline, and corrupt the baseline bytes. Observe denial, complete staged migration and denial respectively. Verify a previous snapshot is retained on a failed reload.

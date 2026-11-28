@@ -1,6 +1,6 @@
 # Configuration crate design
 
-**Contract version** 1.0. Master design §10. Planned implementation.
+**Contract version** 1.1 candidate. Master design §10. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -12,25 +12,22 @@ First-party dependencies: [foundation](../foundation/DESIGN.md)
 
 ## API and data
 
-The operation names below define the crate boundary. Put typed requests, results and record definitions in the modules shown under Source layout. The caller supplies validated identifiers and a deadline where execution can block. Return a typed result. Accept cancellation for long operations and preserve an outcome when cancellation arrives after a durable commit.
+The public resolution operation uses this Rust-shaped pseudocode.
 
-- `resolve(layers, profile)`
-- `migrate(raw, from_version)`
+```rust
+pub fn resolve(
+    layers: &[ConfigLayer],
+    mandatory: &PolicyConstraints,
+) -> Result<ResolvedConfig, ConfigError>;
+```
 
-Record families: ResolvedConfig with origin per key and stable configuration digest. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
+`ConfigLayer` is an authorized normalized input with source class, source digest, edition and typed values. `PolicyConstraints` is the normalized mandatory domain derived from verified policy inputs. `ResolvedConfig` exposes effective typed values, active provenance and tagged configuration and policy digests without mutable access. [Schema](specifications/modules/schema.md) owns key and value types. [Errors](specifications/modules/error.md) owns `ConfigError`. The resolver borrows its inputs and returns an owned candidate without publishing it. It applies [precedence](specifications/modules/overrides.md) and [validation](specifications/modules/validation.md). Treat effective values and contributing origins as one indivisible generation.
 
-### Primary typed interface
-
-The following contract uses Rust-shaped signatures. Names such as `Result<T>` refer to this crate's typed error result, and adapter-specific handles remain opaque to callers.
-
-- `ConfigLayer { source: ConfigSource, schema_major: u16, values: TypedConfig }`
-- `ResolvedConfig { values, origins, policy_digest, config_digest }`
-
-- `resolve(layers: &[ConfigLayer], mandatory: &PolicyConstraints) -> Result<ResolvedConfig>`
+[Loader](specifications/modules/loader.md) owns explicit bounded I/O and compare-and-swap activation. [Defaults](specifications/modules/defaults.md) and [migration](specifications/modules/migration.md) own base schema edition handling. Preserve original bytes and use a verified release baseline as the sole source of the added drain setting during v1 upgrade. Scope, parsing and migration are verified before merge. Neither a local preference nor a previously activated snapshot confers live permission for protected effects.
 
 ## Failure, safety and resource limits
 
-Apply the resolved `configuration.max_layer_bytes` to each layer after bounded bootstrap. Reject unknown keys for version 1, duplicate keys, unavailable credential references and unsafe override attempts.
+Apply the resolved `configuration.max_layer_bytes` to each layer after bounded bootstrap. Reject unknown editions, unknown or duplicate keys, unavailable references required for the profile and unsafe override attempts. No secret payload crosses Configuration. Keep a prior valid immutable generation on failed reload and apply current mandatory revocation independently.
 
 - `InvalidConfig`
 - `UnsupportedSchema`
@@ -74,11 +71,11 @@ crates/configuration/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Permute unordered inputs and obtain identical digests. Verify a project cannot enable network against an offline policy.
+Permute unordered inputs and obtain identical digests. Verify a project cannot enable network against an offline policy. Exercise v1 and v2 base defaults and the installation deadline binding with the [drain policy fixtures](../../contracts/acceptance/runtime/drain-policy-fixtures.json). Qualify the concrete canonical snapshot codec and the Rust composition signatures before independent sign-off.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+The entries below specify file ownership and acceptance. Each contract carries its maturity status. The [requirements map](../../contracts/requirements/modules/configuration.json) associates planned paths with acceptance identifiers. Profile, user, security and inference module drafts and native acceptance remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

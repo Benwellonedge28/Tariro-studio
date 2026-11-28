@@ -1,15 +1,17 @@
 # Control hierarchy
 
-**ZIP-RUNTIME-CONTROL-MOD-001 · v1.0 · Owner:** Runtime maintainers. **Maturity:** D3 file contract draft.
+**ZIP-RUNTIME-CONTROL-MOD-001 · v1.1 · Owner:** Runtime maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/runtime/src/control/mod.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Expose cancel, timeout, pause and shutdown commands without direct task mutations. Supervisor is authority for terminal transition and cleanup.
+This module routes typed control requests to [cancellation](cancellation.md), [timeout](timeout.md), [pause](pause.md) and [shutdown](shutdown.md). Keep deadline arithmetic internal and expose control commands through [Runtime](../runtime.md). Accept only trusted command context and framework-provided clock observations at the composition boundary. Operation modules own their state and decisions.
+
+## Behavior and failure handling
+
+Route installation shutdown through lifecycle, scoped pause through the durable controlling gate, and task stop through the attempt journal. Apply the corresponding owning permission before reading an addressable record. A shutdown closure wins over a scoped resume. Task stop preserves the first accepted durable cause. Use the shared supervisor gate instead of duplicating deadlines or lock ordering. This file owns no storage records or background tasks.
 
 ## Acceptance
 
-**ZIP-RUNTIME-CONTROL-MOD-T01.** Application cancel path routes through supervisor, never kills by untrusted process ID.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-RUNTIME-CONTROL-MOD-T01.** Submit two cancellation observers and a simultaneous installation drain and scoped resume. Verify the first stop cause persists and the resume cannot reopen intake. Verify the public facade cannot reach worker-side control constructors.

@@ -1,15 +1,17 @@
 # Versioned checkpoint envelope
 
-**ZIP-RUNTIME-CHECKPOINT-CHECKPOINT-001 · v1.0 · Owner:** Runtime maintainers. **Maturity:** D3 file contract draft.
+**ZIP-RUNTIME-CHECKPOINT-CHECKPOINT-001 · v1.1 · Owner:** Runtime maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/runtime/src/checkpoint/checkpoint.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Record task, assignment, attempt epoch, monotonic sequence, plan digest, artifact digest and verification ref. No evidence-free checkpoint can advance verified progress.
+Checkpoint owns immutable local execution progress. Construct a candidate from the validated attempt identifier, nonzero sequence, prior checkpoint receipt digest when applicable, reviewed-plan and action digests, payload codec edition, staged object digest and verified byte length. The first sequence is one and has no prior receipt. Use Foundation identifier and digest encodings and the attempt identity from [supervisor](../supervisor.md). Validate fields without acquiring authority. The execution context supplies the current owner generation independently.
+
+## Behavior and failure handling
+
+Resolve the payload through Storage's immutable object interface. Check its recorded length and digest before writing a record reference. The owning codec validates the payload under admitted size and decode limits. Unknown codec editions preserve the bytes and block restore. Serialize durable metadata in the owning versioned Storage envelope. A checkpoint carries no permit, credentials, live process handle or monotonic instant. An accepted record is immutable. Repeated content alone does not identify a checkpoint across different attempts or sequences.
 
 ## Acceptance
 
-**ZIP-RUNTIME-CHECKPOINT-CHECKPOINT-T01.** Decode wrong version, stale epoch and mismatched digest; deny each.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-RUNTIME-CHECKPOINT-CHECKPOINT-T01.** Construct the first and second checkpoint and reject a zero sequence, inconsistent predecessor, unsupported codec and mismatched staged payload length. Verify no checkpoint receipt appears on invalid input and no execution authority can be reconstructed from a checkpoint.
