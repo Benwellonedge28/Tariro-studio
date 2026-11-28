@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Zipporah normalized base operational defaults v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "configuration",
+    "storage",
+    "events",
+    "runtime",
+    "inference",
+    "scheduler",
+    "knowledge",
+    "search",
+    "agents",
+    "orchestration",
+    "workflows",
+    "source_analysis",
+    "debugging",
+    "terminal",
+    "networking",
+    "api"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_layer_bytes"
+      ],
+      "properties": {
+        "max_layer_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Validate each subsequent configuration layer before allocation"
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_record_bytes",
+        "max_transaction_operations"
+      ],
+      "properties": {
+        "max_record_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Validate encoded record before transaction staging"
+        },
+        "max_transaction_operations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Charge each transaction operation before enqueueing it"
+        }
+      }
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_subscriber_queue_items"
+      ],
+      "properties": {
+        "max_subscriber_queue_items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Acquire a bounded queue reservation when subscribing"
+        }
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "shutdown_drain_ms",
+        "stop_grace_ms"
+      ],
+      "properties": {
+        "shutdown_drain_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036854775807,
+          "description": "Bound the installation drain from acceptance of the first shutdown request"
+        },
+        "stop_grace_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Clip cooperative shutdown window to the task deadline"
+        }
+      }
+    },
+    "inference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_loaded_generation_models"
+      ],
+      "properties": {
+        "max_loaded_generation_models": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615,
+          "description": "Compare admitted model slots within profile and current capacity"
+        }
+      }
+    },
+    "scheduler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "job_deadline_ms",
+        "max_attempts",
+        "max_workspace_queue_items",
+        "retry_jitter_ms"
+      ],
+      "properties": {
+        "max_workspace_queue_items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Reject enqueue before inserting a job if the queue is full"
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Charge an attempt under current lease before dispatch"
+        },
+        "job_deadline_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Check remaining deadline before dispatch or retry"
+        },
+        "retry_jitter_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615,
+          "description": "Clip jitter to the rescheduling deadline; zero disables jitter"
+        }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_results",
+        "max_traversal_depth"
+      ],
+      "properties": {
+        "max_traversal_depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Bound edge depth at expansion"
+        },
+        "max_results": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Bound query result materialization"
+        }
+      }
+    },
+    "search": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_results"
+      ],
+      "properties": {
+        "max_results": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Cap emitted results and return a cursor"
+        }
+      }
+    },
+    "agents": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_delegation_depth",
+        "max_mailbox_items"
+      ],
+      "properties": {
+        "max_mailbox_items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Admit mailbox capacity before push"
+        },
+        "max_delegation_depth": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615,
+          "description": "Reject a delegation beyond approved depth"
+        }
+      }
+    },
+    "orchestration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_concurrent_agents"
+      ],
+      "properties": {
+        "max_concurrent_agents": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615,
+          "description": "Reserve agent slots before activation"
+        }
+      }
+    },
+    "workflows": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_expanded_steps",
+        "max_nesting_depth"
+      ],
+      "properties": {
+        "max_expanded_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Stop expansion before appending an excess step"
+        },
+        "max_nesting_depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Check depth before following a nested step"
+        }
+      }
+    },
+    "source_analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_parse_ms",
+        "max_source_bytes"
+      ],
+      "properties": {
+        "max_source_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Bound streamed source input before parser construction"
+        },
+        "max_parse_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Clip parse deadline to lease time"
+        }
+      }
+    },
+    "debugging": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deadline_ms",
+        "max_attempts"
+      ],
+      "properties": {
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Charge attempts before running reproduction"
+        },
+        "deadline_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Clip debug session deadline to assignment"
+        }
+      }
+    },
+    "terminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deadline_ms",
+        "max_output_bytes"
+      ],
+      "properties": {
+        "max_output_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Charge combined stdout and stderr before storing"
+        },
+        "deadline_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Enforce task deadline across the contained process tree"
+        }
+      }
+    },
+    "networking": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_deadline_ms"
+      ],
+      "properties": {
+        "request_deadline_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Apply timeout before connect and to remaining response work"
+        }
+      }
+    },
+    "api": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_page_items",
+        "max_page_items",
+        "max_principal_concurrency",
+        "max_request_bytes"
+      ],
+      "properties": {
+        "max_request_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Bound streamed request before decoding"
+        },
+        "max_principal_concurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Enforce per-principal admission before dispatch"
+        },
+        "default_page_items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Apply if client does not supply a page size"
+        },
+        "max_page_items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 18446744073709551615,
+          "description": "Reject oversized page request before scanning records"
+        }
+      }
+    }
+  }
+}

@@ -12,4 +12,6 @@ Fresh profiles start local. Selecting a distributed profile permits discovery on
 
 For profiles with `derive_from_admission.keys`, omit the listed default slot caps from preference resolution. Compute finite effective capacity from enforceable per-unit demand and current pool availability, intersect it with administrative caps, and deny if no finite value can be derived. Derivation never removes a mandatory ceiling. An explicit profile numeric override and derivation for the same key are mutually exclusive.
 
-The [defaults schema](schemas/limits.schema.json) validates the normalized TOML value tree. The loader must also enforce cross-key relations and profile permissions before activation.
+The [v2 defaults schema](schemas/limits-v2.schema.json) validates the parsed base defaults tree. Keep the [v1 defaults schema](schemas/limits.schema.json) for edition detection and migration. Select the exact schema by the declared version before normalization. Reject unknown versions and validate both ends of the v1-to-v2 migration. The [resource budget view](../crates/configuration/specifications/modules/resources.md) owns the migration and provenance rules for the new drain budget. Profile and policy input versions are governed by their own schemas.
+
+The loader also enforces cross-key relations, profile permissions and adapter representability before activation. The shipped drain duration is a configurable starting preference. See [ordered shutdown](../crates/runtime/specifications/modules/control/shutdown.md) for deadline selection and recovery.

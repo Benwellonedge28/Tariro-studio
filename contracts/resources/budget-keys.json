@@ -35,6 +35,17 @@
       "enforcement": "Acquire a bounded queue reservation when subscribing"
     },
     {
+      "key": "runtime.shutdown_drain_ms",
+      "unit": "milliseconds",
+      "owner": "runtime",
+      "kind": "profile_default",
+      "value_kind": "u64",
+      "minimum": 1,
+      "maximum": 9223372036854775807,
+      "reload": "next_shutdown_operation",
+      "enforcement": "Bound the installation drain from acceptance of the first shutdown request"
+    },
+    {
       "key": "runtime.stop_grace_ms",
       "unit": "milliseconds",
       "owner": "runtime",

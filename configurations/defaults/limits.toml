@@ -1,4 +1,4 @@
-schema_version = 1
+schema_version = 2
 
 [configuration]
 max_layer_bytes = 1048576
@@ -11,6 +11,7 @@ max_transaction_operations = 512
 max_subscriber_queue_items = 256
 
 [runtime]
+shutdown_drain_ms = 30000
 stop_grace_ms = 2000
 
 [inference]

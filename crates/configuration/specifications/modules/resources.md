@@ -1,6 +1,6 @@
 # Resource budget view
 
-**ZIP-CONFIGURATION-RESOURCES-001 · v1.1 candidate · Owner** Configuration maintainers
+**ZIP-CONFIGURATION-RESOURCES-001 · v1.2 candidate · Owner** Configuration maintainers
 
 **Planned source** `crates/configuration/src/resources.rs`
 
@@ -10,4 +10,12 @@ Apply the [configuration authority rules](../../../../CONFIGURATION_STANDARD.md)
 
 Resources depends on Configuration. This module exports configuration-owned data only and has no dependency on the resources crate. Provider credentials live in their existing adapters. Diagnostics identify the responsible key and policy class and omit secrets. Retain provenance under the normal configuration audit policy.
 
-**ZIP-CONFIGURATION-RESOURCES-T01.** Permute unordered inputs and verify the normalized snapshot digest is identical. Reject a workspace network enable under offline organization policy, and keep the previous complete snapshot after an invalid reload. A derived bound and an explicit zero retain distinct representations at the admission boundary.
+## Runtime installation drain
+
+The [key catalog](../../../../contracts/resources/budget-keys.json) registers `runtime.shutdown_drain_ms` as a positive integer duration in milliseconds. The application composition root passes this typed bound, configuration digest and applicable policy revision to Runtime. Reject an unrepresentable value before activation. Resolve the installed preference with the applicable installation-level administrative ceilings by minimum. The bound covers one installation's drain. A task or assignment policy continues to constrain that task independently, through its own execution deadline. No dependency on hardware discovery or provider reachability is required to resolve the drain bound.
+
+Validate base defaults against their declared schema. For v1 input, stage a v2 copy in memory by retaining all validated v1 values, setting the staged version to 2 and importing only `runtime.shutdown_drain_ms` from the current release's verified and validated [v2 base defaults](../../../../configurations/defaults/limits.toml). Record that release artifact as the inserted key's origin. Validate the complete staged copy against [v2](../../../../configurations/schemas/limits-v2.schema.json) before normal layer resolution. Preserve the original bytes. A missing or invalid release baseline, or a v2 input missing the required key, blocks activation. Rollback requires the retained v1 input and a reader supporting v1. Existing profile and policy inputs retain their own format versions.
+
+Apply a valid reload to a future shutdown operation when it first accepts. An accepted shutdown retains its sampled deadline and configuration provenance through replay and cleanup. Mandatory revocation continues to fence execution and effects under live policy. A reload never reopens intake or extends cleanup authority.
+
+**ZIP-CONFIGURATION-RESOURCES-T01.** Permute unordered inputs and verify the normalized snapshot digest is identical. Reject a workspace network enable under offline organization policy, and keep the previous complete snapshot after an invalid reload. A derived bound and an explicit zero retain distinct representations at the admission boundary. Verify v1 migration keeps original bytes and all old values, records the release origin, and denies a missing v2 key, an invalid v1 key and an unavailable verified baseline. Apply a tighter installed ceiling and reload during an active drain. Confirm only a future operation uses the new bound. See the [drain policy fixtures](../../../../contracts/acceptance/runtime/drain-policy-fixtures.json).
