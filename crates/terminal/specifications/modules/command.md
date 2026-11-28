@@ -1,15 +1,17 @@
 # Immutable execution request
 
-**ZIP-TERMINAL-COMMAND-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-COMMAND-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/command.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Pin qualified executable, argv, cwd, environment schema, byte and time budgets, grant and correlation ID. Review digest binds these fields.
+Define an immutable CommandSpec binding exact executable capability and digest, structured arguments, rooted working-directory identity, environment schema and opaque references, stream budgets, deadline basis, grant and correlation identity. Validate types and compatible units before acceptance. Include only approved digested data and credential references in review metadata.
+
+## Behavior and failure handling
+
+Bind the exact versioned semantics in the reviewed effect digest. A changed field relevant to execution requires new evidence and authority. Values carried in the request cannot open a shell, extend the admitted deadline or broaden path permissions. The request alone cannot create a live process.
 
 ## Acceptance
 
-**ZIP-TERMINAL-COMMAND-T01.** Changed argv after review produces stale effect digest.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-COMMAND-T01.** Preview an authorized synthetic command, change only its arguments and try the original review digest. Reject before launch. Repeat with an unchanged binding and verify scope is still independently checked.

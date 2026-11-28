@@ -1,15 +1,17 @@
 # Bounded deterministic tree scan
 
-**ZIP-FILESYSTEM-TRAVERSAL-001 · v1.0 · Owner:** Filesystem maintainers. **Maturity:** D3 file contract draft.
+**ZIP-FILESYSTEM-TRAVERSAL-001 · v1.1 · Owner:** Filesystem maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/filesystem/src/traversal.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Traverse authorized directories with stable order, count/depth/byte budgets and optional pinned cursor. Report partial scans, forbidden entry types and non-recoverable positions.
+Traverse a scoped pinned directory hierarchy using deterministic relative path order from qualified entries. Admit depth, observations, items, bytes and elapsed work before progressing. Return a bounded page with coverage state and a cursor bound to the scope and generation.
+
+## Behavior and failure handling
+
+Never follow forbidden entries or use unknown identity to widen a scan. Incomplete, denied or changed traversal produces explicit noncomplete status and safe evidence. Cursor replay rechecks grant and root revision. On overflow or nonreplayable cursor conditions resume only from a qualified new scan.
 
 ## Acceptance
 
-**ZIP-FILESYSTEM-TRAVERSAL-T01.** Mid-scan quota exhaustion returns partial result and no false completeness.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-FILESYSTEM-TRAVERSAL-T01.** Exhaust an admitted item budget midway and verify the result remains partial. Change the root generation and confirm the prior cursor cannot label the remaining output complete.

@@ -1,6 +1,6 @@
 # Tools crate design
 
-**Contract version** 1.0. Master design §38. Planned implementation.
+**Contract version** 1.1 candidate. Master design §38. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -30,9 +30,11 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 
 - `invoke(call: ToolCall, decision: AuthorizationDecision, cancel: Cancellation) -> Result<EffectOutcome<ToolReceipt>>`
 
+The [invocation](specifications/modules/invocation.md) binds an exact descriptor, effect digest, grant and attempt. The [execution boundary](specifications/modules/execution.md) records intent with required audit evidence before dispatch and reconciles unknown outcomes by original identity. Composition supplies process and external transports without introducing first-party dependencies on those owners.
+
 ## Failure, safety and resource limits
 
-Reject arbitrary command strings or undeclared tool permissions. Deadlines and pagination mandatory. Output content cannot grant capability.
+Reject arbitrary command strings or undeclared tool permissions. Require finite deadlines for every invocation and bounded pagination for operations that return pages. Output content cannot grant capability.
 
 - `UnknownTool`
 - `InvalidArguments`
@@ -81,7 +83,7 @@ Test malformed tool calls, hallucinated tool output and unauthorized mutating ca
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned source path has a candidate contract and stable acceptance mapping in the [requirements map](../../contracts/requirements/modules/tools.json). Concrete codec vectors, adapter qualification, compiled signatures and independent review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

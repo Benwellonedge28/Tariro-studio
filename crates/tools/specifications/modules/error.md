@@ -1,15 +1,17 @@
 # Tool failure vocabulary
 
-**ZIP-TOOLS-ERROR-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-ERROR-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/error.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Classify invalid arguments, unsupported capability, denied scope, timeout, resource exhaustion, unknown effect and adapter failure. Contain upstream raw errors.
+Define typed invalid arguments, unsupported descriptor, capability denial, timeout, exhaustion, adapter failure and unknown effect dispositions. Carry bounded safe request and adapter references only within caller scope. Do not expose raw input, upstream messages, protected routes or credential values.
+
+## Behavior and failure handling
+
+Separate definite preclaim failures from potentially committed effects. A validation error produces no adapter dispatch. An ambiguous effect or receipt write requires reconciliation by original identity. A retry requires qualified proof and current authorization. Preserve specific scoped reason without returning sensitive input fragments.
 
 ## Acceptance
 
-**ZIP-TOOLS-ERROR-T01.** Mismatched schema can be returned without exposing raw input.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-ERROR-T01.** Return a schema mismatch containing a synthetic private value and verify safe error output. Lose a mutation response and confirm UnknownEffect instead of validation denial or ordinary failure.

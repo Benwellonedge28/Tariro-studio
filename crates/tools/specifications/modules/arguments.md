@@ -1,15 +1,17 @@
 # Typed tool argument parsing
 
-**ZIP-TOOLS-ARGUMENTS-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-ARGUMENTS-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/arguments.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Validate strict schema and scoped paths/identifiers, then normalize canonical arguments. Bound byte and list sizes before materialization.
+Decode bounded request bytes against the negotiated typed schema before allocating arrays, maps or derived payloads beyond their limits. Validate exact field names, scalar kinds, identifiers and path scope. Separate absent, explicit null and unsupported values according to the declared edition.
+
+## Behavior and failure handling
+
+Normalize deterministically for the invocation digest while preserving array order where meaningful. Reject unknown mandatory fields, duplicate keys and arbitrary command text where the schema expects typed values. Neither argument value nor normalization authorizes a path or destination. Keep payload bytes out of denial diagnostics.
 
 ## Acceptance
 
-**ZIP-TOOLS-ARGUMENTS-T01.** Arbitrary command text fails the expected typed argument schema.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-ARGUMENTS-T01.** Submit an arbitrary command string for a structured argument schema, a duplicate key and an over-limit list. Each fails before adapter use. Equivalent allowed maps yield the same canonical argument identity.

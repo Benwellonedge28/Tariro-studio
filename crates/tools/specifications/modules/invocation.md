@@ -1,15 +1,17 @@
 # Invocation intent and idempotency
 
-**ZIP-TOOLS-INVOCATION-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-INVOCATION-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/invocation.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Bind tool/version, normalized arguments, effect digest, grant, lease, runtime deadline and request identity. Replay same receipt for identical committed request, reject payload drift.
+Define an immutable invocation descriptor binding stable request identity, exact tool and adapter versions, normalized arguments, effect digest, scoped grant, lease and finite deadline. A request ID is an idempotency locator, not a credential or qualification. Keep opaque references separate from secret values.
+
+## Behavior and failure handling
+
+Validate identity and authority before receipt lookup. A same-key same-digest authorized replay returns stored status or receipt. A different digest is a conflict. If outcome remains unknown, the owning reconciliation path controls any later repeat. A new key cannot be used as a workaround for unsettled work.
 
 ## Acceptance
 
-**ZIP-TOOLS-INVOCATION-T01.** Lost response preserves pending intent and cannot trigger duplicate mutation.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-INVOCATION-T01.** Lose the first confirmed result reply and repeat the same request. Verify the prior state or receipt is returned without another invocation. Try a field change and confirm conflict.

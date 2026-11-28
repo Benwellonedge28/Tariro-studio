@@ -1,15 +1,17 @@
 # Bounded standard output
 
-**ZIP-TERMINAL-STDOUT-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-STDOUT-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/stdout.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Charge bytes to combined output account before buffer/persist, maintain order within stream, and expose explicit truncation or output exhaustion.
+Capture ordered stdout under the shared [combined cap](output_limits.md), assigning bounded per-stream observations to the exact process attempt. Reserve bytes before retention and track complete, truncated or unavailable separately. Use safe scoped output projections for user or model disclosure.
+
+## Behavior and failure handling
+
+Treat stream EOF as a stream event. Verified process outcome and cleanup depend on the supervisor. When output is truncated, report a bounded prefix and explicit reason under policy. Never parse text asserting success into a trusted effect receipt.
 
 ## Acceptance
 
-**ZIP-TERMINAL-STDOUT-T01.** Flooded stdout stops within admitted combined limit.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-STDOUT-T01.** Flood the synthetic stdout stream and verify the retained bytes do not exceed the combined cap. Use output text claiming success with absent exit proof and confirm the final process disposition stays unresolved.

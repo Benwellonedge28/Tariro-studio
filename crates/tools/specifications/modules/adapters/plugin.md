@@ -1,15 +1,17 @@
 # Isolated plugin adapter
 
-**ZIP-TOOLS-ADAPTERS-PLUGIN-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-ADAPTERS-PLUGIN-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/adapters/plugin.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Validate plugin identity/version, lifecycle and permitted host imports. Enforce fuel/memory and reconcile host effects independently.
+Bind plugin identity, installed digest, negotiated API edition, permitted imports and effective execution bounds. Select only an enrolled plugin with qualified Sandbox controls and reviewed capabilities. Host imports are exact typed action requests that use their own authority.
+
+## Behavior and failure handling
+
+Verify each protected import's current lifecycle, attempt, budget and grant at dispatch. Enforce approved fuel and memory limits without converting guest termination to external settlement evidence. Plugin revocation fences new calls and preserves all outstanding effect identities for reconciliation.
 
 ## Acceptance
 
-**ZIP-TOOLS-ADAPTERS-PLUGIN-T01.** Revoked plug-in cannot invoke host capability after lease change.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-ADAPTERS-PLUGIN-T01.** Revoke a plugin between a successful synthetic guest start and a host capability call. Verify the host call denies and the guest's old lease does not convey new access.

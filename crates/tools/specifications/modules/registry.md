@@ -1,15 +1,17 @@
 # Qualified capability registry
 
-**ZIP-TOOLS-REGISTRY-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-REGISTRY-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/registry.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Index admitted descriptors by stable ID and version. Resolve request against negotiated interface and current policy; duplicate version identity conflicts.
+Index immutable admitted descriptors by tool identity and supported version with approved manifest digest, qualified adapter and effective scope. Validate proposed registration against the authorized registry revision and enforce uniqueness. A same-version different manifest is a conflict.
+
+## Behavior and failure handling
+
+Resolve the exact declared and currently allowed version. Do not silently choose another version, tool name or adapter when resolution fails. Keep historic versions and retirement evidence scoped. Lookup supplies metadata only, and execution requires permission and current qualification again.
 
 ## Acceptance
 
-**ZIP-TOOLS-REGISTRY-T01.** A mismatched version never silently routes to another adapter.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-REGISTRY-T01.** Register conflicting bytes under one tool version and verify no overwrite. Request an incompatible version with a compatible sibling enrolled and confirm there is no silent fallback.

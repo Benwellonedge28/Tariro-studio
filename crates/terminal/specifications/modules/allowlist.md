@@ -1,15 +1,17 @@
 # Executable identity restrictions
 
-**ZIP-TERMINAL-ALLOWLIST-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-ALLOWLIST-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/allowlist.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Resolve explicit executable capability and version/integrity by approved resolver. Match actual executable rather than caller label or inherited search path.
+Resolve an enrolled executable capability from exact adapter, approved source identity, version and integrity evidence. Match the selected executable through a trusted handle or equivalent qualified identity proof. Never resolve unrestricted caller-supplied names using ambient process search state.
+
+## Behavior and failure handling
+
+Check current policy and actual executable binding again at launch. A changed digest, path identity or adapter version requires fresh qualification. Enrollment describes what can be selected and confers no authority to launch. Reject unavailable identity evidence before starting the body.
 
 ## Acceptance
 
-**ZIP-TERMINAL-ALLOWLIST-T01.** An executable with same name in an unapproved directory is denied.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-ALLOWLIST-T01.** Install a synthetic same-name executable outside the approved scope and confirm it cannot be selected. Replace the approved fixture after preview and verify its stale evidence cannot authorize launch.

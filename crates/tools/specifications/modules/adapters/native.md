@@ -1,15 +1,17 @@
 # In-process tool adapter
 
-**ZIP-TOOLS-ADAPTERS-NATIVE-001 · v1.0 · Owner:** Tools maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TOOLS-ADAPTERS-NATIVE-001 · v1.1 · Owner:** Tools maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/tools/src/adapters/native.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Use reviewed typed adapter, check before effect and enforce cooperative cancellation and budget. No raw host APIs outside assigned scope.
+Invoke an enrolled typed implementation under the exact adapter revision and allowed resource and effect scope. Use only injected safe host capability ports for scoped actions. A native implementation is eligible only when it can enforce required isolation, budget, cancellation and observable result.
+
+## Behavior and failure handling
+
+Check authority before effect and observe cancellation at bounded safe points. Report provisional or final evidence with the same attempt and descriptor binding. Noncooperative or unobservable mandatory control makes the mode unavailable. Do not add ambient filesystem, network or credential access through a hosted interface.
 
 ## Acceptance
 
-**ZIP-TOOLS-ADAPTERS-NATIVE-T01.** An implementation lacking required isolation cannot be advertised bound.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TOOLS-ADAPTERS-NATIVE-T01.** Offer a synthetic native action with one missing required isolation proof. Verify it is not eligible and no implementation call occurs. Validate that an approved read cannot obtain a mutation port.

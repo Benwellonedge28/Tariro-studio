@@ -1,15 +1,17 @@
 # Contained descendant control
 
-**ZIP-TERMINAL-PROCESS-TREE-001 · v1.0 · Owner:** Terminal maintainers. **Maturity:** D3 file contract draft.
+**ZIP-TERMINAL-PROCESS-TREE-001 · v1.1 · Owner:** Terminal maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/terminal/src/process_tree.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Track descendants with sandbox-qualified scope, terminate only owned group and verify no live processes retain lease resources.
+Observe descendants through the Sandbox-qualified containment identity and current owner. Whole-group evidence controls cancellation and cleanup. Do not infer descendant status from parent status, output EOF or elapsed time. Changes or unavailable scope return incomplete evidence.
+
+## Behavior and failure handling
+
+When the supervisor requests termination, target only the verified owned group and confirm all applicable usage and occupancy settled. A blocked stream or observer cancellation does not excuse completion checks. Preserve earlier confirmed receipts and do not release the lease on uncertain termination.
 
 ## Acceptance
 
-**ZIP-TERMINAL-PROCESS-TREE-T01.** A spawned child holding output pipe cannot survive reported cleanup.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-TERMINAL-PROCESS-TREE-T01.** Run a benign fixture with an active descendant holding a stream open. Observe no completed cleanup after parent exit. Verify the descendant and group settle under the owning supervisor before release.

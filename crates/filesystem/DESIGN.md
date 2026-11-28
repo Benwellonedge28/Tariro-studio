@@ -1,6 +1,6 @@
 # Filesystem crate design
 
-**Contract version** 1.0. Master design §40. Planned implementation.
+**Contract version** 1.1 candidate. Master design §40. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -29,6 +29,8 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 - `WriteReceipt { digest, bytes, new_revision }`
 
 - `atomic_write(request: WriteRequest, root: &ScopedRoot) -> Result<WriteReceipt>`
+
+The [conditional writer](specifications/modules/atomic_write.md) distinguishes verified durability from visible replacement or an ambiguous outcome. Use exact handle-bound identities and original-intent recovery. A cooperating lock alone cannot qualify replacement under interference.
 
 ## Failure, safety and resource limits
 
@@ -76,7 +78,7 @@ Test link replacement race, root escapes, concurrent CAS and failed rename rollb
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned source path has a candidate contract and stable acceptance mapping in the [requirements map](../../contracts/requirements/modules/filesystem.json). Qualified filesystem adapters, exact conditional-replacement and durability semantics, compiled ports and independent review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
