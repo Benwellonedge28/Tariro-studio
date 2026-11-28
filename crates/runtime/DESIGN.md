@@ -1,10 +1,10 @@
 # Runtime crate design
 
-**ZIP-RT-CRATE-001 · v1.1 · Owner:** Runtime maintainers. **Maturity:** D4 candidate for the local attempt lifecycle. Master design §14.
+**ZIP-RT-CRATE-001 · v1.2 · Owner:** Runtime maintainers. **Maturity:** D4 candidate for the local attempt lifecycle. Master design §14.
 
 ## Responsibility and dependencies
 
-Register task before spawn. Contain child tree, supervise bounded channels, close intake on pause, publish outcome and evidence only after cleanup. Recover persisted intent before automatic retry.
+Register the attempt before creating host state. Hold a task body behind verified containment and the one-way launch gate. Use task- or assignment-scoped pause and installation-wide shutdown. Stage bounded provisional observations before terminal publication, which requires completed cleanup and reconciliation. Recover persisted intent before allowing a scheduler successor.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../storage/DESIGN.md), [events](../events/DESIGN.md), [resources](../resources/DESIGN.md)
 
@@ -15,23 +15,25 @@ First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../st
 The following Rust-shaped pseudocode defines the public call shapes for local work. The runtime façade in `runtime.rs` owns these methods. [Task](specifications/modules/execution/task.md), [executor](specifications/modules/execution/executor.md), [task handle](specifications/modules/execution/task_handle.md), [supervisor](specifications/modules/supervisor.md) and [errors](specifications/modules/error.md) own their named types.
 
 - `spawn(&self, spec: TaskSpec, lease: ResourceLease, cancel: Cancellation) -> Result<TaskHandle, RuntimeError>`
-- `cancel(&self, task_id: Identifier) -> Result<(), RuntimeError>` accepts an authorized request for cooperative stop. Success confirms recording the request, with terminal disposition read from the handle.
+- `cancel(&self, task_id: Identifier) -> Result<(), RuntimeError>` accepts an authorized request for cooperative stop in the assignment scope bound by composition. Resolve the single open attempt under that assignment and task. Success confirms the accepted stop decision. The handle supplies the terminal result.
 - `pub(crate) checkpoint(&self, context: &ExecutionContext, checkpoint: Checkpoint) -> Result<(), RuntimeError>` checks the attempt and owner generation from the trusted [execution context](specifications/modules/execution/execution_context.md). The [checkpoint store](specifications/modules/checkpoint/store.md) owns the data and replay.
 - Startup calls crate-private recovery before enabling intake. Recovery authority and worker authority are independently resolved at composition.
 
 `ResourceLease` comes from `resources::allocation::lease`. `Identifier` comes from `foundation::identity::identifier`. `Cancellation` denotes the read-only sticky observation handle specified by [runtime cancellation](specifications/modules/control/cancellation.md). The returned `TaskHandle` observes one attempt. Dropping it releases its observation slot while the supervisor retains ownership. An adapter observation is provisional until an authorized journal transition records it.
 
+The [facade](specifications/modules/runtime.md) delegates installation startup to [lifecycle](specifications/modules/lifecycle.md), pause and resume to a [scoped gate](specifications/modules/control/pause.md), and shutdown to the [installation drain](specifications/modules/control/shutdown.md). `RuntimeBuilder` is the validated composition entry described in [builder](specifications/modules/builder.md). Command transport DTOs and public observation signatures require binding and compilation at the composition boundary. Internal launch and journal types remain private under the [export contract](specifications/modules/lib.md).
+
 ## Persistence and concurrency
 
 The [numbered runtime specification](../../specifications/0200-runtime/runtime.md) owns state transitions. The supervisor writes attempt state, applicable receipt and outbox record in one storage transaction with expected revision and owner generation. Serialized durable fields are owned by the [supervisor](specifications/modules/supervisor.md). Stage immutable evidence through storage before committing a reference. Never wait for an adapter, provider, process or resource transaction while holding the runtime write transaction. Treat cross-journal operations as separately durable and inspect the owning journal after a lost response.
 
-Cross-crate scheduling is composed at the application boundary. Runtime consumes the checked job claim through an injected verifier and has no direct scheduler or child-tool dependency. Resource admission and provider effect permissions remain separately enforced.
+The [checkpoint store](specifications/modules/checkpoint/store.md) commits progress, receipt and outbox together. [Restore](specifications/modules/checkpoint/restore.md) verifies the committed contiguous prefix without creating fresh authority. The [worker pool](specifications/modules/execution/worker_pool.md) is a bounded local index. Cross-crate scheduling is composed at the application boundary. Runtime consumes the checked job claim through an injected verifier and has no direct scheduler or child-tool dependency. Resource admission and provider effect permissions remain separately enforced.
 
 ## Failure, limits and portability
 
-Use the resolved `runtime.stop_grace_ms` clipped to the applicable deadline, then terminate the contained process tree and verify exit. Escalate unreaped work and retain its hold. Reuse resolved storage and scheduler budgets at their owning boundaries. Capacity, retention and evidence limits come from resolved policy. Reject unsupported required containment and reliable ownership queries before accepting platform execution. The lifecycle rules are platform-neutral. A concrete adapter qualifies only after containment, query and restart tests pass on that target.
+Resolve `runtime.shutdown_drain_ms` for the installation and clip `runtime.stop_grace_ms` to the applicable attempt and control deadlines. Terminate the contained process tree and verify exit after the grace window. Escalate unreaped work and retain its hold. Reuse resolved storage and scheduler budgets at their owning boundaries. Capacity, retention and evidence limits come from resolved policy. Reject unsupported required containment and reliable ownership queries before accepting platform execution. The lifecycle rules are platform-neutral. A concrete adapter qualifies only after containment, query and restart tests pass on that target.
 
-Authorization, stale epochs, deadline, ambiguity and cleanup failures follow the [typed error contract](specifications/modules/error.md). Observability reports bounded state, error code, attempt ID and evidence reference. Avoid task inputs, provider responses and private host locator contents in logs or metric labels.
+Authorization, stale epochs, deadline, ambiguity and cleanup failures follow the [typed error contract](specifications/modules/error.md). Scoped diagnostics may report a permitted attempt ID and evidence reference. [Metrics](specifications/modules/metrics.md) use fixed categories. Exclude task inputs, provider responses and private host locators from diagnostics and metrics.
 
 ## Versioning and implementation order
 
@@ -82,11 +84,11 @@ crates/runtime/src/
 
 Implement value types and validation first. Wire the successful path through its typed interface and dependency ports. Add failure and cancellation handling before promoting the feature. Then verify this crate's contract with deterministic and negative fixtures.
 
-Use the [acceptance fixtures](../../contracts/acceptance/runtime/lifecycle-fixtures.json). Crash before and after spawn, checkpoint, terminal commit and resource release. Confirm a fenced worker cannot publish and uncertain ownership retains the resource hold.
+Use the [lifecycle fixtures](../../contracts/acceptance/runtime/lifecycle-fixtures.json) and [drain policy fixtures](../../contracts/acceptance/runtime/drain-policy-fixtures.json). Crash before and after spawn, checkpoint, terminal commit and resource release. Confirm a fenced worker cannot publish and uncertain ownership retains the resource hold.
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. Each linked contract carries its own maturity and review status.
+The entries below specify file ownership, required behavior and test cases. Each linked contract carries its own maturity and review status. The [requirements map](../../contracts/requirements/modules/runtime.json) binds planned paths and acceptance identifiers. Native isolation adapters, clock integration and independent design review still require qualification.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
