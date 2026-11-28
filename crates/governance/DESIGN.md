@@ -1,10 +1,10 @@
 # Governance crate design
 
-**Contract version** 1.0. Master design §43. Planned implementation.
+**Contract version** 1.1 candidate. Master design §43. Planned implementation.
 
 ## Responsibility and dependencies
 
-Intersect signed/owner policies and agent capabilities, hash exact scope and inputs, re-evaluate immediately before effect, persist intent and invalidate scoped leases on revoke.
+Intersect the constitution, active policy and exact scoped grant. Evaluate a redacted decision before the authorized claim records durable intent. Record revocation and stop before notifying execution owners. Runtime and Resources own process containment, lease holds and verified release.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [identity](../identity/DESIGN.md), [security](../security/DESIGN.md), [storage](../storage/DESIGN.md), [events](../events/DESIGN.md)
 
@@ -23,7 +23,7 @@ The operation names below define the crate boundary. Put typed requests, results
 - `revoke(grant)`
 - `stop(scope)`
 
-Record families: Authorization, PolicyVersion, Decision, ApprovalRequest and revocation epoch. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
+Record families: Authorization, PolicyVersion, Decision, ApprovalRequest and revocation epoch. [Evaluation](specifications/modules/policy_engine.md) produces observations and [claim](specifications/modules/authorization/operation.md) records a guarded intent. Composition supplies the required Audit participant through the shared Storage transaction, with no new first-party dependency. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
 
 ### Primary typed interface
 
@@ -87,7 +87,7 @@ Test missing attributes, grant expiry during execution, and policy change before
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned Governance source path has a candidate file contract. See the [requirements map](../../contracts/requirements/modules/governance.json). Exact Rust port signatures, active clock and authority qualification, and independent design review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

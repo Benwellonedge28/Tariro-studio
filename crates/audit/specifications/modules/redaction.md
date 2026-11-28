@@ -1,15 +1,17 @@
 # Audit-safe data reduction
 
-**ZIP-AUDIT-REDACTION-001 · v1.0 · Owner:** Audit maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AUDIT-REDACTION-001 · v1.1 · Owner:** Audit maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/audit/src/redaction.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Allowlist operational fields and redact any secret not needed for attribution; perform before persistence and hashing. Keep safe digest references only.
+Reduce an input to the registry-approved typed fields for its operation and disclosure policy before canonical encoding or persistence. Omit raw environments, command text, prompts, credentials, private path text and opaque adapter error strings. Use scoped identifiers and eligible validated evidence digests only. Never create a digest of a secret for a public or redacted record.
+
+## Behavior and failure handling
+
+Apply a separate query or export projection when disclosure requires additional redaction. Do not modify an existing chained record to produce that view. An unsafe optional field is omitted; a required field that cannot be represented safely blocks the append. Bound diagnostics and never include rejected raw bytes. Redaction proof carries policy revision and source category.
 
 ## Acceptance
 
-**ZIP-AUDIT-REDACTION-T01.** Synthetic token cannot appear in serialized audit record or logs.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AUDIT-REDACTION-T01.** Include synthetic token, private path and malicious diagnostic in the draft. Verify all remain absent from persisted bytes, projected views and error logs. Inject a required unredactable field and verify the privileged append fails closed.

@@ -1,15 +1,17 @@
 # Authorization service boundary
 
-**ZIP-GOVERNANCE-AUTHORIZATION-MOD-001 · v1.0 · Owner:** Governance maintainers. **Maturity:** D3 file contract draft.
+**ZIP-GOVERNANCE-AUTHORIZATION-MOD-001 · v1.1 · Owner:** Governance maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/governance/src/authorization/mod.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Export separate assignment, operation, approval, delegation, expiry and revoke ports. Keep effect execution outside authority issuance.
+Declare separate [assignment grants](assignment.md), [operation claims](operation.md), [one-time approvals](approval.md), [delegation](delegation.md), [expiry](expiry.md) and [revocation](revocation.md). Export typed scoped commands and redacted observations through the owning Governance service. Grant constructors and claimed intent internals remain private.
+
+## Behavior and failure handling
+
+Issuance records permission bounds. Evaluate returns a decision for exact input. Claim serializes current authority and durable intent before any external effect. Only the owning adapter can dispatch under the verified claim. Keep read-only reconciliation and independently authorized cleanup separate. No import or type construction reads credentials, grants authority or executes work.
 
 ## Acceptance
 
-**ZIP-GOVERNANCE-AUTHORIZATION-MOD-T01.** A consumer cannot execute effects from a grant constructor alone.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-GOVERNANCE-AUTHORIZATION-MOD-T01.** Compile a downstream fixture that constructs an evaluation input but cannot construct a claimed intent or mutate a grant epoch. Call evaluate with a valid test grant and verify zero effect calls.

@@ -1,15 +1,17 @@
 # Bounded decision presentation
 
-**ZIP-GOVERNANCE-OVERSIGHT-HUMAN-001 · v1.0 · Owner:** Governance maintainers. **Maturity:** D3 file contract draft.
+**ZIP-GOVERNANCE-OVERSIGHT-HUMAN-001 · v1.1 · Owner:** Governance maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/governance/src/oversight/human.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Present exact scope, diff/effect digest, expiry, expected irreversible effects and review target. Approval input carries authenticated decision and displayed digest.
+Render a bounded authenticated review view with exact scope, expected base, candidate/effect digest, deadline, requested destinations, resource obligations and irreversible outcomes. Each view names the request version and approved review target. Omit secret values and separately protect restricted evidence.
+
+## Behavior and failure handling
+
+Verify the submitted decision is from the current qualified human authority and binds the exact displayed request and digest. Canonical validation happens server-side. A material change invalidates the preview and requires a fresh review. Client text, prefilled fields, votes and agent messages supply no approval. Persist the human decision before making it available to the [approval gate](../authorization/approval.md).
 
 ## Acceptance
 
-**ZIP-GOVERNANCE-OVERSIGHT-HUMAN-T01.** Editing any approved proposal field forces a fresh preview.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-GOVERNANCE-OVERSIGHT-HUMAN-T01.** Preview a proposal, edit one target field and submit the previously displayed digest. Verify rejection. Repeat with stale role membership and confirm a new qualified decision is necessary.

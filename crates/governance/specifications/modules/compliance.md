@@ -1,15 +1,17 @@
 # Policy evidence projection
 
-**ZIP-GOVERNANCE-COMPLIANCE-001 · v1.0 · Owner:** Governance maintainers. **Maturity:** D3 file contract draft.
+**ZIP-GOVERNANCE-COMPLIANCE-001 · v1.1 · Owner:** Governance maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/governance/src/compliance.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Collect audited decisions and outcomes under scoped access, compare mandatory controls to linked evidence and report gaps. No policy or effect mutation.
+Project a verdict from scoped policy obligations and redacted audit and outcome observations tied to an exact candidate, effect identity and policy revision. Read through a composition-supplied evidence interface. Distinguish verified, violated and unavailable obligations. A policy label or assertion cannot stand in for observed completion.
+
+## Behavior and failure handling
+
+Require all mandatory records for the requested claim, including each applicable prior authorization and confirmed final receipt. Missing or stale evidence blocks the affected claim. An unresolved effect remains open. If a valid exception applies, retain its exact authorization and expiry as evidence for only that rule. Do not alter policy, audit history or effect status from a compliance check.
 
 ## Acceptance
 
-**ZIP-GOVERNANCE-COMPLIANCE-T01.** Missing audit record prevents a compliant verdict for that effect.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-GOVERNANCE-COMPLIANCE-T01.** Omit the required outcome audit record for one otherwise matching operation. Verify a blocked verdict with a scoped missing requirement and no effect or policy mutation.

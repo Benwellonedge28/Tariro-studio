@@ -1,15 +1,17 @@
 # Checkpoint and chain validation
 
-**ZIP-AUDIT-INTEGRITY-001 · v1.0 · Owner:** Audit maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AUDIT-INTEGRITY-001 · v1.1 · Owner:** Audit maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/audit/src/integrity.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Verify contiguous sequence, exact digests and configured signed checkpoints. Return first failed segment and immutable scope; no silent repair.
+Read a pinned workspace snapshot and the requested range plus independently verified start and end expectations when the claim requires completeness. Verify current authorization, sequence continuity, supported format, predecessor bindings and every canonical digest. Validate configured checkpoint signatures and enrolled signer scope through Security when the policy requires them.
+
+## Behavior and failure handling
+
+Verify the observed tail against trusted high-water or checkpoint evidence before claiming the expected suffix is present. A chain consistent only within a returned slice cannot prove omitted records are absent. Expose verified range, unmet anchor requirements and first mismatch with redacted provenance. Never repair, overwrite or infer successful deletion from verification.
 
 ## Acceptance
 
-**ZIP-AUDIT-INTEGRITY-T01.** Truncated suffix fails when inconsistent with recorded checkpoint.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AUDIT-INTEGRITY-T01.** Truncate a suffix beneath a separately trusted checkpoint and verify failure. Provide an internally consistent slice with no trusted tail evidence and verify full-history qualification remains blocked.

@@ -1,15 +1,17 @@
 # Scoped audit export
 
-**ZIP-AUDIT-EXPORT-001 · v1.0 · Owner:** Audit maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AUDIT-EXPORT-001 · v1.1 · Owner:** Audit maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/audit/src/export.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Stage redacted filtered records and manifest, verify integrity and require explicit approved destination. Export is bounded and never grants decryption scope.
+Accept an exact scope, immutable snapshot range, current authority, bounded item and byte envelope and approved destination. Filter through [query](query.md) and redact into a distinct export representation. Stage a manifest binding source generation, filters, redaction policy, retained evidence references, range and exported byte digest.
+
+## Behavior and failure handling
+
+Validate the source chain under permitted qualified access and label the export's coverage. A filtered or projected export cannot substitute for a full canonical chain. Enforce bytes and items before staging growth and again before transfer. Require a fresh destination and data disclosure grant at the owning effect boundary. An ambiguous transfer response retains its original intent. Do not widen decryption or evidence access while exporting.
 
 ## Acceptance
 
-**ZIP-AUDIT-EXPORT-T01.** Copy attempt to unapproved destination is denied before transfer.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AUDIT-EXPORT-T01.** Attempt transfer to an unapproved destination and verify zero outbound calls. Revoke after staging and verify the bundle remains untransferred. Change a staged byte and confirm digest verification blocks publication.

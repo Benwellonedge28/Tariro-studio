@@ -1,15 +1,17 @@
 # Bounded authorized audit query
 
-**ZIP-AUDIT-QUERY-001 · v1.0 · Owner:** Audit maintainers. **Maturity:** D3 file contract draft.
+**ZIP-AUDIT-QUERY-001 · v1.1 · Owner:** Audit maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/audit/src/query.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Filter workspace and grant before scanning typed records. Use stream generation/cursor and admitted bytes/items. Do not fetch event payload to form summary.
+Authorize the caller, exact workspace, filters, disclosure scope and snapshot before reading the audit stream. Return bounded typed views ordered by workspace sequence. Bind continuation to scope, filter, retained generation, next sequence and authorized cursor lifetime. Treat a cursor as a locator requiring fresh authority.
+
+## Behavior and failure handling
+
+Bound scanned and returned items and bytes under resolved policy. Compare the pinned generation and validated earliest retained position before continuing. Return CursorExpired for an authorized obsolete continuation and do not expose hidden ranks or counts to an unauthorized requester. Build summaries from redacted records or verified evidence references without reading raw referenced payloads.
 
 ## Acceptance
 
-**ZIP-AUDIT-QUERY-T01.** Cross-workspace query exposes neither records nor hidden ranks.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-AUDIT-QUERY-T01.** Use a cursor from a different workspace, one made obsolete by retention and one current authorized cursor. Verify forbidden or expired outcomes as applicable and stable order within the permitted stream.

@@ -1,10 +1,10 @@
 # Audit crate design
 
-**Contract version** 1.0. Master design §45. Planned implementation.
+**Contract version** 1.1 candidate. Master design §45. Planned implementation.
 
 ## Responsibility and dependencies
 
-Redact before canonically encoding and hashing. Append in same transaction with privileged intent; append result after reconciliation. Sign checkpoint on configured cadence.
+Redact before canonical encoding and hashing. Append required audit evidence in the same transaction as privileged intent. Append unresolved and verified outcome observations under the original operation identity. Use qualified checkpoint signing when required by configured policy.
 
 First-party dependencies: [foundation](../foundation/DESIGN.md), [storage](../storage/DESIGN.md), [security](../security/DESIGN.md)
 
@@ -23,7 +23,7 @@ The operation names below define the crate boundary. Put typed requests, results
 - `verify_chain()`
 - `export(scope, cursor)`
 
-Record families: AuditRecord with sequence, prev hash, hash, actor, policy digest, scope and outcome. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
+Record families: AuditRecord with workspace sequence, predecessor and body digests, actor, decision, scope and outcome. [Record codec](specifications/modules/record.md) owns candidate hash-input bytes and [hash chain](specifications/modules/hash_chain.md) owns framing. A provisional append reference becomes authoritative only with its containing Storage commit. Encode durable records versioned at the storage boundary. Use immutable digest references for payloads and revision-checked writes for mutable state. Bare integers crossing a boundary must have explicit units.
 
 ### Primary typed interface
 
@@ -74,7 +74,7 @@ Mutate one record and detect chain failure. Verify ordering under concurrent wri
 
 ## Planned source-file contracts
 
-The entries below specify file ownership, required behavior and test cases. They are D3 drafts. Exact signature and test qualification is tracked until independent review.
+Every planned Audit source path has a candidate file contract. See the [requirements map](../../contracts/requirements/modules/audit.json). Canonical codec vectors, Storage namespace and index integration, checkpoint signer qualification and independent review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)
