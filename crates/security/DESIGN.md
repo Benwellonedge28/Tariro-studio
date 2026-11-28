@@ -1,6 +1,6 @@
 # Security crate design
 
-**Contract version** 1.1 candidate. Master design §42. Planned implementation.
+**Contract version** 1.2 candidate. Master design §42. Planned implementation.
 
 ## Responsibility and dependencies
 
@@ -29,6 +29,8 @@ The following contract uses Rust-shaped signatures. Names such as `Result<T>` re
 - `AccessRequest { principal, workspace, operation, target, grant, attributes }`
 
 - `decide_access(request: AccessRequest, trust: &TrustState) -> Result<AuthorizationDecision>`
+
+The [cryptography port](specifications/modules/cryptography/mod.md) qualifies suite and purpose before selecting a key or provider. [Defensive checks](specifications/modules/defenses/mod.md) supply bounded observations at the owning enforcement boundary. [Supply-chain qualification](specifications/modules/supply_chain/mod.md) binds mandatory evidence to exact artifact bytes and policy.
 
 ## Failure, safety and resource limits
 
@@ -96,7 +98,7 @@ Test prompt injection boundaries, secret canaries and delegated capability atten
 
 ## Planned source-file contracts
 
-The entries below specify file ownership and stable acceptance cases. See the [requirements map](../../contracts/requirements/modules/security.json). The cryptography, defensive controls, supply-chain and incident response drafts remain open along with concrete adapter qualification and independent review.
+The entries below specify file ownership and stable acceptance cases. See the [requirements map](../../contracts/requirements/modules/security.json). Every planned Security source path has a candidate contract. Supported cryptographic suites, approved providers, exact interface compilation, native qualification and independent review remain open.
 
 - [`lib.rs`](specifications/modules/lib.md)
 - [`error.rs`](specifications/modules/error.md)

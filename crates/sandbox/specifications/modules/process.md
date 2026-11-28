@@ -1,15 +1,17 @@
 # Process-tree containment
 
-**ZIP-SANDBOX-PROCESS-001 · v1.0 · Owner:** Sandbox maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SANDBOX-PROCESS-001 · v1.1 · Owner:** Sandbox maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/sandbox/src/process.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Start processes inside preconfigured containment scope. Track opaque process identifiers and gateway lease; supervise descendants until exit.
+Prepare an enrolled containment group and bind the workload to its exact opaque identity before application code can run. Supply exact admitted executable and arguments, scoped environment, child count and required limits. Bind any native handles to the controlling owner and a locator that survives supervisor restart.
+
+## Behavior and failure handling
+
+Observe the whole group and count descendants within the admitted envelope. Never infer tree absence from one exit notification, unbound process identifier or wall time. An uncertain start or termination retains durable observation and cleanup responsibility. Enforce the one-way launch gate through the owning supervisor.
 
 ## Acceptance
 
-**ZIP-SANDBOX-PROCESS-T01.** Forked child stays inside containment and is counted during cleanup.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SANDBOX-PROCESS-T01.** Run an authorized benign program creating one child. Verify the child appears in containment accounting, parent exit does not settle cleanup while the child still runs, and enclosure teardown resolves both.

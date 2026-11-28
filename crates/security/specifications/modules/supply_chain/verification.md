@@ -1,15 +1,17 @@
 # Supply-chain acceptance rule
 
-**ZIP-SECURITY-SUPPLY-CHAIN-VERIFICATION-001 · v1.0 · Owner:** Security maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SECURITY-SUPPLY-CHAIN-VERIFICATION-001 · v1.1 · Owner:** Security maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/security/src/supply_chain/verification.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Aggregate scoped findings, evidence identity and mandatory qualification gates. Failed and missing checks are distinct, and neither passes.
+Aggregate scoped evidence for exact artifact, resolved graph, signer policy and mandatory verification gates. Compare each observation's candidate, revision and required authority. Report verified, violated and unavailable conditions independently. Accept only when every mandatory gate has current matching evidence.
+
+## Behavior and failure handling
+
+Bind the result to the exact candidate and policy, keep immutable references to failing observations and never manufacture success from a signed manifest or incomplete reports. Activation is a separate release operation, rechecking live policy and exact candidate. Reconcile missing receipt through its owner instead of running repeated protected effects.
 
 ## Acceptance
 
-**ZIP-SECURITY-SUPPLY-CHAIN-VERIFICATION-T01.** Missing test report blocks release even when cryptographic verification passes.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SECURITY-SUPPLY-CHAIN-VERIFICATION-T01.** Pass digest and signature checks while withholding one mandatory test report. Verify the result remains blocked. Supply a stale passing report and verify it does not change the verdict.

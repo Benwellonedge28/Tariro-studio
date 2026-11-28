@@ -1,15 +1,17 @@
 # Qualification evidence DTO
 
-**ZIP-SANDBOX-CAPABILITY-001 · v1.0 · Owner:** Sandbox maintainers. **Maturity:** D3 file contract draft.
+**ZIP-SANDBOX-CAPABILITY-001 · v1.1 · Owner:** Sandbox maintainers. **Maturity:** D4 candidate for the scope below.
 
 **Planned source:** `crates/sandbox/src/capability.rs`
 
-## Required implementation behavior
+## Boundary and inputs
 
-Advertise each enforced control only after qualified platform evidence, distinguishing supported, unavailable and unknown. Compare required modes before activation.
+Represent each control with a kind, effective enforceable bound where applicable, adapter and host edition, scope, observation generation and evidence reference. Distinguish Enforced, Unavailable and Unknown. A platform claim must come from an enrolled observation port and match the exact requested profile binding.
+
+## Behavior and failure handling
+
+Compare required controls and units before activation. A permissive, mutable or absent observation cannot satisfy a hard requirement. Invalidate stale capability evidence without rewriting historic observations. Composition must check installed controls again at the launch boundary.
 
 ## Acceptance
 
-**ZIP-SANDBOX-CAPABILITY-T01.** Missing isolation evidence cannot map to support.
-
-Before D4, review this file against the component's owning API, error and resource contracts. Define any remaining concrete Rust types, dependencies and fixtures at their respective boundaries. Record independent design review and validation before D5.
+**ZIP-SANDBOX-CAPABILITY-T01.** Provide one missing observation, one mismatched bound and one unrelated valid observation. Verify none qualifies the required mode. A matching fresh observation qualifies only its own control.
